@@ -2,6 +2,6 @@ package com.invoice.entities;
 
 public enum ERole {
 	ROLE_USER,
-    ROLE_MODERATOR,
+    ROLE_AUDITOR,
     ROLE_ADMIN
 }
