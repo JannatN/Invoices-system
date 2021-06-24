@@ -1,0 +1,16 @@
+<h3>Update User</h3>
+<div style="width: 400px;">
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">User Name</label>
+      <input type="text" class="form-control" id="firstName" required [(ngModel)]="user.username" name="firstName">
+    </div>
+
+    <div class="form-group">
+      <label for="name">Email </label>
+      <input type="text" class="form-control" id="emailId" required [(ngModel)]="user.email" name="emailId">
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
