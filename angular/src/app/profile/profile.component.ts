@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
     this.user = this.token.getUser();
     this.id = this.route.snapshot.params['id'];
     this.userService.getUser(this.id);
-    console.log(this.user.id)
+    console.log(this.user.username)
   }
 
   updateUser(id: number) {

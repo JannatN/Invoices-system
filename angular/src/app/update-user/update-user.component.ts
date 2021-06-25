@@ -48,6 +48,7 @@ export class UpdateUserComponent implements OnInit {
   }
   
   back() {
-    this.router.navigate(['profile']);
+    window.location.reload();
   }
+ 
 }

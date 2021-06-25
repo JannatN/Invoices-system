@@ -13,10 +13,31 @@
     <strong>Email:</strong>
     {{user.email}}
   </p>
+
+  <p>
+    <strong>Email:</strong>
+    {{user.email}}
+  </p>
   <strong>Roles:</strong>
   <ul>
     <li *ngFor="let role of user.roles">
       {{ role }}
+      <p>
+        <strong>First name:</strong>
+        {{user.firstname}}
+      </p>
+      <p>
+        <strong>Address :</strong>
+        {{user.address}}
+      </p>
+      <p>
+        <strong>Phone :</strong>
+        {{user.phoneNumber}}
+      </p>
+      <p>
+        <strong>Last name:</strong>
+        {{user.lastname}}
+      </p>
     </li>
   </ul>
   <button (click)="updateUser(user.id)" class="btn btn-info" style="margin-left: 10px">Update my Info</button>

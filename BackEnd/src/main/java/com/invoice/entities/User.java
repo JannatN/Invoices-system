@@ -35,8 +35,7 @@ public class User {
 	@Size(max = 50)
 	private String address;
 
-	@NotBlank
-	@Size(max = 50)
+	@Size(max = 10)
 	private String phoneNumber;
 
 	@NotBlank
@@ -47,13 +46,19 @@ public class User {
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	public User() {
-	}
-
-	public User(String username, String email, String password) {
+	public User(String username, String email, String password, String firstname, String lastname, String address,
+			String phoneNumber) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+	}
+
+	public User() {
+
 	}
 
 	public Long getId() {
