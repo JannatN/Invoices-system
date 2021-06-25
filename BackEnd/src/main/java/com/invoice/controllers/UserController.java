@@ -32,13 +32,14 @@ public class UserController {
 	private UserRepository userRepository;
 
 	@GetMapping("/users")
-	@PreAuthorize("hasRole('ADMIN')")
-	public List<User> getAllEmployees() {
+	@PreAuthorize("hasRole('ADMIN') ")
+	public List<User> getAllUsers() {
 		return userRepository.findAll();
 	}
 
+
 	@GetMapping("/users/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
 		User user = userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
@@ -47,12 +48,12 @@ public class UserController {
 
 	@PostMapping("/users")
 	@PreAuthorize("hasRole('ADMIN')")
-	public User createEmployee(@Valid @RequestBody User employee) {
-		return userRepository.save(employee);
+	public User createUser(@Valid @RequestBody User user) {
+		return userRepository.save(user);
 	}
 
 	@PutMapping("/users/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long userId,
 			@Valid @RequestBody User userDetails) throws ResourceNotFoundException {
 		User user = userRepository.findById(userId)
@@ -60,6 +61,10 @@ public class UserController {
 
 		user.setEmail(userDetails.getEmail());
 		user.setUsername(userDetails.getUsername());
+		user.setFirstname(userDetails.getFirstname());
+		user.setLastname(userDetails.getLastname());
+		user.setAddress(userDetails.getFirstname());
+		user.setPhoneNumber(userDetails.getPhoneNumber());
 		final User updatedUser = userRepository.save(user);
 		return ResponseEntity.ok(updatedUser);
 	}

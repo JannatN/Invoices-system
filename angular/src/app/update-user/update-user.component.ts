@@ -9,19 +9,18 @@ import { UserService } from '../_services/users.service';
   styleUrls: ['./update-user.component.css']
 })
 export class UpdateUserComponent implements OnInit {
-
   id: number;
   user: User;
 
-  constructor(private route: ActivatedRoute,private router: Router,
+  constructor(private route: ActivatedRoute, private router: Router,
     private userService: UserService) { }
 
   ngOnInit() {
     this.user = new User();
 
     this.id = this.route.snapshot.params['id'];
-    
-    this.userService.getUsers(this.id)
+
+    this.userService.getUser(this.id)
       .subscribe(data => {
         console.log(data)
         this.user = data;
@@ -29,19 +28,26 @@ export class UpdateUserComponent implements OnInit {
   }
 
   updateUser() {
-    this.userService.updateUser(this.id, this.user)
-      .subscribe(data => {
-        console.log(data);
-        this.user = new User();
-        this.gotoList();
-      }, error => console.log(error));
+      this.userService.updateUser(this.id, this.user)
+        .subscribe(data => {
+          console.log(data);
+          this.user = new User();
+          this.gotoList();
+        }, error => console.log(error));
+    
   }
-
   onSubmit() {
-    this.updateUser();    
+    this.updateUser();
   }
 
   gotoList() {
     this.router.navigate(['/users']);
+  }
+  gotoProfile() {
+    this.router.navigate(['/profile']);
+  }
+  
+  back() {
+    this.router.navigate(['profile']);
   }
 }

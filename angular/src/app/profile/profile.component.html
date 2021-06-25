@@ -1,24 +1,25 @@
-<div class="container" *ngIf="currentUser; else loggedOut">
+<div class="container" *ngIf="user; else loggedOut">
   <header class="jumbotron">
     <h3>
-      <strong>{{ currentUser.username }}</strong> Profile
+      <strong>{{user.username}}</strong> Profile
     </h3>
   </header>
-  <p>
+  <!-- <p>
     <strong>Token:</strong>
     {{ currentUser.accessToken.substring(0, 20) }} ...
     {{ currentUser.accessToken.substr(currentUser.accessToken.length - 20) }}
-  </p>
+  </p> -->
   <p>
     <strong>Email:</strong>
-    {{ currentUser.email }}
+    {{user.email}}
   </p>
   <strong>Roles:</strong>
   <ul>
-    <li *ngFor="let role of currentUser.roles">
+    <li *ngFor="let role of user.roles">
       {{ role }}
     </li>
   </ul>
+  <button (click)="updateUser(user.id)" class="btn btn-info" style="margin-left: 10px">Update my Info</button>
 </div>
 
 <ng-template #loggedOut>
