@@ -16,7 +16,6 @@ export class UpdateUserComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit() {
-    // this.pagereload();
     this.user = new User();
 
     this.id = this.route.snapshot.params['id'];
@@ -29,24 +28,27 @@ export class UpdateUserComponent implements OnInit {
   }
 
   updateUser() {
-    this.userService.updateUser(this.id, this.user)
-      .subscribe(data => {
-        console.log(data);
-        this.user = new User();
-        this.pagereload();
-      }, error => console.log(error));
-
+      this.userService.updateUser(this.id, this.user)
+        .subscribe(data => {
+          console.log(data);
+          this.user = new User();
+          this.gotoList();
+        }, error => console.log(error));
+    
   }
   onSubmit() {
     this.updateUser();
   }
 
+  gotoList() {
+    this.router.navigate(['/users']);
+  }
   gotoProfile() {
     this.router.navigate(['/profile']);
   }
-
-  pagereload() {
-    location.reload();
+  
+  back() {
+    window.location.reload();
   }
-
+ 
 }
