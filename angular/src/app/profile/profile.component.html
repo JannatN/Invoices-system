@@ -1,26 +1,174 @@
-<div class="container" *ngIf="currentUser; else loggedOut">
+<!-- <div class="container" *ngIf="user; else loggedOut">
   <header class="jumbotron">
     <h3>
-      <strong>{{ currentUser.username }}</strong> Profile
+      <strong>{{user.username}}</strong> Profile
     </h3>
   </header>
-  <p>
+  <!-- <p>
     <strong>Token:</strong>
     {{ currentUser.accessToken.substring(0, 20) }} ...
     {{ currentUser.accessToken.substr(currentUser.accessToken.length - 20) }}
-  </p>
+  </p> 
   <p>
     <strong>Email:</strong>
-    {{ currentUser.email }}
+    {{user.email}}
+  </p>
+
+  <p>
+    <strong>Email:</strong>
+    {{user.email}}
   </p>
   <strong>Roles:</strong>
   <ul>
-    <li *ngFor="let role of currentUser.roles">
+    <li *ngFor="let role of user.roles">
       {{ role }}
+      <p>
+        <strong>First name:</strong>
+        {{user.firstname}}
+      </p>
+      <p>
+        <strong>Address :</strong>
+        {{user.address}}
+      </p>
+      <p>
+        <strong>Phone :</strong>
+        {{user.phoneNumber}}
+      </p>
+      <p>
+        <strong>Last name:</strong>
+        {{user.lastname}}
+      </p>
     </li>
   </ul>
+  <button (click)="updateUser(user.id)" class="btn btn-info" style="margin-left: 10px">Update my Info</button>
 </div>
 
 <ng-template #loggedOut>
   Please login.
-</ng-template>
+</ng-template> -->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container emp-profile">
+  <form method="post">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-img">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+            alt="" />
+          <div class="file btn btn-lg btn-primary">
+            Change Photo
+            <input type="file" name="file" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="profile-head">
+          <h5>
+            {{user.username}} </h5>
+          <h6 *ngFor="let role of user.roles">
+            {{ role }} </h6>
+          <p class="proile-rating">Total Invoices  : <span>3</span></p>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">Timeline</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button (click)="updateUser(user.id)" class="btn btn-info" style="margin-left: 10px">Edit Profile</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-work">
+          <p>WORK LINK</p>
+          <a href="">Website Link</a><br />
+          <a href="">Bootsnipp Profile</a><br />
+          <a href="">Bootply Profile</a>
+          <p>SKILLS</p>
+          <a href="">Web Designer</a><br />
+          <a href="">Web Developer</a><br />
+          <a href="">WordPress</a><br />
+          <a href="">WooCommerce</a><br />
+          <a href="">PHP, .Net</a><br />
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+  
+            <div class="row">
+              <div class="col-md-6">
+                <label>First Name</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{user.firstname}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Last Name</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{user.lastname}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Address</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{user.address}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Phone</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{user.phoneNumber}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Invoice 1</label>
+              </div>
+              <div class="col-md-6">
+                <p>20/12/2012</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label> Invoice 2</label>
+              </div>
+              <div class="col-md-6">
+                <p>12/3/2014</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Invoice 3</label>
+              </div>
+              <div class="col-md-6">
+                <p>22/4/2021</p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
