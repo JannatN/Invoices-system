@@ -15,6 +15,8 @@ import { BoardAuditorComponent } from './board-auditor/board-auditor.component';
 import { ProfileComponent } from './profile/profile.component';
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
+import { InvoicesListComponent } from './components/invoices-list/invoices-list.component';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
     BoardAdminComponent,
     BoardUserComponent,
     BoardAuditorComponent,
-    ProfileComponent
+    ProfileComponent,
+    InvoicesListComponent,
+  
   ],
   imports: [
     BrowserModule,

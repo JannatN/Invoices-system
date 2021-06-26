@@ -1,5 +1,37 @@
-<div class="container">
-  <header class="jumbotron">
-    <p>{{ content }}</p>
-  </header>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>Invoices List</h2>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped">
+  
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>type</th>
+          <th>date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invoice of invoices | async">
+          <td>{{invoice.id}}</td>
+          <td>{{invoice.type}}</td>
+          <td>{{invoice.date}}</td>
+          <td>
+            <!-- <router-outlet></router-outlet> -->
+            <!-- <button (click)="updateUser(user.id)" class="btn btn-info" style="margin-left: 10px">Update</button>
+              <button (click)="userDetails(user.id)" class="btn btn-info" style="margin-left: 10px">Details</button> -->
+          </td>
+        </tr>
+      <!-- </tbody>
+      <tbody>
+        <tr *ngIf="let texts of text | async">
+          <td>{{text}}</td>
+  
+         
+        </tr>
+      </tbody> -->
+    </table>
+  </div>
 </div>
