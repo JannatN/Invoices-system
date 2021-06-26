@@ -14,7 +14,7 @@ export class UserListComponent implements OnInit {
   users: Observable<User[]>;
 
   constructor(private userService: UserService,
-    private router: Router) {}
+    private router: Router) { }
 
   ngOnInit() {
     this.reloadData();
@@ -25,11 +25,15 @@ export class UserListComponent implements OnInit {
   }
 
 
-  userDetails(id: number){
+  userDetails(id: number) {
     this.router.navigate(['details', id]);
   }
 
-  updateUser(id: number){
+  updateUser(id: number) {
     this.router.navigate(['update', id]);
+  }
+  
+  gotoProfile() {
+    this.router.navigate(['/profile']);
   }
 }
