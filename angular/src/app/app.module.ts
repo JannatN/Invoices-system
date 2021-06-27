@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
-import { BoardAdminComponent } from './board-admin/board-admin.component';
+// import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { BoardAuditorComponent } from './board-auditor/board-auditor.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -24,7 +24,7 @@ import { UserListComponent } from './user-list/user-list.component';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    BoardAdminComponent,
+    // BoardAdminComponent,
     BoardUserComponent,
     BoardAuditorComponent,
     ProfileComponent,
