@@ -23,8 +23,8 @@ export class InvoiceService {
         return this.http.get(`${this.baseUrl}`);
     }
 
-    createInvoice(employee: Object): Observable<Object> {
-        return this.http.post(`${this.baseUrl}`, employee);
+    createInvoice(invoice: Object): Observable<Object> {
+        return this.http.post(`${this.baseUrl}`, invoice);
     }
 
 

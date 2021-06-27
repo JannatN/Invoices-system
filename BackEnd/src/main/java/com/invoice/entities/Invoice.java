@@ -97,6 +97,7 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -107,12 +108,12 @@ public class Invoice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@NotBlank
+	
 	private Long userID;
+	@NotNull(message = "Please enter Date")
 	@CreationTimestamp
 	private LocalDateTime dateCreated;
-	@NotBlank
+	@NotNull(message = "Please enter Date")
 	private LocalDateTime dueDate;
 
 	@ManyToMany(fetch = FetchType.LAZY)

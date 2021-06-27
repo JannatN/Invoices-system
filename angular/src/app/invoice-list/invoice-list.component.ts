@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: "app-invoice-list",
-  templateUrl: "./innvoice-list.component.html",
+  templateUrl: "./invoice-list.component.html",
   styleUrls: ["./invoice-list.component.css"]
 })
 export class InvoiceListComponent implements OnInit {
@@ -24,7 +24,7 @@ export class InvoiceListComponent implements OnInit {
   }
 
 
-  InvoicesDetails(id: number) {
+  invoicesDetails(id: number) {
     this.router.navigate(['detailsInvoice', id]);
   }
 
@@ -32,6 +32,9 @@ export class InvoiceListComponent implements OnInit {
     this.router.navigate(['updateInvoice', id]);
   }
 
+  createInvoice() {
+    this.router.navigate(['addInvoice']);
+  }
   
   deleteInvoice(id: number) {
     this.invoiceService.deleteInvoice(id)
@@ -43,7 +46,7 @@ export class InvoiceListComponent implements OnInit {
         error => console.log(error));
   }
   
-  gotoProfile() {
-    this.router.navigate(['/profile']);
+  list() {
+    this.router.navigate(['/invoices']);
   }
 }
