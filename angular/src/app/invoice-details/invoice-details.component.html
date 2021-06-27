@@ -1,0 +1,20 @@
+<h2>Invoice Details</h2> 
+
+<hr/>
+<div *ngIf="invoice">
+  <div>
+    <label><b> dateCreated: </b></label> {{invoice.dateCreated}}
+  </div>
+  <div>
+    <label><b> dueDate: </b></label> {{invoice.dueDate}}
+  </div>
+  <div>
+    <label><b>user Id: </b></label> {{invoice.userID}}
+  </div>  
+</div>
+
+<br>
+<br>
+<button (click)="list()" class="btn btn-primary">Back to Invoice List</button><br>
+
+

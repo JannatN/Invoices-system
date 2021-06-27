@@ -1,14 +1,14 @@
 package com.invoice.repositories;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.invoice.entities.Invoice;
+import com.invoice.entities.User;
 
-public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
-		
-//		List<Invoice> findByPublished(boolean published);
-//		List<Invoice> findByTitleContaining(String title);
-	}
+@Repository
+public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
 
+}

@@ -18,28 +18,36 @@ public class UserDetailsImpl implements UserDetails {
 	private Long id;
 
 	private String username;
-
 	private String email;
+	private String firstname;
+	private String lastname;
+	private String address;
+	private String phoneNumber;
 
 	@JsonIgnore
 	private String password;
 
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserDetailsImpl(Long id, String username, String email, String password,
-			Collection<? extends GrantedAuthority> authorities) {
+	public UserDetailsImpl(Long id, String username, String email, String password, String firstname, String lastname,
+			String address, String phoneNumber, Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
 	}
 
 	public static UserDetailsImpl build(User user) {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
 
-		return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), authorities);
+		return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(),
+				user.getFirstname(), user.getAddress(), user.getLastname(), user.getPhoneNumber(), authorities);
 	}
 
 	@Override
@@ -63,6 +71,22 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public String getUsername() {
 		return username;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
 	@Override

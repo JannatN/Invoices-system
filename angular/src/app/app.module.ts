@@ -13,10 +13,15 @@ import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { BoardAuditorComponent } from './board-auditor/board-auditor.component';
 import { ProfileComponent } from './profile/profile.component';
-
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
-import { InvoicesListComponent } from './components/invoices-list/invoices-list.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
+import { UserListComponent } from './user-list/user-list.component';
 
+import { UpdateInvoiceComponent } from './update-invoice/update-invoice.component';
+import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
+import { InvoiceListComponent } from './invoice-list/invoice-list.component';
+import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 
 @NgModule({
   declarations: [
@@ -25,11 +30,16 @@ import { InvoicesListComponent } from './components/invoices-list/invoices-list.
     RegisterComponent,
     HomeComponent,
     BoardAdminComponent,
+    UpdateInvoiceComponent,
+    InvoiceDetailsComponent,
     BoardUserComponent,
+    InvoiceListComponent,
     BoardAuditorComponent,
+    CreateInvoiceComponent,
     ProfileComponent,
-    InvoicesListComponent,
-  
+    UserDetailsComponent,
+    UserListComponent,
+    UpdateUserComponent
   ],
   imports: [
     BrowserModule,
