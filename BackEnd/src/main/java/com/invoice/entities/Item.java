@@ -24,6 +24,10 @@ public class Item {
 	private Double price;
 
 	@NotBlank
+	@Size(max = 3)
+	private String currency;
+
+	@NotBlank
 	private Integer quantity;
 
 	public Item() {
@@ -58,8 +62,24 @@ public class Item {
 		return price;
 	}
 
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 }
