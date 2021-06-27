@@ -12,6 +12,11 @@ import { UpdateUserComponent } from './update-user/update-user.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserListComponent } from './user-list/user-list.component';
 
+import { UpdateInvoiceComponent } from './update-invoice/update-invoice.component';
+import {InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
+import { InvoiceListComponent } from './invoice-list/invoice-list.component';
+import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
+
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
@@ -24,6 +29,11 @@ const routes: Routes = [
   { path: 'users', component: UserListComponent },
   { path: 'update/:id', component: UpdateUserComponent },
   { path: 'details/:id', component: UserDetailsComponent },
+  { path: 'invoices/:id', component: InvoiceListComponent },
+  { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
+  { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
+  { path: 'addInvoice', component: CreateInvoiceComponent },
+
 ];
 
 @NgModule({
