@@ -120,8 +120,9 @@ public class Invoice {
 	private String type;
 
 	@NotBlank
-	@Size(max = 20)
 	private String company;
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "userID", insertable = false, updatable = false)
 	private User user;
