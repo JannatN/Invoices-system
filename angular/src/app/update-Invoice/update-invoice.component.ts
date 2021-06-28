@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Invoice } from '../invoice';
+import { Invoice } from '../models/invoice';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceService } from '../_services/invoices.service';
 

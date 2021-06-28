@@ -1,8 +1,8 @@
 // import { Component, OnInit } from '@angular/core';
 // import { UserService } from '../_services/user.service';
-import { InvoiceService } from '../_services/invoice.service';
+import { InvoiceService } from '../_services/invoices.service';
+import { Invoice } from '../models/invoice';
 
-import { Invoice } from 'src/app/models/invoice.model';
 // import { InvoiceService } from 'src/app/_services/invoice.service';
 // @Component({
 //   selector: 'app-board-user',
@@ -56,7 +56,7 @@ import { Observable } from "rxjs";
 // import { User } from "../user";
 import { Component, OnInit } from "@angular/core";
 import { Router } from '@angular/router';
-import {TokenStorageService} from "../_services/token-storage.service";
+import { TokenStorageService } from "../_services/token-storage.service";
 @Component({
   selector: 'app-board-user',
   templateUrl: './board-user.component.html',
@@ -64,18 +64,18 @@ import {TokenStorageService} from "../_services/token-storage.service";
 })
 export class BoardUserComponent implements OnInit {
   invoices: Observable<Invoice[]>;
-  text:String;
+  text: String;
 
   constructor(private invoiceService: InvoiceService,
-    private router: Router , private tokenStorageService:TokenStorageService) {}
+    private router: Router, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
     this.reloadData();
   }
 
   reloadData() {
-    this.invoices = this.invoiceService.getInvList();
-    this.text=this.tokenStorageService.getToken();
+    this.invoices = this.invoiceService.getInvoicesList();
+    this.text = this.tokenStorageService.getToken();
   }
 
 
