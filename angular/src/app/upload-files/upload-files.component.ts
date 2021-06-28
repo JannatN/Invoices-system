@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UploadFileService } from '../_services/upload-file.service';
+import { UploadFilesService } from '../_services/upload-file.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -11,41 +11,44 @@ import { Observable } from 'rxjs';
 export class UploadFilesComponent implements OnInit {
 
   selectedFiles: FileList;
-  currentFile: File;
-  progress = 0;
+  progressInfos = [];
   message = '';
 
   fileInfos: Observable<any>;
 
-  constructor(private uploadService: UploadFileService) { }
+  constructor(private uploadService: UploadFilesService) { }
 
   ngOnInit() {
     this.fileInfos = this.uploadService.getFiles();
   }
 
-  selectFile(event) {
+  selectFiles(event) {
+    this.progressInfos = [];
     this.selectedFiles = event.target.files;
   }
 
-  upload() {
-    this.progress = 0;
+  upload(idx, file) {
+    this.progressInfos[idx] = { value: 0, fileName: file.name };
 
-    this.currentFile = this.selectedFiles.item(0);
-    this.uploadService.upload(this.currentFile).subscribe(
+    this.uploadService.upload(file).subscribe(
       event => {
         if (event.type === HttpEventType.UploadProgress) {
-          this.progress = Math.round(100 * event.loaded / event.total);
+          this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
         } else if (event instanceof HttpResponse) {
-          this.message = event.body.message;
           this.fileInfos = this.uploadService.getFiles();
         }
       },
       err => {
-        this.progress = 0;
-        this.message = 'Could not upload the file!';
-        this.currentFile = undefined;
+        this.progressInfos[idx].value = 0;
+        this.message = 'Could not upload the file:' + file.name;
       });
+  }
 
-    this.selectedFiles = undefined;
+  uploadFiles() {
+    this.message = '';
+
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      this.upload(i, this.selectedFiles[i]);
+    }
   }
 }
