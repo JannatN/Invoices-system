@@ -62,6 +62,8 @@ public class InvoiceController {
 		invoice.setDateCreated(invoiceDetails.getDateCreated());
 		invoice.setDueDate(invoiceDetails.getDueDate());
 		invoice.setUserID(invoiceDetails.getUserID());
+		invoice.setCompany(invoiceDetails.getCompany());
+		invoice.setType(invoiceDetails.getType());
 
 		final Invoice updatedInvoice = invoiceRepository.save(invoice);
 		return ResponseEntity.ok(updatedInvoice);

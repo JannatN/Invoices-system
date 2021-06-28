@@ -115,18 +115,17 @@ public class Invoice {
 	private LocalDateTime dateCreated;
 	@NotNull(message = "Please enter Date")
 	private LocalDateTime dueDate;
+	@NotBlank
+	@Size(max = 20)
+	private String type;
 
+	@NotBlank
+	@Size(max = 20)
+	private String company;
 	@ManyToOne
 	@JoinColumn(name = "userID", insertable = false, updatable = false)
 	private User user;
-//	 private Set<User> recordings = new HashSet<>();
 
-//	@ManyToOne(optional=false)
-//	@JoinColumn(name="userID",referencedColumnName="id", insertable=false, updatable=false)
-//	private User user;
-
-//	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	private Set<User> recordings = new HashSet<>();
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "invoice_item", joinColumns = @JoinColumn(name = "invoice_ID"), inverseJoinColumns = @JoinColumn(name = "item_ID"))
@@ -180,6 +179,30 @@ public class Invoice {
 
 	public void setItems(Set<Item> items) {
 		this.items = items;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

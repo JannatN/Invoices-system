@@ -10,6 +10,8 @@
           <th>Date Created</th>
           <th>Due Date</th>
           <th>User ID</th>
+          <th> Company</th>
+          <th>Invoice Type</th>
           <th>Action</th>
 
         </tr>
@@ -20,6 +22,9 @@
           <td>{{invoice.dateCreated}}</td>
           <td>{{invoice.dueDate}}</td>
           <td>{{invoice.userID}}</td>
+          <td>{{invoice.company}}</td>
+          <td>{{invoice.type}}</td>
+
 
           <td>
             <button (click)="updateInvoice(invoice.id)" class="btn btn-info" style="margin-left: 10px">Update</button>
