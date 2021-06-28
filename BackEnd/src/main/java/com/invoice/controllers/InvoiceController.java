@@ -51,6 +51,7 @@ public class InvoiceController {
 		return invoiceRepository.save(invoice);
 	}
 
+	
 	@PutMapping("/invoices/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Invoice> updateInvoice(@PathVariable(value = "id") Long invoiceID,
@@ -61,6 +62,8 @@ public class InvoiceController {
 		invoice.setDateCreated(invoiceDetails.getDateCreated());
 		invoice.setDueDate(invoiceDetails.getDueDate());
 		invoice.setUserID(invoiceDetails.getUserID());
+		invoice.setCompany(invoiceDetails.getCompany());
+		invoice.setType(invoiceDetails.getType());
 
 		final Invoice updatedInvoice = invoiceRepository.save(invoice);
 		return ResponseEntity.ok(updatedInvoice);

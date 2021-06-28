@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 @Table(name = "item")
 public class Item {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@NotBlank
@@ -19,15 +19,12 @@ public class Item {
 	@Size(max = 200)
 	private String description;
 
-	@NotBlank
-	@Size(max = 15)
 	private Double price;
 
 	@NotBlank
 	@Size(max = 3)
 	private String currency;
 
-	@NotBlank
 	private Integer quantity;
 
 	public Item() {

@@ -17,6 +17,11 @@ import {InvoiceDetailsComponent } from './invoice-details/invoice-details.compon
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 
+import { UpdateItemComponent } from './update-item/update-item.component';
+import {ItemDetailsComponent } from './item-details/item-details.component';
+import { ItemListComponent } from './item-list/item-list.component';
+import { CreateItemComponent } from './create-item/create-item.component';
+
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
@@ -33,6 +38,10 @@ const routes: Routes = [
   { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
   { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
   { path: 'addInvoice', component: CreateInvoiceComponent },
+  { path: 'items/:id', component: ItemListComponent },
+  { path: 'detailsItem/:id', component: ItemDetailsComponent },
+  { path: 'updateItem/:id', component: UpdateItemComponent },
+  { path: 'addItem', component: CreateItemComponent },
 
 ];
 

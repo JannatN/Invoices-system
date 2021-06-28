@@ -22,6 +22,11 @@ import { UpdateInvoiceComponent } from './update-invoice/update-invoice.componen
 import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
+import { UploadFilesComponent } from './upload-files/upload-files.component';
+import { ItemListComponent } from './item-list/item-list.component';
+import { ItemDetailsComponent } from './item-details/item-details.component';
+import { UpdateItemComponent } from './update-item/update-item.component';
+import { CreateItemComponent } from './create-item/create-item.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +44,13 @@ import { CreateInvoiceComponent } from './create-invoice/create-invoice.componen
     ProfileComponent,
     UserDetailsComponent,
     UserListComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    UploadFilesComponent,
+    ItemListComponent,
+    ItemDetailsComponent,
+    UpdateItemComponent,
+    CreateItemComponent
+
   ],
   imports: [
     BrowserModule,
