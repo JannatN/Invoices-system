@@ -2,12 +2,13 @@
 <div [hidden]="submitted" style="width: 400px;">
   <form (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="name">dateCreated </label>
-      <input type="text" class="form-control" id="dateCreated" required [(ngModel)]="invoice.dateCreated" name="dateCreated">
+      <label for="name">Date Created </label>
+      <input type="text" class="form-control" id="dateCreated" required [(ngModel)]="invoice.dateCreated"
+        name="dateCreated">
     </div>
 
     <div class="form-group">
-      <label for="name">dueDate</label>
+      <label for="name">Due Date</label>
       <input type="text" class="form-control" id="dueDate" required [(ngModel)]="invoice.dueDate" name="dueDate">
     </div>
 
@@ -15,8 +16,17 @@
       <label for="name">User Id</label>
       <input type="text" class="form-control" id="userID" required [(ngModel)]="invoice.userID" name="userID">
     </div>
+    <div class="form-group">
+      <label for="name">Company </label>
+      <input type="text" class="form-control" id="company" required [(ngModel)]="invoice.company" name="company">
+    </div>
+    <div class="form-group">
+      <label for="name"> Invoice Type</label>
+      <input type="text" class="form-control" id="type" required [(ngModel)]="invoice.type" name="type">
+    </div>
 
     <button type="submit" class="btn btn-success">Submit</button>
+    <app-upload-files></app-upload-files>
   </form>
 </div>
 

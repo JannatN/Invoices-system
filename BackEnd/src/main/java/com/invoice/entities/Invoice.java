@@ -106,9 +106,9 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "invoice", uniqueConstraints = { @UniqueConstraint(columnNames = "userID") })
 public class Invoice {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	private Long userID;
 	@NotNull(message = "Please enter Date")
 	@CreationTimestamp
@@ -116,15 +116,18 @@ public class Invoice {
 	@NotNull(message = "Please enter Date")
 	private LocalDateTime dueDate;
 
-	
-//	 @ManyToOne
-//	    @JoinColumn(name = "userID")
-//	    private User user;
-	@ManyToOne(optional=false)
-	@JoinColumn(name="userID",referencedColumnName="id", insertable=false, updatable=false)
+	@NotBlank
+	@Size(max = 20)
+	private String type;
+
+	@NotBlank
+	@Size(max = 20)
+	private String company;
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "userID", referencedColumnName = "id", insertable = false, updatable = false)
 	private User user;
-	
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "invoice_item", joinColumns = @JoinColumn(name = "invoice_ID"), inverseJoinColumns = @JoinColumn(name = "item_ID"))
 	private Set<Item> items = new HashSet<>();
@@ -177,6 +180,30 @@ public class Invoice {
 
 	public void setItems(Set<Item> items) {
 		this.items = items;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
