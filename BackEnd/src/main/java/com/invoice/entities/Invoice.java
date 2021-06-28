@@ -127,7 +127,12 @@ public class Invoice {
 	@JoinColumn(name = "userID", insertable = false, updatable = false)
 	private User user;
 
-
+	 @OneToOne(cascade = CascadeType.ALL)
+	    @JoinColumn(name = "file_id", referencedColumnName = "id")
+	    private FileDB file;
+	
+	
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "invoice_item", joinColumns = @JoinColumn(name = "invoice_ID"), inverseJoinColumns = @JoinColumn(name = "item_ID"))
 	private Set<Item> items = new HashSet<>();
