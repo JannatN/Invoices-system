@@ -103,12 +103,12 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "invoice", uniqueConstraints = { @UniqueConstraint(columnNames = "userID") })
+@Table(name = "invoice")
 public class Invoice {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	private Long userID;
 	@NotNull(message = "Please enter Date")
 	@CreationTimestamp
@@ -116,15 +116,18 @@ public class Invoice {
 	@NotNull(message = "Please enter Date")
 	private LocalDateTime dueDate;
 
-	
-//	 @ManyToOne
-//	    @JoinColumn(name = "userID")
-//	    private User user;
-	@ManyToOne(optional=false)
-	@JoinColumn(name="userID",referencedColumnName="id", insertable=false, updatable=false)
+	@ManyToOne
+	@JoinColumn(name = "userID", insertable = false, updatable = false)
 	private User user;
-	
-	
+//	 private Set<User> recordings = new HashSet<>();
+
+//	@ManyToOne(optional=false)
+//	@JoinColumn(name="userID",referencedColumnName="id", insertable=false, updatable=false)
+//	private User user;
+
+//	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private Set<User> recordings = new HashSet<>();
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "invoice_item", joinColumns = @JoinColumn(name = "invoice_ID"), inverseJoinColumns = @JoinColumn(name = "item_ID"))
 	private Set<Item> items = new HashSet<>();
