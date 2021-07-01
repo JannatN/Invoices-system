@@ -1,60 +1,113 @@
-<h3>Create Invoice</h3>
-<div [hidden]="submitted" style="width: 400px;">
-  <form (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Date Created </label>
-      <input type="text" class="form-control" id="dateCreated" required [(ngModel)]="invoice.dateCreated"
-        name="dateCreated">
-    </div>
+<div class="container">
+  <div class="title">Create Invoice</div>
+  <div [hidden]="submitted" class="cont">
+      <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+          <div class="forms">
+              <div class="form-group">
+                  <label for="name">Date Created </label>
+                  <input type="text" class="form-control" id="dateCreated" required [(ngModel)]="invoice.dateCreated" name="dateCreated">
+              </div>
 
-    <div class="form-group">
-      <label for="name">Due Date</label>
-      <input type="text" class="form-control" id="dueDate" required [(ngModel)]="invoice.dueDate" name="dueDate">
-    </div>
+              <div class="form-group">
+                  <label for="name">Due Date</label>
+                  <input type="text" class="form-control" id="dueDate" required [(ngModel)]="invoice.dueDate" name="dueDate" #dueDate="ngModel">
+                  <div class="alert-danger" *ngIf="f.submitted && dueDate.invalid && (dueDate.dirty || dueDate.touched)" class="alert">
+                      <div class="alert-danger" *ngIf="dueDate.errors?.required">
+                          Date is required.
+                      </div>
+                  </div>
+              </div>
 
-    <div class="form-group">
-      <label for="name">User Id</label>
-      <input type="number" class="form-control" id="userID" required [(ngModel)]="invoice.userID" name="userID">
-    </div>
-    <div class="form-group">
-      <label for="name">Company </label>
-      <input type="text" class="form-control" id="company" required [(ngModel)]="invoice.company" name="company">
-    </div>
-    <div class="form-group">
-      <label for="name"> Invoice Type</label>
-      <input type="text" class="form-control" id="type" required [(ngModel)]="invoice.type" name="type">
-    </div>
-        <div class="form-group">
-            <label for="name">Item name</label>
-            <input type="text" class="form-control" id="name" required [(ngModel)]="item.name" name="name">
-        </div>
 
-        <div class="form-group">
-            <label for="name">Description</label>
-            <input type="text" class="form-control" id="description" required [(ngModel)]="item.description"
-                name="description">
-        </div>
+              <div class="form-group">
+                  <label for="name">User Id</label>
+                  <input type="number" class="form-control" id="userID" required [(ngModel)]="invoice.userID" name="userID" #userID="ngModel">
+                  <div class="alert-danger" *ngIf="f.submitted && userID.invalid && (userID.dirty || userID.touched)" class="alert">
 
-        <div class="form-group">
-            <label for="name">Item price</label>
-            <input type="number" class="form-control" id="price" required [(ngModel)]="item.price" name="price">
-        </div>
-        <div class="form-group">
-            <label for="name">Currency </label>
-            <input type="text" class="form-control" id="currency" required [(ngModel)]="item.currency" name="currency">
-        </div>
-        <div class="form-group">
-            <label for="name">Quantitiy </label>
-            <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.quantity" name="quantity">
-        </div>
-    <button type="submit" class="btn btn-success">Submit</button>
-  </form>
- 
-    
-  <app-upload-files></app-upload-files>
+                      <div class="alert-danger" *ngIf="userID.errors?.required">
+                          User ID is required.
+                      </div>
+                  </div>
 
+              </div>
+              <div class="form-group">
+                  <label for="name">Company </label>
+                  <input type="text" class="form-control" id="company" required [(ngModel)]="invoice.company" name="company" #company="ngModel">
+                  <div class="alert-danger" *ngIf="f.submitted && company.invalid && (company.dirty || company.touched)" class="alert">
+                      <div class="alert-danger" *ngIf="company.errors?.required">
+                          Company is required.
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="name"> Invoice Type</label>
+                  <input type="text" class="form-control" id="type" required [(ngModel)]="invoice.type" name="type" #type="ngModel">
+                  <div class="alert-danger" *ngIf="f.submitted && type.invalid && (type.dirty || type.touched)" class="alert">
+                      <div class="alert-danger" *ngIf="type.errors?.required">
+                          Type is required.
+                      </div>
+                  </div>
+              </div>
+          </div> <br><br>
+
+          <div class="forms">
+              <div class="form-group">
+                  <label for="name">Item name</label>
+                  <input type="text" class="form-control" id="name" required [(ngModel)]="invoice.name" name="name" #name="ngModel">
+                  <div class="alert-danger" *ngIf="f.submitted && name.invalid && (name.dirty || name.touched)" class="alert">
+                      <div class="alert-danger" *ngIf="name.errors?.required">
+                          Name is required.
+                      </div>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="name">Description</label>
+                  <input type="text" class="form-control" id="description" required [(ngModel)]="invoice.description" name="description" #description="ngModel">
+                  <div class="alert-danger" *ngIf="f.submitted && description.invalid && (description.dirty || description.touched)" class="alert">
+                      <div class="alert-danger" *ngIf="description.errors?.required">
+                          Description is required.
+                      </div>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="name">Item price</label>
+                  <input type="number" class="form-control" id="price" required [(ngModel)]="invoice.price" name="price" #price="ngModel">
+                  <div class="alert-danger" *ngIf="f.submitted && price.invalid && (price.dirty || price.touched)" class="alert">
+                      <div class="alert-danger" *ngIf="price.errors?.required">
+                          Price is required.
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="name">Currency </label>
+                  <input type="text" class="form-control" id="currency" required [(ngModel)]="invoice.currency" name="currency" #currency="ngModel">
+                  <div class="alert-danger" *ngIf="f.submitted && currency.invalid && (currency.dirty || currency.touched)" class="alert">
+                      <div class="alert-danger" *ngIf="currency.errors?.required">
+                          Currency is required.
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="name">Quantitiy </label>
+                  <input type="text" class="form-control" id="quantity" required [(ngModel)]="invoice.quantity" name="quantity" #quantity="ngModel">
+                  <div class="alert-danger" *ngIf="f.submitted && quantity.invalid && (quantity.dirty || quantity.touched)" class="alert">
+                      <div class="alert-danger" *ngIf="quantity.errors?.required">
+                          Quantity is required.
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <br><br>
+          <button type="submit" class="btn btn-success">Save Invoice</button>
+      </form>
+
+
+      <app-upload-files></app-upload-files>
+
+  </div>
 </div>
-
 <div [hidden]="!submitted">
   <h4>You submitted successfully!</h4>
   <!-- <button class="btn btn-success" (click)="newEmployee()">Add</button> -->
