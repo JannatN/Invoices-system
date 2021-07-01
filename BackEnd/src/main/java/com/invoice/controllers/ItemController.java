@@ -58,7 +58,7 @@ public class ItemController {
 			@Valid @RequestBody Item itemDetails) throws ResourceNotFoundException {
 		Item item = itemRepository.findById(itemID)
 				.orElseThrow(() -> new ResourceNotFoundException("Item not found for this id :: " + itemID));
-
+		item.setInvoice_id(itemDetails.getInvoice_id());
 		item.setName(itemDetails.getName());
 		item.setDescription(itemDetails.getDescription());
 		item.setPrice(itemDetails.getPrice());

@@ -1,0 +1,23 @@
+.cont{
+    display:grid;
+    grid-template-columns: auto auto;
+}
+.forms{
+    width: 100%;
+    border: 1px solid black;
+    height: auto;
+
+}
+form{
+    width: 100%
+}
+.form-group{
+    margin:10px;
+}
+.title{
+    font-size: 30px;
+    color: blue;
+}
+.container{
+    margin:3px
+}

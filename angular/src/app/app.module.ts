@@ -27,6 +27,7 @@ import { ItemListComponent } from './item-list/item-list.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { UpdateItemComponent } from './update-item/update-item.component';
 import { CreateItemComponent } from './create-item/create-item.component';
+import { NewItemComponent } from './new-item/new-item.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { CreateItemComponent } from './create-item/create-item.component';
     ItemListComponent,
     ItemDetailsComponent,
     UpdateItemComponent,
-    CreateItemComponent
+    CreateItemComponent,
+    NewItemComponent
 
   ],
   imports: [

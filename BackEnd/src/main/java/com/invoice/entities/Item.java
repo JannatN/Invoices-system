@@ -77,4 +77,12 @@ public class Item {
 		this.quantity = quantity;
 	}
 
+	public Long getInvoice_id() {
+		return invoice_id;
+	}
+
+	public void setInvoice_id(Long invoice_id) {
+		this.invoice_id = invoice_id;
+	}
+
 }
