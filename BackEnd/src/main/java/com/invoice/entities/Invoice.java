@@ -1,6 +1,8 @@
 package com.invoice.entities;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,13 +12,14 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "invoice")
+@Table(name = "invoices")
 public class Invoice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private Long userID;
+	
 	@NotNull(message = "Please enter Date")
 	@CreationTimestamp
 	private LocalDateTime dateCreated;
@@ -28,16 +31,14 @@ public class Invoice {
 
 	@NotBlank
 	private String company;
-	
-	
+
 	@ManyToOne
 	@JoinColumn(name = "userID", insertable = false, updatable = false)
 	private User user;
-
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "invoice_item", joinColumns = @JoinColumn(name = "invoice_ID"), inverseJoinColumns = @JoinColumn(name = "item_ID"))
-	private Set<Item> items = new HashSet<>();
+	
+	@OneToMany(mappedBy = "invoice_id", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
+			CascadeType.PERSIST })
+	private List<Item> items;
 
 	public Invoice(Long userID, LocalDateTime dateCreated, LocalDateTime dueDate) {
 		this.userID = userID;
@@ -79,14 +80,6 @@ public class Invoice {
 
 	public void setDueDate(LocalDateTime dueDate) {
 		this.dueDate = dueDate;
-	}
-
-	public Set<Item> getItems() {
-		return items;
-	}
-
-	public void setItems(Set<Item> items) {
-		this.items = items;
 	}
 
 	public String getType() {

@@ -5,11 +5,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "item")
+@Table(name = "items")
 public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	private Long invoice_id;
 
 	@NotBlank
 	@Size(max = 20)
@@ -26,17 +28,13 @@ public class Item {
 	private String currency;
 
 	private Integer quantity;
+	
+	@ManyToOne
+	@JoinColumn(name = "invoice_id", insertable = false, updatable = false)
+	private Invoice invoice;
 
 	public Item() {
 
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {
