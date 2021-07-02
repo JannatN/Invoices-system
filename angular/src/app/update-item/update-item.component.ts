@@ -43,6 +43,6 @@ export class UpdateItemComponent implements OnInit {
   }
 
   gotoList() {
-    this.router.navigate(['items']);
+    this.router.navigate(['admin']);
   }
 }

@@ -43,6 +43,6 @@ export class UpdateInvoiceComponent implements OnInit {
   }
 
   gotoList() {
-    this.router.navigate(['invoices']);
+    this.router.navigate(['admin']);
   }
 }
