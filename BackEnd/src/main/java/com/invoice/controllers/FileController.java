@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,48 +26,44 @@ import com.invoice.services.FileStorageService;
 @CrossOrigin(origins = "http://localhost:4200")
 public class FileController {
 
-  @Autowired
-  private FileStorageService storageService;
+	@Autowired
+	private FileStorageService storageService;
 
-  @PostMapping("/upload")
-  public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
-    String message = "";
-    try {
-      storageService.store(file);
+	@PostMapping("/upload")
+	@PreAuthorize("hasRole('ADMIN') ")
+	public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
+		String message = "";
+		try {
+			storageService.store(file);
 
-      message = "Uploaded the file successfully: " + file.getOriginalFilename();
-      return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
-    } catch (Exception e) {
-      message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
-    }
-  }
+			message = "Uploaded the file successfully: " + file.getOriginalFilename();
+			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
+		} catch (Exception e) {
+			message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
+		}
+	}
 
-  @GetMapping("/files")
-  public ResponseEntity<List<ResponseFile>> getListFiles() {
-    List<ResponseFile> files = storageService.getAllFiles().map(dbFile -> {
-      String fileDownloadUri = ServletUriComponentsBuilder
-          .fromCurrentContextPath()
-          .path("/files/")
-          .path(dbFile.getId())
-          .toUriString();
+	@GetMapping("/files")
+	@PreAuthorize("hasRole('ADMIN') ")
+	public ResponseEntity<List<ResponseFile>> getListFiles() {
+		List<ResponseFile> files = storageService.getAllFiles().map(dbFile -> {
+			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/")
+					.path(dbFile.getId()).toUriString();
 
-      return new ResponseFile(
-          dbFile.getName(),
-          fileDownloadUri,
-          dbFile.getType(),
-          dbFile.getData().length);
-    }).collect(Collectors.toList());
+			return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length);
+		}).collect(Collectors.toList());
 
-    return ResponseEntity.status(HttpStatus.OK).body(files);
-  }
+		return ResponseEntity.status(HttpStatus.OK).body(files);
+	}
 
-  @GetMapping("/files/{id}")
-  public ResponseEntity<byte[]> getFile(@PathVariable String id) {
-    FileDB fileDB = storageService.getFile(id);
+	@GetMapping("/files/{id}")
+	@PreAuthorize("hasRole('ADMIN') ")
+	public ResponseEntity<byte[]> getFile(@PathVariable String id) {
+		FileDB fileDB = storageService.getFile(id);
 
-    return ResponseEntity.ok()
-        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
-        .body(fileDB.getData());
-  }
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
+				.body(fileDB.getData());
+	}
 }

@@ -1,5 +1,4 @@
 package com.invoice.entities;
-
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +18,6 @@ public class Invoice {
 	private Long id;
 
 	private Long userID;
-	
 	@NotNull(message = "Please enter Date")
 	@CreationTimestamp
 	private LocalDateTime dateCreated;
@@ -31,14 +29,15 @@ public class Invoice {
 
 	@NotBlank
 	private String company;
-
+	
+	@OneToMany(mappedBy = "invoiceID", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
+			CascadeType.PERSIST })
+	private List<Item> items;
+	
 	@ManyToOne
 	@JoinColumn(name = "userID", insertable = false, updatable = false)
 	private User user;
-	
-	@OneToMany(mappedBy = "invoice_id", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
-			CascadeType.PERSIST })
-	private List<Item> items;
+
 
 	public Invoice(Long userID, LocalDateTime dateCreated, LocalDateTime dueDate) {
 		this.userID = userID;
@@ -81,6 +80,8 @@ public class Invoice {
 	public void setDueDate(LocalDateTime dueDate) {
 		this.dueDate = dueDate;
 	}
+
+
 
 	public String getType() {
 		return type;

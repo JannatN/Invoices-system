@@ -5,5 +5,5 @@ export class Item {
     price: number;
     currency: string;
     quantity: number;
-    invoice_id: number;
+    invoiceID: number;
 }

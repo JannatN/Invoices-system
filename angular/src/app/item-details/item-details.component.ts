@@ -29,7 +29,7 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   list(){
-    this.router.navigate(['items']);
+    this.router.navigate(['admin']);
   }
 }
 

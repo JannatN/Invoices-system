@@ -26,20 +26,22 @@ export class CreateItemComponent implements OnInit {
 
   save() {
     this.itemService
-    .createItem(this.item).subscribe(data => {
-      console.log(data)
-      this.item = new Item();
-      // this.gotoList();
-    }, 
-    error => console.log(error));
+      .createItem(this.item).subscribe(data => {
+        console.log(data)
+        this.item = new Item();
+      },
+        error => console.log(error));
   }
 
   onSubmit() {
     this.submitted = true;
-    this.save();    
+    this.save();
   }
 
   gotoList() {
     this.router.navigate(['/items']);
+  }
+  createItem() {
+    this.router.navigate(['addItem']);
   }
 }

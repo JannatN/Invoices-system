@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="title">Create Invoice</div>
     <div class="cont">
+        <div class="title">Create Invoice</div>
         <form (ngSubmit)="onSubmit()">
             <div class="forms">
                 <div class="form-group">
@@ -38,11 +38,9 @@
             </div>
             <button type="submit" class="btn btn-success">Save Invoice</button>
         </form>
-        <div class="title">Create Item for invoice with id</div>
-
+        <div *ngIf="invoice" class="title">Create Item for invoice with id {{invoice.id}}</div>
         <app-create-item></app-create-item>
-        <form><button (click)="createItem()" class="btn btn-info" style="margin-left: 10px">Add Item</button>
-        </form>
+    
         <app-upload-files></app-upload-files>
 
     </div>

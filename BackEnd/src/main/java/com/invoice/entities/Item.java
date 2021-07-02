@@ -11,8 +11,6 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	private Long invoice_id;
-
 	@NotBlank
 	@Size(max = 20)
 	private String name;
@@ -29,12 +27,22 @@ public class Item {
 
 	private Integer quantity;
 	
+	private Long invoiceID;
+
 	@ManyToOne
-	@JoinColumn(name = "invoice_id", insertable = false, updatable = false)
+	@JoinColumn(name = "invoiceID", insertable = false, updatable = false)
 	private Invoice invoice;
 
 	public Item() {
 
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -77,12 +85,12 @@ public class Item {
 		this.quantity = quantity;
 	}
 
-	public Long getInvoice_id() {
-		return invoice_id;
+	public Long getInvoiceID() {
+		return invoiceID;
 	}
 
-	public void setInvoice_id(Long invoice_id) {
-		this.invoice_id = invoice_id;
+	public void setInvoiceID(Long invoiceID) {
+		this.invoiceID = invoiceID;
 	}
 
 }

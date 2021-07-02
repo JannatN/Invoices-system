@@ -1,6 +1,5 @@
 .cont{
     display:grid;
-    grid-template-columns: auto auto;
 }
 .forms{
     width: 100%;
@@ -19,5 +18,5 @@ form{
     color: blue;
 }
 .container{
-    margin:3px
-}
+    display:grid;
+    grid-template-columns: auto auto;}
