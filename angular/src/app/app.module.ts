@@ -30,6 +30,7 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
 import { UpdateItemComponent } from './update-item/update-item.component';
 import { CreateItemComponent } from './create-item/create-item.component';
 import { NewItemComponent } from './new-item/new-item.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { NewItemComponent } from './new-item/new-item.component';
     FormsModule,
     HttpClientModule,
     MatTableModule,
-MatPaginatorModule
+MatPaginatorModule,
+MatFormFieldModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

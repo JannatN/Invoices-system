@@ -50,6 +50,8 @@ export class BoardAuditorComponent  {
 
   
   displayedColumns = ['id', 'name', 'age', 'gender', 'country'];
+  // displayedColumns = ['id', 'username'];
+
   dataSource: MatTableDataSource<IHeaders>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

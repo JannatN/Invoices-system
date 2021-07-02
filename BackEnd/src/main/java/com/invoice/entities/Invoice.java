@@ -24,9 +24,9 @@ public class Invoice {
 	private Long userID;
 	@NotNull(message = "Please enter Date")
 	@CreationTimestamp
-	private LocalDateTime dateCreated;
+	private LocalDateTime date_created;
 	@NotNull(message = "Please enter Date")
-	private LocalDateTime dueDate;
+	private LocalDateTime due_date;
 	@NotBlank
 	@Size(max = 20)
 	private String type;
@@ -50,8 +50,8 @@ public class Invoice {
 
 	public Invoice(Long userID, LocalDateTime dateCreated, LocalDateTime dueDate) {
 		this.userID = userID;
-		this.dateCreated = dateCreated;
-		this.dueDate = dueDate;
+		this.date_created = dateCreated;
+		this.due_date = dueDate;
 	}
 
 	public Invoice() {
@@ -75,19 +75,19 @@ public class Invoice {
 	}
 
 	public LocalDateTime getDateCreated() {
-		return dateCreated;
+		return date_created;
 	}
 
 	public void setDateCreated(LocalDateTime dateCreated) {
-		this.dateCreated = dateCreated;
+		this.date_created = dateCreated;
 	}
 
 	public LocalDateTime getDueDate() {
-		return dueDate;
+		return due_date;
 	}
 
 	public void setDueDate(LocalDateTime dueDate) {
-		this.dueDate = dueDate;
+		this.due_date = dueDate;
 	}
 
 	public Set<Item> getItems() {
