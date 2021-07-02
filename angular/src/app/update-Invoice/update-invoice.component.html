@@ -3,18 +3,18 @@
   <form (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="name">Date created Name</label>
-      <input type="text" class="form-control" id="dateCreated" required [(ngModel)]="invoice.dateCreated"
-        name="dateCreated">
+      <input type="text" class="form-control" id="dateCreated" required [(ngModel)]="invoice.date_created"
+        name="date_created">
     </div>
 
     <div class="form-group">
       <label for="name">Due Date</label>
-      <input type="text" class="form-control" id="dueDate" required [(ngModel)]="invoice.dueDate" name="dueDate">
+      <input type="text" class="form-control" id="dueDate" required [(ngModel)]="invoice.due_date" name="due-date">
     </div>
 
     <div class="form-group">
       <label for="name">User Id</label>
-      <input type="text" class="form-control" id="userID" required [(ngModel)]="invoice.userID" name="userID">
+      <input type="text" class="form-control" id="userID" required [(ngModel)]="invoice.userid" name="userid">
     </div>
     <div class="form-group">
       <label for="name">Company </label>

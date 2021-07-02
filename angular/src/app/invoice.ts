@@ -1,6 +1,9 @@
 export class Invoice {
     id: number;
-    dateCreated: Date;
-    dueDate: Date;
-    userID: number;
+    date_created: Date;
+    due_date: Date;
+    userid: number;
+    company:string;
+    type:string;
+    file_id:number;
 }

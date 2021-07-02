@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Invoice } from '../models/invoice.model';
+import { Invoice } from '../invoice';
 
 
 @Injectable({
@@ -19,7 +19,6 @@ export class InvoiceService {
   getInvList(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);
   }
-
 
 
   // getAll(): Observable<Invoice[]> {

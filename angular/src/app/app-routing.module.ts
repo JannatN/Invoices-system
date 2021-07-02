@@ -16,6 +16,7 @@ import { UpdateInvoiceComponent } from './update-invoice/update-invoice.componen
 import {InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
+import { MaterialtableComponent } from './materialtable/materialtable.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -33,11 +34,14 @@ const routes: Routes = [
   { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
   { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
   { path: 'addInvoice', component: CreateInvoiceComponent },
+  { path: 'table', component: MaterialtableComponent },
+
+  
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

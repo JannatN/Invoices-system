@@ -23,6 +23,8 @@ import { InvoiceDetailsComponent } from './invoice-details/invoice-details.compo
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 import { UploadFilesComponent } from './upload-files/upload-files.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -48,9 +50,15 @@ import { UploadFilesComponent } from './upload-files/upload-files.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule,
+MatPaginatorModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
+
+
+
+
 export class AppModule { }
