@@ -1,4 +1,4 @@
-import { Invoice } from '../invoice';
+import { Invoice } from '../models/invoice';
 import { Component, OnInit, Input } from '@angular/core';
 import { InvoiceService } from "../_services/invoices.service";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -29,6 +29,6 @@ export class InvoiceDetailsComponent implements OnInit {
   }
 
   list(){
-    this.router.navigate(['invoices']);
+    this.router.navigate(['admin']);
   }
 }

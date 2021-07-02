@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.invoice.entities.Invoice;
+import com.invoice.entities.Item;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.repositories.InvoiceRepository;
 
@@ -51,6 +55,7 @@ public class InvoiceController {
 		return invoiceRepository.save(invoice);
 	}
 
+
 	
 	@PutMapping("/invoices/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
@@ -80,4 +85,11 @@ public class InvoiceController {
 		response.put("deleted", Boolean.TRUE);
 		return response;
 	}
+//	@RequestMapping("/invoice/{id}")
+//	@ResponseBody 
+//	public long getRatingInfo(@PathVariable("id") long id, HttpServletRequest req, HttpServletResponse res) throws Exception {
+//
+//	long userobj = invoiceRepository.countByUserId(id);
+//	return userobj;
+//	}
 }

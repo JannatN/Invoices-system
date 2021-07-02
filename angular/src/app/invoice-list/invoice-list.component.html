@@ -2,6 +2,8 @@
   <div class="panel-heading">
     <h2>Invoice List</h2>
   </div>
+  <button (click)="createInvoice()" class="btn btn-info" style="margin-left: 10px">Create Invoice</button>
+
   <div class="panel-body">
     <table class="table table-striped">
       <thead>
@@ -19,9 +21,9 @@
       <tbody>
         <tr *ngFor="let invoice of invoices| async">
           <td>{{invoice.id}}</td>
-          <td>{{invoice.dateCreated}}</td>
-          <td>{{invoice.dueDate}}</td>
-          <td>{{invoice.userID}}</td>
+          <td>{{invoice.date_created}}</td>
+          <td>{{invoice.due_date}}</td>
+          <td>{{invoice.userid}}</td>
           <td>{{invoice.company}}</td>
           <td>{{invoice.type}}</td>
 
@@ -33,7 +35,6 @@
             <button (click)="deleteInvoice(invoice.id)" class="btn btn-danger">Delete</button>
           </td>
         </tr>
-        <button (click)="createInvoice()" class="btn btn-info" style="margin-left: 10px">Create Invoice</button>
 
       </tbody>
     </table>

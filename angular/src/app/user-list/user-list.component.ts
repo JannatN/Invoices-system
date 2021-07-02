@@ -1,9 +1,7 @@
 import { UserDetailsComponent } from '../user-details/user-details.component';
 import { Observable } from "rxjs";
 import { UserService } from "../_services/users.service";
-// import { userServices } from "../_services/user.service";
-
-import { User } from "../user";
+import { User } from "../models/user";
 import { Component, OnInit } from "@angular/core";
 import { Router } from '@angular/router';
 

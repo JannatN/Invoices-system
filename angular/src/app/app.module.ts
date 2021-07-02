@@ -18,13 +18,18 @@ import { UpdateUserComponent } from './update-user/update-user.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserListComponent } from './user-list/user-list.component';
 
-import { UpdateInvoiceComponent } from './update-invoice/update-invoice.component';
+import { UpdateInvoiceComponent } from './update-Invoice/update-invoice.component';
 import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 import { UploadFilesComponent } from './upload-files/upload-files.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ItemListComponent } from './item-list/item-list.component';
+import { ItemDetailsComponent } from './item-details/item-details.component';
+import { UpdateItemComponent } from './update-item/update-item.component';
+import { CreateItemComponent } from './create-item/create-item.component';
+import { NewItemComponent } from './new-item/new-item.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     UserDetailsComponent,
     UserListComponent,
     UpdateUserComponent,
-    UploadFilesComponent
+    UploadFilesComponent,
+    ItemListComponent,
+    ItemDetailsComponent,
+    UpdateItemComponent,
+    CreateItemComponent,
+    NewItemComponent
 
   ],
   imports: [

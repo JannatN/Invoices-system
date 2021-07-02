@@ -12,11 +12,16 @@ import { UpdateUserComponent } from './update-user/update-user.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserListComponent } from './user-list/user-list.component';
 
-import { UpdateInvoiceComponent } from './update-invoice/update-invoice.component';
+import { UpdateInvoiceComponent } from './update-Invoice/update-invoice.component';
 import {InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 import { MaterialtableComponent } from './materialtable/materialtable.component';
+
+import { UpdateItemComponent } from './update-item/update-item.component';
+import {ItemDetailsComponent } from './item-details/item-details.component';
+import { ItemListComponent } from './item-list/item-list.component';
+import { CreateItemComponent } from './create-item/create-item.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -30,13 +35,17 @@ const routes: Routes = [
   { path: 'users', component: UserListComponent },
   { path: 'update/:id', component: UpdateUserComponent },
   { path: 'details/:id', component: UserDetailsComponent },
-  { path: 'invoices/:id', component: InvoiceListComponent },
+  { path: 'invoices', component: InvoiceListComponent },
   { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
   { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
   { path: 'addInvoice', component: CreateInvoiceComponent },
   { path: 'table', component: MaterialtableComponent },
 
   
+  { path: 'items', component: ItemListComponent },
+  { path: 'detailsItem/:id', component: ItemDetailsComponent },
+  { path: 'updateItem/:id', component: UpdateItemComponent },
+  { path: 'addItem', component: CreateItemComponent },
 
 ];
 

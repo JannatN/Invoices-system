@@ -5,10 +5,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "item")
+@Table(name = "items")
 public class Item {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@NotBlank
@@ -19,16 +19,19 @@ public class Item {
 	@Size(max = 200)
 	private String description;
 
-	@NotBlank
-	@Size(max = 15)
 	private Double price;
 
 	@NotBlank
 	@Size(max = 3)
 	private String currency;
 
-	@NotBlank
 	private Integer quantity;
+	
+	private Long invoiceID;
+
+	@ManyToOne
+	@JoinColumn(name = "invoiceID", insertable = false, updatable = false)
+	private Invoice invoice;
 
 	public Item() {
 
@@ -80,6 +83,14 @@ public class Item {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public Long getInvoiceID() {
+		return invoiceID;
+	}
+
+	public void setInvoiceID(Long invoiceID) {
+		this.invoiceID = invoiceID;
 	}
 
 }

@@ -1,4 +1,4 @@
-import { Invoice } from '../invoice';
+import { Invoice } from '../models/invoice';
 import { Component, OnInit, Input } from '@angular/core';
 import { InvoiceService } from "../_services/invoices.service";
 import { Router } from '@angular/router';
@@ -12,8 +12,10 @@ export class CreateInvoiceComponent implements OnInit {
 
   invoice: Invoice = new Invoice();
   submitted = false;
+  invoices:Invoice;
 
-  constructor(private invoiceService: InvoiceService,
+  
+  constructor(private invoiceService: InvoiceService, 
     private router: Router) { }
 
   ngOnInit() {
@@ -24,22 +26,28 @@ export class CreateInvoiceComponent implements OnInit {
     this.invoice = new Invoice();
   }
 
-  save() {
+
+  saveInvoice() {
     this.invoiceService
-    .createInvoice(this.invoice).subscribe(data => {
-      console.log(data)
-      this.invoice = new Invoice();
-      this.gotoList();
-    }, 
-    error => console.log(error));
+      .createInvoice(this.invoice).subscribe(data => {
+        console.log(data)
+        this.invoice = new Invoice();
+      },
+        error => console.log(error));
   }
+ 
+
 
   onSubmit() {
     this.submitted = true;
-    this.save();    
+    this.saveInvoice();
+    console.log(this.invoices);
+
   }
 
   gotoList() {
     this.router.navigate(['/invoices']);
   }
+  
+
 }
