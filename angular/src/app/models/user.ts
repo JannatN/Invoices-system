@@ -8,3 +8,4 @@ export class User {
     address: string;
     phoneNumber: string;
 }
+    

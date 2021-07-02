@@ -64,6 +64,8 @@ public class ItemController {
 		item.setPrice(itemDetails.getPrice());
 		item.setCurrency(itemDetails.getCurrency());
 		item.setQuantity(itemDetails.getQuantity());
+		item.setInvoiceID(itemDetails.getInvoiceID());
+
 
 		final Item updatedItem = itemRepository.save(item);
 		return ResponseEntity.ok(updatedItem);

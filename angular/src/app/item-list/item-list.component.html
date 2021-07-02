@@ -11,6 +11,7 @@
             <th>Description</th>
             <th>Price</th>
             <th>Quantitiy</th>
+            <th>Imvoice ID</th>
             <th>Action</th>
   
           </tr>
@@ -22,7 +23,8 @@
             <td>{{item.description}}</td>
             <td>{{item.price}}</td>
             <td>{{item.quantity}}</td>
-  
+            <td>{{item.invoiceID}}</td>
+
             <td>
               <button (click)="updateItem(item.id)" class="btn btn-info" style="margin-left: 10px">Update</button>
               <button (click)="itemDetails(item.id)" class="btn btn-info"

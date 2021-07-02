@@ -4,5 +4,6 @@ export class Item {
     description: string;
     price: number;
     currency: string;
-    quantity: number
+    quantity: number;
+    invoiceID: number;
 }

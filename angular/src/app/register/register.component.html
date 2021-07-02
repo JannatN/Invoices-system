@@ -84,8 +84,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input type="number" class="form-control" name="phone" [(ngModel)]="form.phone" required maxlength="10"
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="form.phoneNumber" required maxlength="10"
           #phone="ngModel" />
         <!-- <div class="alert-danger" *ngIf="f.submitted && phone.invalid">
           <div *ngIf="phone.errors.required">Phone is required</div>

@@ -1,5 +1,6 @@
 package com.invoice.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.invoice.entities.Invoice;
 import com.invoice.entities.User;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.repositories.UserRepository;
@@ -31,13 +35,35 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 
+//	@GetMapping("/users")
+//	public List<User> getAllUsers() {
+//		return userRepository.findAll();
+//	}
+
+
 	@GetMapping("/users")
 	@PreAuthorize("hasRole('ADMIN') ")
-	public List<User> getAllUsers() {
-		return userRepository.findAll();
+	public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) String username,String firstname) {
+		try {
+			List<User> users = new ArrayList<User>();
+
+			if (username == null)
+				userRepository.findAll().forEach(users::add);
+			 else 
+				userRepository.findByusername(username).forEach(users::add);
+			
+			
+		
+
+			if (users.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return new ResponseEntity<>(users, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
-
-
 	@GetMapping("/users/{id}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {

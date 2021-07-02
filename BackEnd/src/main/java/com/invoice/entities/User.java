@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 		@UniqueConstraint(columnNames = "email") })
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@NotBlank

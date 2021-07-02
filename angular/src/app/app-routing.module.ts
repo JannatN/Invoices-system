@@ -16,6 +16,7 @@ import { UpdateInvoiceComponent } from './update-Invoice/update-invoice.componen
 import {InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
+import { MaterialtableComponent } from './materialtable/materialtable.component';
 
 import { UpdateItemComponent } from './update-item/update-item.component';
 import {ItemDetailsComponent } from './item-details/item-details.component';
@@ -34,11 +35,14 @@ const routes: Routes = [
   { path: 'users', component: UserListComponent },
   { path: 'update/:id', component: UpdateUserComponent },
   { path: 'details/:id', component: UserDetailsComponent },
-  { path: 'invoices/:id', component: InvoiceListComponent },
+  { path: 'invoices', component: InvoiceListComponent },
   { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
   { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
   { path: 'addInvoice', component: CreateInvoiceComponent },
-  { path: 'items/:id', component: ItemListComponent },
+  { path: 'table', component: MaterialtableComponent },
+
+  
+  { path: 'items', component: ItemListComponent },
   { path: 'detailsItem/:id', component: ItemDetailsComponent },
   { path: 'updateItem/:id', component: UpdateItemComponent },
   { path: 'addItem', component: CreateItemComponent },
@@ -46,7 +50,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

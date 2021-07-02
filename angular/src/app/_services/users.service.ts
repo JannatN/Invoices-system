@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   private baseUrl = 'http://localhost:8080/api/v1/users';
+  // private baseUrl2 = 'http://localhost:8080/api/v1/user';
+
 
   constructor(private http: HttpClient) { }
 
@@ -21,5 +24,9 @@ export class UserService {
 
   getUserList(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);
+  }
+  
+  findByUsername(username: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}?username=${username}`);
   }
 }

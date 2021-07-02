@@ -5,6 +5,9 @@
       <li class="nav-item">
         <a href="/home" class="nav-link" routerLink="home">Home </a>
       </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a href="/auditor" class="nav-link" routerLink="auditor">Table </a>
+      </li>
       <li class="nav-item" *ngIf="showAdminBoard">
         <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
       </li>
@@ -34,7 +37,5 @@
       </li>
     </ul>
   </nav>
-  <div class="container">
     <router-outlet></router-outlet>
-  </div>
 </div>

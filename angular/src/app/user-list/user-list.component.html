@@ -1,3 +1,27 @@
+
+<div class="list row">
+  <div class="col-md-8">
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search by username"
+     
+        [(ngModel)]="username"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          (click)="searchUsername()"
+        >
+          Search
+        </button>
+        
+      </div>
+    </div>
+  
+  </div>
 <div class="panel panel-primary">
   <div class="panel-heading">
     <h2>Users List</h2>
@@ -15,11 +39,11 @@
         <tr *ngFor="let user of users | async">
           <td>{{user.id}}</td>
           <td>{{user.username}}</td>
-          <!-- <td>{{user.email}}</td> -->
+           <td>{{user.email}}</td> 
           <td>
-            <!-- <router-outlet></router-outlet> -->
+            <router-outlet></router-outlet> 
 
-            <button (click)="updateUser(user.id)" class="btn btn-info" style="margin-left: 10px">Update</button>
+             <button (click)="updateUser(user.id)" class="btn btn-info" style="margin-left: 10px">Update</button>
             <button (click)="userDetails(user.id)" class="btn btn-info" style="margin-left: 10px">Details</button>
           </td>
         </tr>
@@ -27,4 +51,49 @@
       </tbody>
     </table>
   </div>
+</div> 
+
+
+
+
+ <!-- <div class="row">
+  <div class="col-md-4">
+      <input type="text"
+          [(ngModel)]="filters.keyword"
+          name="keyword"
+          (input)="listusers()" 
+          class="form-control"
+          placeholder="Filter invoice"/>
+  </div>
+  <div class="col-md-4">
+  </div>
 </div>
+<div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>UserName</th>
+          <th>address</th>
+
+          <th> Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users" >
+          <td>{{user.id}}</td>
+          <td>{{user.username}}</td>
+          <td>{{user.address}}</td>
+
+           <td>{{user.email}}</td> 
+          <td>
+            <router-outlet></router-outlet> 
+
+             <button (click)="updateUser(user.id)" class="btn btn-info" style="margin-left: 10px">Update</button>
+            <button (click)="userDetails(user.id)" class="btn btn-info" style="margin-left: 10px">Details</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+</div> -->

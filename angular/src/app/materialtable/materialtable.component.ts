@@ -1,32 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-// import { UserService } from '../_services/user.service';
-
-// @Component({
-//   selector: 'app-board-auditor',
-//   templateUrl: './board-auditor.component.html',
-//   styleUrls: ['./board-auditor.component.css']
-// })
-// export class BoardAuditorComponent implements OnInit {
-//   content: any;
-
-//   constructor(private userService: UserService) { }
-
-//   ngOnInit() {
-//     this.userService.getAuditorBoard().subscribe(
-//       data => {
-//         this.content = data;
-//       },
-//       err => {
-//         this.content = JSON.parse(err.error).message;
-//       }
-//     );
-//   }
-// }
-
-
-
-
-
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -40,18 +11,14 @@ export interface IHeaders {
   country: string;
 }
 
-
- @Component({
-  selector: 'app-board-auditor',
-  templateUrl: './board-auditor.component.html',
-  styleUrls: ['./board-auditor.component.css']
+@Component({
+  selector: 'app-materialtable',
+  templateUrl: './materialtable.component.html',
+  styleUrls: ['./materialtable.component.css']
 })
-export class BoardAuditorComponent  {
-
+export class MaterialtableComponent {
   
   displayedColumns = ['id', 'name', 'age', 'gender', 'country'];
-  // displayedColumns = ['id', 'username'];
-
   dataSource: MatTableDataSource<IHeaders>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

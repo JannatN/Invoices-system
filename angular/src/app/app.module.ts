@@ -23,10 +23,14 @@ import { InvoiceDetailsComponent } from './invoice-details/invoice-details.compo
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 import { UploadFilesComponent } from './upload-files/upload-files.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { ItemListComponent } from './item-list/item-list.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { UpdateItemComponent } from './update-item/update-item.component';
 import { CreateItemComponent } from './create-item/create-item.component';
+import { NewItemComponent } from './new-item/new-item.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -49,16 +53,24 @@ import { CreateItemComponent } from './create-item/create-item.component';
     ItemListComponent,
     ItemDetailsComponent,
     UpdateItemComponent,
-    CreateItemComponent
+    CreateItemComponent,
+    NewItemComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule,
+MatPaginatorModule,
+MatFormFieldModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
+
+
+
+
 export class AppModule { }

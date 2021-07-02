@@ -47,6 +47,6 @@ export class ItemListComponent implements OnInit {
   }
   
   list() {
-    this.router.navigate(['/items']);
+    this.router.navigate(['admin']);
   }
 }

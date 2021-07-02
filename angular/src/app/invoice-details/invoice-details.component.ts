@@ -29,6 +29,6 @@ export class InvoiceDetailsComponent implements OnInit {
   }
 
   list(){
-    this.router.navigate(['invoices']);
+    this.router.navigate(['admin']);
   }
 }
