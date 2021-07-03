@@ -1,7 +1,14 @@
+<div class="heading">
+  <h2>Welcome Auditor {{user.username}}</h2>
+</div>
+
+
 <div class="container">
-  <div class="example-header">
+  <div class="form-group mb-4">
     <mat-form-field>
-      <input matInput (keyup)="doFilter($event.target.value)" class="input" placeholder="Filter">
+      <label>Filter:</label>
+      <input matInput (keyup)="doFilter($event.target.value)" class="input" id="exampleFormControlInput1"
+        class="form-control form-control-underlined">
     </mat-form-field>
   </div>
 

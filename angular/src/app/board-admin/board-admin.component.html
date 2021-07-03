@@ -1,12 +1,14 @@
-<div class="panel-heading">
-  <h2>Welcome Admin {{user.username}}</h2>
-</div>
-<button class="btn" (click)="createInvoice()" class="btn btn-info" style="margin-left: 10px">Create Invoice</button>
+<div class="heading">
+  <h2>Welcome Admin {{user.username}}</h2><button (click)="createInvoice()" class="btn btn-info">Create Invoice</button>
 
-<div class="container">  
-  <div class="example-header">
+</div>
+
+<div class="container">
+  <div class="form-group mb-4">
     <mat-form-field>
-      <input matInput (keyup)="doFilter($event.target.value)" class="input" placeholder="Filter">
+      <label>Filter:</label>
+      <input matInput (keyup)="doFilter($event.target.value)" id="exampleFormControlInput1"
+        class="form-control form-control-underlined">
     </mat-form-field>
   </div>
 
@@ -74,7 +76,7 @@
     </mat-table>
     <mat-paginator [pageSizeOptions]="[10]"></mat-paginator>
   </div>
-  <app-item-list></app-item-list>
+  <!-- <app-item-list></app-item-list> -->
 
 </div>
 

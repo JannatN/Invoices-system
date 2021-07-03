@@ -6,6 +6,9 @@ import { InvoiceService } from "../_services/invoices.service";
 import { Invoice } from '../models/invoice';
 import { Router } from '@angular/router';
 import { Observable } from "rxjs";
+import { User } from '../models/user';
+import { TokenStorageService } from '../_services/token-storage.service';
+
 
 
 @Component({
@@ -15,6 +18,7 @@ import { Observable } from "rxjs";
 })
 export class BoardAuditorComponent implements OnInit {
   invoices: Observable<Invoice[]>;
+  user: User;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -24,10 +28,12 @@ export class BoardAuditorComponent implements OnInit {
   // dataSource = new MatTableDataSource();
 
   public dataSource = new MatTableDataSource<Invoice>();
-  constructor(private invoiceService: InvoiceService, private router: Router) { }
+  constructor(private invoiceService: InvoiceService, private router: Router, private token: TokenStorageService) { }
 
   ngOnInit() {
     this.getList();
+    this.user = this.token.getUser();
+
   }
 
   public getList = () => {

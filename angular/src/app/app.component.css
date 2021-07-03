@@ -1,13 +1,17 @@
 .navbar {
     background-color: #20445e;
+
 }
 .nav-link {
     color: white;
+
 }
 .navbar-brand{
     color: white;
     font-weight: 600;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
-body{
-    width: 100%;
+#app{
+    background-color: #f1f2f2;
+
 }
