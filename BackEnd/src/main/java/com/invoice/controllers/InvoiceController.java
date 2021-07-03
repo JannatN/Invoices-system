@@ -35,7 +35,7 @@ public class InvoiceController {
 	private InvoiceRepository invoiceRepository;
 
 	@GetMapping("/invoices")
-	@PreAuthorize("hasRole('ADMIN') ")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
 	public List<Invoice> getAllInvoices() {
 		return invoiceRepository.findAll();
 	}

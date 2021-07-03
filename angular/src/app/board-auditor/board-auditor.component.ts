@@ -13,13 +13,13 @@ import { Observable } from "rxjs";
   templateUrl: './board-auditor.component.html',
   styleUrls: ['./board-auditor.component.css']
 })
-export class BoardAuditorComponent {
+export class BoardAuditorComponent implements OnInit {
   invoices: Observable<Invoice[]>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  public displayedColumns = ['id', 'dateCreated', 'dueDate', 'userID', 'company', 'type', 'details', 'update'];
+  public displayedColumns = ['id', 'dateCreated', 'dueDate', 'userID', 'company', 'type'];
   //dataSource: MatTableDataSource<any>;
   // dataSource = new MatTableDataSource();
 
@@ -46,28 +46,6 @@ export class BoardAuditorComponent {
     value = value.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = value;
   }
-
-  public redirectToDetails = (id: number) => {
-    this.router.navigate(['detailsInvoice', id]);
-
-  }
-  public redirectToUpdate = (id: number) => {
-    this.router.navigate(['updateInvoice', id]);
-
-  }
-  public redirectToDelete = (id: number) => {
-    this.invoiceService.deleteInvoice(id)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.reloadData();
-        },
-        error => console.log(error));
-  }
-  reloadData() {
-    this.invoices = this.invoiceService.getInvoicesList();
-  }
-
 
 
   // constructor(private userService: UserService) { }  

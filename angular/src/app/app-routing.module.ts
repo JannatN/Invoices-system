@@ -16,7 +16,6 @@ import { UpdateInvoiceComponent } from './update-Invoice/update-invoice.componen
 import {InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
-import { MaterialtableComponent } from './materialtable/materialtable.component';
 
 import { UpdateItemComponent } from './update-item/update-item.component';
 import {ItemDetailsComponent } from './item-details/item-details.component';
@@ -39,7 +38,6 @@ const routes: Routes = [
   { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
   { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
   { path: 'addInvoice', component: CreateInvoiceComponent },
-  { path: 'table', component: MaterialtableComponent },
 
   
   { path: 'items', component: ItemListComponent },
