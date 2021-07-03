@@ -4,8 +4,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { InvoiceService } from "../_services/invoices.service";
 import { Invoice } from '../models/invoice';
+import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { Observable } from "rxjs";
+import { TokenStorageService } from '../_services/token-storage.service';
 
 
 @Component({
@@ -15,6 +17,7 @@ import { Observable } from "rxjs";
 })
 export class BoardAdminComponent implements OnInit {
   invoices: Observable<Invoice[]>;
+  user: User;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -23,10 +26,12 @@ export class BoardAdminComponent implements OnInit {
 
 
   public dataSource = new MatTableDataSource<Invoice>();
-  constructor(private invoiceService: InvoiceService, private router: Router) { }
+  constructor(private invoiceService: InvoiceService, private router: Router, private token: TokenStorageService) { }
 
   ngOnInit() {
     this.getList();
+    this.user = this.token.getUser();
+
   }
 
   public getList = () => {
@@ -63,6 +68,11 @@ export class BoardAdminComponent implements OnInit {
         },
         error => console.log(error));
   }
+
+  createInvoice() {
+    this.router.navigate(['addInvoice']);
+  }
+
   reloadData() {
     this.invoices = this.invoiceService.getInvoicesList();
   }

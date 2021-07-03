@@ -44,4 +44,8 @@
   text-align: left;
   max-width: 300px;
   font-weight: 700;
+  color: #dc656e;
+}
+.btn{
+  margin-left: 20px;
 }
