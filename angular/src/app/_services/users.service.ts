@@ -14,6 +14,10 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl);
+  }
+
   getUser(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
@@ -25,8 +29,9 @@ export class UserService {
   getUserList(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);
   }
-  
+
   findByUsername(username: string): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}?username=${username}`);
   }
+ 
 }

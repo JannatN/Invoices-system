@@ -1,96 +1,89 @@
-// import { Component, OnInit } from '@angular/core';
-// import { UserService } from '../_services/user.service';
-
-// @Component({
-//   selector: 'app-board-auditor',
-//   templateUrl: './board-auditor.component.html',
-//   styleUrls: ['./board-auditor.component.css']
-// })
-// export class BoardAuditorComponent implements OnInit {
-//   content: any;
-
-//   constructor(private userService: UserService) { }
-
-//   ngOnInit() {
-//     this.userService.getAuditorBoard().subscribe(
-//       data => {
-//         this.content = data;
-//       },
-//       err => {
-//         this.content = JSON.parse(err.error).message;
-//       }
-//     );
-//   }
-// }
-
-
-
-
-
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-
-export interface IHeaders {
-  id: string | number;
-  name: string;
-  age: number | string;
-  gender: string;
-  country: string;
-}
+import { InvoiceService } from "../_services/invoices.service";
+import { Invoice } from '../models/invoice';
+import { Router } from '@angular/router';
+import { Observable } from "rxjs";
 
 
- @Component({
+@Component({
   selector: 'app-board-auditor',
   templateUrl: './board-auditor.component.html',
   styleUrls: ['./board-auditor.component.css']
 })
-export class BoardAuditorComponent  {
-
-  
-  displayedColumns = ['id', 'name', 'age', 'gender', 'country'];
-  // displayedColumns = ['id', 'username'];
-
-  dataSource: MatTableDataSource<IHeaders>;
+export class BoardAuditorComponent {
+  invoices: Observable<Invoice[]>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
-    const users: IHeaders[] = [];
-    for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
+  public displayedColumns = ['id', 'dateCreated', 'dueDate', 'userID', 'company', 'type', 'details', 'update'];
+  //dataSource: MatTableDataSource<any>;
+  // dataSource = new MatTableDataSource();
 
-    this.dataSource = new MatTableDataSource(users);
+  public dataSource = new MatTableDataSource<Invoice>();
+  constructor(private invoiceService: InvoiceService, private router: Router) { }
+
+  ngOnInit() {
+    this.getList();
   }
 
-  /**
-   * Set the paginator and sort after the view init since this component will
-   * be able to query its view for the initialized paginator and sort.
-   */
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  public getList = () => {
+    this.invoiceService.getInvoicesList()
+      .subscribe(res => {
+        this.dataSource.data = res as Invoice[];
+      })
+  }
+  ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+  public doFilter = (value: string) => {
+    // this.dataSource.filter = value.trim().toLocaleLowerCase();
+    value = value.trim(); // Remove whitespace
+    value = value.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = value;
   }
 
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); 
-    filterValue = filterValue.toLowerCase(); 
-    this.dataSource.filter = filterValue;
+  public redirectToDetails = (id: number) => {
+    this.router.navigate(['detailsInvoice', id]);
+
   }
-}
+  public redirectToUpdate = (id: number) => {
+    this.router.navigate(['updateInvoice', id]);
 
-function createNewUser(id: number): IHeaders {
-  const coutries = ['USA', 'UK', 'India', 'Singapore', 'London'];
-  const country = coutries[Math.floor(Math.random() * coutries.length)];
+  }
+  public redirectToDelete = (id: number) => {
+    this.invoiceService.deleteInvoice(id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.reloadData();
+        },
+        error => console.log(error));
+  }
+  reloadData() {
+    this.invoices = this.invoiceService.getInvoicesList();
+  }
 
-  const genders = ['Male', 'Female'];
-  const gender = genders[Math.floor(Math.random() * genders.length)];
-  return {
-    id: id,
-    name: 'Nami ' + id,
-    age: 21 + Math.round(Math.random() * 10),
-    gender,
-    country
-  };
+
+
+  // constructor(private userService: UserService) { }  
+  // ngOnInit() {
+  //   //return this._dataService.getData().subscribe(res => this.dataSource.data = res["0"]["data"]);
+  //   // return this.userService.getUserList().subscribe(res => this.dataSource.data = res);
+  //   this.dataSource = new MatTableDataSource(this.userService.getUserList);
+  // }
+
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
+  // }
+
+  // applyFilter(filterValue: string) {
+  //   filterValue = filterValue.trim(); // Remove whitespace
+  //   filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+  //   this.dataSource.filter = filterValue;
 }

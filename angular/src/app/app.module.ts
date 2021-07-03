@@ -31,6 +31,12 @@ import { UpdateItemComponent } from './update-item/update-item.component';
 import { CreateItemComponent } from './create-item/create-item.component';
 import { NewItemComponent } from './new-item/new-item.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from "@angular/material/icon";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatButtonModule } from "@angular/material/button";
+
 
 @NgModule({
   declarations: [
@@ -63,8 +69,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     FormsModule,
     HttpClientModule,
     MatTableModule,
-MatPaginatorModule,
-MatFormFieldModule
+    MatPaginatorModule, 
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatSortModule,
+    MatInputModule,
+    MatIconModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

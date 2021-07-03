@@ -17,7 +17,6 @@ export interface IHeaders {
   styleUrls: ['./materialtable.component.css']
 })
 export class MaterialtableComponent {
-  
   displayedColumns = ['id', 'name', 'age', 'gender', 'country'];
   dataSource: MatTableDataSource<IHeaders>;
 
