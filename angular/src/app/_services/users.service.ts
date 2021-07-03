@@ -33,5 +33,8 @@ export class UserService {
   findByUsername(username: string): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}?username=${username}`);
   }
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+}
  
 }

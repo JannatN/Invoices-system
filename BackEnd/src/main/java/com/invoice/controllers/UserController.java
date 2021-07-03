@@ -95,15 +95,16 @@ public class UserController {
 		return ResponseEntity.ok(updatedUser);
 	}
 
-//	@DeleteMapping("/users/{id}")
-//	public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId)
-//			throws ResourceNotFoundException {
-//		User user = userRepository.findById(userId)
-//				.orElseThrow(() -> new ResourceNotFoundException("user not found for this id :: " + employeeId));
-//
-//		userRepository.delete(user);
-//		Map<String, Boolean> response = new HashMap<>();
-//		response.put("deleted", Boolean.TRUE);
-//		return response;
-//	}
+	@DeleteMapping("/users/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId)
+			throws ResourceNotFoundException {
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("user not found for this id :: " + userId));
+
+		userRepository.delete(user);
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("deleted", Boolean.TRUE);
+		return response;
+	}
 }
