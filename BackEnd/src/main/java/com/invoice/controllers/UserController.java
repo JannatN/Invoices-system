@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.invoice.entities.Invoice;
 import com.invoice.entities.User;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.repositories.UserRepository;
@@ -35,25 +35,16 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 
-//	@GetMapping("/users")
-//	public List<User> getAllUsers() {
-//		return userRepository.findAll();
-//	}
-
-
 	@GetMapping("/users")
 	@PreAuthorize("hasRole('ADMIN') ")
-	public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) String username,String firstname) {
+	public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) String username, String firstname) {
 		try {
 			List<User> users = new ArrayList<User>();
 
 			if (username == null)
 				userRepository.findAll().forEach(users::add);
-			 else 
+			else
 				userRepository.findByusername(username).forEach(users::add);
-			
-			
-		
 
 			if (users.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -64,8 +55,9 @@ public class UserController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
 	@GetMapping("/users/{id}")
-	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
 	public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
 		User user = userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
@@ -79,7 +71,7 @@ public class UserController {
 	}
 
 	@PutMapping("/users/{id}")
-	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('AUDITOR')")
 	public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long userId,
 			@Valid @RequestBody User userDetails) throws ResourceNotFoundException {
 		User user = userRepository.findById(userId)
@@ -97,8 +89,7 @@ public class UserController {
 
 	@DeleteMapping("/users/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId)
-			throws ResourceNotFoundException {
+	public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
 		User user = userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("user not found for this id :: " + userId));
 

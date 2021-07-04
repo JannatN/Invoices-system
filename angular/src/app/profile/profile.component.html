@@ -4,7 +4,7 @@
       <strong>{{user.username}}</strong> Profile
     </h3>
   </header>
-  <!-- <p>
+  <p>
     <strong>Token:</strong>
     {{ currentUser.accessToken.substring(0, 20) }} ...
     {{ currentUser.accessToken.substr(currentUser.accessToken.length - 20) }}
@@ -69,17 +69,17 @@
         <div class="profile-head">
           <h5>
             {{user.username}} </h5>
-          <!-- <h6 *ngFor="let role of user.roles">
+          <!-- <h6 *ngFor="let role of user">
             {{ role }} </h6> -->
-          <p class="proile-rating">Total Invoices  : <span>3</span></p>
+          <p class="proile-rating">Total Invoices: <span>3</span> </p>
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="/profile" role="tab" aria-controls="home"
                 aria-selected="true">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="false">Timeline</a>
+              <!-- <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">Timeline</a> -->
             </li>
           </ul>
         </div>
@@ -91,16 +91,9 @@
     <div class="row">
       <div class="col-md-4">
         <div class="profile-work">
-          <p>WORK LINK</p>
-          <a href="">Website Link</a><br />
-          <a href="">Bootsnipp Profile</a><br />
-          <a href="">Bootply Profile</a>
-          <p>SKILLS</p>
-          <a href="">Web Designer</a><br />
-          <a href="">Web Developer</a><br />
-          <a href="">WordPress</a><br />
-          <a href="">WooCommerce</a><br />
-          <a href="">PHP, .Net</a><br />
+          <p>work mail</p>
+          <div>{{user.email}}</div><br />
+          
         </div>
       </div>
       <div class="col-md-8">

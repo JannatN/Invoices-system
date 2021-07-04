@@ -23,7 +23,7 @@ export class BoardAuditorComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  public displayedColumns = ['id', 'dateCreated', 'dueDate', 'userID', 'company', 'type'];
+  public displayedColumns = ['id', 'dateCreated', 'dueDate', 'userID', 'company', 'type', 'details'];
   //dataSource: MatTableDataSource<any>;
   // dataSource = new MatTableDataSource();
 
@@ -52,7 +52,10 @@ export class BoardAuditorComponent implements OnInit {
     value = value.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = value;
   }
+  public redirectToDetails = (id: number) => {
+    this.router.navigate(['detailsInvoice', id]);
 
+  }
 
   // constructor(private userService: UserService) { }  
   // ngOnInit() {

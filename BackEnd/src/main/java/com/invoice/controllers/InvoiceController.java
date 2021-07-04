@@ -41,7 +41,7 @@ public class InvoiceController {
 	}
 
 	@GetMapping("/invoices/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
 	public ResponseEntity<Invoice> getInvoiceById(@PathVariable(value = "id") Long invoiceID)
 			throws ResourceNotFoundException {
 		Invoice invoice = invoiceRepository.findById(invoiceID)

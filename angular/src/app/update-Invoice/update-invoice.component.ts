@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Invoice } from '../models/invoice';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceService } from '../_services/invoices.service';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class UpdateInvoiceComponent implements OnInit {
   invoice: Invoice;
 
   constructor(private route: ActivatedRoute,private router: Router,
-    private invoiceService: InvoiceService) { }
+    private invoiceService: InvoiceService, private location: Location) { }
 
   ngOnInit() {
     this.invoice = new Invoice();
@@ -34,7 +35,7 @@ export class UpdateInvoiceComponent implements OnInit {
       .subscribe(data => {
         console.log(data);
         this.invoice = new Invoice();
-        this.gotoList();
+        this.list();
       }, error => console.log(error));
   }
 
@@ -42,7 +43,6 @@ export class UpdateInvoiceComponent implements OnInit {
     this.updateInvoice();    
   }
 
-  gotoList() {
-    this.router.navigate(['invoices']);
-  }
+  list(){
+    this.location.back();  }
 }

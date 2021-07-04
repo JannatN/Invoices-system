@@ -2,7 +2,7 @@ import { Invoice } from '../models/invoice';
 import { Component, OnInit, Input } from '@angular/core';
 import { InvoiceService } from "../_services/invoices.service";
 import { Router, ActivatedRoute } from '@angular/router';
-
+import {Location} from '@angular/common';
 @Component({
   selector: 'app-invoice-details',
   templateUrl: './invoice-details.component.html',
@@ -14,7 +14,7 @@ export class InvoiceDetailsComponent implements OnInit {
   invoice: Invoice;
 
   constructor(private route: ActivatedRoute,private router: Router,
-    private invoiceService: InvoiceService) { }
+    private invoiceService: InvoiceService, private location: Location) { }
 
   ngOnInit() {
     this.invoice = new Invoice();
@@ -29,6 +29,5 @@ export class InvoiceDetailsComponent implements OnInit {
   }
 
   list(){
-    this.router.navigate(['admin']);
-  }
+    this.location.back();  }
 }

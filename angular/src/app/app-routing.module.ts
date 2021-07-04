@@ -24,6 +24,7 @@ import { CreateItemComponent } from './create-item/create-item.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'logout', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },

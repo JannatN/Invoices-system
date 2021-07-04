@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../_services/users.service';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-update-user',
@@ -13,7 +14,7 @@ export class UpdateUserComponent implements OnInit {
   user: User;
 
   constructor(private route: ActivatedRoute, private router: Router,
-    private userService: UserService) { }
+    private userService: UserService, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
     this.user = new User();
@@ -28,27 +29,29 @@ export class UpdateUserComponent implements OnInit {
   }
 
   updateUser() {
-      this.userService.updateUser(this.id, this.user)
-        .subscribe(data => {
-          console.log(data);
-          this.user = new User();
-          this.gotoList();
-        }, error => console.log(error));
-    
+    this.userService.updateUser(this.id, this.user)
+      .subscribe(data => {
+        console.log(data);
+        this.user = new User();
+        this.gotoProfile();
+      }, error => console.log(error));
+
   }
   onSubmit() {
     this.updateUser();
   }
 
-  gotoList() {
-    this.router.navigate(['/users']);
-  }
+  // logout() {
+  //   this.tokenStorageService.signOut();
+  //   this.router.navigate(['/logout']);
+
+  // }
   gotoProfile() {
     this.router.navigate(['/profile']);
   }
-  
+
   back() {
     window.location.reload();
   }
- 
+
 }

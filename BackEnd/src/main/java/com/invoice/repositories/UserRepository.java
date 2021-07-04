@@ -12,7 +12,7 @@ import com.invoice.entities.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findByUsername(String username);
 
-	List<User> findByusername(String title);
+	List<User> findByusername(String username);
 	
 	Boolean existsByUsername(String username);
 
