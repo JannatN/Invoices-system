@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 		@UniqueConstraint(columnNames = "email") })
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotBlank
@@ -43,26 +43,10 @@ public class User {
 	@Size(max = 120)
 	private String password;
 
-	
-	
-//	@OneToMany(mappedBy = "userID", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	
-//	private Set<Invoice> recordings;
-	
-//	@OneToMany(fetch=FetchType.EAGER)
-//	@JoinColumn(name = "userID")
-//	private Set<Invoice> invoives;
-	
-	
-	@OneToMany(mappedBy="userID", cascade =  {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
-    private List<Invoice> invoices;
-	
-	
-//	private Invoice invoice;
-//	@ManyToOne(optional=false)
-//	@JoinColumn(name="userID",referencedColumnName="id", insertable=false, updatable=false)
-//	private Invoice invoice;
-	
+	@OneToMany(mappedBy = "userID", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
+			CascadeType.PERSIST })
+	private List<Invoice> invoices;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();

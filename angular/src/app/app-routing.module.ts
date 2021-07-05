@@ -40,10 +40,10 @@ const routes: Routes = [
   { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
   { path: 'addInvoice', component: CreateInvoiceComponent },
 
-  
   { path: 'items', component: ItemListComponent },
   { path: 'detailsItem/:id', component: ItemDetailsComponent },
   { path: 'updateItem/:id', component: UpdateItemComponent },
+  // { path: 'addInvoice/:id/addItem', component: CreateItemComponent },
   { path: 'addItem', component: CreateItemComponent },
 
 ];

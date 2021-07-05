@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.invoice.entities.Invoice;
 import com.invoice.entities.Item;
 import com.invoice.exception.ResourceNotFoundException;
+import com.invoice.repositories.InvoiceRepository;
 import com.invoice.repositories.ItemRepository;
 
 //@CrossOrigin(origins = "http://localhost:4200")
@@ -31,12 +36,8 @@ import com.invoice.repositories.ItemRepository;
 public class ItemController {
 	@Autowired
 	private ItemRepository itemRepository;
-
-	@GetMapping("/items")
-	@PreAuthorize("hasRole('ADMIN') ")
-	public List<Item> getAllItems() {
-		return itemRepository.findAll();
-	}
+	@Autowired
+	private InvoiceRepository invoiceRepository;
 
 	@GetMapping("/items/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
@@ -46,29 +47,57 @@ public class ItemController {
 		return ResponseEntity.ok().body(item);
 	}
 
-	@PostMapping("/items")
+//	@GetMapping("/posts/{postId}/comments")
+//	public Page<Item> getAllItemsByInvoiceID(@PathVariable(value = "invoiceID") Long invoiceID, Pageable pageable)
+//			throws ResourceNotFoundException {
+//		return ItemRepository.findByInvoiceId(invoiceID, pageable);
+//	}
+
+	@PostMapping("/invoices/{invoiceID}/items")
 	@PreAuthorize("hasRole('ADMIN')")
-	public Item createItem(@Valid @RequestBody Item item) {
-		return itemRepository.save(item);
+	public Item createItem(@PathVariable(value = "invoiceID") Long invoiceID, @Valid @RequestBody Item item)
+			throws ResourceNotFoundException {
+		return invoiceRepository.findById(invoiceID).map(invoice -> {
+			item.setInvoice(invoice);
+			item.setInvoiceID(invoiceID);
+			return itemRepository.save(item);
+		}).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
 	}
 
-	@PutMapping("/items/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Item> updateItem(@PathVariable(value = "id") Long itemID,
-			@Valid @RequestBody Item itemDetails) throws ResourceNotFoundException {
-		Item item = itemRepository.findById(itemID)
-				.orElseThrow(() -> new ResourceNotFoundException("Item not found for this id :: " + itemID));
+//	@PutMapping("/items/{id}")
+//	@PreAuthorize("hasRole('ADMIN')")
+//	public ResponseEntity<Item> updateItem(@PathVariable(value = "id") Long itemID,
+//			@Valid @RequestBody Item itemDetails) throws ResourceNotFoundException {
+//		Item item = itemRepository.findById(itemID)
+//				.orElseThrow(() -> new ResourceNotFoundException("Item not found for this id :: " + itemID));
+//
+//		item.setName(itemDetails.getName());
+//		item.setDescription(itemDetails.getDescription());
+//		item.setPrice(itemDetails.getPrice());
+//		item.setCurrency(itemDetails.getCurrency());
+//		item.setQuantity(itemDetails.getQuantity());
+//		item.setInvoiceID(itemDetails.getInvoiceID());
+//
+//		final Item updatedItem = itemRepository.save(item);
+//		return ResponseEntity.ok(updatedItem);
+//	}
+	@PutMapping("/invoices/{invoiceID}/items/{itemID}")
+	public Item updateComment(@PathVariable(value = "invoiceID") Long invoiceID,
+			@PathVariable(value = "itemID") Long itemID, @Valid @RequestBody Item itemDetails)
+			throws ResourceNotFoundException {
+		if (!invoiceRepository.existsById(invoiceID)) {
+			throw new ResourceNotFoundException("InvoiceID " + invoiceID + " not found");
+		}
 
-		item.setName(itemDetails.getName());
-		item.setDescription(itemDetails.getDescription());
-		item.setPrice(itemDetails.getPrice());
-		item.setCurrency(itemDetails.getCurrency());
-		item.setQuantity(itemDetails.getQuantity());
-		item.setInvoiceID(itemDetails.getInvoiceID());
-
-
-		final Item updatedItem = itemRepository.save(item);
-		return ResponseEntity.ok(updatedItem);
+		return itemRepository.findById(itemID).map(item -> {
+			item.setName(itemDetails.getName());
+			item.setDescription(itemDetails.getDescription());
+			item.setPrice(itemDetails.getPrice());
+			item.setCurrency(itemDetails.getCurrency());
+			item.setQuantity(itemDetails.getQuantity());
+			item.setInvoiceID(itemDetails.getInvoiceID());
+			return itemRepository.save(item);
+		}).orElseThrow(() -> new ResourceNotFoundException("ItemID " + itemID + "not found"));
 	}
 
 	@DeleteMapping("/items/{id}")

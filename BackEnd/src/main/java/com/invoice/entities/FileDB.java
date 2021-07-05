@@ -1,11 +1,10 @@
 package com.invoice.entities;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -13,11 +12,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "files")
 public class FileDB {
-  
-	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
+  @Id
   @GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
   private String id;
 
   private String name;
@@ -29,10 +26,7 @@ public class FileDB {
 
   public FileDB() {
   }
-  
-  @OneToOne(mappedBy = "file")
-  private Invoice invoice;
-  
+
   public FileDB(String name, String type, byte[] data) {
     this.name = name;
     this.type = type;

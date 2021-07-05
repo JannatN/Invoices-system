@@ -26,6 +26,7 @@ import com.invoice.entities.Invoice;
 import com.invoice.entities.Item;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.repositories.InvoiceRepository;
+//TODO Read about 3 tier arch, DTO, Mapping between DTO and entites
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -33,7 +34,7 @@ import com.invoice.repositories.InvoiceRepository;
 public class InvoiceController {
 	@Autowired
 	private InvoiceRepository invoiceRepository;
-
+//TODO do pagination and searching/filterting
 	@GetMapping("/invoices")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
 	public List<Invoice> getAllInvoices() {

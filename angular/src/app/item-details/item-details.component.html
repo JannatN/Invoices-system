@@ -3,6 +3,21 @@
 <hr />
 <div *ngIf="item">
     <div>
+        <label><b> dateCreated: </b></label> {{item["invoice"].dateCreated}}
+    </div>
+    <div>
+        <label><b> dueDate: </b></label> {{item["invoice"].dueDate}}
+    </div>
+    <div>
+        <label><b>user Id: </b></label> {{item["invoice"].userID}}
+    </div>
+    <div>
+        <label><b>Company: </b></label> {{item["invoice"].company}}
+    </div>
+    <div>
+        <label><b>Invoice Type: </b></label> {{item["invoice"].type}}
+    </div>
+    <div>
         <label><b> Name: </b></label> {{item.name}}
     </div>
     <div>
@@ -17,6 +32,7 @@
     <div>
         <label><b>Currency : </b></label> {{item.currency}}
     </div>
+
 </div>
 
 <br>

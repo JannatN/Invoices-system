@@ -22,7 +22,7 @@ import com.invoice.security.services.UserDetailsServiceImpl;
 public class AuthTokenFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtUtils jwtUtils;
-
+//TODO Read about spring security filter and interceptors
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
 

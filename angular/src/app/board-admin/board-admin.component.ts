@@ -4,10 +4,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { InvoiceService } from "../_services/invoices.service";
 import { Invoice } from '../models/invoice';
+import { Item } from '../models/item';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { Observable } from "rxjs";
 import { TokenStorageService } from '../_services/token-storage.service';
+import { ItemService } from "../_services/items.service";
 
 
 @Component({
@@ -17,6 +19,7 @@ import { TokenStorageService } from '../_services/token-storage.service';
 })
 export class BoardAdminComponent implements OnInit {
   invoices: Observable<Invoice[]>;
+  items: Observable<Item[]>;
   user: User;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

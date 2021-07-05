@@ -1,13 +1,10 @@
-
 package com.invoice.entities;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,36 +19,32 @@ public class Invoice {
 	private Long id;
 
 	private Long userID;
-	@NotNull(message = "Please enter Date")
 	@CreationTimestamp
-	private LocalDateTime date_created;
+	private LocalDateTime dateCreated;
 	@NotNull(message = "Please enter Date")
-	private LocalDateTime due_date;
+	private LocalDateTime dueDate;
 	@NotBlank
 	@Size(max = 20)
 	private String type;
 
 	@NotBlank
 	private String company;
-	
-	
+
+	@OneToMany(mappedBy = "invoiceID", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
+			CascadeType.PERSIST })
+	private Set<Item> items;
+
 	@ManyToOne
 	@JoinColumn(name = "userID", insertable = false, updatable = false)
 	private User user;
 
-	
-	@OneToMany(mappedBy = "invoiceID", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,CascadeType.PERSIST })
-	private Set<Item> items;
-	
-	 @OneToOne(cascade = CascadeType.ALL)
-	    @JoinColumn(name = "file_id", referencedColumnName = "id")
-	    private FileDB file;
-	
-
-	public Invoice(Long userID, LocalDateTime dateCreated, LocalDateTime dueDate) {
+	public Invoice(Long userID, LocalDateTime dateCreated, LocalDateTime dueDate, String type, String company) {
 		this.userID = userID;
-		this.date_created = dateCreated;
-		this.due_date = dueDate;
+		this.dateCreated = dateCreated;
+		this.dueDate = dueDate;
+		this.type = type;
+		this.company = company;
+
 	}
 
 	public Invoice() {
@@ -75,27 +68,19 @@ public class Invoice {
 	}
 
 	public LocalDateTime getDateCreated() {
-		return date_created;
+		return dateCreated;
 	}
 
 	public void setDateCreated(LocalDateTime dateCreated) {
-		this.date_created = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public LocalDateTime getDueDate() {
-		return due_date;
+		return dueDate;
 	}
 
 	public void setDueDate(LocalDateTime dueDate) {
-		this.due_date = dueDate;
-	}
-
-	public Set<Item> getItems() {
-		return items;
-	}
-
-	public void setItems(Set<Item> items) {
-		this.items = items;
+		this.dueDate = dueDate;
 	}
 
 	public String getType() {

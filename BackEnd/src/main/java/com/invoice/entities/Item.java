@@ -26,7 +26,7 @@ public class Item {
 	private String currency;
 
 	private Integer quantity;
-	
+
 	private Long invoiceID;
 
 	@ManyToOne
@@ -35,6 +35,20 @@ public class Item {
 
 	public Item() {
 
+	}
+
+	public Item(Long invoiceID) {
+		this.invoiceID = invoiceID;
+
+	}
+
+	public Item(Long invoiceID, String name, String description, Double price, String currency, Integer quantity) {
+		this.invoiceID = invoiceID;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.currency = currency;
+		this.quantity = quantity;
 	}
 
 	public Long getId() {
@@ -91,6 +105,14 @@ public class Item {
 
 	public void setInvoiceID(Long invoiceID) {
 		this.invoiceID = invoiceID;
+	}
+
+	public Invoice getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
 	}
 
 }
