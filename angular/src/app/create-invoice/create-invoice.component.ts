@@ -39,14 +39,14 @@ export class CreateInvoiceComponent implements OnInit {
       .createInvoice(this.invoice).subscribe(data => {
         console.log(data)
         this.invoice = new Invoice();
-        this.gotoList();
+        this.id = this.invoice.id;
       },
         error => console.log(error));
   }
 
   saveItem() {
     this.itemService
-      .createItem(this.item).subscribe(data => {
+      .createItem(this.item, this.id).subscribe(data => {
         console.log(data)
         this.item = new Item();
         // this.gotoList();

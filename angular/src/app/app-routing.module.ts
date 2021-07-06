@@ -44,7 +44,7 @@ const routes: Routes = [
   { path: 'detailsItem/:id', component: ItemDetailsComponent },
   { path: 'updateItem/:id', component: UpdateItemComponent },
   // { path: 'addInvoice/:id/addItem', component: CreateItemComponent },
-  { path: 'addItem', component: CreateItemComponent },
+  { path: 'invoices/:id/items', component: CreateItemComponent },
 
 ];
 

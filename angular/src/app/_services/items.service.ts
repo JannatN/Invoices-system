@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ItemService {
 
-    private baseUrl = 'http://localhost:8080/api/v1/items';
+    private baseUrl = 'http://localhost:8080/api/v1/invoices/items';
 
     constructor(private http: HttpClient) { }
 
@@ -23,8 +23,8 @@ export class ItemService {
         return this.http.get(`${this.baseUrl}`);
     }
 
-    createItem(item: Object): Observable<Object> {
-        return this.http.post(`${this.baseUrl}`, item);
+    createItem(item: Object, id: number): Observable<Object> {
+        return this.http.post(`${this.baseUrl}/${id}`, item);
     }
 
 
