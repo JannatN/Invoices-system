@@ -1,10 +1,9 @@
 import { Invoice } from '../models/invoice';
 import { Component, OnInit, Input } from '@angular/core';
 import { InvoiceService } from "../_services/invoices.service";
-import { Router } from '@angular/router';
-import { ItemService } from "../_services/items.service";
+import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../models/item';
-import { Location } from '@angular/common';
+import { ItemService } from '../_services/items.service';
 
 @Component({
   selector: 'app-create-invoice',
@@ -14,14 +13,22 @@ import { Location } from '@angular/common';
 export class CreateInvoiceComponent implements OnInit {
 
   invoice: Invoice = new Invoice();
-  item: Item = new Item();
   submitted = false;
+  invoices: Invoice;
+  i: any;
+  item: Item = new Item();
+  // submitted = false;
   id: number;
 
-  constructor(private invoiceService: InvoiceService, private itemService: ItemService,
-    private router: Router, private location: Location) { }
+  constructor(private invoiceService: InvoiceService,
+    private router: Router, private itemService: ItemService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    // this.getInv();
+    // this.id = this.route.snapshot.params['id'];
+    // console.log("iiii"+this.id)
+    // console.log(this.invoice.id);
+    // this.  saveInvoice() ;
   }
 
   newInvoice(): void {
@@ -29,43 +36,106 @@ export class CreateInvoiceComponent implements OnInit {
     this.invoice = new Invoice();
   }
 
-  newItem(): void {
-    this.submitted = false;
-    this.item = new Item();
-  }
 
   saveInvoice() {
+
+
+
     this.invoiceService
-      .createInvoice(this.invoice).subscribe(data => {
-        console.log(data)
+      .createInvoice(this.invoice).subscribe(data1 => {
+        console.log(data1)
+
         this.invoice = new Invoice();
-        this.id = this.invoice.id;
-      },
-        error => console.log(error));
-  }
 
-  saveItem() {
-    this.itemService
-      .createItem(this.item, this.id).subscribe(data => {
-        console.log(data)
-        this.item = new Item();
-        // this.gotoList();
-      },
-        error => console.log(error));
-  }
+        this.itemService.createItem(this.item).subscribe(data2 => {
+          console.log(data2)
 
+          this.item = new Item();
+
+
+
+
+          this.invoiceService
+            .getLastInvoice().subscribe(data1 => {
+              console.log(data1.id);
+
+
+              this.itemService.getLastItem().subscribe(data => {
+                console.log(data)
+
+                data.invoiceID = data1.id;
+                console.log(data.invoiceID)
+                this.itemService.createItem(data).subscribe(data => {
+                  console.log(data)
+                })
+
+              })
+            }
+
+            )
+        })
+
+      })
+  }
 
   onSubmit() {
     this.submitted = true;
     this.saveInvoice();
-    this.saveItem();
+    console.log("invoice created");
+    console.log("invoice created");
 
   }
-
 
   gotoList() {
-    this.location.back();
+    this.router.navigate(['/invoices']);
   }
 
+  getInv() {
+    this.invoiceService
+      .getLastInvoice().subscribe(data => {
+        console.log(data.id + 1);
+        console.log(data);
+
+
+        // this.invoiceService.getInvoice(data.id).subscribe(data1 => {
+
+        //   console.log(data1)
+
+        // })
+        // this.invoice = new Invoice();
+
+        // console.log("sssssss"+data.length)
+
+      },
+        error => console.log(error));
+  }
+
+  newItem(): void {
+    this.submitted = false;
+    this.item = new Item();
+    this
+  }
+  // $last_insert = mysql_insert_id();
+
+  // save() {
+  //   this.invoiceService
+  //     .getLastInvoice().subscribe(data1 => {
+  //       console.log(  data1.id+1);
+
+
+  //   this.itemService
+  //     .createItem(this.item,data1.id).subscribe(data => {
+  //       console.log(data)
+
+  //       this.item = new Item();
+  //     },
+  //       error => console.log(error));
+
+
+  //   })
+  // }
+  createItem() {
+    this.router.navigate(['addItem']);
+  }
 
 }

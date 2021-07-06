@@ -25,7 +25,7 @@ export class BoardAdminComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  public displayedColumns = ['id', 'dateCreated', 'dueDate', 'userID', 'company', 'type', 'details', 'update', 'delete'];
+  public displayedColumns = ['id', 'dateCreated', 'dueDate', 'userID', 'company', 'type', 'details', 'update', 'delete', 'create'];
 
 
   public dataSource = new MatTableDataSource<Invoice>();
@@ -75,12 +75,14 @@ export class BoardAdminComponent implements OnInit {
   createInvoice() {
     this.router.navigate(['addInvoice']);
   }
-
+  redirectToCreate(id: number) {
+    this.router.navigate(['addItem', id]);
+  }
   reloadData() {
     this.invoices = this.invoiceService.getInvoicesList();
   }
 
 
 
-  
+
 }

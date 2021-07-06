@@ -31,8 +31,13 @@ export class InvoiceListComponent implements OnInit {
   updateInvoice(id: number) {
     this.router.navigate(['updateInvoice', id]);
   }
-
-  createInvoice() {
+  createItem(id: number) {
+    this.router.navigate(['addItem', id]);
+  }
+  createInvoice(id: number) {
+    this.router.navigate(['addInvoice',id]);
+  }
+  createInvoice1() {
     this.router.navigate(['addInvoice']);
   }
   
