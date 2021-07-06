@@ -13,11 +13,68 @@
   </div>  
   <div>
     <label><b>Company: </b></label> {{invoice.company}}
+  </div>
+  
+  <div >
+    
+    <label><b>first name: </b></label> {{invoice["user"].firstname}}
+    
+  </div>  
+  <div >
+    
+    <label><b>last name: </b></label> {{invoice["user"].lastname}}
+    
+  </div> 
+  <div >
+    
+    <label><b>email: </b></label> {{invoice["user"].email}}
+    
+  </div> 
+  <div >
+    
+    <label><b>address: </b></label> {{invoice["user"].address}}
+    
+  </div> 
+
+
+  <!-- <div *ngFor=" let invoice of invoice['items']"> -->
+    <!-- <div> -->
+    <!-- console.log(this.invoice["items"][1].price) -->
+    <label><b>items: </b></label><pre> <code>
+      {{invoice["items"] |json}}
+    </code> 
+  </pre>
+    
+  
+
+
+
+<!-- <button *ngFor="let config of configs; let i = index" type="button" style="text-align:left; margin-right: 10px; margin-bottom: 10px" class="btn btn-primary">
+        Name: {{config.name}} <br /> {{configOpPoints[i]}} <br /> 
+</button> -->
+    
+  <!-- </div>   -->
+</div>
+
+<!-- <div *ngIf="item">
+  <div>
+    <label><b> id: </b></label> {{item.id}}
+  </div> -->
+  <!-- <div>
+    <label><b> dueDate: </b></label> {{invoice.dueDate}}
+  </div>
+  <div>
+    <label><b>user Id: </b></label> {{invoice.userID}}
+  </div>  
+  <div>
+    <label><b>Company: </b></label> {{invoice.company}}
   </div>  
   <div>
     <label><b>Invoice Type: </b></label> {{invoice.type}}
-  </div>  
-</div>
+  </div>   -->
+<!-- </div> -->
+
+
 
 <br>
 <br>
