@@ -39,8 +39,9 @@ public class InvoiceService {
 		return invoiceRepository.findTopByOrderByIdDesc();
 	}
 
-	public Invoice createInvoice(Invoice invoice) {
-		return invoiceRepository.saveAndFlush(invoice);
+	public ResponseEntity<Invoice> createInvoice(Invoice invoice) {
+		invoiceRepository.saveAndFlush(invoice);
+		return new ResponseEntity<Invoice>(invoice, HttpStatus.CREATED);
 	}
 
 	public ResponseEntity<Invoice> getInvoiceById(Long invoiceID) throws ResourceNotFoundException {

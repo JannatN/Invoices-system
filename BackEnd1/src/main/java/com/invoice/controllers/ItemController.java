@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.invoice.entities.Invoice;
 import com.invoice.entities.Item;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.services.ItemService;
@@ -34,14 +35,14 @@ public class ItemController {
 
 	@PostMapping("items/{invoiceID}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public Item createItem2(@PathVariable(value = "invoiceID") Long invoiceID, @Valid @RequestBody Item item)
-			throws ResourceNotFoundException {
+	public ResponseEntity<Item> createItem2(@PathVariable(value = "invoiceID") Long invoiceID,
+			@Valid @RequestBody Item item) throws ResourceNotFoundException {
 		return itemService.createItem2(invoiceID, item);
 	}
 
 	@PostMapping("/items")
 	@PreAuthorize("hasRole('ADMIN')")
-	public Item createItem(@Valid @RequestBody Item item) {
+	public ResponseEntity<Item> createItem(@Valid @RequestBody Item item) {
 		return itemService.createItem(item);
 	}
 

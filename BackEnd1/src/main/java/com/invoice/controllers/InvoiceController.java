@@ -42,7 +42,7 @@ public class InvoiceController {
 	}
 	@PostMapping("/invoices")
 	@PreAuthorize("hasRole('ADMIN')")
-	public Invoice createInvoice(@Valid @RequestBody Invoice invoice) {
+	public ResponseEntity<Invoice> createInvoice(@Valid @RequestBody Invoice invoice) {
 //		invoiceRepository.save(invoice.setId(id));
 		return invoiceService.createInvoice(invoice);
 	}

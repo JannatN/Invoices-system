@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.invoice.entities.FileDB;
+import com.invoice.entities.Invoice;
 import com.invoice.entities.Item;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.repositories.FileDBRepository;
@@ -47,16 +49,18 @@ public class ItemService {
 		return ResponseEntity.ok().body(item);
 	}
 
-	public Item createItem2(Long invoiceID, Item item) throws ResourceNotFoundException {
+	public ResponseEntity<Item> createItem2(Long invoiceID, Item item) throws ResourceNotFoundException {
 		return invoiceRepository.findById(invoiceID).map(invoice -> {
 			item.setInvoice(invoice);
 			item.setInvoiceID(invoiceID);
-			return itemRepository.saveAndFlush(item);
+			itemRepository.saveAndFlush(item);
+			return new ResponseEntity<Item>(item, HttpStatus.CREATED);
 		}).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
 	}
 
-	public Item createItem(Item item) {
-		return itemRepository.save(item);
+	public ResponseEntity<Item> createItem(Item item) {
+		itemRepository.save(item);
+		return new ResponseEntity<Item>(item, HttpStatus.CREATED);
 	}
 
 	public Item getLastItem() {
