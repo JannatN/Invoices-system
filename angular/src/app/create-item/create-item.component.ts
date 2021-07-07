@@ -4,6 +4,7 @@ import { ItemService } from "../_services/items.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceService } from '../_services/invoices.service';
 import { Invoice } from '../models/invoice';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-create-item',
@@ -17,7 +18,7 @@ export class CreateItemComponent implements OnInit {
   id: number;
 
   constructor(private invoiceService: InvoiceService, private itemService: ItemService,
-    private router: Router, private route: ActivatedRoute) { }
+    private router: Router, private route: ActivatedRoute,  private location: Location) { }
 
   ngOnInit() {
     // this.getInv();
@@ -64,6 +65,8 @@ export class CreateItemComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.save();
+    this.back();
+
   }
 
   gotoList() {
@@ -75,6 +78,9 @@ export class CreateItemComponent implements OnInit {
 
   invoiceid(id: number) {
     this.router.navigate(['addInvoice', id]);
+  }
+  back() {
+    this.location.back();
   }
 }
 

@@ -24,11 +24,7 @@ export class CreateInvoiceComponent implements OnInit {
     private router: Router, private itemService: ItemService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // this.getInv();
-    // this.id = this.route.snapshot.params['id'];
-    // console.log("iiii"+this.id)
-    // console.log(this.invoice.id);
-    // this.  saveInvoice() ;
+
   }
 
   newInvoice(): void {
@@ -81,7 +77,6 @@ export class CreateInvoiceComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.saveInvoice();
-    console.log("invoice created");
     console.log("invoice created");
 
   }

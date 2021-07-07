@@ -1,0 +1,28 @@
+form {
+    width: 100%
+}
+
+.form-group {
+    margin: 10px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: large;
+}
+
+.title {
+    font-size: 30px;
+    color: black;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    /* border-bottom: 1px solid black; */
+}
+
+.container {
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: #20445e2a;
+    width: 60%;
+}
+
+.body {
+    display: grid;
+    grid-template-columns: auto auto;
+}

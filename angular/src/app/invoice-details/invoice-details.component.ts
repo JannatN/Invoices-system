@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Item } from '../models/item';
 import { ItemService } from '../_services/items.service';
 import { Observable } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-invoice-details',
@@ -18,7 +19,7 @@ export class InvoiceDetailsComponent implements OnInit {
   // items:Observable<Item[]>
   invoices: Observable<Invoice[]>;
   constructor(private route: ActivatedRoute, private router: Router,
-    private invoiceService: InvoiceService, private itemService: ItemService) { }
+    private invoiceService: InvoiceService, private location: Location) { }
 
   ngOnInit() {
     this.invoice = new Invoice();
@@ -31,7 +32,7 @@ export class InvoiceDetailsComponent implements OnInit {
 
         console.log(data)
         this.invoice = data;
-        this.invoices=data
+        this.invoices = data
         console.log(this.invoices["items"])
 
         // console.log("start");
@@ -41,7 +42,7 @@ export class InvoiceDetailsComponent implements OnInit {
 
 
 
-        
+
       })
     error => console.log(error);
   }
@@ -49,6 +50,6 @@ export class InvoiceDetailsComponent implements OnInit {
 
 
   list() {
-    this.router.navigate(['admin']); 
+    this.location.back();
   }
 }

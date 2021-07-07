@@ -3,6 +3,7 @@ import { User } from '../models/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../_services/users.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-update-user',
@@ -14,7 +15,7 @@ export class UpdateUserComponent implements OnInit {
   user: User;
 
   constructor(private route: ActivatedRoute, private router: Router,
-    private userService: UserService, private tokenStorageService: TokenStorageService) { }
+    private userService: UserService, private tokenStorageService: TokenStorageService,  private location: Location) { }
 
   ngOnInit() {
     this.user = new User();
@@ -33,7 +34,7 @@ export class UpdateUserComponent implements OnInit {
       .subscribe(data => {
         console.log(data);
         this.user = new User();
-        this.gotoProfile();
+        this.back();
       }, error => console.log(error));
 
   }
@@ -51,7 +52,7 @@ export class UpdateUserComponent implements OnInit {
   }
 
   back() {
-    window.location.reload();
+    this.location.back();
   }
 
 }
