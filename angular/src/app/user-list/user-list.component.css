@@ -59,3 +59,20 @@ label {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-size: 1.3vw;
 }
+
+.heading {
+  background-color: rgba(255, 255, 255, 0.39);
+  padding: 10px;
+}
+
+h2 {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  margin-top: 20px;
+}
+
+.container {
+  margin: 10vh;
+  margin-left: 0px;
+
+  background-color: rgba(255, 255, 255, 0.39);
+}

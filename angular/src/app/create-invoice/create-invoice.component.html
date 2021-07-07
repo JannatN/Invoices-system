@@ -4,7 +4,7 @@
     <form (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="name">Due Date</label>
-            <input type="text" class="form-control" id="dueDate" required [(ngModel)]="invoice.dueDate" name="due_date"
+            <input type="datetime-local" class="form-control" id="dueDate" required [(ngModel)]="invoice.dueDate" name="due_date"
                 #dueDate="ngModel">
         </div>
 

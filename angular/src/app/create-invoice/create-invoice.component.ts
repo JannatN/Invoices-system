@@ -43,19 +43,11 @@ export class CreateInvoiceComponent implements OnInit {
 
         this.invoice = new Invoice();
 
-        this.itemService.createItem(this.item).subscribe(data2 => {
-          console.log(data2)
-
+        this.itemService.createItem(this.item)
           this.item = new Item();
-
-
-
-
           this.invoiceService
             .getLastInvoice().subscribe(data1 => {
               console.log(data1.id);
-
-
               this.itemService.getLastItem().subscribe(data => {
                 console.log(data)
 
@@ -69,7 +61,7 @@ export class CreateInvoiceComponent implements OnInit {
             }
 
             )
-        })
+        // })
 
       })
   }
