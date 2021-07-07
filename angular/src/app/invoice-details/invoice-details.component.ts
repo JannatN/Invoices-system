@@ -1,7 +1,10 @@
-import { Item } from '../models/item';
+import { Invoice } from '../models/invoice';
 import { Component, OnInit, Input } from '@angular/core';
-import { ItemService } from "../_services/items.service";
+import { InvoiceService } from "../_services/invoices.service";
 import { Router, ActivatedRoute } from '@angular/router';
+import { Item } from '../models/item';
+import { ItemService } from '../_services/items.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-invoice-details',
@@ -11,27 +14,41 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class InvoiceDetailsComponent implements OnInit {
 
   id: number;
-  item: Item;
-
-  constructor(private route: ActivatedRoute,private router: Router,
-    private itemService:ItemService) { }
+  invoice: Invoice;
+  // items:Observable<Item[]>
+  invoices: Observable<Invoice[]>;
+  constructor(private route: ActivatedRoute, private router: Router,
+    private invoiceService: InvoiceService, private itemService: ItemService) { }
 
   ngOnInit() {
-    this.item = new Item();
+    this.invoice = new Invoice();
+    this.invoices = this.invoiceService.getInvoicesList();
 
-    this.id = this.item.id;
-    
-    this.itemService.getItem(this.id)
+    this.id = this.route.snapshot.params['id'];
+
+    this.invoiceService.getInvoice(this.id)
       .subscribe(data => {
-        console.log(data)
-        this.item = data;
-        console.log(this.item["invoice"].type)
 
-      }, error => console.log(error));
+        console.log(data)
+        this.invoice = data;
+        this.invoices=data
+        console.log(this.invoices["items"])
+
+        // console.log("start");
+
+        console.log(this.invoices)
+        // console.log("end");
+
+
+
+        
+      })
+    error => console.log(error);
   }
 
-  list(){
-    this.router.navigate(['admin']);
+
+
+  list() {
+    this.router.navigate(['admin']); 
   }
 }
-

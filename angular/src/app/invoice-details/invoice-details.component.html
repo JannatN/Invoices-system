@@ -1,39 +1,76 @@
 <h2>Invoice Details</h2>
 
 <hr />
-<div *ngIf="item">
+<div *ngIf="invoice">
     <div>
-        <label><b> dateCreated: </b></label> {{item["invoice"].dateCreated}}
+        <label><b> Created Date: </b></label> {{invoice.dateCreated}}
     </div>
     <div>
-        <label><b> dueDate: </b></label> {{item["invoice"].dueDate}}
+        <label><b>Due Date: </b></label> {{invoice.dueDate}}
     </div>
     <div>
-        <label><b>user Id: </b></label> {{item["invoice"].userID}}
+        <label><b>User Id: </b></label> {{invoice.userID}}
     </div>
     <div>
-        <label><b>Company: </b></label> {{item["invoice"].company}}
+        <label><b>First name: </b></label> {{invoice["user"].firstname}}
     </div>
     <div>
-        <label><b>Invoice Type: </b></label> {{item["invoice"].type}}
+
+        <label><b>Last name: </b></label> {{invoice["user"].lastname}}
+
     </div>
     <div>
-        <label><b> Name: </b></label> {{item.name}}
+
+        <label><b>Email: </b></label> {{invoice["user"].email}}
+
     </div>
     <div>
-        <label><b>Description: </b></label> {{item.description}}
+        <label><b>Company: </b></label> {{invoice.company}}
     </div>
     <div>
-        <label><b>Price: </b></label> {{item.price}}
-    </div>
-    <div>
-        <label><b>Quantitiy: </b></label> {{item.quantity}}
-    </div>
-    <div>
-        <label><b>Currency : </b></label> {{item.currency}}
+        <label><b>Invoice Type: </b></label> {{invoice.type}}
     </div>
 
+
+    <!-- <div *ngFor=" let invoice of invoice['items']"> -->
+    <!-- <div> -->
+    <!-- console.log(this.invoice["items"][1].price) -->
+    <label><b>Items: </b></label>
+    <pre> <code>
+      {{invoice["items"] |json}}
+    </code> 
+  </pre>
+
+
+
+
+
+    <!-- <button *ngFor="let config of configs; let i = index" type="button" style="text-align:left; margin-right: 10px; margin-bottom: 10px" class="btn btn-primary">
+        Name: {{config.name}} <br /> {{configOpPoints[i]}} <br /> 
+</button> -->
+
+    <!-- </div>   -->
 </div>
+
+<!-- <div *ngIf="item">
+  <div>
+    <label><b> id: </b></label> {{item.id}}
+  </div> -->
+<!-- <div>
+    <label><b> dueDate: </b></label> {{invoice.dueDate}}
+  </div>
+  <div>
+    <label><b>user Id: </b></label> {{invoice.userID}}
+  </div>  
+  <div>
+    <label><b>Company: </b></label> {{invoice.company}}
+  </div>  
+  <div>
+    <label><b>Invoice Type: </b></label> {{invoice.type}}
+  </div>   -->
+<!-- </div> -->
+
+
 
 <br>
 <br>
