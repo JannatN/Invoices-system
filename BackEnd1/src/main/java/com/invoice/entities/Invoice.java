@@ -39,7 +39,8 @@ public class Invoice {
 	private User user;
 
 	
-	@OneToMany(mappedBy = "invoiceID", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,CascadeType.PERSIST })
+	@OneToMany(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "invoiceid", referencedColumnName = "id")
 	private Set<Item> items;
 	
 	 @OneToOne(cascade = CascadeType.ALL)
@@ -121,4 +122,12 @@ public class Invoice {
 		this.user = user;
 	}
 
+	@Override
+	public String toString() {
+		return "Invoice [id=" + id + ", userID=" + userID + ", date_created=" + date_created + ", due_date=" + due_date
+				+ ", type=" + type + ", company=" + company + ", user=" + user + ", items=" + items + ", file=" + file
+				+ "]";
+	}
+
+	
 }

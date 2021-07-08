@@ -52,7 +52,8 @@ public class ItemService {
 	public ResponseEntity<Item> createItem2(Long invoiceID, Item item) throws ResourceNotFoundException {
 		return invoiceRepository.findById(invoiceID).map(invoice -> {
 			item.setInvoice(invoice);
-			item.setInvoiceID(invoiceID);
+//			item.setInvoiceID(invoiceID);
+			
 			itemRepository.saveAndFlush(item);
 			return new ResponseEntity<Item>(item, HttpStatus.CREATED);
 		}).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
@@ -64,6 +65,7 @@ public class ItemService {
 	}
 
 	public Item getLastItem() {
+//		itemRepository.
 		return itemRepository.findTopByOrderByIdDesc();
 	}
 
@@ -78,7 +80,7 @@ public class ItemService {
 			item.setPrice(itemDetails.getPrice());
 			item.setCurrency(itemDetails.getCurrency());
 			item.setQuantity(itemDetails.getQuantity());
-			item.setInvoiceID(itemDetails.getInvoiceID());
+//			item.setInvoiceID(itemDetails.getInvoiceID());
 			return itemRepository.save(item);
 		}).orElseThrow(() -> new ResourceNotFoundException("ItemID " + itemID + "not found"));
 	}

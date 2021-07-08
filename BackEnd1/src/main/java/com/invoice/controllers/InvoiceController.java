@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.invoice.entities.Invoice;
+import com.invoice.entities.Item;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.services.InvoiceService;
 

@@ -2,9 +2,12 @@ package com.invoice.services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.invoice.entities.Invoice;
+import com.invoice.entities.Item;
 import com.invoice.entities.User;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.repositories.InvoiceRepository;
+import com.invoice.repositories.ItemRepository;
 import com.invoice.repositories.UserRepository;
 
 @Service
@@ -26,10 +31,20 @@ public class InvoiceService {
 	@Autowired
 	private InvoiceRepository invoiceRepository;
 
-	public ResponseEntity<Invoice> addInvoice(Invoice invoice) {
-		invoiceRepository.save(invoice);
-		return new ResponseEntity<Invoice>(invoice, HttpStatus.CREATED);
-	}
+	@Autowired
+	private ItemRepository itemRepository;
+
+//	public ResponseEntity<Invoice> addInvoice(Invoice invoice) {
+//		List<Item> items=new  ArrayList<Item>();
+//		Item item=new Item();
+//		item.setId(1L);
+//		item.setCurrency("$");
+//		item.setInvoice(invoice);
+//		items.add(item);
+//	
+//				invoiceRepository.save(invoice);
+//		return new ResponseEntity<Invoice>(invoice, HttpStatus.CREATED);
+//	}
 
 	public List<Invoice> getAllInvoices() {
 		return invoiceRepository.findAll();
@@ -39,8 +54,37 @@ public class InvoiceService {
 		return invoiceRepository.findTopByOrderByIdDesc();
 	}
 
+	@Transactional
 	public ResponseEntity<Invoice> createInvoice(Invoice invoice) {
-		invoiceRepository.saveAndFlush(invoice);
+		Set<Item> items = new HashSet<Item>();
+//		Item item = new Item();
+//		
+//		item.setName("hiii");
+//		item.setCurrency("$");
+//		item.setDescription("hiii");
+//		item.setPrice(4.5);
+//		item.setQuantity(2);
+		System.out.println(invoice.getItems().toString());
+//		items.addAll(invoice.getItems());
+//		invoice.setItems(items);
+//		invoice.getItems()	
+		
+//		System.out.println("after set invoice id" + invoice.toString());
+		invoiceRepository.save(invoice);
+		
+		
+		System.out.println("after set invoice id" + invoice.toString());
+//		System.out.println("after set invoice id" + invoice.getId());
+//		System.out.println(item.getInvoiceID());
+//		System.out.println(item.getInvoiceID());
+//		item.setInvoiceID(invoice.getId());
+//		item.setInvoice(invoice);
+//		items.add(item);
+//		invoice.setItems(items);
+//		invoiceRepository.saveAndFlush(invoice);
+
+//		itemRepository.save(item);
+
 		return new ResponseEntity<Invoice>(invoice, HttpStatus.CREATED);
 	}
 
@@ -75,4 +119,4 @@ public class InvoiceService {
 		return response;
 	}
 
-} 
+}
