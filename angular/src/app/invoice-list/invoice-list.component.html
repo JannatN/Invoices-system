@@ -2,8 +2,11 @@
   <div class="panel-heading">
     <h2>Invoice List</h2>
   </div>
-  <button (click)="createInvoice()" class="btn btn-info" style="margin-left: 10px">Create Invoice</button>
 
+ 
+      <button (click)="createInvoice1()" class="btn btn-info" style="margin-left: 10px">Create Invoice</button>
+ 
+  
   <div class="panel-body">
     <table class="table table-striped">
       <thead>
@@ -33,6 +36,8 @@
             <button (click)="invoicesDetails(invoice.id)" class="btn btn-info"
               style="margin-left: 10px">Details</button>
             <button (click)="deleteInvoice(invoice.id)" class="btn btn-danger">Delete</button>
+            <button (click)="createItem(invoice.id)" class="btn btn-primary">create item</button>
+
           </td>
         </tr>
 

@@ -39,12 +39,13 @@ const routes: Routes = [
   { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
   { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
   { path: 'addInvoice', component: CreateInvoiceComponent },
-
-  
+  // { path: 'addInvoice/:id', component: CreateInvoiceComponent },
   { path: 'items', component: ItemListComponent },
   { path: 'detailsItem/:id', component: ItemDetailsComponent },
   { path: 'updateItem/:id', component: UpdateItemComponent },
-  { path: 'addItem', component: CreateItemComponent },
+  // { path: 'addItem', component: CreateItemComponent },
+  { path: 'addItem/:id', component: CreateItemComponent },
+
 
 ];
 

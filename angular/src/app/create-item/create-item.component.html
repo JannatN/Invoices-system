@@ -1,50 +1,40 @@
-<div class="cont">
+<div class="container">
+    <div class="title">Add Item to the Invoice</div>
+    <hr />
     <form (ngSubmit)="onSubmit()">
-        <div class="forms">
-            <div class="form-group">
-                <label for="name">Invoice ID</label>
-                <input type="text" class="form-control" id="invoiceID" required [(ngModel)]="item.invoiceID"
-                    name="invoiceID" #name="ngModel">
+        <div class="form-group">
+            <label for="name">Item name</label>
+            <input type="text" class="form-control" id="name" required [(ngModel)]="item.name" name="name"
+                #name="ngModel">
 
-            </div>
-            <div class="form-group">
-                <label for="name">Item name</label>
-                <input type="text" class="form-control" id="name" required [(ngModel)]="item.name" name="name"
-                    #name="ngModel">
-
-            </div>
-
-            <div class="form-group">
-                <label for="name">Description</label>
-                <input type="text" class="form-control" id="description" required [(ngModel)]="item.description"
-                    name="description" #description="ngModel">
-
-            </div>
-
-            <div class="form-group">
-                <label for="name">Item price</label>
-                <input type="number" class="form-control" id="price" required [(ngModel)]="item.price" name="price"
-                    #price="ngModel">
-
-            </div>
-            <div class="form-group">
-                <label for="name">Currency </label>
-                <input type="text" class="form-control" id="currency" required [(ngModel)]="item.currency"
-                    name="currency" #currency="ngModel">
-
-            </div>
-            <div class="form-group">
-                <label for="name">Quantitiy </label>
-                <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.quantity"
-                    name="quantity" #quantity="ngModel">
-
-            </div>
         </div>
-        <button type="submit" class="btn btn-success">Save Item</button>
-        <button (click)="createItem()" class="btn btn-info" style="margin-left: 10px">Add Item</button>
+
+        <div class="form-group">
+            <label for="name">Description</label>
+            <textarea rows="4" cols="50" class="form-control" id="description" required [(ngModel)]="item.description"
+            name="description" #description="ngModel">
+                        Enter text here...</textarea>
+
+        </div>
+
+        <div class="form-group">
+            <label for="name">Item price</label>
+            <input type="number" class="form-control" id="price" required [(ngModel)]="item.price" name="price"
+                #price="ngModel">
+
+        </div>
+        <div class="form-group">
+            <label for="name">Currency </label>
+            <input type="text" class="form-control" id="currency" required [(ngModel)]="item.currency" name="currency"
+                #currency="ngModel">
+
+        </div>
+        <div class="form-group">
+            <label for="name">Quantitiy </label>
+            <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.quantity" name="quantity"
+                #quantity="ngModel">
+
+        </div>
+        <button type="submit"  class="btn btn-success">Save Item</button>
     </form>
 </div>
-
-<!-- <div [hidden]="!submitted">
-    <h4>You submitted successfully!</h4>
-</div> -->

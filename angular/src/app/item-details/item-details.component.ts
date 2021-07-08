@@ -25,6 +25,8 @@ export class ItemDetailsComponent implements OnInit {
       .subscribe(data => {
         console.log(data)
         this.item = data;
+          console.log(this.item["invoice"].type)
+
       }, error => console.log(error));
   }
 

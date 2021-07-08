@@ -37,7 +37,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatButtonModule } from "@angular/material/button";
 
-
+import { CommonModule } from '@angular/common';  
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,6 +77,8 @@ import { MatButtonModule } from "@angular/material/button";
     MatIconModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    CommonModule,
+    
 
   ],
   providers: [authInterceptorProviders],
