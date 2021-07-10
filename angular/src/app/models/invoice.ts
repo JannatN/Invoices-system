@@ -1,3 +1,5 @@
+import { Item } from "./item";
+
 export class Invoice {
     id: number;
     dateCreated: Date;
@@ -5,5 +7,6 @@ export class Invoice {
     userID: number;
     company:string;
     type:string;
+    items: Item[];
     file_id:number;
 }

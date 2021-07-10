@@ -2,9 +2,12 @@ package com.invoice.services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.invoice.entities.Invoice;
+import com.invoice.entities.Item;
 import com.invoice.entities.User;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.repositories.InvoiceRepository;
@@ -26,11 +30,6 @@ public class InvoiceService {
 	@Autowired
 	private InvoiceRepository invoiceRepository;
 
-	public ResponseEntity<Invoice> addInvoice(Invoice invoice) {
-		invoiceRepository.save(invoice);
-		return new ResponseEntity<Invoice>(invoice, HttpStatus.CREATED);
-	}
-
 	public List<Invoice> getAllInvoices() {
 		return invoiceRepository.findAll();
 	}
@@ -38,9 +37,13 @@ public class InvoiceService {
 	public Invoice getLastInvoice() {
 		return invoiceRepository.findTopByOrderByIdDesc();
 	}
-
+	@Transactional
 	public ResponseEntity<Invoice> createInvoice(Invoice invoice) {
-		invoiceRepository.saveAndFlush(invoice);
+//		Set<Item> items = new HashSet<Item>();
+		System.out.println(invoice.getItems().toString());
+
+//		invoice.getItems().addAll(invoice.getItems());
+		invoiceRepository.save(invoice);
 		return new ResponseEntity<Invoice>(invoice, HttpStatus.CREATED);
 	}
 

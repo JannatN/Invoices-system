@@ -4,6 +4,7 @@ package com.invoice.entities;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -13,6 +14,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "invoices")
@@ -32,20 +36,18 @@ public class Invoice {
 
 	@NotBlank
 	private String company;
-	
-	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "userID", insertable = false, updatable = false)
 	private User user;
 
-	
-	@OneToMany(mappedBy = "invoiceID", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,CascadeType.PERSIST })
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
 	private Set<Item> items;
-	
-	 @OneToOne(cascade = CascadeType.ALL)
-	    @JoinColumn(name = "file_id", referencedColumnName = "id")
-	    private FileDB file;
-	
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "file_id", referencedColumnName = "id")
+	private FileDB file;
 
 	public Invoice(Long userID, LocalDateTime dateCreated, LocalDateTime dueDate) {
 		this.userID = userID;
@@ -119,6 +121,13 @@ public class Invoice {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "Invoice [id=" + id + ", userID=" + userID + ", date_created=" + date_created + ", due_date=" + due_date
+				+ ", type=" + type + ", company=" + company + ", user=" + user + ", items=" + items + ", file=" + file
+				+ "]";
 	}
 
 }

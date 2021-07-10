@@ -45,7 +45,7 @@
         <mat-cell *matCellDef="let row" class="mycolor"> {{row.type }} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="create">
-        <th mat-header-cell *matHeaderCellDef>Add Item </th>
+        <th mat-header-cell *matHeaderCellDef>+Item </th>
         <td mat-cell *matCellDef="let row">
           <button mat-icon-button color="warn" (click)="redirectToCreate(row.id)">
             <mat-icon class="mat-18"><img class="img-responsive" src="assets/images/plus.png"></mat-icon>
@@ -71,7 +71,7 @@
       </ng-container>
 
       <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <th mat-header-cell *matHeaderCellDef> Delete | </th>
         <td mat-cell *matCellDef="let row">
           <button mat-icon-button color="warn" (click)="redirectToDelete(row.id)">
             <mat-icon class="mat-18"><img class="img-responsive" src="assets/images/delete.png"></mat-icon>
