@@ -16,7 +16,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "invoices")
@@ -28,15 +27,15 @@ public class Invoice {
 	private Long userID;
 	@CreationTimestamp
 	private LocalDateTime date_created;
-	@NotNull(message = "Please enter Date")
-	private LocalDateTime due_date;
+
+	private LocalDateTime due_date = LocalDateTime.now();
 	@NotBlank
 	@Size(max = 20)
 	private String type;
 
 	@NotBlank
 	private String company;
-	@JsonIgnore
+
 	@ManyToOne
 	@JoinColumn(name = "userID", insertable = false, updatable = false)
 	private User user;

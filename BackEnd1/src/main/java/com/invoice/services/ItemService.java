@@ -34,22 +34,13 @@ public class ItemService {
 	@Autowired
 	private InvoiceRepository invoiceRepository;
 
-//	@GetMapping("/posts/{postId}/comments")
-//	public Page<Item> getAllItemsByInvoiceID(@PathVariable(value = "invoiceID") Long invoiceID, Pageable pageable)
-//			throws ResourceNotFoundException {
-//		return ItemRepository.findByInvoiceId(invoiceID, pageable);
-//	}
-	public List<Item> getAllItems() {
-		return itemRepository.findAll();
-	}
-
 	public ResponseEntity<Item> getItemById(Long itemID) throws ResourceNotFoundException {
 		Item item = itemRepository.findById(itemID)
 				.orElseThrow(() -> new ResourceNotFoundException("Item not found for this id :: " + itemID));
 		return ResponseEntity.ok().body(item);
 	}
 
-	public ResponseEntity<Item> createItem2(Long invoiceID, Item item) throws ResourceNotFoundException {
+	public ResponseEntity<Item> createItem(Long invoiceID, Item item) throws ResourceNotFoundException {
 		return invoiceRepository.findById(invoiceID).map(invoice -> {
 			item.setInvoice(invoice);
 //			item.setInvoiceID(invoiceID);
@@ -58,14 +49,10 @@ public class ItemService {
 		}).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
 	}
 
-	public ResponseEntity<Item> createItem(Item item) {
-		itemRepository.save(item);
-		return new ResponseEntity<Item>(item, HttpStatus.CREATED);
-	}
-
-	public Item getLastItem() {
-		return itemRepository.findTopByOrderByIdDesc();
-	}
+//	public ResponseEntity<Item> createItem(Item item) {
+//		itemRepository.save(item);
+//		return new ResponseEntity<Item>(item, HttpStatus.CREATED);
+//	}
 
 	public Item updateItem(Long invoiceID, Long itemID, Item itemDetails) throws ResourceNotFoundException {
 		if (!invoiceRepository.existsById(invoiceID)) {

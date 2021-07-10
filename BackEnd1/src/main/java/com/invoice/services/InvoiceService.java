@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.invoice.dto.InvoiceDto;
 import com.invoice.entities.Invoice;
 import com.invoice.entities.Item;
 import com.invoice.entities.User;
@@ -39,10 +40,7 @@ public class InvoiceService {
 	}
 	@Transactional
 	public ResponseEntity<Invoice> createInvoice(Invoice invoice) {
-//		Set<Item> items = new HashSet<Item>();
 		System.out.println(invoice.getItems().toString());
-
-//		invoice.getItems().addAll(invoice.getItems());
 		invoiceRepository.save(invoice);
 		return new ResponseEntity<Invoice>(invoice, HttpStatus.CREATED);
 	}
@@ -68,14 +66,14 @@ public class InvoiceService {
 		return ResponseEntity.ok(updatedInvoice);
 	}
 
-	public Map<String, Boolean> deleteInvoice(Long invoiceID) throws ResourceNotFoundException {
+	public void deleteInvoice(Long invoiceID) throws ResourceNotFoundException {
 		Invoice invoice = invoiceRepository.findById(invoiceID)
 				.orElseThrow(() -> new ResourceNotFoundException("Invoice not found for this id :: " + invoiceID));
 
 		invoiceRepository.delete(invoice);
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
-		return response;
+//		Map<String, Boolean> response = new HashMap<>();
+//		response.put("deleted", Boolean.TRUE);
+	//	return response;
 	}
 
 } 

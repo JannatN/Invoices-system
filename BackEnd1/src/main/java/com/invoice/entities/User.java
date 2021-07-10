@@ -43,21 +43,10 @@ public class User {
 	@Size(max = 120)
 	private String password;
 
-//	@OneToMany(mappedBy = "userID", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	
-//	private Set<Invoice> recordings;
-
-//	@OneToMany(fetch=FetchType.EAGER)
-//	@JoinColumn(name = "userID")
-//	private Set<Invoice> invoives;
-
-	@OneToMany(mappedBy = "userID", cascade = { CascadeType.PERSIST })
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "userID", referencedColumnName = "id")
 	private List<Invoice> invoices;
 
-//	private Invoice invoice;
-//	@ManyToOne(optional=false)
-//	@JoinColumn(name="userID",referencedColumnName="id", insertable=false, updatable=false)
-//	private Invoice invoice;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
