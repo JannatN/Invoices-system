@@ -26,13 +26,13 @@ public class ItemDto {
 
 	private Integer quantity;
 
-	private InvoiceDto invoice;
+	private Invoice invoice;
 
-	public InvoiceDto getInvoiceDto() {
-		return invoice;
+	public Long getInvoice() {
+		return invoice.getId();
 	}
 
-	public void setInvoiceDto(InvoiceDto invoice) {
+	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
 	}
 

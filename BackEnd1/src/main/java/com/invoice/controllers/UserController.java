@@ -50,6 +50,7 @@ public class UserController {
 	@GetMapping("/users")
 	@PreAuthorize("hasRole('ADMIN') ")
 	public List<UserDto> getAllUsers() {
+		modelMapper.getConfiguration().setAmbiguityIgnored(true);
 		return convertToDto(userService.getAllUsers());
 	}
 
@@ -62,6 +63,7 @@ public class UserController {
 	@GetMapping("/users/{id}")
 	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
 	public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
+		modelMapper.getConfiguration().setAmbiguityIgnored(true);
 		return userService.getUserById(userId);
 	}
 

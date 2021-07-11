@@ -1,6 +1,7 @@
 package com.invoice.dto;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -21,11 +22,12 @@ import com.invoice.entities.User;
 
 public class InvoiceDto {
 
+	@Id
 	private Long id;
 
-	private LocalDateTime date_created;
+	private Date date_created;
 
-	private LocalDateTime due_date;
+	private Date due_date;
 
 	private String type;
 
@@ -33,9 +35,11 @@ public class InvoiceDto {
 
 	private Set<ItemDto> items;
 
-	private UserDto user;
+//	private User user;
 
-	public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company,
+	private Long userid;
+
+	public InvoiceDto(Long id, Date date_created, Date due_date, String type, String company,
 			Set<ItemDto> items) {
 		super();
 		this.id = id;
@@ -50,6 +54,22 @@ public class InvoiceDto {
 
 	}
 
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
+
+	public Long getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Long userid) {
+		this.userid = userid;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -58,19 +78,19 @@ public class InvoiceDto {
 		this.id = id;
 	}
 
-	public LocalDateTime getDate_created() {
+	public Date getDate_created() {
 		return date_created;
 	}
 
-	public void setDate_created(LocalDateTime date_created) {
+	public void setDate_created(Date date_created) {
 		this.date_created = date_created;
 	}
 
-	public LocalDateTime getDue_date() {
+	public Date getDue_date() {
 		return due_date;
 	}
 
-	public void setDue_date(LocalDateTime due_date) {
+	public void setDue_date(Date due_date) {
 		this.due_date = due_date;
 	}
 

@@ -51,6 +51,7 @@ public class InvoiceController {
 	@GetMapping("/invoices")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
 	public List<InvoiceDto> getAllInvoices() {
+		modelMapper.getConfiguration().setAmbiguityIgnored(true);
 		return convertToDto(invoiceService.getAllInvoices());
 	}
 
@@ -61,6 +62,7 @@ public class InvoiceController {
 	public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException {
 		Invoice invoice = convertToEntity(invoiceDto);
 		ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice);
+		modelMapper.getConfiguration().setAmbiguityIgnored(true);
 		return convertToDto(invoiceCreated);
 	}
 
@@ -73,6 +75,7 @@ public class InvoiceController {
 	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('AUDITOR') ")
 	public ResponseEntity<Invoice> getInvoiceById(@PathVariable(value = "id") Long invoiceID)
 			throws ResourceNotFoundException {
+		modelMapper.getConfiguration().setAmbiguityIgnored(true);
 		return invoiceService.getInvoiceById(invoiceID);
 	}
 

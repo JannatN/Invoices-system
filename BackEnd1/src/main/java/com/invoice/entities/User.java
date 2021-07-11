@@ -44,9 +44,8 @@ public class User {
 	private String password;
 
 	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "userID", referencedColumnName = "id")
+	@JoinColumn(name = "userid", referencedColumnName = "id")
 	private List<Invoice> invoices;
-
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

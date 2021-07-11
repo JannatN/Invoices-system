@@ -26,9 +26,9 @@ public class Invoice {
 
 	private Long userID;
 	@CreationTimestamp
-	private LocalDateTime date_created;
+	private Date date_created;
 
-	private LocalDateTime due_date = LocalDateTime.now();
+	private Date due_date;
 	@NotBlank
 	@Size(max = 20)
 	private String type;
@@ -48,7 +48,7 @@ public class Invoice {
 	@JoinColumn(name = "file_id", referencedColumnName = "id")
 	private FileDB file;
 
-	public Invoice(Long userID, LocalDateTime dateCreated, LocalDateTime dueDate) {
+	public Invoice(Long userID, Date dateCreated, Date dueDate) {
 		this.userID = userID;
 		this.date_created = dateCreated;
 		this.due_date = dueDate;
@@ -74,19 +74,19 @@ public class Invoice {
 		this.userID = userID;
 	}
 
-	public LocalDateTime getDateCreated() {
+	public Date getDateCreated() {
 		return date_created;
 	}
 
-	public void setDateCreated(LocalDateTime dateCreated) {
+	public void setDateCreated(Date dateCreated) {
 		this.date_created = dateCreated;
 	}
 
-	public LocalDateTime getDueDate() {
+	public Date getDueDate() {
 		return due_date;
 	}
 
-	public void setDueDate(LocalDateTime dueDate) {
+	public void setDueDate(Date dueDate) {
 		this.due_date = dueDate;
 	}
 
