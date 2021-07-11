@@ -20,12 +20,12 @@ import com.invoice.entities.Item;
 import com.invoice.entities.User;
 
 public class InvoiceDto {
-	
+
 	private Long id;
 
 	private LocalDateTime date_created;
 
-	private LocalDateTime due_date = LocalDateTime.now();
+	private LocalDateTime due_date;
 
 	private String type;
 
@@ -35,9 +35,18 @@ public class InvoiceDto {
 
 	private UserDto user;
 
+	public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company,
+			Set<ItemDto> items) {
+		super();
+		this.id = id;
+		this.date_created = date_created;
+		this.due_date = due_date;
+		this.type = type;
+		this.company = company;
+		this.items = items;
+	}
 
-
-	private InvoiceDto() {
+	public InvoiceDto() {
 
 	}
 

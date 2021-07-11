@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import com.invoice.dto.InvoiceDto;
 import com.invoice.entities.Invoice;
+import com.invoice.entities.User;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.services.InvoiceService;
 
@@ -43,30 +44,15 @@ public class InvoiceController {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@GetMapping("/invoices")
-	public Page<Invoice> findPaginated(Pageable page) {
-		return invoiceService.findPaginated(page);
-	}
-
-//    @GetMapping
-//    @ResponseBody
-//    public List<InvoiceDto> getInvoices(
-//            @PathVariable("page") int page,
-//            @PathVariable("size") int size, 
-//            @PathVariable("sortDir") String sortDir, 
-//            @PathVariable("sort") String sort) {
-//        
-//        List<Invoice> invoices = invoiceService.getInvoicesList(page, size, sortDir, sort);
-//        return invoices.stream()
-//          .map(this::convertToDto)
-//          .collect(Collectors.toList());
-//    }
-
 //	@GetMapping("/invoices")
-//	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
-//	public List<InvoiceDto> getAllInvoices() {
-//		return convertToDto(invoiceService.getAllInvoices());
+//	public Page<Invoice> findPaginated(Pageable page) {
+//		return invoiceService.findPaginated(page);
 //	}
+	@GetMapping("/invoices")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
+	public List<InvoiceDto> getAllInvoices() {
+		return convertToDto(invoiceService.getAllInvoices());
+	}
 
 	@ResponseBody
 	@PostMapping("/invoices")
@@ -78,37 +64,40 @@ public class InvoiceController {
 		return convertToDto(invoiceCreated);
 	}
 
+//	@GetMapping("/invoices/{id}")
+//	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
+//	public InvoiceDto getInvoiceById(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
+//		return convertToDto(invoiceService.getInvoiceById(invoiceID));
+//	}
 	@GetMapping("/invoices/{id}")
-	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
-	public InvoiceDto getInvoiceById(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
-		return convertToDto(invoiceService.getInvoiceById(invoiceID));
+	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('AUDITOR') ")
+	public ResponseEntity<Invoice> getInvoiceById(@PathVariable(value = "id") Long invoiceID)
+			throws ResourceNotFoundException {
+		return invoiceService.getInvoiceById(invoiceID);
 	}
 
-//	@PutMapping("/invoices/{id}")
-//	@PreAuthorize("hasRole('ADMIN')")
-//	public ResponseEntity<InvoiceDto> updateInvoice(@PathVariable(value = "id") Long invoiceID,
-//			@Valid @RequestBody Invoice invoiceDetails) throws ResourceNotFoundException {
-//		return convertToDto(invoiceService.updateInvoice(invoiceID, invoiceDetails));
-//	}
+	@PutMapping("/invoices/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public InvoiceDto updateInvoice(@PathVariable(value = "id") Long invoiceID,
+			@Valid @RequestBody InvoiceDto invoiceDetails) throws ResourceNotFoundException, ParseException {
+		Invoice invoice = convertToEntity(invoiceDetails);
+		return convertToDto(invoiceService.updateInvoice(invoice, invoiceID));
+	}
 //
-//	@DeleteMapping("/invoices/{id}")
-//	@PreAuthorize("hasRole('ADMIN')")
-//	public void deleteInvoice(@PathVariable(value = "id") Long invoiceID)
-//			throws ResourceNotFoundException {
-//		 convertToDto(invoiceService.deleteInvoice(invoiceID));
-//	}
+	@DeleteMapping("/invoices/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public void deleteInvoice(@PathVariable(value = "id") Long invoiceID)
+			throws ResourceNotFoundException {
+		invoiceService.deleteInvoice(invoiceID);
+	}
 
 	private InvoiceDto convertToDto(ResponseEntity<Invoice> invoice) {
 		InvoiceDto invoiceDto = modelMapper.map(invoice, InvoiceDto.class);
-//		invoiceDto.setSubmissionDate(invoice.getSubmissionDate(), userService.getCurrentUser().getPreference().getTimezone());
 		return invoiceDto;
 	}
 
 	private Invoice convertToEntity(@Valid InvoiceDto invoiceDto) throws ParseException {
 		Invoice invoice = modelMapper.map(invoiceDto, Invoice.class);
-//	        invoice.setSubmissionDate(postDto.getSubmissionDateConverted(
-//	          userService.getCurrentUser().getPreference().getTimezone()));
-//	      
 		return invoice;
 	}
 

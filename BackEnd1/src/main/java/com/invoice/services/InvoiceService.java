@@ -74,7 +74,7 @@ public class InvoiceService {
 		return ResponseEntity.ok().body(invoice);
 	}
 
-	public ResponseEntity<Invoice> updateInvoice(Long invoiceID, Invoice invoiceDetails)
+	public ResponseEntity<Invoice> updateInvoice(Invoice invoiceDetails, Long invoiceID)
 			throws ResourceNotFoundException {
 		Invoice invoice = invoiceRepository.findById(invoiceID)
 				.orElseThrow(() -> new ResourceNotFoundException("Invoice not found for this id :: " + invoiceID));

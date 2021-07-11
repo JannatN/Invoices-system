@@ -62,6 +62,11 @@ public class ItemController {
 //			throws ResourceNotFoundException {
 //		return itemService.updateItem(invoiceID, itemID, itemDetails);
 //	}
+	@GetMapping("/items")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
+	public List<ItemDto> getAllItems() {
+		return convertToDto(itemService.getAllItems());
+	}
 
 	private ItemDto convertToDto(ResponseEntity<Item> item) {
 		ItemDto itemDto = modelMapper.map(item, ItemDto.class);
@@ -71,6 +76,15 @@ public class ItemController {
 	private Item convertToEntity(@Valid ItemDto ItemDto) throws ParseException {
 		Item item = modelMapper.map(ItemDto, Item.class);
 		return item;
+	}
+
+	private List<ItemDto> convertToDto(List<Item> allItems) {
+		List<ItemDto> itemService = mapList(allItems, ItemDto.class);
+		return itemService;
+	}
+
+	<S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
+		return source.stream().map(element -> modelMapper.map(element, targetClass)).collect(Collectors.toList());
 	}
 
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { _MatPaginatorBase } from '@angular/material/paginator';
 
 @Injectable({
     providedIn: 'root'
@@ -30,10 +31,9 @@ export class InvoiceService {
     // getInvoices(page: number) {
     //     return this.http.get(`${this.baseUrl + page}`);
     // }
-    findPaginated(request) {
-        const params = request;
-        return this.http.get(`${this.baseUrl}/${params}`);
-      }
+    // findPaginated(){
+    //     return this.http.get(`${this.baseUrl}`);
+    //   }
 
     deleteInvoice(id: number): Observable<any> {
         return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });

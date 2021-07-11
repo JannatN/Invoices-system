@@ -26,6 +26,16 @@ public class ItemDto {
 
 	private Integer quantity;
 
+	private InvoiceDto invoice;
+
+	public InvoiceDto getInvoiceDto() {
+		return invoice;
+	}
+
+	public void setInvoiceDto(InvoiceDto invoice) {
+		this.invoice = invoice;
+	}
+
 	public String getName() {
 		return name;
 	}

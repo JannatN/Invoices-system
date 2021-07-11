@@ -4,13 +4,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { InvoiceService } from "../_services/invoices.service";
 import { Invoice } from '../models/invoice';
-import { Item } from '../models/item';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { Observable } from "rxjs";
 import { TokenStorageService } from '../_services/token-storage.service';
-import { InvoiceDataSource } from "../invoice.datasource";
-import { tap } from 'rxjs/operators';
+import { ItemService } from "../_services/items.service";
+import { Item } from '../models/item';
 
 
 @Component({
@@ -22,8 +21,9 @@ export class BoardAdminComponent implements OnInit {
   invoices: Observable<Invoice[]>;
   items: Observable<Item[]>;
   user: User;
-  invoiceDatasource: InvoiceDataSource;
-
+  page: number = 0
+  invoicesArray: Array<any>;
+  pages: Array<number>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -37,8 +37,6 @@ export class BoardAdminComponent implements OnInit {
   ngOnInit() {
     this.getList();
     // this.getListBackend();
-    // this.invoiceDatasource.loadTodos();
-    // this.invoiceDatasource = new InvoiceDataSource(this.invoiceService);
     this.user = this.token.getUser();
 
   }
@@ -52,7 +50,8 @@ export class BoardAdminComponent implements OnInit {
   // public getListBackend = () => {
   //   this.invoiceService.getInvoices(this.page)
   //     .subscribe(res => {
-      
+  //       this.pages = new Array(res['totalPages']);
+  //       this.invoicesArray = res['content']
   //       this.dataSource.data = res as Invoice[];
   //     })
   // }
@@ -61,26 +60,6 @@ export class BoardAdminComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
-
-  // ngAfterViewInit() {
-  //   this.invoiceDatasource.counter$
-  //     .pipe(
-  //       tap((count) => {
-  //         this.paginator.length = count;
-  //       })
-  //     )
-  //     .subscribe();
-
-  //   this.paginator.page
-  //     .pipe(
-  //       tap(() => this.loadTodos())
-  //     )
-  //     .subscribe();
-  // }
-
-  // loadTodos() {
-  //   this.invoiceDatasource.loadTodos(this.paginator.pageIndex, this.paginator.pageSize);
-  // }
   public doFilter = (value: string) => {
     // this.dataSource.filter = value.trim().toLocaleLowerCase();
     value = value.trim(); // Remove whitespace

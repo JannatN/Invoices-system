@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,11 +74,13 @@ public class UserController {
 		return convertToDto(userCreated);
 	}
 
+
 	@PutMapping("/users/{id}")
-	@PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('AUDITOR')")
-	public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long userId,
-			@Valid @RequestBody User userDetails) throws ResourceNotFoundException {
-		return userService.updateUser(userId, userDetails);
+	@PreAuthorize("hasRole('ADMIN')")
+	public UserDto updateUser(@PathVariable(value = "id") Long userId, @Valid @RequestBody UserDto userDetails)
+			throws ResourceNotFoundException, ParseException {
+		User user = convertToEntity(userDetails);
+		return convertToDto(userService.updateUser(userId, user));
 	}
 
 	@DeleteMapping("/users/{id}")

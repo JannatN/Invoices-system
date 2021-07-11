@@ -33,6 +33,10 @@ public class ItemService {
 	private ItemRepository itemRepository;
 	@Autowired
 	private InvoiceRepository invoiceRepository;
+	
+	public List<Item> getAllItems() {
+		return itemRepository.findAll();
+	}
 
 	public ResponseEntity<Item> getItemById(Long itemID) throws ResourceNotFoundException {
 		Item item = itemRepository.findById(itemID)
