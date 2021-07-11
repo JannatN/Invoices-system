@@ -11,6 +11,8 @@ import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,15 +44,34 @@ public class InvoiceController {
 	private ModelMapper modelMapper;
 
 	@GetMapping("/invoices")
-	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
-	public List<InvoiceDto> getAllInvoices() {
-		return convertToDto(invoiceService.getAllInvoices());
+	public Page<Invoice> findPaginated(Pageable page) {
+		return invoiceService.findPaginated(page);
 	}
+
+//    @GetMapping
+//    @ResponseBody
+//    public List<InvoiceDto> getInvoices(
+//            @PathVariable("page") int page,
+//            @PathVariable("size") int size, 
+//            @PathVariable("sortDir") String sortDir, 
+//            @PathVariable("sort") String sort) {
+//        
+//        List<Invoice> invoices = invoiceService.getInvoicesList(page, size, sortDir, sort);
+//        return invoices.stream()
+//          .map(this::convertToDto)
+//          .collect(Collectors.toList());
+//    }
+
+//	@GetMapping("/invoices")
+//	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
+//	public List<InvoiceDto> getAllInvoices() {
+//		return convertToDto(invoiceService.getAllInvoices());
+//	}
 
 	@ResponseBody
 	@PostMapping("/invoices")
 	@PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.CREATED)
 	public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException {
 		Invoice invoice = convertToEntity(invoiceDto);
 		ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice);

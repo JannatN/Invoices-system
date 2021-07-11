@@ -9,7 +9,8 @@ import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { Observable } from "rxjs";
 import { TokenStorageService } from '../_services/token-storage.service';
-import { ItemService } from "../_services/items.service";
+import { InvoiceDataSource } from "../invoice.datasource";
+import { tap } from 'rxjs/operators';
 
 
 @Component({
@@ -21,6 +22,8 @@ export class BoardAdminComponent implements OnInit {
   invoices: Observable<Invoice[]>;
   items: Observable<Item[]>;
   user: User;
+  invoiceDatasource: InvoiceDataSource;
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -33,6 +36,9 @@ export class BoardAdminComponent implements OnInit {
 
   ngOnInit() {
     this.getList();
+    // this.getListBackend();
+    // this.invoiceDatasource.loadTodos();
+    // this.invoiceDatasource = new InvoiceDataSource(this.invoiceService);
     this.user = this.token.getUser();
 
   }
@@ -43,10 +49,38 @@ export class BoardAdminComponent implements OnInit {
         this.dataSource.data = res as Invoice[];
       })
   }
+  // public getListBackend = () => {
+  //   this.invoiceService.getInvoices(this.page)
+  //     .subscribe(res => {
+      
+  //       this.dataSource.data = res as Invoice[];
+  //     })
+  // }
+
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
+
+  // ngAfterViewInit() {
+  //   this.invoiceDatasource.counter$
+  //     .pipe(
+  //       tap((count) => {
+  //         this.paginator.length = count;
+  //       })
+  //     )
+  //     .subscribe();
+
+  //   this.paginator.page
+  //     .pipe(
+  //       tap(() => this.loadTodos())
+  //     )
+  //     .subscribe();
+  // }
+
+  // loadTodos() {
+  //   this.invoiceDatasource.loadTodos(this.paginator.pageIndex, this.paginator.pageSize);
+  // }
   public doFilter = (value: string) => {
     // this.dataSource.filter = value.trim().toLocaleLowerCase();
     value = value.trim(); // Remove whitespace

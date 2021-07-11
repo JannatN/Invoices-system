@@ -8,17 +8,11 @@ import { Observable } from 'rxjs';
 export class InvoiceService {
 
     private baseUrl = 'http://localhost:8080/api/v1/invoices';
-    private baseUrl2 = 'http://localhost:8080/api/v1/invoices/last';
-
-    
 
     constructor(private http: HttpClient) { }
 
     getInvoice(id: number): Observable<any> {
         return this.http.get(`${this.baseUrl}/${id}`);
-    }
-    getLastInvoice(): Observable<any> {
-        return this.http.get(`${this.baseUrl2}`);
     }
 
     updateInvoice(id: number, value: any): Observable<Object> {
@@ -29,13 +23,17 @@ export class InvoiceService {
         return this.http.get(`${this.baseUrl}`);
     }
 
-    // createInvoice(invoice: Object): Observable<Object> {
-    //     return this.http.post(`${this.baseUrl}`, invoice);
-    // }
     createInvoice(invoice: Object): Observable<Object> {
         return this.http.post(`${this.baseUrl}`, invoice);
     }
 
+    // getInvoices(page: number) {
+    //     return this.http.get(`${this.baseUrl + page}`);
+    // }
+    findPaginated(request) {
+        const params = request;
+        return this.http.get(`${this.baseUrl}/${params}`);
+      }
 
     deleteInvoice(id: number): Observable<any> {
         return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
