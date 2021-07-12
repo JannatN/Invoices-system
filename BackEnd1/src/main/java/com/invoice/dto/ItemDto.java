@@ -28,8 +28,9 @@ public class ItemDto {
 
 	private Invoice invoice;
 
-	public Long getInvoice() {
-		return invoice.getId();
+
+	public Invoice getInvoice() {
+		return invoice;
 	}
 
 	public void setInvoice(Invoice invoice) {

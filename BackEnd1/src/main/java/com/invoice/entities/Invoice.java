@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,7 +26,8 @@ public class Invoice {
 	private Long id;
 
 	private Long userID;
-	@CreationTimestamp
+//	@CreationTimestamp
+	@CreatedDate
 	private Date date_created;
 
 	private Date due_date;
@@ -37,7 +39,7 @@ public class Invoice {
 	private String company;
 
 	@ManyToOne
-	@JoinColumn(name = "userID", insertable = false, updatable = false)
+	@JoinColumn(name = "userid", insertable = false, updatable = false)
 	private User user;
 
 	@OneToMany(cascade = { CascadeType.ALL })

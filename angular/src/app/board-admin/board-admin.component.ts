@@ -28,7 +28,7 @@ export class BoardAdminComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  public displayedColumns = ['id', 'dateCreated', 'dueDate', 'userid', 'company', 'type', 'details', 'update', 'delete', 'create'];
+  public displayedColumns = ['id', 'date_created', 'due_date', 'userid', 'company', 'type', 'details', 'update', 'delete', 'create'];
 
 
   public dataSource = new MatTableDataSource<Invoice>();

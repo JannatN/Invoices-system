@@ -60,11 +60,17 @@ public class UserController {
 //			throws ResourceNotFoundException {
 //		return convertToDto(userService.getUserById(userId));
 //	}
+//	@GetMapping("/users/{id}")
+//	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
+//	public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
+//		modelMapper.getConfiguration().setAmbiguityIgnored(true);
+//		return userService.getUserById(userId);
+//	}
+
 	@GetMapping("/users/{id}")
 	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
-	public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
-		modelMapper.getConfiguration().setAmbiguityIgnored(true);
-		return userService.getUserById(userId);
+	public UserDto getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
+		return convertToDto(userService.getUserById(userId));
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
@@ -75,7 +81,6 @@ public class UserController {
 		ResponseEntity<User> userCreated = userService.saveUser(user);
 		return convertToDto(userCreated);
 	}
-
 
 	@PutMapping("/users/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
@@ -92,6 +97,11 @@ public class UserController {
 	}
 
 	private UserDto convertToDto(ResponseEntity<User> responseEntity) {
+		UserDto userDto = modelMapper.map(responseEntity, UserDto.class);
+		return userDto;
+	}
+
+	private UserDto convertToDto(User responseEntity) {
 		UserDto userDto = modelMapper.map(responseEntity, UserDto.class);
 		return userDto;
 	}

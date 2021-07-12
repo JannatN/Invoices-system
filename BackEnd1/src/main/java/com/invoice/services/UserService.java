@@ -50,10 +50,15 @@ public class UserService {
 //		}
 //	}
 
-	public ResponseEntity<User> getUserById(Long userId) throws ResourceNotFoundException {
-		User user = userRepository.findById(userId)
+//	public ResponseEntity<User> getUserById(Long userId) throws ResourceNotFoundException {
+//		User user = userRepository.findById(userId)
+//				.orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
+//		return ResponseEntity.ok().body(user);
+//	}
+	public User getUserById(Long userId) throws ResourceNotFoundException {
+		return userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
-		return ResponseEntity.ok().body(user);
+
 	}
 
 	public ResponseEntity<User> updateUser(Long userId, User userDetails) throws ResourceNotFoundException {

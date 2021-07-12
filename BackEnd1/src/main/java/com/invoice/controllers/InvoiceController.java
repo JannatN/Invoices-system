@@ -66,18 +66,19 @@ public class InvoiceController {
 		return convertToDto(invoiceCreated);
 	}
 
-//	@GetMapping("/invoices/{id}")
-//	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
-//	public InvoiceDto getInvoiceById(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
-//		return convertToDto(invoiceService.getInvoiceById(invoiceID));
-//	}
 	@GetMapping("/invoices/{id}")
-	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('AUDITOR') ")
-	public ResponseEntity<Invoice> getInvoiceById(@PathVariable(value = "id") Long invoiceID)
-			throws ResourceNotFoundException {
+	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
+	public InvoiceDto getInvoiceById(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
 		modelMapper.getConfiguration().setAmbiguityIgnored(true);
-		return invoiceService.getInvoiceById(invoiceID);
+		return convertToDto(invoiceService.getInvoiceById(invoiceID));
 	}
+//	@GetMapping("/invoices/{id}")
+//	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('AUDITOR') ")
+//	public Invoice getInvoiceById(@PathVariable(value = "id") Long invoiceID)
+//			throws ResourceNotFoundException {
+////		modelMapper.getConfiguration().setAmbiguityIgnored(true);
+//		return invoiceService.getInvoiceById(invoiceID);
+//	}
 
 	@PutMapping("/invoices/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
@@ -86,7 +87,7 @@ public class InvoiceController {
 		Invoice invoice = convertToEntity(invoiceDetails);
 		return convertToDto(invoiceService.updateInvoice(invoice, invoiceID));
 	}
-//
+
 	@DeleteMapping("/invoices/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public void deleteInvoice(@PathVariable(value = "id") Long invoiceID)
@@ -95,6 +96,10 @@ public class InvoiceController {
 	}
 
 	private InvoiceDto convertToDto(ResponseEntity<Invoice> invoice) {
+		InvoiceDto invoiceDto = modelMapper.map(invoice, InvoiceDto.class);
+		return invoiceDto;
+	}
+	private InvoiceDto convertToDto(Invoice invoice) {
 		InvoiceDto invoiceDto = modelMapper.map(invoice, InvoiceDto.class);
 		return invoiceDto;
 	}

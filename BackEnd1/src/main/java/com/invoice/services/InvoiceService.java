@@ -68,14 +68,13 @@ public class InvoiceService {
 		return new ResponseEntity<Invoice>(invoice, HttpStatus.CREATED);
 	}
 
-	public ResponseEntity<Invoice> getInvoiceById(Long invoiceID) throws ResourceNotFoundException {
-		Invoice invoice = invoiceRepository.findById(invoiceID)
+	public Invoice getInvoiceById(Long invoiceID) throws ResourceNotFoundException {
+		return invoiceRepository.findById(invoiceID)
 				.orElseThrow(() -> new ResourceNotFoundException("Invoice not found for this id :: " + invoiceID));
-		return ResponseEntity.ok().body(invoice);
+
 	}
 
-	public ResponseEntity<Invoice> updateInvoice(Invoice invoiceDetails, Long invoiceID)
-			throws ResourceNotFoundException {
+	public Invoice updateInvoice(Invoice invoiceDetails, Long invoiceID) throws ResourceNotFoundException {
 		Invoice invoice = invoiceRepository.findById(invoiceID)
 				.orElseThrow(() -> new ResourceNotFoundException("Invoice not found for this id :: " + invoiceID));
 
@@ -84,9 +83,9 @@ public class InvoiceService {
 		invoice.setUserID(invoiceDetails.getUserID());
 		invoice.setCompany(invoiceDetails.getCompany());
 		invoice.setType(invoiceDetails.getType());
+		invoice.setItems(invoiceDetails.getItems());
 
-		final Invoice updatedInvoice = invoiceRepository.save(invoice);
-		return ResponseEntity.ok(updatedInvoice);
+		return invoiceRepository.save(invoice);
 	}
 
 	public void deleteInvoice(Long invoiceID) throws ResourceNotFoundException {
