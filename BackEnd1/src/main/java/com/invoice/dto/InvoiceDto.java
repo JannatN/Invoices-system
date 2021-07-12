@@ -21,8 +21,6 @@ import com.invoice.entities.Item;
 import com.invoice.entities.User;
 
 public class InvoiceDto {
-
-	@Id
 	private Long id;
 
 	private LocalDateTime date_created;
@@ -34,9 +32,7 @@ public class InvoiceDto {
 	private String company;
 
 	private Set<ItemDto> items;
-
-//	private User user;
-
+//	private UserDto user;
 	private Long userid;
 
 	public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company,
@@ -54,11 +50,11 @@ public class InvoiceDto {
 
 	}
 
-//	public User getUser() {
+//	public UserDto getUser() {
 //		return user;
 //	}
 //
-//	public void setUser(User user) {
+//	public void setUser(UserDto user) {
 //		this.user = user;
 //	}
 

@@ -61,7 +61,7 @@ public class InvoiceController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException {
 		Invoice invoice = convertToEntity(invoiceDto);
-		ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice);
+		Invoice invoiceCreated = invoiceService.createInvoice(invoice);
 		modelMapper.getConfiguration().setAmbiguityIgnored(true);
 		return convertToDto(invoiceCreated);
 	}
@@ -95,10 +95,10 @@ public class InvoiceController {
 		invoiceService.deleteInvoice(invoiceID);
 	}
 
-	private InvoiceDto convertToDto(ResponseEntity<Invoice> invoice) {
-		InvoiceDto invoiceDto = modelMapper.map(invoice, InvoiceDto.class);
-		return invoiceDto;
-	}
+//	private InvoiceDto convertToDto(ResponseEntity<Invoice> invoice) {
+//		InvoiceDto invoiceDto = modelMapper.map(invoice, InvoiceDto.class);
+//		return invoiceDto;
+//	}
 	private InvoiceDto convertToDto(Invoice invoice) {
 		InvoiceDto invoiceDto = modelMapper.map(invoice, InvoiceDto.class);
 		return invoiceDto;

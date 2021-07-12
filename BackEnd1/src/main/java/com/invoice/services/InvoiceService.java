@@ -62,10 +62,9 @@ public class InvoiceService {
 	}
 
 	@Transactional
-	public ResponseEntity<Invoice> createInvoice(Invoice invoice) {
+	public Invoice createInvoice(Invoice invoice) {
 		System.out.println(invoice.getItems().toString());
-		invoiceRepository.save(invoice);
-		return new ResponseEntity<Invoice>(invoice, HttpStatus.CREATED);
+		return invoiceRepository.save(invoice);
 	}
 
 	public Invoice getInvoiceById(Long invoiceID) throws ResourceNotFoundException {
@@ -82,7 +81,7 @@ public class InvoiceService {
 		invoice.setDue_date(invoiceDetails.getDue_date());
 		invoice.setUserID(invoiceDetails.getUserID());
 		invoice.setCompany(invoiceDetails.getCompany());
-		invoice.setType(invoiceDetails.getType());
+		invoice.setType(invoiceDetails.getType());	
 		invoice.setItems(invoiceDetails.getItems());
 
 		return invoiceRepository.save(invoice);
