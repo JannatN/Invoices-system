@@ -25,9 +25,9 @@ public class InvoiceDto {
 	@Id
 	private Long id;
 
-	private Date date_created;
+	private LocalDateTime date_created;
 
-	private Date due_date;
+	private LocalDateTime due_date;
 
 	private String type;
 
@@ -39,7 +39,7 @@ public class InvoiceDto {
 
 	private Long userid;
 
-	public InvoiceDto(Long id, Date date_created, Date due_date, String type, String company,
+	public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company,
 			Set<ItemDto> items) {
 		super();
 		this.id = id;
@@ -78,19 +78,19 @@ public class InvoiceDto {
 		this.id = id;
 	}
 
-	public Date getDate_created() {
+	public LocalDateTime getDate_created() {
 		return date_created;
 	}
 
-	public void setDate_created(Date date_created) {
+	public void setDate_created(LocalDateTime date_created) {
 		this.date_created = date_created;
 	}
 
-	public Date getDue_date() {
+	public LocalDateTime getDue_date() {
 		return due_date;
 	}
 
-	public void setDue_date(Date due_date) {
+	public void setDue_date(LocalDateTime due_date) {
 		this.due_date = due_date;
 	}
 

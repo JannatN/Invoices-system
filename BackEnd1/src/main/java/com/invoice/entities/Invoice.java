@@ -26,11 +26,10 @@ public class Invoice {
 	private Long id;
 
 	private Long userID;
-//	@CreationTimestamp
-	@CreatedDate
-	private Date date_created;
+	@CreationTimestamp
+	private LocalDateTime date_created;
 
-	private Date due_date;
+	private LocalDateTime due_date;
 	@NotBlank
 	@Size(max = 20)
 	private String type;
@@ -50,14 +49,38 @@ public class Invoice {
 	@JoinColumn(name = "file_id", referencedColumnName = "id")
 	private FileDB file;
 
-	public Invoice(Long userID, Date dateCreated, Date dueDate) {
+	public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date,
+			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, Set<Item> items, FileDB file) {
+		super();
+		this.id = id;
 		this.userID = userID;
-		this.date_created = dateCreated;
-		this.due_date = dueDate;
+		this.date_created = date_created;
+		this.due_date = due_date;
+		this.type = type;
+		this.company = company;
+		this.user = user;
+		this.items = items;
+		this.file = file;
 	}
 
 	public Invoice() {
 
+	}
+
+	public LocalDateTime getDate_created() {
+		return date_created;
+	}
+
+	public void setDate_created(LocalDateTime date_created) {
+		this.date_created = date_created;
+	}
+
+	public LocalDateTime getDue_date() {
+		return due_date;
+	}
+
+	public void setDue_date(LocalDateTime due_date) {
+		this.due_date = due_date;
 	}
 
 	public Long getId() {
@@ -74,22 +97,6 @@ public class Invoice {
 
 	public void setUserID(Long userID) {
 		this.userID = userID;
-	}
-
-	public Date getDateCreated() {
-		return date_created;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.date_created = dateCreated;
-	}
-
-	public Date getDueDate() {
-		return due_date;
-	}
-
-	public void setDueDate(Date dueDate) {
-		this.due_date = dueDate;
 	}
 
 	public Set<Item> getItems() {
