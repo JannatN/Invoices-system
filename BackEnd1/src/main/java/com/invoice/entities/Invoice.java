@@ -13,8 +13,24 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+//import org.hibernate.envers.Audited;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Entity
+
+@Audited
+//@Configuration
+//@EnableTransactionManagement
+//@EnableJpaRepositories
+//@EnableJpaAuditing
+//@EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
+
+
 @Table(name = "invoices")
 public class Invoice {
 	@Id
@@ -35,17 +51,21 @@ public class Invoice {
 	
 	
 	@ManyToOne
+	@NotAudited
 	@JoinColumn(name = "userID", insertable = false, updatable = false)
 	private User user;
 
 	
 	@OneToMany(cascade = { CascadeType.ALL })
+	@NotAudited
+
     @JoinColumn(name = "invoiceid", referencedColumnName = "id")
 	private Set<Item> items;
 	
-	 @OneToOne(cascade = CascadeType.ALL)
-	    @JoinColumn(name = "file_id", referencedColumnName = "id")
-	    private FileDB file;
+//	 @OneToOne(cascade = CascadeType.ALL)
+//	 
+//	    @JoinColumn(name = "file_id", referencedColumnName = "id")
+//	    private FileDB file;
 	
 
 	public Invoice(Long userID, LocalDateTime dateCreated, LocalDateTime dueDate) {
@@ -125,7 +145,7 @@ public class Invoice {
 	@Override
 	public String toString() {
 		return "Invoice [id=" + id + ", userID=" + userID + ", date_created=" + date_created + ", due_date=" + due_date
-				+ ", type=" + type + ", company=" + company + ", user=" + user + ", items=" + items + ", file=" + file
+				+ ", type=" + type + ", company=" + company + ", user=" + user + ", items=" + items 
 				+ "]";
 	}
 

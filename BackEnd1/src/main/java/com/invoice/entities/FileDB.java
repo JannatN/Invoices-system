@@ -10,7 +10,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+
 @Entity
+//@Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
 @Table(name = "files")
 public class FileDB {
   
@@ -26,12 +28,14 @@ public class FileDB {
 
   @Lob
   private byte[] data;
+  
+  
 
   public FileDB() {
   }
   
-  @OneToOne(mappedBy = "file")
-  private Invoice invoice;
+//  @OneToOne(mappedBy = "file")
+//  private Invoice invoice;
   
   public FileDB(String name, String type, byte[] data) {
     this.name = name;

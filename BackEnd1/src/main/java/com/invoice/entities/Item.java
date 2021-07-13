@@ -5,6 +5,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
+//@Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
+
 @Table(name = "items")
 public class Item {
 	@Id

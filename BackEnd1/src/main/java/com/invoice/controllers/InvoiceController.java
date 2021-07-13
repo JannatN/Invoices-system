@@ -4,8 +4,12 @@ import java.util.HashMap;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.EntityManagerFactory;
 import javax.validation.Valid;
 
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.invoice.entities.Invoice;
 import com.invoice.entities.Item;
 import com.invoice.exception.ResourceNotFoundException;
+import com.invoice.repositories.InvoiceRepository;
 import com.invoice.services.InvoiceService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -30,17 +35,38 @@ public class InvoiceController {
 	@Autowired
 	private InvoiceService invoiceService;
 
+	@Autowired
+	InvoiceRepository invoiceRepository;
+	
 	@GetMapping("/invoices")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
 	public List<Invoice> getAllInvoices() {
 		return invoiceService.getAllInvoices();
 	}
+	
+	
+	
 
+	
+//	@GetMapping("/getInfo/{id}")
+//    public void getInfo(@PathVariable  int id){
+//        System.out.println(invoiceRepository.findLastChangeRevision(id));
+//    }
+//	
 	@GetMapping("/invoices/last")
 	@PreAuthorize("hasRole('ADMIN') ")
 	public Invoice getLastInvoice() {
 		return invoiceService.getLastInvoice();
 	}
+	Invoice invoice;
+//	@Autowired
+//	public EntityManagerFactory entityManagerFactory;
+//	@GetMapping("/invoices/info/{id}")
+//	@PreAuthorize("hasRole('ADMIN')")
+//public void get(@PathVariable Long id){
+////   System.out.println(AuditReaderFactory.get(entityManagerFactory.createEntityManager()).toString());
+//		invoiceRepository.findRevisions(id);
+//}
 	@PostMapping("/invoices")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Invoice> createInvoice(@Valid @RequestBody Invoice invoice) {
@@ -74,5 +100,8 @@ public class InvoiceController {
 			throws ResourceNotFoundException {
 		return invoiceService.deleteInvoice(invoiceID);
 	}
+
+	
+	
 
 }
