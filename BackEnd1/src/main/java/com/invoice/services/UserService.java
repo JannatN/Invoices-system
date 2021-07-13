@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.invoice.entities.Invoice;
 import com.invoice.entities.User;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.repositories.UserRepository;
@@ -21,33 +23,42 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public User saveUser(User user) {
-		return userRepository.save(user);
+	public ResponseEntity<User> saveUser(User user) {
+		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 
-	public ResponseEntity<List<User>> getAllUsers(String username, String firstname) {
-		try {
-			List<User> users = new ArrayList<User>();
-
-			if (username == null)
-				userRepository.findAll().forEach(users::add);
-			else
-				userRepository.findByusername(username).forEach(users::add);
-
-			if (users.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-
-			return new ResponseEntity<>(users, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	public List<User> getAllUsers() {
+		return userRepository.findAll();
 	}
 
-	public ResponseEntity<User> getUserById(Long userId) throws ResourceNotFoundException {
-		User user = userRepository.findById(userId)
+//	public List<User> getAllUsers(String username, String firstname) {
+//		try {
+//			List<User> users = new ArrayList<User>();
+//
+//			if (username == null)
+//				userRepository.findAll().forEach(users::add);
+//			else
+//				userRepository.findByusername(username).forEach(users::add);
+//
+//			if (users.isEmpty()) {
+//				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//			}
+//
+//			return new ResponseEntity<>(users, HttpStatus.OK);
+//		} catch (Exception e) {
+//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//	}
+
+//	public ResponseEntity<User> getUserById(Long userId) throws ResourceNotFoundException {
+//		User user = userRepository.findById(userId)
+//				.orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
+//		return ResponseEntity.ok().body(user);
+//	}
+	public User getUserById(Long userId) throws ResourceNotFoundException {
+		return userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
-		return ResponseEntity.ok().body(user);
+
 	}
 
 	public ResponseEntity<User> updateUser(Long userId, User userDetails) throws ResourceNotFoundException {

@@ -2,20 +2,19 @@ package com.invoice.repositories;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.data.domain.Pageable;
 import com.invoice.entities.Invoice;
 import com.invoice.entities.User;
 
 @Repository
-public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
-//
-//	@Query(countByUserId)
-//	Integer countByUserId(Long user_id);
-//
-//	final String countByUserId= "SELECT COUNT(i) FROM Invoice i WHERE i.userID = ?1";
-	
-	Invoice findTopByOrderByIdDesc();
+public interface InvoiceRepository extends JpaRepository<Invoice, Long>, PagingAndSortingRepository<Invoice, Long> {
+
+//	@Query("select i from Invoice i where id like %?1%")
+//    Page<Invoice> findById(Long id, Pageable pageable);
+
 }

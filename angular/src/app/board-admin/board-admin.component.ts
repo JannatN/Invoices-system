@@ -4,12 +4,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { InvoiceService } from "../_services/invoices.service";
 import { Invoice } from '../models/invoice';
-import { Item } from '../models/item';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { Observable } from "rxjs";
 import { TokenStorageService } from '../_services/token-storage.service';
 import { ItemService } from "../_services/items.service";
+import { Item } from '../models/item';
 
 
 @Component({
@@ -21,11 +21,14 @@ export class BoardAdminComponent implements OnInit {
   invoices: Observable<Invoice[]>;
   items: Observable<Item[]>;
   user: User;
+  page: number = 0
+  invoicesArray: Array<any>;
+  pages: Array<number>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  public displayedColumns = ['id', 'dateCreated', 'dueDate', 'userID', 'company', 'type', 'details', 'update', 'delete', 'create'];
+  public displayedColumns = ['id', 'date_created', 'due_date', 'userid', 'company', 'type', 'details', 'update', 'delete', 'create'];
 
 
   public dataSource = new MatTableDataSource<Invoice>();
@@ -33,6 +36,7 @@ export class BoardAdminComponent implements OnInit {
 
   ngOnInit() {
     this.getList();
+    // this.getListBackend();
     this.user = this.token.getUser();
 
   }
@@ -43,6 +47,15 @@ export class BoardAdminComponent implements OnInit {
         this.dataSource.data = res as Invoice[];
       })
   }
+  // public getListBackend = () => {
+  //   this.invoiceService.getInvoices(this.page)
+  //     .subscribe(res => {
+  //       this.pages = new Array(res['totalPages']);
+  //       this.invoicesArray = res['content']
+  //       this.dataSource.data = res as Invoice[];
+  //     })
+  // }
+
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

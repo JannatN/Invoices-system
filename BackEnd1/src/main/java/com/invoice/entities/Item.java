@@ -4,6 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "items")
 public class Item {
@@ -27,23 +30,18 @@ public class Item {
 
 	private Integer quantity;
 
-	private Long invoiceID;
-
+//	private Long invoiceID;
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "invoiceID", insertable = false, updatable = false)
+	@JoinColumn(name = "invoiceID")
 	private Invoice invoice;
 
 	public Item() {
 
 	}
 
-	public Item(Long invoiceID) {
-		this.invoiceID = invoiceID;
-
-	}
-
-	public Item(Long invoiceID, String name, String description, Double price, String currency, Integer quantity) {
-		this.invoiceID = invoiceID;
+	public Item(String name, String description, Double price, String currency, Integer quantity) {
+//		this.invoiceID = invoiceID;
 		this.name = name;
 		this.description = description;
 		this.price = price;
@@ -99,20 +97,18 @@ public class Item {
 		this.quantity = quantity;
 	}
 
-	public Long getInvoiceID() {
-		return invoiceID;
+	public Invoice getInvoice() {
+		return invoice;
 	}
-
-	public void setInvoiceID(Long invoiceID) {
-		this.invoiceID = invoiceID;
-	}
-
-//	public Invoice getInvoice() {
-//		return invoice;
-//	}
 
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
+	}
+
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", currency="
+				+ currency + ", quantity=" + quantity + ", invoice=" + invoice + "]";
 	}
 
 }

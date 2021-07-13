@@ -4,6 +4,7 @@ package com.invoice.entities;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -13,6 +14,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "invoices")
@@ -24,7 +28,7 @@ public class Invoice {
 	private Long userID;
 	@CreationTimestamp
 	private LocalDateTime date_created;
-	@NotNull(message = "Please enter Date")
+
 	private LocalDateTime due_date;
 	@NotBlank
 	@Size(max = 20)
@@ -32,29 +36,51 @@ public class Invoice {
 
 	@NotBlank
 	private String company;
-	
-	
+
 	@ManyToOne
-	@JoinColumn(name = "userID", insertable = false, updatable = false)
+	@JoinColumn(name = "userid", insertable = false, updatable = false)
 	private User user;
 
-	
-	@OneToMany(mappedBy = "invoiceID", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,CascadeType.PERSIST })
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
 	private Set<Item> items;
-	
-	 @OneToOne(cascade = CascadeType.ALL)
-	    @JoinColumn(name = "file_id", referencedColumnName = "id")
-	    private FileDB file;
-	
 
-	public Invoice(Long userID, LocalDateTime dateCreated, LocalDateTime dueDate) {
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "file_id", referencedColumnName = "id")
+	private FileDB file;
+
+	public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date,
+			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, Set<Item> items, FileDB file) {
+		super();
+		this.id = id;
 		this.userID = userID;
-		this.date_created = dateCreated;
-		this.due_date = dueDate;
+		this.date_created = date_created;
+		this.due_date = due_date;
+		this.type = type;
+		this.company = company;
+		this.user = user;
+		this.items = items;
+		this.file = file;
 	}
 
 	public Invoice() {
 
+	}
+
+	public LocalDateTime getDate_created() {
+		return date_created;
+	}
+
+	public void setDate_created(LocalDateTime date_created) {
+		this.date_created = date_created;
+	}
+
+	public LocalDateTime getDue_date() {
+		return due_date;
+	}
+
+	public void setDue_date(LocalDateTime due_date) {
+		this.due_date = due_date;
 	}
 
 	public Long getId() {
@@ -71,22 +97,6 @@ public class Invoice {
 
 	public void setUserID(Long userID) {
 		this.userID = userID;
-	}
-
-	public LocalDateTime getDateCreated() {
-		return date_created;
-	}
-
-	public void setDateCreated(LocalDateTime dateCreated) {
-		this.date_created = dateCreated;
-	}
-
-	public LocalDateTime getDueDate() {
-		return due_date;
-	}
-
-	public void setDueDate(LocalDateTime dueDate) {
-		this.due_date = dueDate;
 	}
 
 	public Set<Item> getItems() {
@@ -119,6 +129,13 @@ public class Invoice {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "Invoice [id=" + id + ", userID=" + userID + ", date_created=" + date_created + ", due_date=" + due_date
+				+ ", type=" + type + ", company=" + company + ", user=" + user + ", items=" + items + ", file=" + file
+				+ "]";
 	}
 
 }

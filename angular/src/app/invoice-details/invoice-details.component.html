@@ -3,15 +3,22 @@
 <hr />
 <div *ngIf="invoice">
     <div>
-        <label><b> Created Date: </b></label> {{invoice.dateCreated}}
+        <label><b> Created Date: </b></label> {{invoice.date_created}}
     </div>
     <div>
-        <label><b>Due Date: </b></label> {{invoice.dueDate}}
+        <label><b>Due Date: </b></label> {{invoice.due_date}}
     </div>
     <div>
-        <label><b>User Id: </b></label> {{invoice.userID}}
+        <label><b>User Id: </b></label> {{invoice.userid}}
     </div>
     <div>
+        <label><b>Company: </b></label> {{invoice.company}}
+    </div>
+    <div>
+        <label><b>Invoice Type: </b></label> {{invoice.type}}
+    </div>
+
+    <!-- <div>
         <label><b>First name: </b></label> {{invoice["user"].firstname}}
     </div>
     <div>
@@ -23,13 +30,7 @@
 
         <label><b>Email: </b></label> {{invoice["user"].email}}
 
-    </div>
-    <div>
-        <label><b>Company: </b></label> {{invoice.company}}
-    </div>
-    <div>
-        <label><b>Invoice Type: </b></label> {{invoice.type}}
-    </div>
+    </div> -->
 
 
     <!-- <div *ngFor=" let invoice of invoice['items']"> -->
@@ -42,6 +43,6 @@
   </pre>
 
 
-<br>
-<br>
-<button (click)="list()" class="btn btn-primary">Back to Invoice List</button><br>
+    <br>
+    <br>
+    <button (click)="list()" class="btn btn-primary">Back to Invoice List</button><br>

@@ -4,14 +4,14 @@
     <form (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="name">Due Date</label>
-            <input type="datetime-local" class="form-control" id="dueDate" required [(ngModel)]="invoice.dueDate" name="due_date"
+            <input type="datetime-local" class="form-control" id="due_date" required [(ngModel)]="invoice.due_date" name="due_date"
                 #dueDate="ngModel">
         </div>
 
 
         <div class="form-group">
             <label for="name">User Id</label>
-            <input type="number" class="form-control" id="userid" required [(ngModel)]="invoice.userID" name="userid"
+            <input type="number" class="form-control" id="userid" required [(ngModel)]="invoice.userid" name="userid"
                 #userid="ngModel">
 
 

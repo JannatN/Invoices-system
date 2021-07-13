@@ -33,12 +33,7 @@ public class ItemService {
 	private ItemRepository itemRepository;
 	@Autowired
 	private InvoiceRepository invoiceRepository;
-
-//	@GetMapping("/posts/{postId}/comments")
-//	public Page<Item> getAllItemsByInvoiceID(@PathVariable(value = "invoiceID") Long invoiceID, Pageable pageable)
-//			throws ResourceNotFoundException {
-//		return ItemRepository.findByInvoiceId(invoiceID, pageable);
-//	}
+	
 	public List<Item> getAllItems() {
 		return itemRepository.findAll();
 	}
@@ -49,23 +44,19 @@ public class ItemService {
 		return ResponseEntity.ok().body(item);
 	}
 
-	public ResponseEntity<Item> createItem2(Long invoiceID, Item item) throws ResourceNotFoundException {
+	public ResponseEntity<Item> createItem(Long invoiceID, Item item) throws ResourceNotFoundException {
 		return invoiceRepository.findById(invoiceID).map(invoice -> {
 			item.setInvoice(invoice);
-			item.setInvoiceID(invoiceID);
+//			item.setInvoiceID(invoiceID);
 			itemRepository.saveAndFlush(item);
 			return new ResponseEntity<Item>(item, HttpStatus.CREATED);
 		}).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
 	}
 
-	public ResponseEntity<Item> createItem(Item item) {
-		itemRepository.save(item);
-		return new ResponseEntity<Item>(item, HttpStatus.CREATED);
-	}
-
-	public Item getLastItem() {
-		return itemRepository.findTopByOrderByIdDesc();
-	}
+//	public ResponseEntity<Item> createItem(Item item) {
+//		itemRepository.save(item);
+//		return new ResponseEntity<Item>(item, HttpStatus.CREATED);
+//	}
 
 	public Item updateItem(Long invoiceID, Long itemID, Item itemDetails) throws ResourceNotFoundException {
 		if (!invoiceRepository.existsById(invoiceID)) {
@@ -78,7 +69,7 @@ public class ItemService {
 			item.setPrice(itemDetails.getPrice());
 			item.setCurrency(itemDetails.getCurrency());
 			item.setQuantity(itemDetails.getQuantity());
-			item.setInvoiceID(itemDetails.getInvoiceID());
+//			item.setInvoiceID(itemDetails.getInvoiceID());
 			return itemRepository.save(item);
 		}).orElseThrow(() -> new ResourceNotFoundException("ItemID " + itemID + "not found"));
 	}
