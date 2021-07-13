@@ -22,25 +22,31 @@
         <label><b>First name: </b></label> {{invoice["user"].firstname}}
     </div>
     <div>
-
         <label><b>Last name: </b></label> {{invoice["user"].lastname}}
-
     </div>
     <div>
-
         <label><b>Email: </b></label> {{invoice["user"].email}}
-
     </div> -->
 
-
-    <!-- <div *ngFor=" let invoice of invoice['items']"> -->
-    <!-- <div> -->
-    <!-- console.log(this.invoice["items"][1].price) -->
     <label><b>Items: </b></label>
-    <pre> <code>
-      {{invoice["items"] |json}}
-    </code> 
-  </pre>
+    <tbody>
+        <tr *ngFor="let item of invoice.items | keyvalue">
+            <div>Item Name: {{item.value.name}} </div>
+            <div>Price: {{item.value.price}}{{item.value.currency}}</div>
+            <div>Description: {{item.value.description}} </div>
+            <div>Quantity: {{item.value.quantity}} </div>
+            <div><br></div>
+
+        </tr>
+        <!-- <td>
+        <button (click)="updateItem(item.id)" class="btn btn-info" style="margin-left: 10px">Update</button>
+        <button (click)="itemDetails(item.id)" class="btn btn-info"
+          style="margin-left: 10px">Details</button>
+        <button (click)="deleteItem(item.id)" class="btn btn-danger">Delete</button>
+      </td> -->
+        <!-- <button (click)="createItem()" class="btn btn-info" style="margin-left: 10px">Create Item</button> -->
+
+    </tbody>
 
 
     <br>

@@ -16,7 +16,8 @@ export class InvoiceDetailsComponent implements OnInit {
 
   id: number;
   invoice: Invoice;
-  // items:Observable<Item[]>
+  items: Item[];
+  // items: []
   invoices: Observable<Invoice[]>;
   constructor(private route: ActivatedRoute, private router: Router,
     private invoiceService: InvoiceService, private location: Location) { }
@@ -33,7 +34,8 @@ export class InvoiceDetailsComponent implements OnInit {
         console.log(data)
         this.invoice = data;
         this.invoices = data
-        console.log(this.invoices["items"])
+        // this.items.push(this.invoices["items"]);
+        console.log("items",this.invoice.items)
 
         // console.log("start");
 
