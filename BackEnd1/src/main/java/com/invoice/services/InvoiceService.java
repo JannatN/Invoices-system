@@ -64,6 +64,8 @@ public class InvoiceService {
 	@Transactional
 	public Invoice createInvoice(Invoice invoice) {
 		System.out.println(invoice.getItems().toString());
+		System.out.println( invoice.toString());
+
 		return invoiceRepository.save(invoice);
 	}
 
@@ -77,11 +79,11 @@ public class InvoiceService {
 		Invoice invoice = invoiceRepository.findById(invoiceID)
 				.orElseThrow(() -> new ResourceNotFoundException("Invoice not found for this id :: " + invoiceID));
 
-		invoice.setDate_created(invoiceDetails.getDate_created());
+//		invoice.setDate_created(invoiceDetails.getDate_created());
 		invoice.setDue_date(invoiceDetails.getDue_date());
 		invoice.setUserID(invoiceDetails.getUserID());
 		invoice.setCompany(invoiceDetails.getCompany());
-		invoice.setType(invoiceDetails.getType());	
+		invoice.setType(invoiceDetails.getType());
 		invoice.setItems(invoiceDetails.getItems());
 
 		return invoiceRepository.save(invoice);

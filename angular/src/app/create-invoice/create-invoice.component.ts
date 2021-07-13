@@ -17,7 +17,7 @@ export class CreateInvoiceComponent implements OnInit {
 
   invoice: Invoice = new Invoice();
   submitted = false;
-  invoices: Invoice;
+  // invoices: Invoice;
   item: Item = new Item();
   file: FileUp = new FileUp();
   selectedFiles: FileList;
@@ -40,7 +40,7 @@ export class CreateInvoiceComponent implements OnInit {
       console.log(data1)
       this.invoice = new Invoice();
       this.uploadFiles();
-      this.file.invoiceid = this.invoices.id
+
 
 
     })
