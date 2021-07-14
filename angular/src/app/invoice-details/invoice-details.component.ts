@@ -20,7 +20,7 @@ export class InvoiceDetailsComponent implements OnInit {
   // items: []
   invoices: Observable<Invoice[]>;
   constructor(private route: ActivatedRoute, private router: Router,
-    private invoiceService: InvoiceService, private location: Location) { }
+    private invoiceService: InvoiceService,  private itemService: ItemService,private location: Location) { }
 
   ngOnInit() {
     this.invoice = new Invoice();
@@ -35,7 +35,7 @@ export class InvoiceDetailsComponent implements OnInit {
         this.invoice = data;
         this.invoices = data
         // this.items.push(this.invoices["items"]);
-        console.log("items",this.invoice.items)
+        console.log("items", this.invoice.items)
 
         // console.log("start");
 
@@ -48,8 +48,6 @@ export class InvoiceDetailsComponent implements OnInit {
       })
     error => console.log(error);
   }
-
-
 
   list() {
     this.location.back();

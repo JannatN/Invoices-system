@@ -23,7 +23,7 @@ export class BoardAuditorComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  public displayedColumns = ['id', 'dateCreated', 'dueDate', 'userID', 'company', 'type', 'details'];
+  public displayedColumns = ['id', 'date_created', 'due_date', 'userid', 'company', 'type', 'details'];
   //dataSource: MatTableDataSource<any>;
   // dataSource = new MatTableDataSource();
 

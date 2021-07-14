@@ -14,27 +14,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.invoice.entities.File;
 import com.invoice.payload.response.MessageResponse;
-import com.invoice.services.FileStorageService;
+import com.invoice.services.FileService;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:4200")
 public class FileController {
 
 	@Autowired
-	private FileStorageService storageService;
-
-	@PostMapping("/upload")
+	private FileService storageService;
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/upload/{invoiceID}")
 	@PreAuthorize("hasRole('ADMIN') ")
-	public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file,
+			@PathVariable Long invoiceID) {
 		String message = "";
-		
+
 		try {
-			storageService.store(file);
+			storageService.store(file, invoiceID);
 
 			message = "Uploaded the file successfully: " + file.getOriginalFilename();
 			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
