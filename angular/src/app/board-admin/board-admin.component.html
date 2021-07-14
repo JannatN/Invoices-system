@@ -45,7 +45,7 @@
         <mat-cell *matCellDef="let row" class="mycolor"> {{row.type }} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="create">
-        <th mat-header-cell *matHeaderCellDef>+Item </th>
+        <th mat-header-cell *matHeaderCellDef>+Item | </th>
         <td mat-cell *matCellDef="let row">
           <button mat-icon-button color="warn" (click)="redirectToCreate(row.id)">
             <mat-icon class="mat-18"><img class="img-responsive" src="assets/images/plus.png"></mat-icon>
@@ -75,6 +75,14 @@
         <td mat-cell *matCellDef="let row">
           <button mat-icon-button color="warn" (click)="redirectToDelete(row.id)">
             <mat-icon class="mat-18"><img class="img-responsive" src="assets/images/delete.png"></mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="attachFile">
+        <th mat-header-cell *matHeaderCellDef> AttachFile | </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="warn" (click)="redirectToAttachFile(row.id)">
+            <mat-icon class="mat-18"><img class="img-responsive" src="assets/images/file.png"></mat-icon>
           </button>
         </td>
       </ng-container>

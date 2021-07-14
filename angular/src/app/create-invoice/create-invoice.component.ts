@@ -19,12 +19,7 @@ export class CreateInvoiceComponent implements OnInit {
   submitted = false;
   // invoices: Invoice;
   item: Item = new Item();
-  file: FileUp = new FileUp();
-  selectedFiles: FileList;
-  progressInfos = [];
-  fileInfo = [];
-  message = '';
-  fileInfos: Observable<any>;
+  location: any;
 
 
   constructor(private invoiceService: InvoiceService,
@@ -48,9 +43,9 @@ export class CreateInvoiceComponent implements OnInit {
   onSubmit() {
     this.invoice.items = [];
     this.invoice.items.push(this.item);
-    this.invoice.files = this.fileInfo;
-    this.invoice.files.push(this.file);
-    this.uploadFiles();
+    // this.invoice.files = this.fileInfo;
+    // this.invoice.files.push(this.file);
+    // this.uploadFiles();
 
     console.log("array item", this.item)
     console.log("array file", this.invoice.files)
@@ -67,38 +62,10 @@ export class CreateInvoiceComponent implements OnInit {
   createItem() {
     this.router.navigate(['addItem']);
   }
-  selectFiles(event) {
-    this.progressInfos = [];
-    this.selectedFiles = event.target.files;
+  back() {
+    this.location.back();
   }
 
-  upload(idx, file) {
-    this.progressInfos[idx] = { value: 0, fileName: file.name };
-    this.fileInfo[idx] = { fileName: file.name, fileType: file.type, fileSize: file.size, fileInvoice: file.invoiceid }
-    this.uploadService.upload(file).subscribe(
-      event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
-          console.log("fileinvoice", file.invoiceid)
-        }
-        // else if (event instanceof HttpResponse) {
-        //   // this.fileInfos = this.uploadService.getFiles();
-        // }
-      },
-      err => {
-        this.progressInfos[idx].value = 0;
-        this.message = 'Could not upload the file:' + file.name;
-      });
-  }
-
-  uploadFiles() {
-    this.message = '';
-
-    for (let i = 0; i < this.selectedFiles.length; i++) {
-      this.upload(i, this.selectedFiles[i]);
-      console.log("array file", this.file.invoiceid)
-
-    }
-  }
 
 }
+

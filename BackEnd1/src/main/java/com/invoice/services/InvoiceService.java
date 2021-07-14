@@ -64,8 +64,6 @@ public class InvoiceService {
 	@Transactional
 	public Invoice createInvoice(Invoice invoice) {
 		System.out.println(invoice.getItems().toString());
-		System.out.println( invoice.toString());
-
 		return invoiceRepository.save(invoice);
 	}
 
