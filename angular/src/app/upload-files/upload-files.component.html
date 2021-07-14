@@ -1,33 +1,25 @@
-<div *ngFor="let progressInfo of progressInfos" class="mb-2">
-  <span>{{ progressInfo.fileName }}</span>
-  <div class="progress">
-    <div
-      class="progress-bar progress-bar-info progress-bar-striped"
-      role="progressbar"
-      attr.aria-valuenow="{{ progressInfo.value }}"
-      aria-valuemin="0"
-      aria-valuemax="100"
-      [ngStyle]="{ width: progressInfo.value + '%' }"
-    >
-      {{ progressInfo.value }}%
+<div class="container">
+  <div class="title">Upload files</div>
+
+  <label class="btn btn-default">
+    <input type="file" multiple (change)="selectFiles($event)" />
+  </label>
+
+  <button class="btn btn-success" [disabled]="!selectedFiles" (click)="uploadFiles()">
+    Upload
+  </button>
+  <div *ngFor="let progressInfo of progressInfos" class="mb-2">
+    <span>{{ progressInfo.fileName }}</span>
+    <div class="progress">
+      <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+        attr.aria-valuenow="{{ progressInfo.value }}" aria-valuemin="0" aria-valuemax="100"
+        [ngStyle]="{ width: progressInfo.value + '%' }">
+        {{ progressInfo.value }}%
+      </div>
     </div>
   </div>
+  <!-- <div class="alert alert-light" role="alert">{{ message }}</div> -->
 </div>
-
-<label class="btn btn-default">
-  <input type="file" multiple (change)="selectFiles($event)" />
-</label>
-
-<button
-  class="btn btn-success"
-  [disabled]="!selectedFiles"
-  (click)="uploadFiles()"
->
-  Upload
-</button>
-
-<div class="alert alert-light" role="alert">{{ message }}</div>
-
 <!-- <ul
 class="list-group list-group-flush"
 *ngFor="let file of fileInfos | async"
@@ -40,7 +32,7 @@ class="list-group list-group-flush"
 </ul> -->
 
 
-<div class="card">
+<!-- <div class="card">
   <div class="card-header">List of Files</div>
   <ul
     class="list-group list-group-flush"
@@ -51,4 +43,4 @@ class="list-group list-group-flush"
    
     </li>
   </ul>
-</div>
+</div> -->

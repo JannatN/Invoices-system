@@ -28,7 +28,7 @@ export class BoardAdminComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  public displayedColumns = ['id', 'date_created', 'due_date', 'userid', 'company', 'type', 'details', 'update', 'delete', 'create'];
+  public displayedColumns = ['id', 'date_created', 'due_date', 'userid', 'company', 'type', 'details', 'update', 'delete', 'create', 'attachFile'];
 
 
   public dataSource = new MatTableDataSource<Invoice>();
@@ -84,7 +84,10 @@ export class BoardAdminComponent implements OnInit {
         },
         error => console.log(error));
   }
+  redirectToAttachFile(id: number) {
+    this.router.navigate(['attachFile', id]);
 
+  }
   createInvoice() {
     this.router.navigate(['addInvoice']);
   }

@@ -95,10 +95,6 @@ public class InvoiceController {
 		invoiceService.deleteInvoice(invoiceID);
 	}
 
-//	private InvoiceDto convertToDto(ResponseEntity<Invoice> invoice) {
-//		InvoiceDto invoiceDto = modelMapper.map(invoice, InvoiceDto.class);
-//		return invoiceDto;
-//	}
 	private InvoiceDto convertToDto(Invoice invoice) {
 		InvoiceDto invoiceDto = modelMapper.map(invoice, InvoiceDto.class);
 		return invoiceDto;

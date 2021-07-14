@@ -21,6 +21,7 @@ import { UpdateItemComponent } from './update-item/update-item.component';
 import {ItemDetailsComponent } from './item-details/item-details.component';
 import { ItemListComponent } from './item-list/item-list.component';
 import { CreateItemComponent } from './create-item/create-item.component';
+import { UploadFilesComponent } from './upload-files/upload-files.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -45,6 +46,7 @@ const routes: Routes = [
   { path: 'updateItem/:id', component: UpdateItemComponent },
   // { path: 'addItem', component: CreateItemComponent },
   { path: 'addItem/:id', component: CreateItemComponent },
+  { path: 'attachFile/:id', component: UploadFilesComponent },
 
 
 ];

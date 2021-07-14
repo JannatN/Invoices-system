@@ -73,6 +73,6 @@ h2 {
 .container {
   margin: 10vh;
   margin-left: 0px;
-
+  /* height: 100vh; */
   background-color: rgba(255, 255, 255, 0.39);
 }

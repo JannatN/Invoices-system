@@ -2,6 +2,7 @@ package com.invoice.dto;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,7 +17,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.invoice.entities.File;
 import com.invoice.entities.Item;
 import com.invoice.entities.User;
 
@@ -32,11 +36,14 @@ public class InvoiceDto {
 	private String company;
 
 	private Set<ItemDto> items;
+	@JsonBackReference
+	private Set<FileDto> files;
+
 //	private UserDto user;
 	private Long userid;
 
 	public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company,
-			Set<ItemDto> items) {
+			Set<ItemDto> items, Set<FileDto> files) {
 		super();
 		this.id = id;
 		this.date_created = date_created;
@@ -44,6 +51,7 @@ public class InvoiceDto {
 		this.type = type;
 		this.company = company;
 		this.items = items;
+		this.files = files;
 	}
 
 	public InvoiceDto() {
@@ -57,6 +65,14 @@ public class InvoiceDto {
 //	public void setUser(UserDto user) {
 //		this.user = user;
 //	}
+
+	public Set<FileDto> getFiles() {
+		return files;
+	}
+
+	public void setFiles(Set<FileDto> files) {
+		this.files = files;
+	}
 
 	public Long getUserid() {
 		return userid;
@@ -112,6 +128,12 @@ public class InvoiceDto {
 
 	public void setItems(Set<ItemDto> items) {
 		this.items = items;
+	}
+
+	@Override
+	public String toString() {
+		return "InvoiceDto [id=" + id + ", date_created=" + date_created + ", due_date=" + due_date + ", type=" + type
+				+ ", company=" + company + ", items=" + items + ", files=" + files + ", userid=" + userid + "]";
 	}
 
 }

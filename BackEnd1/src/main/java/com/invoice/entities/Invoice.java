@@ -45,12 +45,12 @@ public class Invoice {
 	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
 	private Set<Item> items;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "file_id", referencedColumnName = "id")
-	private FileDB file;
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
+	private Set<File> files;
 
 	public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date,
-			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, Set<Item> items, FileDB file) {
+			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, Set<Item> items, Set<File> files) {
 		super();
 		this.id = id;
 		this.userID = userID;
@@ -60,11 +60,19 @@ public class Invoice {
 		this.company = company;
 		this.user = user;
 		this.items = items;
-		this.file = file;
+		this.files= files;
 	}
 
 	public Invoice() {
 
+	}
+
+	public Set<File> getFiles() {
+		return files;
+	}
+
+	public void setFiles(Set<File> files) {
+		this.files = files;
 	}
 
 	public LocalDateTime getDate_created() {
@@ -134,7 +142,7 @@ public class Invoice {
 	@Override
 	public String toString() {
 		return "Invoice [id=" + id + ", userID=" + userID + ", date_created=" + date_created + ", due_date=" + due_date
-				+ ", type=" + type + ", company=" + company + ", user=" + user + ", items=" + items + ", file=" + file
+				+ ", type=" + type + ", company=" + company + ", user=" + user + ", items=" + items + ", file=" + files
 				+ "]";
 	}
 

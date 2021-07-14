@@ -4,8 +4,8 @@
     <form (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="name">Due Date</label>
-            <input type="datetime-local" class="form-control" id="due_date" required [(ngModel)]="invoice.due_date" name="due_date"
-                #dueDate="ngModel">
+            <input type="datetime-local" class="form-control" id="due_date" required [(ngModel)]="invoice.due_date"
+                name="due_date" #dueDate="ngModel">
         </div>
 
 
@@ -28,8 +28,6 @@
                 #type="ngModel">
 
         </div>
-    </form>
-    <form (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="name">Item name</label>
             <input type="text" class="form-control" id="name" required [(ngModel)]="item.name" name="name"
@@ -62,14 +60,15 @@
                 #quantity="ngModel">
 
         </div>
-        <button type="submit" class="btn btn-success">Save Item</button>
+
+        <button type="submit" class="btn" (click)='back'>Save Invoice</button>
+
     </form>
 
     <div [hidden]="!submitted">
         <h4>You submitted successfully!</h4>
     </div>
 
-
-    <app-upload-files></app-upload-files>
+    <!-- <app-upload-files></app-upload-files> -->
 
 </div>
