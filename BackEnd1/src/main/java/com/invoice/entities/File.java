@@ -48,12 +48,6 @@ public class File {
 		this.data = data;
 	}
 
-	public File(String id, String name, String type, byte[] data) {
-		this.name = name;
-		this.type = type;
-		this.data = data;
-		this.id = id;
-	}
 
 	public String getId() {
 		return id;

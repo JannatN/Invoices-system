@@ -6,12 +6,14 @@ import java.util.stream.Stream;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.invoice.entities.File;
 import com.invoice.exception.ResourceNotFoundException;
+import com.invoice.payload.response.ResponseFile;
 import com.invoice.repositories.FileDBRepository;
 import com.invoice.repositories.InvoiceRepository;
 

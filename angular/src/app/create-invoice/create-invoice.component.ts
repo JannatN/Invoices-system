@@ -6,7 +6,7 @@ import { Item } from '../models/item';
 import { Observable } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { UploadFilesService } from '../_services/upload-file.service';
-import { FileUp } from "../models/file"
+import { File} from "../models/file"
 
 @Component({
   selector: 'app-create-invoice',
@@ -20,7 +20,7 @@ export class CreateInvoiceComponent implements OnInit {
   // invoices: Invoice;
   item: Item = new Item();
   location: any;
-
+  files: File[];
 
   constructor(private invoiceService: InvoiceService,
     private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService) { }
@@ -43,8 +43,8 @@ export class CreateInvoiceComponent implements OnInit {
   onSubmit() {
     this.invoice.items = [];
     this.invoice.items.push(this.item);
-    // this.invoice.files = this.fileInfo;
-    // this.invoice.files.push(this.file);
+    // this.invoice.files = this.files;
+    // this.invoice.files.push(this.files);
     // this.uploadFiles();
 
     console.log("array item", this.item)

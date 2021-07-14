@@ -37,13 +37,13 @@ public class InvoiceDto {
 
 	private Set<ItemDto> items;
 	@JsonBackReference
-	private Set<File> files;
+	private Set<FileDto> files;
 
 //	private UserDto user;
 	private Long userid;
 
 	public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company,
-			Set<ItemDto> items, Set<File> files) {
+			Set<ItemDto> items, Set<FileDto> files) {
 		super();
 		this.id = id;
 		this.date_created = date_created;
@@ -66,11 +66,11 @@ public class InvoiceDto {
 //		this.user = user;
 //	}
 
-	public Set<File> getFiles() {
+	public Set<FileDto> getFiles() {
 		return files;
 	}
 
-	public void setFiles(Set<File> files) {
+	public void setFiles(Set<FileDto> files) {
 		this.files = files;
 	}
 
