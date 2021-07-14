@@ -1,0 +1,19 @@
+.container {
+    height: 100vh;
+}
+
+.btn {
+    /* background-color: #dc656e; */
+    margin-top: 20px;
+}
+.btn1 {
+    background-color: #f0e9ea;
+    margin-top: 20px;
+}
+
+.title {
+    font-size: 30px;
+    color: black;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    /* border-bottom: 1px solid black; */
+}

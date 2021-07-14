@@ -1,20 +1,19 @@
-<h2>Invoice Details</h2>
-
+    <div class="title"> Invoice Details</div>
 <hr />
 <div *ngIf="invoice">
-    <div>
+    <div class="labels">
         <label><b> Created Date: </b></label> {{invoice.date_created}}
     </div>
-    <div>
+    <div class="labels">
         <label><b>Due Date: </b></label> {{invoice.due_date}}
     </div>
-    <div>
+    <div class="labels">
         <label><b>User Id: </b></label> {{invoice.userid}}
     </div>
-    <div>
+    <div class="labels">
         <label><b>Company: </b></label> {{invoice.company}}
     </div>
-    <div>
+    <div class="labels">
         <label><b>Invoice Type: </b></label> {{invoice.type}}
     </div>
 
@@ -27,9 +26,10 @@
     <div>
         <label><b>Email: </b></label> {{invoice["user"].email}}
     </div> -->
-
+    <div class="labels">
     <label><b>Items: </b></label>
     <tbody>
+        
         <tr *ngFor="let item of invoice.items | keyvalue">
             <div>Item Name: {{item.value.name}} </div>
             <div>Price: {{item.value.price}}{{item.value.currency}}</div>
@@ -46,8 +46,9 @@
         </tr>
 
     </tbody>
-
+    </div>
 
     <br>
     <br>
-    <button (click)="list()" class="btn btn-primary">Back to List</button><br>
+    <button (click)="list()" class="btn">Back to List</button><br>
+</div>
