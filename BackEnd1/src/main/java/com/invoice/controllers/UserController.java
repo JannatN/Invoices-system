@@ -1,8 +1,6 @@
 package com.invoice.controllers;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +9,6 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.invoice.dto.InvoiceDto;
-import com.invoice.dto.UserDto;
-import com.invoice.entities.Invoice;
+import com.invoice.controllers.dto.UserDto;
 import com.invoice.entities.User;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.services.UserService;
@@ -67,23 +60,24 @@ public class UserController {
 //		return userService.getUserById(userId);
 //	}
 
+
 	@GetMapping("/users/{id}")
 	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
 	public UserDto getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
 		return convertToDto(userService.getUserById(userId));
 	}
 
-	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("/users")
-	@PreAuthorize("hasRole('ADMIN')")
-	public UserDto createUser(@Valid @RequestBody UserDto userDto) throws ParseException {
-		User user = convertToEntity(userDto);
-		ResponseEntity<User> userCreated = userService.saveUser(user);
-		return convertToDto(userCreated);
-	}
+//	@ResponseStatus(HttpStatus.CREATED)
+//	@PostMapping("/users")
+//	@PreAuthorize("hasRole('ADMIN')")
+//	public UserDto createUser(@Valid @RequestBody UserDto userDto) throws ParseException {
+//		User user = convertToEntity(userDto);
+//		ResponseEntity<User> userCreated = userService.saveUser(user);
+//		return convertToDto(userCreated);
+//	}
 
 	@PutMapping("/users/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('AUDITOR')")
 	public UserDto updateUser(@PathVariable(value = "id") Long userId, @Valid @RequestBody UserDto userDetails)
 			throws ResourceNotFoundException, ParseException {
 		User user = convertToEntity(userDetails);
@@ -94,11 +88,6 @@ public class UserController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
 		return userService.deleteUser(userId);
-	}
-
-	private UserDto convertToDto(ResponseEntity<User> responseEntity) {
-		UserDto userDto = modelMapper.map(responseEntity, UserDto.class);
-		return userDto;
 	}
 
 	private UserDto convertToDto(User responseEntity) {

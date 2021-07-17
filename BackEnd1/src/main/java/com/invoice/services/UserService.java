@@ -23,15 +23,15 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public ResponseEntity<User> saveUser(User user) {
-		return new ResponseEntity<User>(user, HttpStatus.CREATED);
+	public User saveUser(User user) {
+		return userRepository.save(user);
 	}
 
 	public List<User> getAllUsers() {
 		return userRepository.findAll();
 	}
 
-//	public List<User> getAllUsers(String username, String firstname) {
+//	public List<User> getAllUsers(String username) {
 //		try {
 //			List<User> users = new ArrayList<User>();
 //
@@ -41,12 +41,13 @@ public class UserService {
 //				userRepository.findByusername(username).forEach(users::add);
 //
 //			if (users.isEmpty()) {
-//				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//			}
+//				return userRepository.findAll();
 //
-//			return new ResponseEntity<>(users, HttpStatus.OK);
+//			}
+//			return userRepository.findAll();
+////			return new ResponseEntity<>(users, HttpStatus.OK);
 //		} catch (Exception e) {
-//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//			return null;
 //		}
 //	}
 
@@ -61,7 +62,7 @@ public class UserService {
 
 	}
 
-	public ResponseEntity<User> updateUser(Long userId, User userDetails) throws ResourceNotFoundException {
+	public User updateUser(Long userId, User userDetails) throws ResourceNotFoundException {
 		User user = userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("user not found for this id :: " + userId));
 
@@ -71,8 +72,8 @@ public class UserService {
 		user.setLastname(userDetails.getLastname());
 		user.setAddress(userDetails.getAddress());
 		user.setPhoneNumber(userDetails.getPhoneNumber());
-		final User updatedUser = userRepository.save(user);
-		return ResponseEntity.ok(updatedUser);
+//		final User updatedUser = userRepository.save(user);
+		return userRepository.save(user);
 	}
 
 	public Map<String, Boolean> deleteUser(Long userId) throws ResourceNotFoundException {

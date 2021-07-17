@@ -5,6 +5,9 @@ import java.util.Set;
 import javax.validation.constraints.*;
 
 public class SignupRequest {
+	
+	//TODO login api (token in header)
+	
 	@NotBlank
 	@Size(min = 3, max = 20)
 	private String username;

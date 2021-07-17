@@ -29,4 +29,8 @@ form {
 
 .btn {
     background-color: #dc656e;
-}
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1.3vw;
+    color: white;
+    margin: 10px;
+  }

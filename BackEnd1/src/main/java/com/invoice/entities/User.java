@@ -10,131 +10,140 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
-		@UniqueConstraint(columnNames = "email") })
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")})
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	@NotBlank
-	@Size(max = 20)
-	private String username;
-	@NotBlank
-	@Size(max = 20)
-	private String firstname;
+    @NotBlank
+    @Size(max = 20)
+    private String username;
+    @NotBlank
+    @Size(max = 20)
+    private String firstname;
 
-	@NotBlank
-	@Size(max = 20)
-	private String lastname;
-	@NotBlank
-	@Size(max = 50)
-	@Email
-	private String email;
+    @NotBlank
+    @Size(max = 20)
+    private String lastname;
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
 
-	@NotBlank
-	@Size(max = 50)
-	private String address;
+    @NotBlank
+    @Size(max = 50)
+    private String address;
 
-	@Size(max = 10)
-	private String phoneNumber;
+    @Size(max = 10)
+    private String phoneNumber;
 
-	@NotBlank
-	@Size(max = 120)
-	private String password;
+    @NotBlank
+    @Size(max = 120)
+    private String password;
 
-	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "userid", referencedColumnName = "id")
-	private List<Invoice> invoices;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "userid", referencedColumnName = "id")
+    private List<Invoice> invoices;
 
-	public User(String username, String email, String password, String firstname, String lastname, String address,
-			String phoneNumber) {
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.address = address;
-		this.phoneNumber = phoneNumber;
-	}
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
-	public User() {
+    public User(String username, String email, String password, String firstname, String lastname, String address,
+                String phoneNumber) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
 
-	}
+    public User() {
 
-	public Long getId() {
-		return id;
-	}
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getFirstname() {
-		return firstname;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getLastname() {
-		return lastname;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
+    public String getFirstname() {
+        return firstname;
+    }
 
-	public Set<Role> getRoles() {
-		return roles;
-	}
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }
