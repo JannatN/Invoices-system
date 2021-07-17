@@ -31,17 +31,17 @@ export class BoardAuditorComponent implements OnInit {
   constructor(private invoiceService: InvoiceService, private router: Router, private token: TokenStorageService) { }
 
   ngOnInit() {
-    this.getList();
+    // this.getList();
     this.user = this.token.getUser();
 
   }
 
-  public getList = () => {
-    this.invoiceService.getInvoicesList()
-      .subscribe(res => {
-        this.dataSource.data = res as Invoice[];
-      })
-  }
+  // public getList = () => {
+  //   this.invoiceService.getInvoicesList()
+  //     .subscribe(res => {
+  //       this.dataSource.data = res as Invoice[];
+  //     })
+  // }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

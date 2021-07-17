@@ -10,6 +10,8 @@ import javax.validation.Valid;
 import com.invoice.mapper.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,26 +32,36 @@ import com.invoice.services.InvoiceService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/invoices")
 public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
     @Autowired
     private ModelMapper modelMapper;
 
-    //	@GetMapping("/invoices")
-//	public Page<Invoice> findPaginated(Pageable page) {
-//		return invoiceService.findPaginated(page);
-//	}
-    @GetMapping("/invoices")
+    @GetMapping("/")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
-    public List<InvoiceDto> getAllInvoices() {
-        modelMapper.getConfiguration().setAmbiguityIgnored(true);
-        return convertToDto(invoiceService.getAllInvoices());
+	public Page<InvoiceDto> findPaginated(Pageable page) {
+	return convertToDto(invoiceService.findPaginated(page));
+	}
+
+    private Page<InvoiceDto> convertToDto(Page<Invoice> paginated) {
+        Page<InvoiceDto> dtoList = mapEntityPageIntoDtoPage(paginated, InvoiceDto.class);
+        return dtoList;
     }
 
+    public <D, T> Page<D> mapEntityPageIntoDtoPage(Page<T> entities, Class<D> dtoClass) {
+        return entities.map(objectEntity -> modelMapper.map(objectEntity, dtoClass));
+    }
+//    @GetMapping("/")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
+//    public List<InvoiceDto> getAllInvoices() {
+//        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+//        return convertToDto(invoiceService.getAllInvoices());
+//    }
+
     @ResponseBody
-    @PostMapping("/invoices")
+    @PostMapping("/")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException {
@@ -59,7 +71,7 @@ public class InvoiceController {
         return convertToDto(invoiceCreated);
     }
 
-    @GetMapping("/invoices/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
     public InvoiceDto getInvoiceById(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
@@ -73,7 +85,7 @@ public class InvoiceController {
 //		return invoiceService.getInvoiceById(invoiceID);
 //	}
 
-    @PutMapping("/invoices/{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public InvoiceDto updateInvoice(@PathVariable(value = "id") Long invoiceID,
                                     @Valid @RequestBody InvoiceDto invoiceDetails) throws ResourceNotFoundException, ParseException {
@@ -81,7 +93,7 @@ public class InvoiceController {
         return convertToDto(invoiceService.updateInvoice(invoice, invoiceID));
     }
 
-    @DeleteMapping("/invoices/{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteInvoice(@PathVariable(value = "id") Long invoiceID)
             throws ResourceNotFoundException {

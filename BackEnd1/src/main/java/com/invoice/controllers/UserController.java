@@ -32,7 +32,7 @@ import com.invoice.services.UserService;
 //@CrossOrigin(origins = "http://localhost:4200")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/users")
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -40,7 +40,7 @@ public class UserController {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@GetMapping("/users")
+	@GetMapping("/")
 	@PreAuthorize("hasRole('ADMIN') ")
 	public List<UserDto> getAllUsers() {
 		modelMapper.getConfiguration().setAmbiguityIgnored(true);
@@ -61,7 +61,7 @@ public class UserController {
 //	}
 
 
-	@GetMapping("/users/{id}")
+	@GetMapping("/{id}")
 	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
 	public UserDto getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
 		return convertToDto(userService.getUserById(userId));
@@ -76,7 +76,7 @@ public class UserController {
 //		return convertToDto(userCreated);
 //	}
 
-	@PutMapping("/users/{id}")
+	@PutMapping("/{id}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('AUDITOR')")
 	public UserDto updateUser(@PathVariable(value = "id") Long userId, @Valid @RequestBody UserDto userDetails)
 			throws ResourceNotFoundException, ParseException {
@@ -84,7 +84,7 @@ public class UserController {
 		return convertToDto(userService.updateUser(userId, user));
 	}
 
-	@DeleteMapping("/users/{id}")
+	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
 		return userService.deleteUser(userId);

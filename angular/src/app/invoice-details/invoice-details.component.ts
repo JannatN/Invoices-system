@@ -24,7 +24,7 @@ export class InvoiceDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.invoice = new Invoice();
-    this.invoices = this.invoiceService.getInvoicesList();
+    // this.invoices = this.invoiceService.getInvoicesList();
 
     this.id = this.route.snapshot.params['id'];
 

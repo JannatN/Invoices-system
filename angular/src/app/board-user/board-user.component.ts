@@ -74,7 +74,7 @@ export class BoardUserComponent implements OnInit {
   }
 
   reloadData() {
-    this.invoices = this.invoiceService.getInvoicesList();
+    // this.invoices = this.invoiceService.getInvoicesList();
     this.text = this.tokenStorageService.getToken();
   }
 
