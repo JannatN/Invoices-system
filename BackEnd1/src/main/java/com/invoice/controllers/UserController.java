@@ -1,8 +1,6 @@
 package com.invoice.controllers;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import java.util.List;
 import java.util.Map;
@@ -10,9 +8,12 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.invoice.controllers.dto.InvoiceDto;
+import com.invoice.entities.Invoice;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,14 +25,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.invoice.dto.InvoiceDto;
-import com.invoice.dto.UserDto;
-import com.invoice.entities.Invoice;
+import com.invoice.controllers.dto.UserDto;
 import com.invoice.entities.User;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.services.UserService;
@@ -47,25 +44,25 @@ public class UserController {
 	@Autowired
 	private ModelMapper modelMapper;
 
+//	@GetMapping("/users")
+//	@PreAuthorize("hasRole('ADMIN') ")
+//	public List<UserDto> getAllUsers() {
+//		modelMapper.getConfiguration().setAmbiguityIgnored(true);
+//		return convertToDto(userService.getAllUsers());
+//	}
 	@GetMapping("/users")
-	@PreAuthorize("hasRole('ADMIN') ")
-	public List<UserDto> getAllUsers() {
-		modelMapper.getConfiguration().setAmbiguityIgnored(true);
-		return convertToDto(userService.getAllUsers());
+	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
+	public Page<UserDto> findPaginatedUsers(Pageable page) {
+		return convertToDto(userService.findPaginatedUsers(page));
+	}
+	private Page<UserDto> convertToDto(Page<User> paginated) {
+		Page<UserDto> dtoList = mapEntityPageIntoDtoPage(paginated, UserDto.class);
+		return dtoList;
 	}
 
-//	@GetMapping("/users/{id}")
-//	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
-//	public UserDto getUserById(@PathVariable(value = "id") Long userId)
-//			throws ResourceNotFoundException {
-//		return convertToDto(userService.getUserById(userId));
-//	}
-//	@GetMapping("/users/{id}")
-//	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
-//	public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
-//		modelMapper.getConfiguration().setAmbiguityIgnored(true);
-//		return userService.getUserById(userId);
-//	}
+	public <D, T> Page<D> mapEntityPageIntoDtoPage(Page<T> entities, Class<D> dtoClass) {
+		return entities.map(objectEntity -> modelMapper.map(objectEntity, dtoClass));
+	}
 
 	@GetMapping("/users/{id}")
 	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
@@ -73,17 +70,17 @@ public class UserController {
 		return convertToDto(userService.getUserById(userId));
 	}
 
-	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("/users")
-	@PreAuthorize("hasRole('ADMIN')")
-	public UserDto createUser(@Valid @RequestBody UserDto userDto) throws ParseException {
-		User user = convertToEntity(userDto);
-		ResponseEntity<User> userCreated = userService.saveUser(user);
-		return convertToDto(userCreated);
-	}
+//	@ResponseStatus(HttpStatus.CREATED)
+//	@PostMapping("/users")
+//	@PreAuthorize("hasRole('ADMIN')")
+//	public UserDto createUser(@Valid @RequestBody UserDto userDto) throws ParseException {
+//		User user = convertToEntity(userDto);
+//		ResponseEntity<User> userCreated = userService.saveUser(user);
+//		return convertToDto(userCreated);
+//	}
 
 	@PutMapping("/users/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('AUDITOR')")
 	public UserDto updateUser(@PathVariable(value = "id") Long userId, @Valid @RequestBody UserDto userDetails)
 			throws ResourceNotFoundException, ParseException {
 		User user = convertToEntity(userDetails);
@@ -94,11 +91,6 @@ public class UserController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
 		return userService.deleteUser(userId);
-	}
-
-	private UserDto convertToDto(ResponseEntity<User> responseEntity) {
-		UserDto userDto = modelMapper.map(responseEntity, UserDto.class);
-		return userDto;
 	}
 
 	private UserDto convertToDto(User responseEntity) {

@@ -30,6 +30,11 @@ export class UserService {
     return this.http.get(`${this.baseUrl}`);
   }
 
+  listUsers(request) {
+    const params = request;
+    return this.http.get(`${this.baseUrl}`, { params });
+  }
+
   findByUsername(username: string): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}?username=${username}`);
   }

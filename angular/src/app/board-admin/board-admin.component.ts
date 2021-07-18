@@ -6,10 +6,11 @@ import { InvoiceService } from "../_services/invoices.service";
 import { Invoice } from '../models/invoice';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { TokenStorageService } from '../_services/token-storage.service';
-import { ItemService } from "../_services/items.service";
 import { Item } from '../models/item';
+import { InvoiceDataSource } from '../datasource/invoices.datasource';
+import { tap } from 'rxjs/operators';
 
 
 @Component({
@@ -21,44 +22,59 @@ export class BoardAdminComponent implements OnInit {
   invoices: Observable<Invoice[]>;
   items: Observable<Item[]>;
   user: User;
-  page: number = 0
-  invoicesArray: Array<any>;
-  pages: Array<number>;
+
+ 
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   public displayedColumns = ['id', 'date_created', 'due_date', 'userid', 'company', 'type', 'details', 'update', 'delete', 'create', 'attachFile'];
+  invoiceDatasource: InvoiceDataSource;
 
 
   public dataSource = new MatTableDataSource<Invoice>();
   constructor(private invoiceService: InvoiceService, private router: Router, private token: TokenStorageService) { }
 
   ngOnInit() {
-    this.getList();
+    // this.getList();
     // this.getListBackend();
     this.user = this.token.getUser();
+    this.invoiceDatasource = new InvoiceDataSource(this.invoiceService);
+    this.invoiceDatasource.loadInvoices();
 
   }
 
-  public getList = () => {
-    this.invoiceService.getInvoicesList()
-      .subscribe(res => {
-        this.dataSource.data = res as Invoice[];
-      })
-  }
-  // public getListBackend = () => {
-  //   this.invoiceService.getInvoices(this.page)
+  // public getList = () => {
+  //   this.invoiceService.getInvoicesList()
   //     .subscribe(res => {
-  //       this.pages = new Array(res['totalPages']);
-  //       this.invoicesArray = res['content']
   //       this.dataSource.data = res as Invoice[];
   //     })
   // }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+
+  // ngAfterViewInit(): void {
+  //   this.dataSource.sort = this.sort;
+  //   this.dataSource.paginator = this.paginator;
+  // }
+  ngAfterViewInit() {
+    this.invoiceDatasource.counter$
+      .pipe(
+        tap((count) => {
+          this.paginator.length = count;
+        })
+      )
+      .subscribe();
+
+    this.paginator.page
+      .pipe(
+        tap(() => this.loadTodos())
+      )
+      .subscribe();
+  }
+
+  loadTodos() {
+    this.invoiceDatasource.loadInvoices(this.paginator.pageIndex, this.paginator.pageSize);
   }
   public doFilter = (value: string) => {
     // this.dataSource.filter = value.trim().toLocaleLowerCase();
@@ -80,7 +96,7 @@ export class BoardAdminComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.reloadData();
+          // this.reloadData();
         },
         error => console.log(error));
   }
@@ -94,11 +110,12 @@ export class BoardAdminComponent implements OnInit {
   redirectToCreate(id: number) {
     this.router.navigate(['addItem', id]);
   }
-  reloadData() {
-    this.invoices = this.invoiceService.getInvoicesList();
-  }
+  // reloadData() {
+  //   this.invoices = this.invoiceService.getInvoicesList();
+  // }
 
 
 
 
 }
+

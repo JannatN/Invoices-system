@@ -1,3 +1,5 @@
+import { Invoice } from "./invoice";
+
 export class User {
     id: number;
     username: string;
@@ -7,5 +9,6 @@ export class User {
     password: string;
     address: string;
     phoneNumber: string;
+    invoices: Invoice[];
 }
     

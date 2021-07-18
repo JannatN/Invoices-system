@@ -49,11 +49,11 @@ public class Invoice {
 	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
 	private Set<File> files;
 
-	public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date,
+	public Invoice(Long id, LocalDateTime date_created, LocalDateTime due_date,
 			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, Set<Item> items, Set<File> files) {
 		super();
 		this.id = id;
-		this.userID = userID;
+//		this.userID = userID;
 		this.date_created = date_created;
 		this.due_date = due_date;
 		this.type = type;
@@ -141,7 +141,7 @@ public class Invoice {
 
 	@Override
 	public String toString() {
-		return "Invoice [id=" + id + ", userID=" + userID + ", date_created=" + date_created + ", due_date=" + due_date
+		return "Invoice [id=" + id + ", date_created=" + date_created + ", due_date=" + due_date
 				+ ", type=" + type + ", company=" + company + ", user=" + user + ", items=" + items + ", file=" + files
 				+ "]";
 	}

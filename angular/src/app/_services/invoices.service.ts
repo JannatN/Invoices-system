@@ -20,9 +20,9 @@ export class InvoiceService {
         return this.http.put(`${this.baseUrl}/${id}`, value);
     }
 
-    getInvoicesList(): Observable<any> {
-        return this.http.get(`${this.baseUrl}`);
-    }
+    // getInvoicesList(): Observable<any> {
+    //     return this.http.get(`${this.baseUrl}`);
+    // }
 
     createInvoice(invoice: Object): Observable<Object> {
         return this.http.post(`${this.baseUrl}`, invoice);
@@ -32,9 +32,10 @@ export class InvoiceService {
     // getInvoices(page: number) {
     //     return this.http.get(`${this.baseUrl + page}`);
     // }
-    // findPaginated(){
-    //     return this.http.get(`${this.baseUrl}`);
-    //   }
+    listInv(request) {
+        const params = request;
+        return this.http.get(`${this.baseUrl}`, { params });
+      }
 
     deleteInvoice(id: number): Observable<any> {
         return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });

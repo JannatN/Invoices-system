@@ -1,35 +1,39 @@
-package com.invoice.dto;
+package com.invoice.controllers.dto;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.invoice.entities.ERole;
-import com.invoice.entities.Invoice;
-import com.invoice.entities.Role;
-
 public class UserDto {
+	@Id
 	private Long id;
-
+	@NotBlank
+	@Size(max = 20)
 	private String username;
-
+	@NotBlank
+	@Size(max = 20)
 	private String firstname;
-
+	@NotBlank
+	@Size(max = 20)
 	private String lastname;
-
+	@NotBlank
+	@Size(max = 50)
+	@Email
 	private String email;
-
+	@NotBlank
+	@Size(max = 50)
 	private String address;
-
+	@Size(max = 10)
 	private String phoneNumber;
-
-	@JsonIgnore
+	@NotBlank
+	@Size(max = 120)
 	private String password;
 
 	private Set<RoleDto> roles = new HashSet<>();

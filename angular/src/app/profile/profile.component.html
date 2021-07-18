@@ -1,4 +1,3 @@
-
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -38,7 +37,7 @@
         </div>
       </div>
       <div class="col-md-2">
-        <button (click)="updateUser(user.id)" class="btn btn-info" style="margin-left: 10px">Edit Profile</button>
+        <button (click)="updateUser(user.id)" class="btn" style="margin-left: 10px">Edit Profile</button>
       </div>
     </div>
     <div class="row">
@@ -46,13 +45,13 @@
         <div class="profile-work">
           <p>work mail</p>
           <div>{{user.email}}</div><br />
-          
+
         </div>
       </div>
       <div class="col-md-8">
         <div class="tab-content profile-tab" id="myTabContent">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-  
+
             <div class="row">
               <div class="col-md-6">
                 <label>First Name</label>
@@ -111,9 +110,27 @@
                 <p>22/4/2021</p>
               </div>
             </div>
-            
+
           </div>
+
         </div>
+      </div>
+
+     
+      <br>
+      <div> <label><b>Invoices: </b></label>
+        <tbody>
+          <!-- <div>hhhhhhhhs</div> -->
+          <tr *ngFor="let invoice of user.invoices  | keyvalue">
+            <div>Created at: {{invoice.value.date_created}} </div>
+            <div>Due date: {{invoice.value.due_date}} </div>
+            <div>Type: {{invoice.value.type}}</div>
+            <div>Type: {{invoice.value.company}}</div>
+            
+            <div><br></div>
+          </tr>
+
+        </tbody>
       </div>
     </div>
   </form>

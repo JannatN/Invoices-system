@@ -5,9 +5,13 @@ import { MatSort } from '@angular/material/sort';
 import { InvoiceService } from "../_services/invoices.service";
 import { Invoice } from '../models/invoice';
 import { Router } from '@angular/router';
-import { Observable } from "rxjs";
 import { User } from '../models/user';
+import { Observable, of } from "rxjs";
 import { TokenStorageService } from '../_services/token-storage.service';
+import { Item } from '../models/item';
+import { InvoiceDataSource } from '../datasource/invoices.datasource';
+import { tap } from 'rxjs/operators';
+
 
 
 
@@ -18,33 +22,61 @@ import { TokenStorageService } from '../_services/token-storage.service';
 })
 export class BoardAuditorComponent implements OnInit {
   invoices: Observable<Invoice[]>;
+  items: Observable<Item[]>;
   user: User;
+
+ 
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   public displayedColumns = ['id', 'date_created', 'due_date', 'userid', 'company', 'type', 'details'];
-  //dataSource: MatTableDataSource<any>;
-  // dataSource = new MatTableDataSource();
+  invoiceDatasource: InvoiceDataSource;
+
 
   public dataSource = new MatTableDataSource<Invoice>();
   constructor(private invoiceService: InvoiceService, private router: Router, private token: TokenStorageService) { }
 
   ngOnInit() {
-    this.getList();
+    // this.getList();
+    // this.getListBackend();
     this.user = this.token.getUser();
+    this.invoiceDatasource = new InvoiceDataSource(this.invoiceService);
+    this.invoiceDatasource.loadInvoices();
 
   }
 
-  public getList = () => {
-    this.invoiceService.getInvoicesList()
-      .subscribe(res => {
-        this.dataSource.data = res as Invoice[];
-      })
+  // public getList = () => {
+  //   this.invoiceService.getInvoicesList()
+  //     .subscribe(res => {
+  //       this.dataSource.data = res as Invoice[];
+  //     })
+  // }
+
+
+  // ngAfterViewInit(): void {
+  //   this.dataSource.sort = this.sort;
+  //   this.dataSource.paginator = this.paginator;
+  // }
+  ngAfterViewInit() {
+    this.invoiceDatasource.counter$
+      .pipe(
+        tap((count) => {
+          this.paginator.length = count;
+        })
+      )
+      .subscribe();
+
+    this.paginator.page
+      .pipe(
+        tap(() => this.loadTodos())
+      )
+      .subscribe();
   }
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+
+  loadTodos() {
+    this.invoiceDatasource.loadInvoices(this.paginator.pageIndex, this.paginator.pageSize);
   }
   public doFilter = (value: string) => {
     // this.dataSource.filter = value.trim().toLocaleLowerCase();
@@ -52,25 +84,15 @@ export class BoardAuditorComponent implements OnInit {
     value = value.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = value;
   }
+
   public redirectToDetails = (id: number) => {
     this.router.navigate(['detailsInvoice', id]);
 
   }
+ 
+ 
 
-  // constructor(private userService: UserService) { }  
-  // ngOnInit() {
-  //   //return this._dataService.getData().subscribe(res => this.dataSource.data = res["0"]["data"]);
-  //   // return this.userService.getUserList().subscribe(res => this.dataSource.data = res);
-  //   this.dataSource = new MatTableDataSource(this.userService.getUserList);
-  // }
 
-  // ngAfterViewInit() {
-  //   this.dataSource.paginator = this.paginator;
-  //   this.dataSource.sort = this.sort;
-  // }
 
-  // applyFilter(filterValue: string) {
-  //   filterValue = filterValue.trim(); // Remove whitespace
-  //   filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-  //   this.dataSource.filter = filterValue;
+
 }

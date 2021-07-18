@@ -20,23 +20,23 @@ export class InvoiceDetailsComponent implements OnInit {
   files: File[];
   invoices: Observable<Invoice[]>;
   constructor(private route: ActivatedRoute, private router: Router,
-    private invoiceService: InvoiceService,  private itemService: ItemService,private location: Location) { }
+    private invoiceService: InvoiceService, private itemService: ItemService, private location: Location) { }
 
   ngOnInit() {
     this.invoice = new Invoice();
-    this.invoices = this.invoiceService.getInvoicesList();
+    // this.invoices = this.invoiceService.getInvoicesList();
 
     this.id = this.route.snapshot.params['id'];
 
     this.invoiceService.getInvoice(this.id)
       .subscribe(data => {
 
-        console.log("data",data)
+        console.log("data", data)
         this.invoice = data;
         this.invoices = data
         // this.items.push(this.invoices["items"]);
-        console.log("items", this.invoice.items)
-        console.log("files", this.invoice.files)
+        // console.log("items", this.invoice.items)
+        // console.log("files", this.invoice.files)
 
         // console.log("start");
 

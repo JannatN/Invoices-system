@@ -4,6 +4,7 @@ import { User } from "../models/user";
 import { TokenStorageService } from '../_services/token-storage.service';
 import { UserService } from "../_services/users.service";
 import { Router, ActivatedRoute } from '@angular/router';
+import { Invoice } from '../models/invoice';
 
 @Component({
   selector: 'app-profile',
@@ -14,23 +15,45 @@ export class ProfileComponent implements OnInit {
   currentUser: any;
   id: number;
   user: User;
-
+  // invoice: Invoice[];
+  
   constructor(private token: TokenStorageService, private userService: UserService,
     private router: Router, private route: ActivatedRoute) { }
+    
+    ngOnInit() {
+      this.reloadData();
+      this.user = new User();
 
-  ngOnInit() {
-    this.reloadData();
-  }
-  reloadData() {
-    this.user = this.token.getUser();
-    this.id = this.route.snapshot.params['id'];
-    this.userService.getUser(this.id);
-    console.log(this.user.username)
-  }
+    this.id = this.token.getUser().id;
 
+    this.userService.getUser(this.id)
+      .subscribe(data => {
+        console.log(data)
+        this.user = data;
+      }, error => console.log(error));
+    }
+    reloadData() {
+      this.user = this.token.getUser();
+
+      // this.getUser(); 
+      console.log(this.user)
+      console.log(this.token.getUser().id )
+      // console.log(this.token.getUser())
+  }
+  
   updateUser(id: number) {
     this.router.navigate(['update', id]);
   }
-
-
+  
+  getUser() {
+    this.user = new User();
+    
+    this.id = this.route.snapshot.params['id'];
+    
+    this.userService.getUser(this.id)
+    .subscribe(data => {
+      console.log(data)
+      this.user = data;
+    }, error => console.log(error));
+  }
 }

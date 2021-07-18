@@ -21,7 +21,6 @@ export class CreateInvoiceComponent implements OnInit {
   item: Item = new Item();
   location: any;
   files: File[];
-
   constructor(private invoiceService: InvoiceService,
     private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService) { }
 
@@ -34,9 +33,6 @@ export class CreateInvoiceComponent implements OnInit {
     this.invoiceService.createInvoice(this.invoice).subscribe(data1 => {
       console.log(data1)
       this.invoice = new Invoice();
-
-
-
     })
   }
 
@@ -47,8 +43,8 @@ export class CreateInvoiceComponent implements OnInit {
     // this.invoice.files.push(this.files);
     // this.uploadFiles();
 
-    console.log("array item", this.item)
-    console.log("array file", this.invoice.files)
+    // console.log("array item", this.item)
+    // console.log("array file", this.invoice.files)
     this.submitted = true;
     this.saveInvoice();
     console.log("invoice created");
