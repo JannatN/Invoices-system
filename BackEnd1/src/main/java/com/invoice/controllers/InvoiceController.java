@@ -32,14 +32,14 @@ import com.invoice.services.InvoiceService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/invoices")
+@RequestMapping("/api/v1")
 public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping("")
+    @GetMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
 	public Page<InvoiceDto> findPaginated(Pageable page) {
 	return convertToDto(invoiceService.findPaginated(page));
@@ -61,7 +61,7 @@ public class InvoiceController {
 //    }
 
     @ResponseBody
-    @PostMapping("")
+    @PostMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException {
@@ -72,7 +72,7 @@ public class InvoiceController {
         return convertToDto(invoiceCreated);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/invoices/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
     public InvoiceDto getInvoiceById(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
@@ -86,7 +86,7 @@ public class InvoiceController {
 //		return invoiceService.getInvoiceById(invoiceID);
 //	}
 
-    @PutMapping("/{id}")
+    @PutMapping("/invoices/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public InvoiceDto updateInvoice(@PathVariable(value = "id") Long invoiceID,
                                     @Valid @RequestBody InvoiceDto invoiceDetails) throws ResourceNotFoundException, ParseException {
@@ -94,7 +94,7 @@ public class InvoiceController {
         return convertToDto(invoiceService.updateInvoice(invoice, invoiceID));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/invoices/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteInvoice(@PathVariable(value = "id") Long invoiceID)
             throws ResourceNotFoundException {

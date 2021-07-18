@@ -19,31 +19,18 @@ public class InvoiceService {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
-//	public List<Invoice> getInvoicesList(int page, int size, String sortDir, String sort) {
-//
-//		PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
-//
-//		Page<Invoice> invoices = invoiceRepository.findByUser(invoiceRepository.getCurrentUser(), pageReq);
-//		return invoices.getContent();
-//	}
-
-//	public Page<Invoice> showPage(@RequestParam(defaultValue = "0") int page) {
-//		return invoiceRepository.findAll(new PageRequest(page, 10));
-//	}
-
     public Page<Invoice> findPaginated(Pageable page) {
         return invoiceRepository.findAll(page);
     }
 
-    public List<Invoice> getAllInvoices() {
-        return invoiceRepository.findAll();
-    }
+//    public List<Invoice> getAllInvoices() {
+//        return invoiceRepository.findAll();
+//    }
 
     @Transactional
     public Invoice createInvoice(Invoice invoice) {
-//        invoice.getItems();
-        System.out.println(invoice.toString());
-//        invoice.setFiles();
+        System.out.println(invoice.getItems().toString());
+//        invoice.setItems(invoice.getItems());
         return invoiceRepository.save(invoice);
     }
 

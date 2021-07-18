@@ -8,7 +8,7 @@ import { User } from '../models/user';
 })
 export class UserService {
 
-  private baseUrl = 'http://localhost:8080/api/users';
+  private baseUrl = 'http://localhost:8080/api/v1/users';
   // private baseUrl2 = 'http://localhost:8080/api/v1/user';
 
 
@@ -28,6 +28,11 @@ export class UserService {
 
   getUserList(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);
+  }
+
+  listUsers(request) {
+    const params = request;
+    return this.http.get(`${this.baseUrl}`, { params });
   }
 
   findByUsername(username: string): Observable<User[]> {

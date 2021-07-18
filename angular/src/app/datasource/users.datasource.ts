@@ -2,20 +2,20 @@ import { DataSource } from '@angular/cdk/table';
 import { CollectionViewer } from '@angular/cdk/collections';
 import { Observable, BehaviorSubject, of } from "rxjs";
 import { catchError, finalize } from "rxjs/operators";
-import { Invoice } from './models/invoice';
-import { InvoiceService } from './_services/invoices.service';
-import { ListResponse } from './models/listResponse';
+import { UserListResponse } from '../models/usersListResponse';
+import { User } from '../models/user';
+import { UserService } from '../_services/users.service';
 
-export class InvoiceDataSource implements DataSource<Invoice>{
+export class UserDataSource implements DataSource<User>{
 
-    private todoSubject = new BehaviorSubject<Invoice[]>([]);
+    private todoSubject = new BehaviorSubject<User[]>([]);
     private loadingSubject = new BehaviorSubject<boolean>(false);
     private countSubject = new BehaviorSubject<number>(0);
     public counter$ = this.countSubject.asObservable();
 
-    constructor(private invoiceService: InvoiceService) { }
+    constructor(private userService: UserService) { }
 
-    connect(collectionViewer: CollectionViewer): Observable<Invoice[]> {
+    connect(collectionViewer: CollectionViewer): Observable<User[]> {
         return this.todoSubject.asObservable();
     }
 
@@ -25,14 +25,14 @@ export class InvoiceDataSource implements DataSource<Invoice>{
         this.countSubject.complete();
     }
 
-    loadTodos(pageNumber = 0, pageSize = 10) {
+    loadUsers(pageNumber = 0, pageSize = 10) {
         this.loadingSubject.next(true);
-        this.invoiceService.listInv({ page: pageNumber, size: pageSize })
+        this.userService.listUsers({ page: pageNumber, size: pageSize })
             .pipe(
                 catchError(() => of([])),
                 finalize(() => this.loadingSubject.next(false))
             )
-            .subscribe((result: ListResponse) => {
+            .subscribe((result: UserListResponse) => {
                 this.todoSubject.next(result.content);
                 this.countSubject.next(result.totalElements);
             }

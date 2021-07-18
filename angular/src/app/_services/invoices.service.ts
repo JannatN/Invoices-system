@@ -8,7 +8,7 @@ import { _MatPaginatorBase } from '@angular/material/paginator';
 })
 export class InvoiceService {
 
-    private baseUrl = 'http://localhost:8080/api/invoices';
+    private baseUrl = 'http://localhost:8080/api/v1/invoices';
 
     constructor(private http: HttpClient) { }
 
@@ -32,9 +32,6 @@ export class InvoiceService {
     // getInvoices(page: number) {
     //     return this.http.get(`${this.baseUrl + page}`);
     // }
-    // findPaginated(){
-    //     return this.http.get(`${this.baseUrl}`);
-    //   }
     listInv(request) {
         const params = request;
         return this.http.get(`${this.baseUrl}`, { params });
