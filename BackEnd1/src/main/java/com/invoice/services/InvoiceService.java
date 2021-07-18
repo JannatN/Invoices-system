@@ -30,6 +30,7 @@ public class InvoiceService {
     @Transactional
     public Invoice createInvoice(Invoice invoice) {
         System.out.println(invoice.getItems().toString());
+//        invoice.setItems(invoice.getItems());
         return invoiceRepository.save(invoice);
     }
 
