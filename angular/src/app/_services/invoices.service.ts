@@ -13,11 +13,11 @@ export class InvoiceService {
     constructor(private http: HttpClient) { }
 
     getInvoice(id: number): Observable<any> {
-        return this.http.get(`${this.baseUrl}/${id}`);
+        return this.http.get(`${this.baseUrl}${id}`);
     }
 
     updateInvoice(id: number, value: any): Observable<Object> {
-        return this.http.put(`${this.baseUrl}/${id}`, value);
+        return this.http.put(`${this.baseUrl}${id}`, value);
     }
 
     // getInvoicesList(): Observable<any> {
@@ -41,6 +41,6 @@ export class InvoiceService {
       }
 
     deleteInvoice(id: number): Observable<any> {
-        return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+        return this.http.delete(`${this.baseUrl}${id}`, { responseType: 'text' });
     }
 }

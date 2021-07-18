@@ -19,11 +19,11 @@ export class UserService {
   }
 
   getUser(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}${id}`);
   }
 
   updateUser(id: number, value: any): Observable<Object> {
-    return this.http.put(`${this.baseUrl}/${id}`, value);
+    return this.http.put(`${this.baseUrl}${id}`, value);
   }
 
   getUserList(): Observable<any> {
@@ -34,7 +34,7 @@ export class UserService {
     return this.http.get<User[]>(`${this.baseUrl}?username=${username}`);
   }
   deleteUser(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+    return this.http.delete(`${this.baseUrl}${id}`, { responseType: 'text' });
 }
  
 }
