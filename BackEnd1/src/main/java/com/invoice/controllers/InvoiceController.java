@@ -39,7 +39,7 @@ public class InvoiceController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping("/")
+    @GetMapping("")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
 	public Page<InvoiceDto> findPaginated(Pageable page) {
 	return convertToDto(invoiceService.findPaginated(page));
@@ -61,7 +61,7 @@ public class InvoiceController {
 //    }
 
     @ResponseBody
-    @PostMapping("/")
+    @PostMapping("")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException {

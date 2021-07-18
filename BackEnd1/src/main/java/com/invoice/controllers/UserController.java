@@ -40,7 +40,7 @@ public class UserController {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@GetMapping("/")
+	@GetMapping("")
 	@PreAuthorize("hasRole('ADMIN') ")
 	public List<UserDto> getAllUsers() {
 		modelMapper.getConfiguration().setAmbiguityIgnored(true);
