@@ -10,9 +10,8 @@ import { BehaviorSubject, Observable, of } from "rxjs";
 import { TokenStorageService } from '../_services/token-storage.service';
 import { ItemService } from "../_services/items.service";
 import { Item } from '../models/item';
-import { ListResponse } from '../models/listResponse';
 import { catchError, finalize, tap } from "rxjs/operators";
-import { InvoiceDataSource } from '../todo.datasource';
+import { InvoiceDataSource } from '../datasource/invoices.datasource';
 
 
 @Component({
@@ -24,9 +23,7 @@ export class BoardAdminComponent implements OnInit {
   invoices: Observable<Invoice[]>;
   items: Observable<Item[]>;
   user: User;
-  page: number = 0
-  invoicesArray: Array<any>;
-  pages: Array<number>;
+
  
 
 
@@ -45,7 +42,7 @@ export class BoardAdminComponent implements OnInit {
     // this.getListBackend();
     this.user = this.token.getUser();
     this.invoiceDatasource = new InvoiceDataSource(this.invoiceService);
-    this.invoiceDatasource.loadTodos();
+    this.invoiceDatasource.loadInvoices();
 
   }
 
@@ -78,7 +75,7 @@ export class BoardAdminComponent implements OnInit {
   }
 
   loadTodos() {
-    this.invoiceDatasource.loadTodos(this.paginator.pageIndex, this.paginator.pageSize);
+    this.invoiceDatasource.loadInvoices(this.paginator.pageIndex, this.paginator.pageSize);
   }
   public doFilter = (value: string) => {
     // this.dataSource.filter = value.trim().toLocaleLowerCase();

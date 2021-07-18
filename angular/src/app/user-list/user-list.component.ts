@@ -6,6 +6,8 @@ import { UserService } from "../_services/users.service";
 import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { Observable } from "rxjs";
+import { UserDataSource } from '../datasource/users.datasource';
+import { tap } from 'rxjs/operators';
 
 
 @Component({
@@ -18,6 +20,8 @@ export class UserListComponent implements OnInit {
   user?: User[];
   currentIndex = -1;
   username = '';
+  usersDatasource: UserDataSource;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -28,18 +32,39 @@ export class UserListComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    this.getList();
+    // this.getList();
+    this.usersDatasource = new UserDataSource(this.userService);
+    this.usersDatasource.loadUsers();
   }
 
-  public getList = () => {
-    this.userService.getUserList()
-      .subscribe(res => {
-        this.dataSource.data = res as User[];
-      })
+  // public getList = () => {
+  //   this.userService.getUserList()
+  //     .subscribe(res => {
+  //       this.dataSource.data = res as User[];
+  //     })
+  // }
+  // ngAfterViewInit(): void {
+  //   this.dataSource.sort = this.sort;
+  //   this.dataSource.paginator = this.paginator;
+  // }
+  ngAfterViewInit() {
+    this.usersDatasource.counter$
+      .pipe(
+        tap((count) => {
+          this.paginator.length = count;
+        })
+      )
+      .subscribe();
+
+    this.paginator.page
+      .pipe(
+        tap(() => this.loadTodos())
+      )
+      .subscribe();
   }
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+
+  loadTodos() {
+    this.usersDatasource.loadUsers(this.paginator.pageIndex, this.paginator.pageSize);
   }
   public doFilter = (value: string) => {
     // this.dataSource.filter = value.trim().toLocaleLowerCase();
@@ -72,20 +97,6 @@ export class UserListComponent implements OnInit {
   reloadData() {
     this.users = this.userService.getUserList();
   }
-  // searchUsername(): void {
-  //   this.users = undefined;
-  //   this.currentIndex = -1;
-
-  //   this.users = this.userService.findByUsername(this.username)
-  //   // .subscribe(
-  //   //   data => {
-  //   //     console.log(data);
-  //   //   },
-  //   //   error => {
-  //   //     console.log(error);
-  //   //   });
-  // }
-
 
 
 

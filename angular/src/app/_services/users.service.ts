@@ -8,7 +8,7 @@ import { User } from '../models/user';
 })
 export class UserService {
 
-  private baseUrl = 'http://localhost:8080/api/users';
+  private baseUrl = 'http://localhost:8080/api/v1/users';
   // private baseUrl2 = 'http://localhost:8080/api/v1/user';
 
 
@@ -19,22 +19,27 @@ export class UserService {
   }
 
   getUser(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}${id}`);
+    return this.http.get(`${this.baseUrl}/${id}`);
   }
 
   updateUser(id: number, value: any): Observable<Object> {
-    return this.http.put(`${this.baseUrl}${id}`, value);
+    return this.http.put(`${this.baseUrl}/${id}`, value);
   }
 
   getUserList(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);
   }
 
+  listUsers(request) {
+    const params = request;
+    return this.http.get(`${this.baseUrl}`, { params });
+  }
+
   findByUsername(username: string): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}?username=${username}`);
   }
   deleteUser(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}${id}`, { responseType: 'text' });
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
 }
  
 }
