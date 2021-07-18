@@ -33,15 +33,14 @@ public class FileController {
 	private ModelMapper modelMapper;
 
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("/upload/{invoiceID}")
+	@PostMapping("/upload")
 	@PreAuthorize("hasRole('ADMIN') ")
-	public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file,
-			@PathVariable Long invoiceID) {
+	public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
 		String message = "";
 
 		try {
-			storageService.store(file, invoiceID);
-
+			storageService.store(file);
+System.out.println(storageService);
 			message = "Uploaded the file successfully: " + file.getOriginalFilename();
 			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
 		} catch (Exception e) {

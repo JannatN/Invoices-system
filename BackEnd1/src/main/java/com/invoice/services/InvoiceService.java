@@ -41,8 +41,9 @@ public class InvoiceService {
 
     @Transactional
     public Invoice createInvoice(Invoice invoice) {
-        invoice.getItems();
-        System.out.println(invoice.getItems().toString());
+//        invoice.getItems();
+        System.out.println(invoice.toString());
+//        invoice.setFiles();
         return invoiceRepository.save(invoice);
     }
 

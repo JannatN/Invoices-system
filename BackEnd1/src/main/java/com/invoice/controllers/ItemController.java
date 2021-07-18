@@ -42,6 +42,7 @@ public class ItemController {
 	public ItemDto createItem(@PathVariable(value = "invoiceID") Long invoiceID, @Valid @RequestBody ItemDto itemDto)
 			throws ResourceNotFoundException, ParseException {
 		Item item = convertToEntity(itemDto);
+		System.out.println(item.toString());
 		ResponseEntity<Item> itemCreated = itemService.createItem(invoiceID, item);
 		return convertToDto(itemCreated);
 	}

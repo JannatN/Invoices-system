@@ -30,32 +30,32 @@ export class UploadFilesComponent implements OnInit {
     this.selectedFiles = event.target.files;
   }
 
-  upload(idx, file) {
-    this.id = this.route.snapshot.params['id'];
-    this.progressInfos[idx] = { value: 0, fileName: file.name };
-    this.invoiceService.getInvoice(this.id)
-      .subscribe(data => {
-        console.log(data.id)
-        this.uploadService.upload(file, data.id).subscribe(
-          event => {
-            if (event.type === HttpEventType.UploadProgress) {
-              this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
-            } else if (event instanceof HttpResponse) {
-              // this.fileInfos = this.uploadService.getFiles();
-            }
-          },
-          err => {
-            this.progressInfos[idx].value = 0;
-            this.message = 'Could not upload the file:' + file.name;
-          });
-        })
+  // upload(idx, file) {
+  //   this.id = this.route.snapshot.params['id'];
+  //   this.progressInfos[idx] = { value: 0, fileName: file.name };
+  //   this.invoiceService.getInvoice(this.id)
+  //     .subscribe(data => {
+  //       console.log(data.id)
+  //       this.uploadService.upload(file).subscribe(
+  //         event => {
+  //           if (event.type === HttpEventType.UploadProgress) {
+  //             this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+  //           } else if (event instanceof HttpResponse) {
+  //             // this.fileInfos = this.uploadService.getFiles();
+  //           }
+  //         },
+  //         err => {
+  //           this.progressInfos[idx].value = 0;
+  //           this.message = 'Could not upload the file:' + file.name;
+  //         });
+  //       })
 
-      }
-  uploadFiles() {
-        this.message = '';
+  //     }
+  // uploadFiles() {
+  //       this.message = '';
 
-        for(let i = 0; i< this.selectedFiles.length; i++) {
-      this.upload(i, this.selectedFiles[i]);
-    }
-  }
+  //       for(let i = 0; i< this.selectedFiles.length; i++) {
+  //     this.upload(i, this.selectedFiles[i]);
+  //   }
+  // }
 }

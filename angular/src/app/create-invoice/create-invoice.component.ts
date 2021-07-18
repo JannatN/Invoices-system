@@ -19,8 +19,17 @@ export class CreateInvoiceComponent implements OnInit {
   submitted = false;
   // invoices: Invoice;
   item: Item = new Item();
+  file :File = new File();
   location: any;
-  files: File[];
+  // files: File[];
+  selectedFiles: FileList;
+  selectedFiles2: File[];
+  idx:number
+  progressInfos = [];
+  message = '';
+  id: number;
+
+  fileInfos: Observable<any>;
   constructor(private invoiceService: InvoiceService,
     private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService) { }
 
@@ -39,15 +48,14 @@ export class CreateInvoiceComponent implements OnInit {
   onSubmit() {
     this.invoice.items = [];
     this.invoice.items.push(this.item);
-    // this.invoice.files = this.files;
-    // this.invoice.files.push(this.files);
-    // this.uploadFiles();
-
-    // console.log("array item", this.item)
-    // console.log("array file", this.invoice.files)
+    this.invoice.files = [] ;
+       this.invoice.files.push(this.file)
+    console.log(this.invoice.files)
+   console.log( this.selectedFiles2)
+//  this.upload(this.selectedFiles2)
     this.submitted = true;
     this.saveInvoice();
-    console.log("invoice created");
+
 
   }
 
@@ -63,5 +71,42 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
 
+  selectFiles(event) {
+    this.progressInfos = [];
+    
+    this.selectedFiles = event.target;
+    
+  }
+
+  upload(file) {
+    this.progressInfos[this.idx] = { value: 0, fileName: file.name };
+
+    this.uploadService.upload(file).subscribe(
+      event => {
+     
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progressInfos[this.idx].value = Math.round(100 * event.loaded / event.total);
+        } else if (event instanceof HttpResponse) {
+          this.fileInfos = this.uploadService.getFiles();
+        }
+      },
+      err => {
+        this.progressInfos[this.idx].value = 0;
+        this.message = 'Could not upload the file:' + file.name;
+      });
+  }
+
+  uploadFiles() {
+    this.message = '';
+
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      this.upload(this.selectedFiles[i]);   
+      // this.upload(i, this.selectedFiles2[i]);   
+
+      // console.log(this.file)
+   
+
+    }
+  }
 }
 

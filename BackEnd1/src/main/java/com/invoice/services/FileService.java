@@ -32,15 +32,14 @@ public class FileService {
 //		return fileDBRepository.save(FileDB);
 //	}
 
-	public File store(MultipartFile file, Long invoiceID) throws IOException, ResourceNotFoundException {
+	public File store(MultipartFile file) throws IOException, ResourceNotFoundException {
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		File FileDB = new File(fileName, file.getContentType(), file.getBytes());
 
-		return invoiceRepository.findById(invoiceID).map(invoice -> {
-			FileDB.setInvoice(invoice);
+System.out.println(FileDB.toString());
+
 			return fileDBRepository.save(FileDB);
 
-		}).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
 	}
 
 	public File getFile(String id) {

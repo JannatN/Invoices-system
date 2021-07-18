@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import com.invoice.mapper.Mapper;
+//import com.invoice.mapper.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -67,6 +67,7 @@ public class InvoiceController {
     public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException {
         Invoice invoice = convertToEntity(invoiceDto);
         Invoice invoiceCreated = invoiceService.createInvoice(invoice);
+        System.out.println("invoice  "+invoiceCreated);
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         return convertToDto(invoiceCreated);
     }
