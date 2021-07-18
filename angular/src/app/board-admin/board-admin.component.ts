@@ -6,12 +6,11 @@ import { InvoiceService } from "../_services/invoices.service";
 import { Invoice } from '../models/invoice';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { TokenStorageService } from '../_services/token-storage.service';
-import { ItemService } from "../_services/items.service";
 import { Item } from '../models/item';
-import { catchError, finalize, tap } from "rxjs/operators";
 import { InvoiceDataSource } from '../datasource/invoices.datasource';
+import { tap } from 'rxjs/operators';
 
 
 @Component({

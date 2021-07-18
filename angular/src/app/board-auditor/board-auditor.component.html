@@ -14,7 +14,7 @@
 
 
   <div class="example-container mat-elevation-z8">
-    <mat-table [dataSource]="dataSource" matSort>
+    <mat-table [dataSource]="invoiceDatasource" matSort>
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Invoice ID</mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
