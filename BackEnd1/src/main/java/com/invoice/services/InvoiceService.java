@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.invoice.specification.InvoiceSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +20,8 @@ public class InvoiceService {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
-    public Page<Invoice> findPaginated(Pageable page) {
-        return invoiceRepository.findAll(page);
+    public Page<Invoice> findPaginated(Pageable page, Invoice request) {
+        return invoiceRepository.findAll(InvoiceSpecification.getInvoices(request), page);
     }
 
 //    public List<Invoice> getAllInvoices() {
