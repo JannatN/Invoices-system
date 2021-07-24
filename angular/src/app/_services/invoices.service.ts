@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { _MatPaginatorBase } from '@angular/material/paginator';
+import { Invoice } from '../models/invoice';
 
 @Injectable({
     providedIn: 'root'
@@ -28,14 +29,14 @@ export class InvoiceService {
         return this.http.post(`${this.baseUrl}`, invoice);
     }
 
-
-    // getInvoices(page: number) {
-    //     return this.http.get(`${this.baseUrl + page}`);
-    // }
     listInv(request) {
         const params = request;
         return this.http.get(`${this.baseUrl}`, { params });
-      }
+    }
+    filter(request): Observable<Invoice[]> {
+        const params = request;
+        return this.http.get<Invoice[]>(`${this.baseUrl}`, { params });
+    }
 
     deleteInvoice(id: number): Observable<any> {
         return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });

@@ -37,7 +37,7 @@ public class InvoiceSpecification {
             if (request.getDue_date() != null) {
                 predicates.add(criteriaBuilder.equal(root.get("due_date"), request.getDue_date()));
             }
-            query.orderBy(criteriaBuilder.desc(root.get("userID")));
+            query.orderBy(criteriaBuilder.desc(root.get("date_created")));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
 

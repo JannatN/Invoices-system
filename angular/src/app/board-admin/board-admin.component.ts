@@ -22,7 +22,9 @@ export class BoardAdminComponent implements OnInit {
   invoices: Observable<Invoice[]>;
   items: Observable<Item[]>;
   user: User;
-
+  invoice?: Invoice[];
+  currentIndex = -1;
+  input = '';
  
 
 
@@ -76,13 +78,21 @@ export class BoardAdminComponent implements OnInit {
   loadTodos() {
     this.invoiceDatasource.loadInvoices(this.paginator.pageIndex, this.paginator.pageSize);
   }
+
   public doFilter = (value: string) => {
     // this.dataSource.filter = value.trim().toLocaleLowerCase();
     value = value.trim(); // Remove whitespace
     value = value.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = value;
   }
-
+ public filter = (value: string) => {
+    this.invoices = undefined;
+    this.currentIndex = -1;
+    value = value.trim(); // Remove whitespace
+    value = value.toLowerCase();
+    this.dataSource.filter = value; 
+    this.invoices=this.invoiceService.filter(this.input)
+  }
   public redirectToDetails = (id: number) => {
     this.router.navigate(['detailsInvoice', id]);
 

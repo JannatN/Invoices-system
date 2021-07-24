@@ -3,11 +3,34 @@
 
 </div>
 
+<!-- <div class="list row">
+  <div class="col-md-8">
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search"
+     
+        [(ngModel)]="input" />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary"
+          type="submit"
+          (click)="filter()"
+        >
+          Search
+        </button>
+        
+      </div>
+    </div>
+  
+  </div> -->
 <div class="container">
+
   <div class="form-group mb-4">
     <mat-form-field>
       <label>Filter:</label>
-      <input matInput (keyup)="doFilter($event.target.value)" id="exampleFormControlInput1"
+      <input matInput (keyup)="filter($event.target.value)" id="exampleFormControlInput1"
         class="form-control form-control-underlined">
     </mat-form-field>
   </div>
