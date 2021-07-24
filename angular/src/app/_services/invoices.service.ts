@@ -8,7 +8,7 @@ import { _MatPaginatorBase } from '@angular/material/paginator';
 })
 export class InvoiceService {
 
-    private baseUrl = 'http://localhost:8080/api/v1/invoices';
+    private baseUrl = 'http://localhost:8080/api/invoices';
 
     constructor(private http: HttpClient) { }
 

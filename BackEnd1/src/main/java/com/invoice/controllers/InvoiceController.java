@@ -32,7 +32,7 @@ import com.invoice.services.InvoiceService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
