@@ -24,7 +24,7 @@ export class CreateInvoiceComponent implements OnInit {
   // item2: Item = new Item();
   location: any;
   files: File[];
-
+  items: Item[] = []
 
   public addresses: FormArray;
   public addressForm: FormGroup;
@@ -55,7 +55,8 @@ export class CreateInvoiceComponent implements OnInit {
   addAddress(): void {
     this.addresses = this.addressForm.get('addresses') as FormArray;
     this.addresses.push(this.createAddress());
-    console.log(this.addresses.value);
+    console.log("addddreeess",this.addresses.value);
+    // this.items.push(this.addresses.value)
   }
 
   removeAddress(i: number) {
@@ -78,7 +79,7 @@ export class CreateInvoiceComponent implements OnInit {
 
   onSubmit() {
 
-    this.invoice.items = [];
+    this.invoice.items = this.items;
     this.invoice.items.push(this.item);
     // console.log(this.addresses.value);
 

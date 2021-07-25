@@ -66,6 +66,7 @@ export class BoardUserComponent implements OnInit {
   invoices: Observable<Invoice[]>;
   text: String;
 
+ 
   constructor(private invoiceService: InvoiceService,
     private router: Router, private tokenStorageService: TokenStorageService) { }
 

@@ -31,11 +31,11 @@ export class InvoiceService {
 
     listInv(request) {
         const params = request;
+        console.log('hhho', params);
         return this.http.get(`${this.baseUrl}`, { params });
     }
-    filter(request): Observable<Invoice[]> {
-        const params = request;
-        return this.http.get<Invoice[]>(`${this.baseUrl}`, { params });
+    filter(): Observable<Invoice[]> {
+        return this.http.get<Invoice[]>(`${this.baseUrl}`);
     }
 
     deleteInvoice(id: number): Observable<any> {
