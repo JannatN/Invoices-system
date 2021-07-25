@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <div class="title">Create Invoice</div>
     <hr />
     <form (ngSubmit)="onSubmit()">
@@ -60,6 +60,38 @@
                 #quantity="ngModel">
 
         </div>
+        <div class="form-group">
+            <label for="name">Item name</label>
+            <input type="text" class="form-control" id="name" required [(ngModel)]="item.name" name="name"
+                #name="ngModel">
+
+        </div>
+
+        <div class="form-group">
+            <label for="name">Item Description</label>
+            <textarea rows="4" cols="50" class="form-control" id="description" required [(ngModel)]="item.description"
+                name="description" #description="ngModel">
+                            Enter text here...</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Item price</label>
+            <input type="number" class="form-control" id="price" required [(ngModel)]="item2.price" name="price"
+                #price="ngModel">
+
+        </div>
+        <div class="form-group">
+            <label for="name">Currency </label>
+            <input type="text" class="form-control" id="currency" required [(ngModel)]="item.currency" name="currency"
+                #currency="ngModel">
+
+        </div>
+        <div class="form-group">
+            <label for="name">Item Quantitiy </label>
+            <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.quantity" name="quantity"
+                #quantity="ngModel">
+
+        </div>
 
         <button type="submit" class="btn" (click)='back'>Save Invoice</button>
 
@@ -69,6 +101,120 @@
         <h4>You submitted successfully!</h4>
     </div>
 
-    <!-- <app-upload-files></app-upload-files> -->
 
+</div> -->
+
+<form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+    <div class="card m-3">
+        <h5 class="card-header">Angular 8 Dynamic Reactive Forms Example</h5>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="name">Due Date</label>
+                <input type="datetime-local" class="form-control" id="due_date" required [(ngModel)]="invoice.due_date"
+                    name="due_date" #dueDate="ngModel" [ngModelOptions]="{standalone: true}">
+            </div>
+
+
+            <div class="form-group">
+                <label for="name">User Id</label>
+                <input type="number" class="form-control" id="userid" required [(ngModel)]="invoice.userid"
+                    name="userid" #userid="ngModel" [ngModelOptions]="{standalone: true}">
+
+
+            </div>
+            <div class="form-group">
+                <label for="name">Company </label>
+                <input type="text" class="form-control" id="company" required [(ngModel)]="invoice.company"
+                    name="company" #company="ngModel" [ngModelOptions]="{standalone: true}">
+
+            </div>
+            <div class="form-group">
+                <label for="name"> Invoice Type</label>
+                <input type="text" class="form-control" id="type" required [(ngModel)]="invoice.type" name="type"
+                    #type="ngModel" [ngModelOptions]="{standalone: true}">
+
+            </div>
+
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Number of Items</label>
+                    <select formControlName="numberOfItems" class="form-control" (change)="onChangeItems($event)"
+                        [ngClass]="{ 'is-invalid': submitted && f.numberOfItems.errors }">
+                        <option value=""></option>
+                        <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">{{i}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.numberOfItems.errors" class="invalid-feedback">
+                        <div *ngIf="f.numberOfItems.errors.required">Number of items is required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngFor="let ticket of t.controls; let i = index" class="list-group list-group-flush">
+            <div class="list-group-item">
+                <h5 class="card-title">Ticket {{i + 1}}</h5>
+                <div [formGroup]="ticket" class="form-row">
+                    <div class="form-group col-6">
+                        <label>Name</label>
+                        <input type="text" formControlName="name" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && ticket.controls.name.errors }" />
+                        <div *ngIf="submitted && ticket.controls.name.errors" class="invalid-feedback">
+                            <div *ngIf="ticket.controls.name.errors.required">Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label>Description</label>
+                        <input type="text" formControlName="description" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && ticket.controls.description.errors }" />
+                        <div *ngIf="submitted && ticket.controls.description.errors" class="invalid-feedback">
+                            <div *ngIf="ticket.controls.description.errors.required">Description is required</div>
+                            <div *ngIf="ticket.controls.description.errors.description">Description must be a valid
+                                email address</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label>Price</label>
+                        <input type="text" formControlName="price" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && ticket.controls.price.errors }" />
+                        <div *ngIf="submitted && ticket.controls.price.errors" class="invalid-feedback">
+                            <div *ngIf="ticket.controls.price.errors.required">Price is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label>Currency</label>
+                        <input type="text" formControlName="currency" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && ticket.controls.currency.errors }" />
+                        <div *ngIf="submitted && ticket.controls.currency.errors" class="invalid-feedback">
+                            <div *ngIf="ticket.controls.currency.errors.required">currency is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label>Quantity</label>
+                        <input type="text" formControlName="quantity" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && ticket.controls.quantity.errors }" />
+                        <div *ngIf="submitted && ticket.controls.quantity.errors" class="invalid-feedback">
+                            <div *ngIf="ticket.controls.quantity.errors.required">quantity is required</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <button class="btn btn-primary mr-1">Save Invoice</button>
+            <button class="btn btn-secondary mr-1" type="reset" (click)="onReset()">Reset</button>
+            <button class="btn btn-secondary" type="button" (click)="onClear()">Clear</button>
+        </div>
+    </div>
+</form>
+
+<!-- credits -->
+<div class="text-center">
+    <p>
+        <a href="https://jasonwatmore.com/post/2019/06/25/angular-8-dynamic-reactive-forms-example"
+            target="_top">Angular 8 - Dynamic Reactive Forms Example</a>
+    </p>
+    <p>
+        <a href="http://jasonwatmore.com" target="_top">JasonWatmore.com</a>
+    </p>
 </div>
