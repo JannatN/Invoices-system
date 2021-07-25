@@ -38,12 +38,14 @@ public class InvoiceController {
     private InvoiceService invoiceService;
     @Autowired
     private ModelMapper modelMapper;
+    Mapper mapper = new Mapper();
 
     @GetMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
-	public Page<InvoiceDto> findPaginated(Pageable page) {
-	return convertToDto(invoiceService.findPaginated(page));
-	}
+    public Page<InvoiceDto> findPaginated(Pageable page, InvoiceDto req) throws ParseException {
+        Invoice invoice = convertToEntity(req);
+        return convertToDto(invoiceService.findPaginated(page, invoice));
+    }
 
     private Page<InvoiceDto> convertToDto(Page<Invoice> paginated) {
         Page<InvoiceDto> dtoList = mapEntityPageIntoDtoPage(paginated, InvoiceDto.class);

@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.Valid;
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +18,8 @@ public class Mapper<T> {
     private ModelMapper modelMapper;
 
     public Class<T> convertToDto(Class<T> responseEntity) {
-        Class<T> objDto = modelMapper.map(responseEntity, Class.class);
+
+        Class<T> objDto = modelMapper.map(responseEntity, Class.class );
         return objDto;
     }
 
@@ -34,6 +36,7 @@ public class Mapper<T> {
     <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         return source.stream().map(element -> modelMapper.map(element, targetClass)).collect(Collectors.toList());
     }
+
 
 
 }

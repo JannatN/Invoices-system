@@ -1,5 +1,6 @@
 package com.invoice.controllers.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.invoice.entities.User;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -7,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 public class InvoiceDto {
@@ -22,8 +24,7 @@ public class InvoiceDto {
     @NotBlank
     @Size(max = 30)
     private String company;
-
-    private Set<ItemDto> items;
+    private List<ItemDto> items;
 
     private Set<FileDto> files;
 
@@ -31,7 +32,7 @@ public class InvoiceDto {
     private Long userid;
 
     public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company,
-                      Set<ItemDto> items, Set<FileDto> files) {
+                      List<ItemDto> items, Set<FileDto> files) {
         super();
         this.id = id;
         this.date_created = date_created;
@@ -117,11 +118,11 @@ public class InvoiceDto {
         this.company = company;
     }
 
-    public Set<ItemDto> getItems() {
+    public List<ItemDto> getItems() {
         return items;
     }
 
-    public void setItems(Set<ItemDto> items) {
+    public void setItems(List<ItemDto> items) {
         this.items = items;
     }
 
