@@ -1,5 +1,6 @@
 package com.invoice.controllers;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 import java.util.List;
@@ -8,6 +9,9 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 //import com.invoice.mapper.Mapper;
+import com.invoice.controllers.dto.FileDto;
+import com.invoice.entities.File;
+import com.invoice.services.FileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +33,7 @@ import com.invoice.controllers.dto.InvoiceDto;
 import com.invoice.entities.Invoice;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.services.InvoiceService;
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -38,6 +43,8 @@ public class InvoiceController {
     private InvoiceService invoiceService;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private FileService storageService;
 
     @GetMapping("")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
@@ -64,10 +71,13 @@ public class InvoiceController {
     @PostMapping("")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException {
+    public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException, IOException, ResourceNotFoundException {
+
+
+//        storageService.store(file);
         Invoice invoice = convertToEntity(invoiceDto);
         Invoice invoiceCreated = invoiceService.createInvoice(invoice);
-        System.out.println("invoice  "+invoiceCreated);
+//        System.out.println("invoice  "+invoiceCreated);
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         return convertToDto(invoiceCreated);
     }

@@ -4,7 +4,7 @@ import { InvoiceService } from "../_services/invoices.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../models/item';
 import { Observable } from 'rxjs';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { UploadFilesService } from '../_services/upload-file.service';
 import { File} from "../models/file"
 
@@ -28,18 +28,29 @@ export class CreateInvoiceComponent implements OnInit {
   progressInfos = [];
   message = '';
   id: number;
+  selectedFile: File;
+  imgURL: any;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  message2: string;
+  imageName: any;
 
   fileInfos: Observable<any>;
   constructor(private invoiceService: InvoiceService,
-    private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService) { }
+    private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService,private httpClient: HttpClient) { }
 
-  ngOnInit() {
-    // this.fileInfos = this.uploadService.getFiles();
 
-  }
 
   saveInvoice() {
     this.invoiceService.createInvoice(this.invoice).subscribe(data1 => {
+
+      // this.message = '';
+
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        this.upload(i, this.selectedFiles[i]);
+        console.log("jlashdjkasfasfvjlsfksecfnvwjvhk")
+      }
       console.log(data1)
       this.invoice = new Invoice();
     })
@@ -50,6 +61,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.invoice.items.push(this.item);
     this.invoice.files = [] ;
        this.invoice.files.push(this.file)
+
     console.log(this.invoice.files)
    console.log( this.selectedFiles2)
 //  this.upload(this.selectedFiles2)
@@ -58,6 +70,15 @@ export class CreateInvoiceComponent implements OnInit {
 
 
   }
+
+ 
+
+  
+
+ 
+
+
+
 
   gotoList() {
     this.router.navigate(['/invoices']);
@@ -71,27 +92,33 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
 
-  selectFiles(event) {
-    this.progressInfos = [];
-    
-    this.selectedFiles = event.target;
-    
+
+
+
+
+  ngOnInit() {
+    // this.fileInfos = this.uploadService.getFiles();
   }
 
-  upload(file) {
-    this.progressInfos[this.idx] = { value: 0, fileName: file.name };
+  selectFiles(event) {
+    this.progressInfos = [];
+    this.selectedFiles = event.target.files[0];
+  }
+
+  upload(idx, file) {
+    this.progressInfos[idx] = { value: 0, fileName: file.name };
 
     this.uploadService.upload(file).subscribe(
       event => {
-     
         if (event.type === HttpEventType.UploadProgress) {
-          this.progressInfos[this.idx].value = Math.round(100 * event.loaded / event.total);
+          this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
         } else if (event instanceof HttpResponse) {
-          this.fileInfos = this.uploadService.getFiles();
+          // this.fileInfos = this.uploadService.getFiles();
+          console.log("error")
         }
       },
       err => {
-        this.progressInfos[this.idx].value = 0;
+        this.progressInfos[idx].value = 0;
         this.message = 'Could not upload the file:' + file.name;
       });
   }
@@ -100,13 +127,10 @@ export class CreateInvoiceComponent implements OnInit {
     this.message = '';
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      this.upload(this.selectedFiles[i]);   
-      // this.upload(i, this.selectedFiles2[i]);   
-
-      // console.log(this.file)
-   
-
+      this.upload(i, this.selectedFiles[i]);
     }
   }
+
+ 
 }
 

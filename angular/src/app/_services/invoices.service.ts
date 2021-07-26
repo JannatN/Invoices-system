@@ -25,7 +25,10 @@ export class InvoiceService {
     // }
 
     createInvoice(invoice: Object): Observable<Object> {
-        return this.http.post(`${this.baseUrl}`, invoice);
+        return this.http.post(`${this.baseUrl}`, invoice,{
+            reportProgress: true,
+            responseType: 'json'
+          });
     }
 
 
