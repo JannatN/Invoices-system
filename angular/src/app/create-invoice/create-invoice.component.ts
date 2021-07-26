@@ -6,6 +6,8 @@ import { Item } from '../models/item';
 import { UploadFilesService } from '../_services/upload-file.service';
 import { File } from "../models/file"
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-invoice',
@@ -18,9 +20,14 @@ export class CreateInvoiceComponent implements OnInit {
 
   invoice: Invoice = new Invoice();
   item: Item = new Item();
-
   location: any;
-  array: [];
+
+  selectedFiles: File;
+  progressInfos = [];
+  message = '';
+  id: number;
+  // fileInfos: Observable<any>;
+
 
   constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService,
     private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService) { }
@@ -38,6 +45,38 @@ export class CreateInvoiceComponent implements OnInit {
   get t() {
     return this.f.items as FormArray;
 
+  }
+
+  selectFiles(event) {
+    this.progressInfos = [];
+    this.selectedFiles = event.target.files;
+    console.log(this.selectedFiles)
+
+  }
+
+  upload(idx, file) {
+    this.progressInfos[idx] = { value: 0, fileName: file.name };
+
+    this.invoiceService.uploadFile(file).subscribe(
+      event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+        } else if (event instanceof HttpResponse) {
+          // this.fileInfos = this.uploadService.getFiles();
+        }
+      },
+      err => {
+        this.progressInfos[idx].value = 0;
+        this.message = 'Could not upload the file:' + file.name;
+      });
+  }
+
+  uploadFiles() {
+    this.message = '';
+
+    // for (let i = 0; i < this.selectedFiles.length; i++) {
+    //   this.upload(i, this.selectedFiles[i]);
+    // }
   }
   saveInvoice() {
     this.invoiceService.createInvoice(this.invoice).subscribe(data1 => {
@@ -77,15 +116,23 @@ export class CreateInvoiceComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.invoice.items = [];
+    this.invoice.files = [];
     for (let i = 0; i < 10; i++) {
       this.invoice.items.push(this.dynamicForm.value.items[i]);
+
     }
+    // this.invoice.files.push(this.selectedFiles[0]);
+
     console.log("values", this.dynamicForm.value.items);
     console.log("items", this.invoice);
+    this.invoice.files.push(this.selectedFiles[0]);
+
+    console.log("file", this.selectedFiles);
 
 
     this.saveInvoice();
     console.log("invoice created");
+    console.log("invoice", this.invoice);
     if (this.dynamicForm.invalid) {
       return;
     }
