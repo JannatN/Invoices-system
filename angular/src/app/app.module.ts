@@ -36,6 +36,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from "@angular/material/icon";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatButtonModule } from "@angular/material/button";
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';  
 @NgModule({
@@ -78,7 +79,7 @@ import { CommonModule } from '@angular/common';
     BrowserAnimationsModule,
     MatButtonModule,
     CommonModule,
-    
+    ReactiveFormsModule
 
   ],
   providers: [authInterceptorProviders],

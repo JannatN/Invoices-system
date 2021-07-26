@@ -27,7 +27,7 @@ export class InvoiceDataSource implements DataSource<Invoice>{
 
     loadInvoices(pageNumber = 0, pageSize = 10) {
         this.loadingSubject.next(true);
-        this.invoiceService.listInv({ page: pageNumber, size: pageSize })
+        this.invoiceService.listInv({ page: pageNumber, size: pageSize})
             .pipe(
                 catchError(() => of([])),
                 finalize(() => this.loadingSubject.next(false))

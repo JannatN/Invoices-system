@@ -10,7 +10,7 @@ import { Observable, of } from "rxjs";
 import { TokenStorageService } from '../_services/token-storage.service';
 import { Item } from '../models/item';
 import { InvoiceDataSource } from '../datasource/invoices.datasource';
-import { tap } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 
 
 @Component({
@@ -19,12 +19,14 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./board-admin.component.css']
 })
 export class BoardAdminComponent implements OnInit {
+  filters = {
+    keyword: ''
+  }
   invoices: Observable<Invoice[]>;
   items: Observable<Item[]>;
   user: User;
-
- 
-
+  invoice: Invoice;
+  invoicesArray: Invoice[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -44,7 +46,26 @@ export class BoardAdminComponent implements OnInit {
     this.invoiceDatasource.loadInvoices();
 
   }
+  filterInvoice(invoice: Invoice[]) {
+    console.log('hhh', this.filters);
+    return Object.values(invoice).filter(res => {
+      for (let i = 0; i < 10; i++) {      
+      console.log('hhh', res[i].type);
+      return res[i].type.toLowerCase().includes(this.filters.keyword.toLowerCase());
+      }
+    })
+  }
+  listInv() {
+    console.log('hhh', this.filters);
+    this.invoiceService.listInv({invoice: this.filters.keyword}) .pipe(
+      catchError(() => of([])),
+  )
+  console.log('hhho', this.filters);
 
+    // .subscribe(
+    //   data => this.invoicesArray = this.filterInvoice(data)
+    // )
+  }
   // public getList = () => {
   //   this.invoiceService.getInvoicesList()
   //     .subscribe(res => {
@@ -76,6 +97,7 @@ export class BoardAdminComponent implements OnInit {
   loadTodos() {
     this.invoiceDatasource.loadInvoices(this.paginator.pageIndex, this.paginator.pageSize);
   }
+
   public doFilter = (value: string) => {
     // this.dataSource.filter = value.trim().toLocaleLowerCase();
     value = value.trim(); // Remove whitespace

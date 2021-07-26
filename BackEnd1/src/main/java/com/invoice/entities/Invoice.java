@@ -17,6 +17,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "invoices")
@@ -27,8 +28,10 @@ public class Invoice {
 
 	private Long userID;
 	@CreationTimestamp
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDateTime date_created;
 
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDateTime due_date;
 	@NotBlank
 	@Size(max = 20)
