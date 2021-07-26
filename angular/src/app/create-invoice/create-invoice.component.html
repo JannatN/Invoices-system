@@ -1,215 +1,118 @@
-<!-- <div class="container">
-    <div class="title">Create Invoice</div>
-    <hr />
-    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()  class="container mt-3">
-        ">
-        <div class="form-group">
-            <label for="name">Due Date</label>
-            <input type="datetime-local" class="form-control" id="due_date" required [(ngModel)]="invoice.due_date"
-                name="due_date" #dueDate="ngModel">
-        </div>
-
-
-        <div class="form-group">
-            <label for="name">User Id</label>
-            <input type="number" class="form-control" id="userid" required [(ngModel)]="invoice.userid" name="userid"
-                #userid="ngModel">
-
-
-        </div>
-        <div class="form-group">
-            <label for="name">Company </label>
-            <input type="text" class="form-control" id="company" required [(ngModel)]="invoice.company" name="company"
-                #company="ngModel">
-
-        </div>
-        <div class="form-group">
-            <label for="name"> Invoice Type</label>
-            <input type="text" class="form-control" id="type" required [(ngModel)]="invoice.type" name="type"
-                #type="ngModel">
-
-        </div>
-        <div class="title">Item</div>
-        <div class="form-group">
-            <label for="name">Item name</label>
-            <input type="text" class="form-control" id="name" required [(ngModel)]="item.name" name="name"
-                #name="ngModel">
-
-        </div>
-
-        <div class="form-group">
-            <label for="name">Item Description</label>
-            <textarea rows="4" cols="50" class="form-control" id="description" required [(ngModel)]="item.description"
-                name="description" #description="ngModel">
-                            Enter text here...</textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="name">Item price</label>
-            <input type="number" class="form-control" id="price" required [(ngModel)]="item.price" name="price"
-                #price="ngModel">
-
-        </div>
-        <div class="form-group">
-            <label for="name">Currency </label>
-            <input type="text" class="form-control" id="currency" required [(ngModel)]="item.currency" name="currency"
-                #currency="ngModel">
-
-        </div>
-        <div class="form-group">
-            <label for="name">Item Quantitiy </label>
-            <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.quantity" name="quantity"
-                #quantity="ngModel">
-
-        </div>
-        <div *ngIf="isShow">
-            <div class="form-group">
-                <label for="name">Item name</label>
-                <input type="text" class="form-control" id="name" required [(ngModel)]="item.name" name="name"
-                    #name="ngModel">
-
-            </div>
-
-            <div class="form-group">
-                <label for="name">Item Description</label>
-                <textarea rows="4" cols="50" class="form-control" id="description" required
-                    [(ngModel)]="item.description" name="description" #description="ngModel">
-                                Enter text here...</textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="name">Item price</label>
-                <input type="number" class="form-control" id="price" required [(ngModel)]="item.price" name="price"
-                    #price="ngModel">
-
-            </div>
-            <div class="form-group">
-                <label for="name">Currency </label>
-                <input type="text" class="form-control" id="currency" required [(ngModel)]="item.currency"
-                    name="currency" #currency="ngModel">
-
-            </div>
-            <div class="form-group">
-                <label for="name">Item Quantitiy </label>
-                <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.quantity"
-                    name="quantity" #quantity="ngModel">
-
-            </div>
-        </div>
-        <input type="button" (click)=toggleDisplay() value = "+Item"/>
-        <button type="submit" class="btn" (click)='back'>Save Invoice</button>
-
-    </form>
-
-    <div [hidden]="!submitted">
-        <h4>You submitted successfully!</h4>
-    </div>
-
-
-</div> -->
-<div class="container">
-    <div class="title">Create Invoice</div>
-    <hr />
-    <form [formGroup]="addressForm"  class="container mt-3" (ngSubmit)="onSubmit()" >
-        
-        <div class="row justify-content-center">
-            <div class="col-6">
+<form [formGroup]="dynamicForm" (ngSubmit)="fo.form.valid && onSubmit()" #fo="ngForm" novalidate>
+    <div class="card m-3">
+        <h5 class="card-header">Create New Invoice</h5>
+        <div class="card-body">
             <div class="form-group">
                 <label for="name">Due Date</label>
                 <input type="datetime-local" class="form-control" id="due_date" required [(ngModel)]="invoice.due_date"
-                    name="due_date" #dueDate="ngModel"  [ngModelOptions]="{standalone: true}">
+                    name="due_date" #dueDate="ngModel" [ngModelOptions]="{standalone: true}">
+                <!-- <div class="alert alert-danger" role="alert" *ngIf="fo.submitted && due_date.invalid">
+                    Due Date is required!
+                </div> -->
             </div>
-    
-    
+
+
             <div class="form-group">
                 <label for="name">User Id</label>
-                <input type="number" class="form-control" id="userid" required [(ngModel)]="invoice.userid" name="userid"
-                    #userid="ngModel"  [ngModelOptions]="{standalone: true}">
-    
-    
+                <input type="number" class="form-control" id="userid" required [(ngModel)]="invoice.userid"
+                    name="userid" #userid="ngModel" [ngModelOptions]="{standalone: true}">
+                <div class="alert alert-danger" role="alert" *ngIf="fo.submitted && userid.invalid">
+                    User id is required!
+                </div>
+
             </div>
             <div class="form-group">
                 <label for="name">Company </label>
-                <input type="text" class="form-control" id="company" required [(ngModel)]="invoice.company" name="company"
-                    #company="ngModel"  [ngModelOptions]="{standalone: true}">
-    
+                <input type="text" class="form-control" id="company" required [(ngModel)]="invoice.company"
+                    name="company" #company="ngModel" [ngModelOptions]="{standalone: true}">
+                <div class="alert alert-danger" role="alert" *ngIf="fo.submitted && company.invalid">
+                    Company is required!
+                </div>
             </div>
             <div class="form-group">
                 <label for="name"> Invoice Type</label>
                 <input type="text" class="form-control" id="type" required [(ngModel)]="invoice.type" name="type"
-                    #type="ngModel"  [ngModelOptions]="{standalone: true}">
+                    #type="ngModel" [ngModelOptions]="{standalone: true}">
+                <div class="alert alert-danger" role="alert" *ngIf="fo.submitted && type.invalid">
+                    Type is required!
+                </div>
             </div>
-            </div>
-            <div class="col-6">
-                <button type="button" class="btn btn-primary mb-2" (click)="addAddress()">Add Item</button>
-                <section class="container border mb-4 p-3" formArrayName="addresses"
-                    *ngFor="let address of addressControls; let i = index;">
-                    <div [formGroupName]="i">
-                        <div class="row">
-                            <div class="col-6">
-                                <h4>Item {{i + 0}}</h4>
-                            </div>
-                            <div class="col-6 text-right">
-                                <button type="button" class="btn btn-danger btn-sm"
-                                    (click)="removeAddress(i)">Remove</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" required [(ngModel)]="item.name" name="name"
-                                        #type="ngModel"  [ngModelOptions]="{standalone: true}">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="name">Description</label>
-                                    <input type="text" class="form-control" id="description" required [(ngModel)]="item.description" name="description"
-                                        #type="ngModel"  [ngModelOptions]="{standalone: true}">
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="name">Price</label>
-                                    <input type="text" class="form-control" id="price" required [(ngModel)]="item.price" name="price"
-                                        #type="ngModel"  [ngModelOptions]="{standalone: true}">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="currency">Currency</label>
-                                    <select class="form-control" id="currency" required [(ngModel)]="item.currency" name="currency"
-                                    #type="ngModel"  [ngModelOptions]="{standalone: true}">
-                                        <option value="USD">USD</option>
-                                        <option value="NIS">NIS</option>
-                                        <!-- <option value="england">England</option> -->
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="name">Quantitiy</label>
-                                    <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.quantity" name="quantity"
-                                        #type="ngModel"  [ngModelOptions]="{standalone: true}">
-                                </div>
-                            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Number of Items</label>
+                    <select formControlName="numberOfItems" class="form-control" (change)="onChangeItems($event)"
+                        [ngClass]="{ 'is-invalid': submitted && f.numberOfItems.errors }">
+                        <option value=""></option>
+                        <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">{{i}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.numberOfItems.errors" class="invalid-feedback">
+                        <div *ngIf="f.numberOfItems.errors.required">Number of items is required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngFor="let item of t.controls; let i = index" class="list-group list-group-flush">
+            <div class="list-group-item">
+                <h5 class="card-title">Item {{i + 1}}</h5>
+                <div [formGroup]="item" class="form-row">
+                    <div class="form-group col-6">
+                        <label>Name</label>
+                        <input type="text" formControlName="name" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && item.controls.name.errors }" />
+                        <div *ngIf="submitted && item.controls.name.errors" class="invalid-feedback">
+                            <div *ngIf="item.controls.name.errors.required">Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label>Description</label>
+                        <input type="text" formControlName="description" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && item.controls.description.errors }" />
+                        <div *ngIf="submitted && item.controls.description.errors" class="invalid-feedback">
+                            <div *ngIf="item.controls.description.errors.required">Description is required</div>
+                            <div *ngIf="item.controls.description.errors.description">Description must be a valid
+                                email address</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label>Price</label>
+                        <input type="text" formControlName="price" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && item.controls.price.errors }" />
+                        <div *ngIf="submitted && item.controls.price.errors" class="invalid-feedback">
+                            <div *ngIf="item.controls.price.errors.required">Price is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label>Currency</label>
+                        <!-- <input type="text" formControlName="currency" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && item.controls.currency.errors }" /> -->
+                        <select class="form-control" formControlName="currency"
+                            [ngClass]="{ 'is-invalid': submitted && item.controls.currency.errors }">
+                            <option value="USD">$</option>
+                            <option value="NIS">₪</option>
+                            <option value="EURO">€</option>
+                        </select>
+                        <div *ngIf="submitted && item.controls.currency.errors" class="invalid-feedback">
+                            <div *ngIf="item.controls.currency.errors.required">Currency is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label>Quantity</label>
+                        <input type="text" formControlName="quantity" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && item.controls.quantity.errors }" />
+                        <div *ngIf="submitted && item.controls.quantity.errors" class="invalid-feedback">
+                            <div *ngIf="item.controls.quantity.errors.required">Quantity is required</div>
                         </div>
                     </div>
 
-                </section>
-
-                <div class="text-right">
-                    <!-- <input type="submit" class="btn btn-success" value="Submit" /> -->
-                    <button type="submit" class="btnn" (click)='back'>Save Invoice</button>
-
                 </div>
-
             </div>
         </div>
-
-    </form>
-</div>
+        <div class="card-footer text-center">
+            <button class="btn btn-primary mr-1">Save Invoice</button>
+            <button class="btn btn-secondary mr-1 grey" type="reset" (click)="onReset()">Reset</button>
+            <button class="btn btn-secondary grey" type="button" (click)="onClear()">Clear</button>
+        </div>
+    </div>
+</form>
