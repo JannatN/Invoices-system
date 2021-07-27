@@ -46,14 +46,14 @@ public class Invoice {
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
-	private Set<Item> items;
+	private List<Item> items;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
 	private Set<File> files;
 
 	public Invoice(Long id, LocalDateTime date_created, LocalDateTime due_date,
-			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, Set<Item> items, Set<File> files) {
+			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, List<Item> items, Set<File> files) {
 		super();
 		this.id = id;
 //		this.userID = userID;
@@ -110,11 +110,11 @@ public class Invoice {
 		this.userID = userID;
 	}
 
-	public Set<Item> getItems() {
+	public List<Item> getItems() {
 		return items;
 	}
 
-	public void setItems(Set<Item> items) {
+	public void setItems(List<Item> items) {
 		this.items = items;
 	}
 

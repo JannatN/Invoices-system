@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { _MatPaginatorBase } from '@angular/material/paginator';
 import { Invoice } from '../models/invoice';
@@ -34,23 +34,28 @@ export class InvoiceService {
         console.log('hhho', params);
         return this.http.get(`${this.baseUrl}`, { params });
     }
-    filter(): Observable<Invoice[]> {
+
+    filter(page: number, size: number, keyword: Object): Observable<Invoice[]> {
+        let params = new HttpParams();
+        params
         return this.http.get<Invoice[]>(`${this.baseUrl}`);
     }
 
     deleteInvoice(id: number): Observable<any> {
         return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
     }
+
+
     uploadFile(file: File): Observable<HttpEvent<any>> {
         const formData: FormData = new FormData();
-    
+
         formData.append('file', file);
-    
+
         const req = new HttpRequest('POST', `${this.baseUrl}`, formData, {
-          reportProgress: true,
-          responseType: 'json'
+            reportProgress: true,
+            responseType: 'json'
         });
-    
+
         return this.http.request(req);
-      }
+    }
 }

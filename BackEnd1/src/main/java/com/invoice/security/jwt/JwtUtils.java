@@ -22,6 +22,11 @@ public class JwtUtils {
 	@Value("${invoice.app.jwtExpirationMs}")
 	private int jwtExpirationMs;
 
+	/**
+	 *
+	 * @param authentication
+	 * @return
+	 */
 	public String generateJwtToken(Authentication authentication) {
 
 		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
@@ -29,12 +34,24 @@ public class JwtUtils {
 		return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(new Date())
 				.setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
 				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+
+
 	}
 
+	/**
+	 *
+	 * @param token
+	 * @return
+	 */
 	public String getUserNameFromJwtToken(String token) {
 		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
 	}
 
+	/**
+	 *
+	 * @param authToken
+	 * @return
+	 */
 	public boolean validateJwtToken(String authToken) {
 		try {
 			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

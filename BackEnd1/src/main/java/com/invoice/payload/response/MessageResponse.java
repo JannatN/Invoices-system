@@ -3,6 +3,10 @@ package com.invoice.payload.response;
 public class MessageResponse {
 	private String message;
 
+	/**
+	 *
+	 * @param message
+	 */
 	public MessageResponse(String message) {
 	    this.message = message;
 	  }
