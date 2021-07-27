@@ -2,13 +2,14 @@ package com.invoice.controllers.dto;
 
 import com.invoice.entities.User;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Set;
-
+//@ResponseBody
 public class InvoiceDto {
     // todo: add validations here
     private Long id;
@@ -24,6 +25,7 @@ public class InvoiceDto {
     private String company;
 
     private Set<ItemDto> items;
+
 
     private Set<FileDto> files;
 

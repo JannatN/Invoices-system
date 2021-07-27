@@ -41,7 +41,7 @@ public class Invoice {
 	@JoinColumn(name = "userid", insertable = false, updatable = false)
 	private User user;
 
-	@OneToMany(cascade = { CascadeType.ALL })
+	@OneToMany(cascade = { CascadeType.ALL },fetch = FetchType.EAGER)
 	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
 	private Set<Item> items;
 

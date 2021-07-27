@@ -52,14 +52,14 @@ public class InvoiceService {
 //        invoice.getItems();
         System.out.println(invoice.toString());
 //        invoice.setFiles();
+//File file=new File();
+//        String fileName = StringUtils.cleanPath(file.getName());
+//      File fileDB = new File(fileName, file.getContentType(), file.getBytes());
 //
-//        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-//        File FileDB = new File(fileName, file.getContentType(), file.getBytes());
-
-//        System.out.println(FileDB.toString());
-//        File file=new File();
-//        file.setInvoice(invoice);
-//         fileDBRepository.save(file);
+////      System.out.println(FileDB.toString());
+//
+//       fileDB.setInvoice(invoice);
+//       fileDBRepository.save(fileDB);
 
 
 

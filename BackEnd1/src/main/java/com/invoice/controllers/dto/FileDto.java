@@ -1,5 +1,8 @@
 package com.invoice.controllers.dto;
 
+import org.springframework.web.bind.annotation.ResponseBody;
+
+//@ResponseBody
 public class FileDto {
     private String name;
 

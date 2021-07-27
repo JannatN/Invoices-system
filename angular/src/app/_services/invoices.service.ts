@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { _MatPaginatorBase } from '@angular/material/paginator';
-
+import {FileUp} from "../models/file"
 @Injectable({
     providedIn: 'root'
 })
@@ -24,11 +24,17 @@ export class InvoiceService {
     //     return this.http.get(`${this.baseUrl}`);
     // }
 
-    createInvoice(invoice: Object): Observable<Object> {
-        return this.http.post(`${this.baseUrl}`, invoice,{
-            reportProgress: true,
-            responseType: 'json'
-          });
+    createInvoice(invoice: Object): Observable<object> {
+      
+        // const formData: FormData = new FormData();
+    
+        // formData.append('file', file);
+
+        return this.http.post(`${this.baseUrl}`, invoice );
+
+        // const req = new HttpRequest('POST',`${this.baseUrl}`, invoice, formData );
+      
+        //   return this.http.request(req);
     }
 
 

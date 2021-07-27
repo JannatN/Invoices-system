@@ -1,5 +1,5 @@
 import { Item } from "./item";
-import {File} from "./file"
+import {FileUp} from "./file"
 export class Invoice {
     id: number;
     date_created: Date;
@@ -8,5 +8,5 @@ export class Invoice {
     company:string;
     type:string;
     items: Item[];
-    files: File[];
+    files: FileUp[];
 }
