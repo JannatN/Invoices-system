@@ -11,5 +11,4 @@ export class Invoice {
   items: Item[];
   // items: FormArray;
   files: File[];
-  invoice: any;
 }

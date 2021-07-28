@@ -20,6 +20,8 @@ export class CreateInvoiceComponent implements OnInit {
 
   invoice: Invoice = new Invoice();
   item: Item = new Item();
+  file: File = new File();
+
   location: any;
 
   selectedFiles: File;
@@ -27,7 +29,6 @@ export class CreateInvoiceComponent implements OnInit {
   message = '';
   id: number;
   // fileInfos: Observable<any>;
-
 
   constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService,
     private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService) { }
@@ -124,15 +125,23 @@ export class CreateInvoiceComponent implements OnInit {
     // this.invoice.files.push(this.selectedFiles[0]);
 
     console.log("values", this.dynamicForm.value.items);
-    console.log("items", this.invoice);
-    this.invoice.files.push(this.selectedFiles[0]);
+    console.log("invoiceeee", this.invoice);
 
-    console.log("file", this.selectedFiles);
+    // this.file = this.selectedFiles
+      this.file.name = this.selectedFiles[0].name
+      this.file.type = this.selectedFiles[0].type
+      this.invoice.files.push(this.file);
+
+    // this.file.data = this.selectedFiles[0].data
+
+    console.log("data", this.selectedFiles[0].data);
+
+    console.log("invoice", this.invoice);
+    console.log("files", this.selectedFiles);
 
 
     this.saveInvoice();
     console.log("invoice created");
-    console.log("invoice", this.invoice);
     if (this.dynamicForm.invalid) {
       return;
     }

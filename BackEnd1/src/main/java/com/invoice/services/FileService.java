@@ -42,6 +42,12 @@ public class FileService {
 
 		}).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
 	}
+	public File store(MultipartFile file) throws IOException {
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		File FileDB = new File(fileName, file.getContentType(), file.getBytes());
+
+		return fileDBRepository.save(FileDB);
+	}
 
 	public File getFile(String id) {
 		return fileDBRepository.findById(id).get();

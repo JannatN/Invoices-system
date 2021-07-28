@@ -46,24 +46,6 @@ public class ItemController {
 		return convertToDto(itemCreated);
 	}
 
-//	@GetMapping("/items/{id}")
-//	@GetMapping("/invoices/{id}")
-//	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
-//	public InvoiceDto getInvoiceById(@PathVariable(value = "id") Long itemID) throws ResourceNotFoundException {
-//		return convertToDto(itemService.getItemById(itemID));
-//	}
-//	@PutMapping("/invoices/{invoiceID}/items/{itemID}")
-//	@PreAuthorize("hasRole('ADMIN')")
-//	public Item updateItem(@PathVariable(value = "invoiceID") Long invoiceID,
-//			@PathVariable(value = "itemID") Long itemID, @Valid @RequestBody Item itemDetails)
-//			throws ResourceNotFoundException {
-//		return itemService.updateItem(invoiceID, itemID, itemDetails);
-//	}
-	@GetMapping("/items")
-	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
-	public List<ItemDto> getAllItems() {
-		return convertToDto(itemService.getAllItems());
-	}
 
 	private ItemDto convertToDto(ResponseEntity<Item> item) {
 		ItemDto itemDto = modelMapper.map(item, ItemDto.class);
@@ -75,13 +57,5 @@ public class ItemController {
 		return item;
 	}
 
-	private List<ItemDto> convertToDto(List<Item> allItems) {
-		List<ItemDto> itemService = mapList(allItems, ItemDto.class);
-		return itemService;
-	}
-
-	<S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
-		return source.stream().map(element -> modelMapper.map(element, targetClass)).collect(Collectors.toList());
-	}
 
 }

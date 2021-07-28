@@ -1,5 +1,6 @@
 package com.invoice.controllers;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 import java.util.List;
@@ -64,7 +65,7 @@ public class InvoiceController {
     @PostMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException {
+    public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException, IOException {
         Invoice invoice = convertToEntity(invoiceDto);
         Invoice invoiceCreated = invoiceService.createInvoice(invoice);
         modelMapper.getConfiguration().setAmbiguityIgnored(true);

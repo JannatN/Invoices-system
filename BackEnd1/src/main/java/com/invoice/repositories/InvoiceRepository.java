@@ -16,10 +16,11 @@ import com.invoice.entities.User;
 
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, Long>, PagingAndSortingRepository<Invoice, Long>, JpaSpecificationExecutor<Invoice> {
-
-//	@Query("select i from Invoice i where id like %?1%")
-//    Page<Invoice> findById(Long id, Pageable pageable);
-
+    /**
+     *
+     * @param spec
+     * @param pageable
+     * @return
+     */
     public Page<Invoice> findAll(Specification<Invoice> spec, Pageable pageable);
-//    public List<Invoice> findAll(Specification<User> spec);
 }

@@ -9,9 +9,15 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class InvoiceSpecification {
 
+@Component
+
+public class InvoiceSpecification {
+    /**
+     * 
+     * @param request
+     * @return
+     */
     public static Specification<Invoice> getInvoices(Invoice request) {
         return (root, query, criteriaBuilder) -> {
 

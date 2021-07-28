@@ -23,16 +23,18 @@ import com.invoice.payload.response.MessageResponse;
 import com.invoice.services.FileService;
 
 @Controller
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*", maxAge = 3600)
+
 public class FileController {
 
-	@Autowired
-	private FileService storageService;
+    @Autowired
+    private FileService storageService;
 
-	@Autowired
-	private ModelMapper modelMapper;
+    @Autowired
+    private ModelMapper modelMapper;
 
-	@ResponseStatus(HttpStatus.CREATED)
+    	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/upload/{invoiceID}")
 	@PreAuthorize("hasRole('ADMIN') ")
 	public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file,
@@ -49,7 +51,20 @@ public class FileController {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
 		}
 	}
-	
+//    @PostMapping("/upload")
+//    @PreAuthorize("hasRole('ADMIN') ")
+//    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
+//        String message = "";
+//        try {
+//            storageService.store(file);
+//
+//            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+//            return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
+//        } catch (Exception e) {
+//            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+//            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
+//        }
+//    }
 
 //	@GetMapping("/files")
 //	@PreAuthorize("hasRole('ADMIN') ")
@@ -73,14 +88,14 @@ public class FileController {
 //				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
 //				.body(fileDB.getData());
 //	}
-	private FileDto convertToDto(ResponseEntity<File> file) {
-		FileDto fileDto = modelMapper.map(file, FileDto.class);
-		return fileDto;
-	}
+        private FileDto convertToDto (ResponseEntity < File > file) {
+            FileDto fileDto = modelMapper.map(file, FileDto.class);
+            return fileDto;
+        }
 
-	private File convertToEntity(@Valid FileDto fileDto) throws ParseException {
-		File file = modelMapper.map(fileDto, File.class);
-		return file;
-	}
+        private File convertToEntity (@Valid FileDto fileDto) throws ParseException {
+            File file = modelMapper.map(fileDto, File.class);
+            return file;
+        }
 
-}
+    }

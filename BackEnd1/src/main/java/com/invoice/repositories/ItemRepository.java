@@ -13,6 +13,4 @@ import com.invoice.entities.User;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-	Item findTopByOrderByIdDesc();
-
 }
