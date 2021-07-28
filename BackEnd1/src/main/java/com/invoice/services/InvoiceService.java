@@ -2,13 +2,18 @@ package com.invoice.services;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import com.invoice.entities.Action;
+import com.invoice.entities.FileHistory;
+import com.invoice.entities.User;
 import com.invoice.specification.InvoiceSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.invoice.entities.Invoice;
@@ -37,7 +42,12 @@ public class InvoiceService {
 //        invoice.setItems(invoice.getItems());
         return invoiceRepository.save(invoice);
     }
-
+//    @org.springframework.transaction.annotation.Transactional("MANDATORY")
+//    public void perform(Invoice target, Action action) {
+//        EntityManager entityManager = BeanUtil.getBean(EntityManager.class);
+//        entityManager.persist(new FileHistory(target, action));
+//
+//    }
     public Invoice getInvoiceById(Long invoiceID) throws ResourceNotFoundException {
         return invoiceRepository.findById(invoiceID)
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice not found for this id :: " + invoiceID));

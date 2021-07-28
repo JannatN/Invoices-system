@@ -5,15 +5,25 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 //import com.invoice.mapper.Mapper;
+import com.invoice.entities.FileEntityListener;
+import com.invoice.entities.FileHistory;
+import com.invoice.entities.User;
+import com.invoice.payload.request.LoginRequest;
+import com.invoice.payload.request.SignupRequest;
+import com.invoice.payload.response.JwtResponse;
 import com.invoice.repositories.InvoiceRepository;
+import com.invoice.security.jwt.JwtUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,8 +78,13 @@ private InvoiceRepository invoiceRepository;
     @ResponseStatus(HttpStatus.CREATED)
     public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException {
         Invoice invoice = convertToEntity(invoiceDto);
+        JwtResponse j=new JwtResponse();
+       System.out.println(j.getUsername());
+
 //        invoiceRepository.getCreatedBy();
 //        System.out.println( invoiceRepository.getCreatedBy());
+//        String username= ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+//        System.out.println(username);
         Invoice invoiceCreated = invoiceService.createInvoice(invoice);
         System.out.println("invoice  "+invoiceCreated);
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
@@ -96,8 +111,14 @@ private InvoiceRepository invoiceRepository;
     @PreAuthorize("hasRole('ADMIN')")
     public InvoiceDto updateInvoice(@PathVariable(value = "id") Long invoiceID,
                                     @Valid @RequestBody InvoiceDto invoiceDetails) throws ResourceNotFoundException, ParseException {
+//        FileEntityListener fl=new FileEntityListener();
+//        fl.preUpdate(invoiceDetails);
+//        FileHistory file=new FileHistory();
+//        file.setFileContent(target.toString());
+//        fileHistoryRepository.saveAndFlush(file);
+        System.out.println(invoiceDetails);
         Invoice invoice = convertToEntity(invoiceDetails);
-//        System.out.println(invoice+"ddddddddddd"+invoiceDetails);
+
         return convertToDto(invoiceService.updateInvoice(invoice, invoiceID));
     }
 

@@ -17,11 +17,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "invoices")
 //@Embeddable
+@EntityListeners(AuditingEntityListener.class)
 public class Invoice extends Auditable<String>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -71,7 +73,9 @@ public class Invoice extends Auditable<String>{
 
 	}
 
-	public Set<File> getFiles() {
+
+
+				public Set<File> getFiles() {
 		return files;
 	}
 
