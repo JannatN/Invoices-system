@@ -41,9 +41,9 @@ public class InvoiceController {
 
     @GetMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
-	public Page<InvoiceDto> findPaginated(Pageable page) {
-	return convertToDto(invoiceService.findPaginated(page));
-	}
+    public Page<InvoiceDto> findPaginated(Pageable page, Invoice req) {
+        return convertToDto(invoiceService.findPaginated(page, req));
+    }
 
     private Page<InvoiceDto> convertToDto(Page<Invoice> paginated) {
         Page<InvoiceDto> dtoList = mapEntityPageIntoDtoPage(paginated, InvoiceDto.class);

@@ -3,11 +3,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { InvoiceService } from "../_services/invoices.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../models/item';
-import { Observable } from 'rxjs';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { UploadFilesService } from '../_services/upload-file.service';
 import { File } from "../models/file"
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-invoice',
@@ -15,60 +15,69 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./create-invoice.component.css']
 })
 export class CreateInvoiceComponent implements OnInit {
+  dynamicForm: FormGroup;
+  submitted = false;
 
   invoice: Invoice = new Invoice();
-  submitted = false;
-  isShow = false;
-  // invoices: Invoice;
   item: Item = new Item();
-  // item2: Item = new Item();
   location: any;
-  files: File[];
+
+  selectedFiles: File;
+  progressInfos = [];
+  message = '';
+  id: number;
+  // fileInfos: Observable<any>;
 
 
-  public addresses: FormArray;
-  public addressForm: FormGroup;
-  constructor(private fb: FormBuilder, private invoiceService: InvoiceService,
-    private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService) {
-    this.addressForm = this.fb.group({
-      addresses: this.fb.array([this.createAddress()])
-    });
-  }
+  constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService,
+    private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService) { }
+
   ngOnInit() {
-  
-  }
-
-  get addressControls() {
-    return this.addressForm.get('addresses')['controls'];
-  }
-
-  createAddress(): FormGroup {
-    return this.fb.group({
-      name: this.item.name,
-      description: this.item.description,
-      price: this.item.price,
-      currency: this.item.currency,
-      quantity: this.item.quantity
+    this.dynamicForm = this.formBuilder.group({
+      numberOfItems: ['', Validators.required],
+      items: new FormArray([])
     });
+
+  }
+  get f() {
+    return this.dynamicForm.controls;
+  }
+  get t() {
+    return this.f.items as FormArray;
+
   }
 
-  addAddress(): void {
-    this.addresses = this.addressForm.get('addresses') as FormArray;
-    this.addresses.push(this.createAddress());
-    console.log(this.addresses.value);
+  selectFiles(event) {
+    this.progressInfos = [];
+    this.selectedFiles = event.target.files;
+    console.log(this.selectedFiles)
+
   }
 
-  removeAddress(i: number) {
-    this.addresses.removeAt(i);
+  upload(idx, file) {
+    this.progressInfos[idx] = { value: 0, fileName: file.name };
+
+    this.invoiceService.uploadFile(file).subscribe(
+      event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+        } else if (event instanceof HttpResponse) {
+          // this.fileInfos = this.uploadService.getFiles();
+        }
+      },
+      err => {
+        this.progressInfos[idx].value = 0;
+        this.message = 'Could not upload the file:' + file.name;
+      });
   }
 
-  logValue() {
-    console.log(this.addresses.value);
+  uploadFiles() {
+    this.message = '';
+
+    // for (let i = 0; i < this.selectedFiles.length; i++) {
+    //   this.upload(i, this.selectedFiles[i]);
+    // }
   }
-
-
-
-
   saveInvoice() {
     this.invoiceService.createInvoice(this.invoice).subscribe(data1 => {
       console.log(data1)
@@ -76,30 +85,74 @@ export class CreateInvoiceComponent implements OnInit {
     })
   }
 
+  onChangeItems(e) {
+    const numberOfItems = e.target.value || 0;
+    if (this.t.length < numberOfItems) {
+      for (let i = this.t.length; i < numberOfItems; i++) {
+        this.t.push(this.formBuilder.group({
+          name: ['', Validators.required],
+          description: ['', Validators.required],
+          price: ['', Validators.required],
+          currency: ['', Validators.required],
+          quantity: ['', Validators.required],
+
+        }));
+        console.log("num", numberOfItems);
+
+      }
+
+
+
+
+    } else {
+      for (let i = this.t.length; i >= numberOfItems; i--) {
+        this.t.removeAt(i);
+      }
+    }
+  }
+
+
+
   onSubmit() {
-
-    this.invoice.items = [];
-    this.invoice.items.push(this.item);
-    // console.log(this.addresses.value);
-
-
-    // this.loop();
-
-    // console.log("array item", this.item)
-    // console.log("array file", this.invoice.files)
     this.submitted = true;
+    this.invoice.items = [];
+    this.invoice.files = [];
+    for (let i = 0; i < 10; i++) {
+      this.invoice.items.push(this.dynamicForm.value.items[i]);
+
+    }
+    // this.invoice.files.push(this.selectedFiles[0]);
+
+    console.log("values", this.dynamicForm.value.items);
+    console.log("items", this.invoice);
+    this.invoice.files.push(this.selectedFiles[0]);
+
+    console.log("file", this.selectedFiles);
+
+
     this.saveInvoice();
     console.log("invoice created");
+    console.log("invoice", this.invoice);
+    if (this.dynamicForm.invalid) {
+      return;
+    }
+
+    // display form values on success
+    // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.dynamicForm.value, null, 4));
+    alert('SUCCESS!! \n\n The Invoice is created ! :-)\n\n');
 
   }
-  toggleDisplay() {
-    this.isShow = !this.isShow;
+
+  onReset() {
+    this.submitted = false;
+    this.dynamicForm.reset();
+    this.t.clear();
   }
-  // loop(){
-  //   for (let i = 0; i < this.invoice.items.length -1; i++) {
-  //     this.invoice.items.push(this.item);
-  //   }
-  // }
+
+  onClear() {
+    this.submitted = false;
+    this.t.reset();
+  }
 
   gotoList() {
     this.router.navigate(['/invoices']);
