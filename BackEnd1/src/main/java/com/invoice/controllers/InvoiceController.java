@@ -76,6 +76,8 @@ public class InvoiceController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
     public InvoiceDto getInvoiceById(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
+//        System.out.println(invoiceService.getInvoiceById(invoiceID).toString());
+
         return convertToDto(invoiceService.getInvoiceById(invoiceID));
     }
 //	@GetMapping("/invoices/{id}")
@@ -91,6 +93,7 @@ public class InvoiceController {
     public InvoiceDto updateInvoice(@PathVariable(value = "id") Long invoiceID,
                                     @Valid @RequestBody InvoiceDto invoiceDetails) throws ResourceNotFoundException, ParseException {
         Invoice invoice = convertToEntity(invoiceDetails);
+//        System.out.println(invoice+"ddddddddddd"+invoiceDetails);
         return convertToDto(invoiceService.updateInvoice(invoice, invoiceID));
     }
 

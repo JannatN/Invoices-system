@@ -21,6 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "invoices")
+//@Embeddable
 public class Invoice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

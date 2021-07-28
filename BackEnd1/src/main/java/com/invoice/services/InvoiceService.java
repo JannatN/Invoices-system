@@ -46,8 +46,11 @@ public class InvoiceService {
 
     // todo: update items/files here
     public Invoice updateInvoice(Invoice invoiceDetails, Long invoiceID) throws ResourceNotFoundException {
+//        System.out.println(invoiceDetails.toString());
         Invoice invoice = invoiceRepository.findById(invoiceID)
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice not found for this id :: " + invoiceID));
+//System.out.println(invoice.toString());
+
 
 //		invoice.setDate_created(invoiceDetails.getDate_created());
         invoice.setDue_date(invoiceDetails.getDue_date());
