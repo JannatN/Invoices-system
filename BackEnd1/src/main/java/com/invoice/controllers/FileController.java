@@ -34,23 +34,23 @@ public class FileController {
     @Autowired
     private ModelMapper modelMapper;
 
-    	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("/upload/{invoiceID}")
-	@PreAuthorize("hasRole('ADMIN') ")
-	public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file,
-			@PathVariable Long invoiceID) {
-		String message = "";
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/upload/{invoiceID}")
+    @PreAuthorize("hasRole('ADMIN') ")
+    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file,
+                                                      @PathVariable Long invoiceID) {
+        String message = "";
 
-		try {
-			storageService.store(file, invoiceID);
+        try {
+            storageService.store(file, invoiceID);
 
-			message = "Uploaded the file successfully: " + file.getOriginalFilename();
-			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
-		} catch (Exception e) {
-			message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
-		}
-	}
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
+        }
+    }
 //    @PostMapping("/upload")
 //    @PreAuthorize("hasRole('ADMIN') ")
 //    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
@@ -79,7 +79,7 @@ public class FileController {
 //		return ResponseEntity.status(HttpStatus.OK).body(files);
 //	}
 
-//	@GetMapping("/files/{id}")
+    //	@GetMapping("/files/{id}")
 //	@PreAuthorize("hasRole('ADMIN') ")
 //	public ResponseEntity<byte[]> getFile(@PathVariable String id) {
 //		File fileDB = storageService.getFile(id);
@@ -88,14 +88,14 @@ public class FileController {
 //				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
 //				.body(fileDB.getData());
 //	}
-        private FileDto convertToDto (ResponseEntity < File > file) {
-            FileDto fileDto = modelMapper.map(file, FileDto.class);
-            return fileDto;
-        }
-
-        private File convertToEntity (@Valid FileDto fileDto) throws ParseException {
-            File file = modelMapper.map(fileDto, File.class);
-            return file;
-        }
-
+    private FileDto convertToDto(ResponseEntity<File> file) {
+        FileDto fileDto = modelMapper.map(file, FileDto.class);
+        return fileDto;
     }
+
+    private File convertToEntity(@Valid FileDto fileDto) throws ParseException {
+        File file = modelMapper.map(fileDto, File.class);
+        return file;
+    }
+
+}

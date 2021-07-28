@@ -42,7 +42,7 @@
     <label><b>Files: </b></label>
     <tbody>
         <tr *ngFor="let file of invoice.files | keyvalue">
-            <div>Item Name: {{file.value.name}} </div>
+            <div> {{file.value.data}} </div>
         </tr>
     </tbody>
     

@@ -1,9 +1,7 @@
 package com.invoice.services;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.invoice.entities.Invoice;
@@ -30,6 +29,8 @@ public class InvoiceService {
 
     @Autowired
     private InvoiceRepository invoiceRepository;
+    @Autowired
+    private FileDBRepository fileDBRepository;
 
     /**
      * @param page
@@ -47,8 +48,16 @@ public class InvoiceService {
      * @throws IOException
      */
     @Transactional
-    public Invoice createInvoice(Invoice invoice) throws IOException {
-        return invoiceRepository.save(invoice);
+    public ResponseEntity<Invoice> createInvoice(Invoice invoice, MultipartFile files) throws IOException {
+        String fileName = StringUtils.cleanPath(files.getOriginalFilename());
+        File FileDB = new File(fileName, files.getContentType(), files.getBytes());
+//        File f = fileDBRepository.save(FileDB);
+        List<File> list = new LinkedList<File>();
+        list.add(FileDB);
+        invoice.setFiles(list);
+        System.out.println("fileeeees "+ Arrays.asList(list));
+        final Invoice inv = invoiceRepository.save(invoice);
+        return ResponseEntity.ok(inv);
     }
 
     /**
@@ -70,12 +79,6 @@ public class InvoiceService {
     public Invoice updateInvoice(Invoice invoiceDetails, Long invoiceID) throws ResourceNotFoundException {
         Invoice invoice = invoiceRepository.findById(invoiceID)
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice not found for this id :: " + invoiceID));
-//        invoice.getItems().get(0).setName(invoiceDetails.getItems().get(0).getName());
-//        invoice.getItems().get(0).setDescription(invoiceDetails.getItems().get(0).getDescription());
-//        invoice.getItems().get(0).setCurrency(invoiceDetails.getItems().get(0).getCurrency());
-//        invoice.getItems().get(0).setPrice(invoiceDetails.getItems().get(0).getPrice());
-//        invoice.getItems().get(0).getQuantity(invoiceDetails.getItems().get(0).getQuantity());
-
         invoice.setDue_date(invoiceDetails.getDue_date());
         invoice.setUserID(invoiceDetails.getUserID());
         invoice.setCompany(invoiceDetails.getCompany());

@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ public class InvoiceDto {
     private Long id;
     @CreationTimestamp
     private LocalDateTime date_created;
-    @NotNull
+//    @NotNull
     private LocalDateTime due_date;
     @NotBlank
     @Size(max = 20)
@@ -27,13 +28,13 @@ public class InvoiceDto {
     private String company;
     private List<ItemDto> items;
 
-    private Set<FileDto> files;
+    private List<FileDto> files;
 
 //    private UserDto user;
     private Long userid;
 
     public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company,
-                      List<ItemDto> items, Set<FileDto> files) {
+                      List<ItemDto> items, List<FileDto> files) {
         super();
         this.id = id;
         this.date_created = date_created;
@@ -63,11 +64,11 @@ public class InvoiceDto {
 //		this.user = user;
 //	}
 
-    public Set<FileDto> getFiles() {
+    public List<FileDto> getFiles() {
         return files;
     }
 
-    public void setFiles(Set<FileDto> files) {
+    public void setFiles(List<FileDto> files) {
         this.files = files;
     }
 

@@ -28,6 +28,8 @@ export class UploadFilesComponent implements OnInit {
   selectFiles(event) {
     this.progressInfos = [];
     this.selectedFiles = event.target.files;
+    console.log("filesss", this.selectedFiles)
+
   }
 
   upload(idx, file) {
@@ -40,6 +42,8 @@ export class UploadFilesComponent implements OnInit {
           event => {
             if (event.type === HttpEventType.UploadProgress) {
               this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+              console.log("fileeeeeeee", file)
+
             } else if (event instanceof HttpResponse) {
               // this.fileInfos = this.uploadService.getFiles();
             }
@@ -56,6 +60,7 @@ export class UploadFilesComponent implements OnInit {
 
         for(let i = 0; i< this.selectedFiles.length; i++) {
       this.upload(i, this.selectedFiles[i]);
+      console.log("files", this.selectedFiles[i])
     }
   }
 }

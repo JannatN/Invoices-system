@@ -2,10 +2,7 @@
 package com.invoice.entities;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -50,10 +47,10 @@ public class Invoice {
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
-	private Set<File> files;
+	private List<File> files;
 
 	public Invoice(Long id, LocalDateTime date_created, LocalDateTime due_date,
-			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, List<Item> items, Set<File> files) {
+			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, List<Item> items, List<File> files) {
 		super();
 		this.id = id;
 //		this.userID = userID;
@@ -70,11 +67,11 @@ public class Invoice {
 
 	}
 
-	public Set<File> getFiles() {
+	public List<File> getFiles() {
 		return files;
 	}
 
-	public void setFiles(Set<File> files) {
+	public void setFiles(List<File> files) {
 		this.files = files;
 	}
 
