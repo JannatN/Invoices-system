@@ -58,18 +58,18 @@ public class ItemService {
 	 * @return
 	 * @throws ResourceNotFoundException
 	 */
-	public Item updateItem(Long invoiceID, Long itemID, Item itemDetails) throws ResourceNotFoundException {
-		if (!invoiceRepository.existsById(invoiceID)) {
-			throw new ResourceNotFoundException("InvoiceID " + invoiceID + " not found");
-		}
-
-		return itemRepository.findById(itemID).map(item -> {
-			item.setName(itemDetails.getName());
-			item.setDescription(itemDetails.getDescription());
-			item.setPrice(itemDetails.getPrice());
-			item.setCurrency(itemDetails.getCurrency());
-			item.setQuantity(itemDetails.getQuantity());
-			return itemRepository.save(item);
-		}).orElseThrow(() -> new ResourceNotFoundException("ItemID " + itemID + "not found"));
-	}
+//	public Item updateItem(Long invoiceID, Long itemID, Item itemDetails) throws ResourceNotFoundException {
+//		if (!invoiceRepository.existsById(invoiceID)) {
+//			throw new ResourceNotFoundException("InvoiceID " + invoiceID + " not found");
+//		}
+//
+//		return itemRepository.findById(itemID).map(item -> {
+//			item.setName(itemDetails.getName());
+//			item.setDescription(itemDetails.getDescription());
+//			item.setPrice(itemDetails.getPrice());
+//			item.setCurrency(itemDetails.getCurrency());
+//			item.setQuantity(itemDetails.getQuantity());
+//			return itemRepository.save(item);
+//		}).orElseThrow(() -> new ResourceNotFoundException("ItemID " + itemID + "not found"));
+//	}
 }

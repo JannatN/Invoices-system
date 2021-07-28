@@ -3,6 +3,7 @@ import { Invoice } from '../models/invoice';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceService } from '../_services/invoices.service';
 import {Location} from '@angular/common';
+import { Item } from '../models/item';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class UpdateInvoiceComponent implements OnInit {
 
   id: number;
   invoice: Invoice;
+  item: Item;
 
   constructor(private route: ActivatedRoute,private router: Router,
     private invoiceService: InvoiceService, private location: Location) { }

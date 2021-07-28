@@ -32,7 +32,6 @@ public class InvoiceService {
     private InvoiceRepository invoiceRepository;
 
     /**
-     *
      * @param page
      * @param request
      * @return
@@ -43,7 +42,6 @@ public class InvoiceService {
     }
 
     /**
-     *
      * @param invoice
      * @return
      * @throws IOException
@@ -54,7 +52,6 @@ public class InvoiceService {
     }
 
     /**
-     *
      * @param invoiceID
      * @return
      * @throws ResourceNotFoundException
@@ -65,7 +62,6 @@ public class InvoiceService {
     }
 
     /**
-     *
      * @param invoiceDetails
      * @param invoiceID
      * @return
@@ -74,10 +70,14 @@ public class InvoiceService {
     public Invoice updateInvoice(Invoice invoiceDetails, Long invoiceID) throws ResourceNotFoundException {
         Invoice invoice = invoiceRepository.findById(invoiceID)
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice not found for this id :: " + invoiceID));
+//        invoice.getItems().get(0).setName(invoiceDetails.getItems().get(0).getName());
+//        invoice.getItems().get(0).setDescription(invoiceDetails.getItems().get(0).getDescription());
+//        invoice.getItems().get(0).setCurrency(invoiceDetails.getItems().get(0).getCurrency());
+//        invoice.getItems().get(0).setPrice(invoiceDetails.getItems().get(0).getPrice());
+//        invoice.getItems().get(0).getQuantity(invoiceDetails.getItems().get(0).getQuantity());
 
-//		invoice.setDate_created(invoiceDetails.getDate_created());
         invoice.setDue_date(invoiceDetails.getDue_date());
-        invoice.setUser(invoiceDetails.getUser());
+        invoice.setUserID(invoiceDetails.getUserID());
         invoice.setCompany(invoiceDetails.getCompany());
         invoice.setType(invoiceDetails.getType());
         invoice.setItems(invoiceDetails.getItems());
@@ -86,7 +86,6 @@ public class InvoiceService {
     }
 
     /**
-     *
      * @param invoiceID
      * @throws ResourceNotFoundException
      */
