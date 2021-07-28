@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 //import com.invoice.mapper.Mapper;
+import com.invoice.repositories.InvoiceRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,7 +39,8 @@ public class InvoiceController {
     private InvoiceService invoiceService;
     @Autowired
     private ModelMapper modelMapper;
-
+@Autowired
+private InvoiceRepository invoiceRepository;
     @GetMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
     public Page<InvoiceDto> findPaginated(Pageable page, Invoice req) {
@@ -66,6 +68,8 @@ public class InvoiceController {
     @ResponseStatus(HttpStatus.CREATED)
     public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException {
         Invoice invoice = convertToEntity(invoiceDto);
+//        invoiceRepository.getCreatedBy();
+//        System.out.println( invoiceRepository.getCreatedBy());
         Invoice invoiceCreated = invoiceService.createInvoice(invoice);
         System.out.println("invoice  "+invoiceCreated);
         modelMapper.getConfiguration().setAmbiguityIgnored(true);

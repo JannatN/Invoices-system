@@ -22,7 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "invoices")
 //@Embeddable
-public class Invoice {
+public class Invoice extends Auditable<String>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
