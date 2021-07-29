@@ -12,4 +12,8 @@ export class Invoice {
   // items: FormArray;
   files: File[];
   invoice: any;
+  createdBy:string
+  lastModifiedBy:string
+  lastModifiedDate:Date
+
 }

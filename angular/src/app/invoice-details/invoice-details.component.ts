@@ -6,6 +6,7 @@ import { Item } from '../models/item';
 import { ItemService } from '../_services/items.service';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
+import { invoices_aud } from '../models/invoices_aud';
 
 @Component({
   selector: 'app-invoice-details',
@@ -16,6 +17,8 @@ export class InvoiceDetailsComponent implements OnInit {
 
   id: number;
   invoice: Invoice;
+  // invoiceList: Observable<Invoice[]>
+  invoiceAud: Observable<invoices_aud[]>;
   items: Item[];
   files: File[];
   invoices: Observable<Invoice[]>;
@@ -23,29 +26,45 @@ export class InvoiceDetailsComponent implements OnInit {
     private invoiceService: InvoiceService, private itemService: ItemService, private location: Location) { }
 
   ngOnInit() {
+    // this.getInvoicesAud();
     this.invoice = new Invoice();
-    // this.invoices = this.invoiceService.getInvoicesList();
+
 
     this.id = this.route.snapshot.params['id'];
 
     this.invoiceService.getInvoice(this.id)
       .subscribe(data => {
+// this.invoiceList=data
 
-        console.log("data", data)
+        // console.log("this.invoiceList", this.invoiceList)
+
+        console.log("invoiceee ",data)
         this.invoice = data;
         this.invoices = data
-        // this.items.push(this.invoices["items"]);
-        // console.log("items", this.invoice.items)
-        // console.log("files", this.invoice.files)
 
-        // console.log("start");
 
         console.log(this.invoices)
-        // console.log("end");
 
       })
+
+    this.invoiceService.getInvoiceAudById(this.id).subscribe(data => {
+      // console.log("invioces aud" , data)
+      this.invoiceAud = data
+      console.log("invioces aud", this.invoiceAud)
+
+    })
+    // console.log("invoices Aud ", this.invoiceAud)
+
     error => console.log(error);
   }
+
+  // getInvoicesAud(){
+  //   this.invoiceService.getInvoiceAud().subscribe(data=>{
+  //     console.log("invioces aud" , data)
+  //     this.invoiceAud=data
+  //     console.log("invoices Aud ", this.invoiceAud)
+  //   })
+  // }
 
   list() {
     this.location.back();

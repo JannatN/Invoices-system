@@ -2,12 +2,19 @@ package com.invoice.controllers.dto;
 
 import com.invoice.entities.User;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
+
+import static javax.persistence.TemporalType.TIMESTAMP;
 
 public class InvoiceDto {
     // todo: add validations here
@@ -30,9 +37,36 @@ public class InvoiceDto {
 //    private UserDto user;
     private Long userid;
 
-    public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company,
-                      Set<ItemDto> items, Set<FileDto> files) {
-        super();
+    @CreatedBy
+    private String createdBy;
+
+//	@CreatedDate
+//	@Temporal(TIMESTAMP)
+//	private Date createdDate;
+
+    @LastModifiedBy
+    private String lastModifiedBy;
+
+    @LastModifiedDate
+    @Temporal(TIMESTAMP)
+    private Date lastModifiedDate;
+
+
+
+//    public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company,
+//                      Set<ItemDto> items, Set<FileDto> files) {
+//        super();
+//        this.id = id;
+//        this.date_created = date_created;
+//        this.due_date = due_date;
+//        this.type = type;
+//        this.company = company;
+//        this.items = items;
+//        this.files = files;
+//    }
+
+
+    public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company, Set<ItemDto> items, Set<FileDto> files, Long userid, String createdBy, String lastModifiedBy, Date lastModifiedDate) {
         this.id = id;
         this.date_created = date_created;
         this.due_date = due_date;
@@ -40,10 +74,39 @@ public class InvoiceDto {
         this.company = company;
         this.items = items;
         this.files = files;
+        this.userid = userid;
+        this.createdBy = createdBy;
+        this.lastModifiedBy = lastModifiedBy;
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public InvoiceDto() {
 
+    }
+
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public Long getUserid() {
@@ -127,8 +190,18 @@ public class InvoiceDto {
 
     @Override
     public String toString() {
-        return "InvoiceDto [id=" + id + ", date_created=" + date_created + ", due_date=" + due_date + ", type=" + type
-                + ", company=" + company + ", items=" + items + ", files=" + files + ", userid=" + "]";
+        return "InvoiceDto{" +
+                "id=" + id +
+                ", date_created=" + date_created +
+                ", due_date=" + due_date +
+                ", type='" + type + '\'' +
+                ", company='" + company + '\'' +
+                ", items=" + items +
+                ", files=" + files +
+                ", userid=" + userid +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastModifiedBy='" + lastModifiedBy + '\'' +
+                ", lastModifiedDate=" + lastModifiedDate +
+                '}';
     }
-
 }

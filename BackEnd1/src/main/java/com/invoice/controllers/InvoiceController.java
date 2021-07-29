@@ -2,6 +2,7 @@ package com.invoice.controllers;
 
 import java.text.ParseException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,13 +11,17 @@ import javax.validation.Valid;
 
 //import com.invoice.mapper.Mapper;
 //import com.invoice.entities.InvoiceHistory;
+import com.invoice.entities.Auditable;
 import com.invoice.payload.response.JwtResponse;
 //import com.invoice.repositories.InvoiceHistoryRepository;
+//import com.invoice.repositories.AuditableRepository;
+import com.invoice.repositories.InvoiceAudRepository;
 import com.invoice.repositories.InvoiceRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +37,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import com.invoice.controllers.dto.InvoiceDto;
 import com.invoice.entities.Invoice;
+import com.invoice.entities.invoices_aud;
+
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.services.InvoiceService;
 
@@ -44,12 +51,37 @@ public class InvoiceController {
     @Autowired
     private ModelMapper modelMapper;
 @Autowired
-private InvoiceRepository invoiceRepository;
+private InvoiceAudRepository invoiceAudRepository;
     @GetMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
     public Page<InvoiceDto> findPaginated(Pageable page, Invoice req) {
         return convertToDto(invoiceService.findPaginated(page, req));
     }
+
+    @GetMapping("/invoices/Aud")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
+    public List<invoices_aud> getAllInvoicesAud() {
+        return invoiceAudRepository.findAll();
+    }
+
+
+    @GetMapping("/invoices/Aud/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
+    public List<invoices_aud> getInvoiceAudById(@PathVariable(value = "id") Integer id)
+            throws ResourceNotFoundException {
+
+        return invoiceAudRepository.findByIdEquals(id);
+    }
+//@Autowired
+//   private InvoiceRepository invoiceRepository;
+//
+//    @GetMapping("/invoices/All")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
+//    public List<Invoice> getAllAud() {
+//
+//        return invoiceRepository.find();
+//    }
+
 
     private Page<InvoiceDto> convertToDto(Page<Invoice> paginated) {
         Page<InvoiceDto> dtoList = mapEntityPageIntoDtoPage(paginated, InvoiceDto.class);

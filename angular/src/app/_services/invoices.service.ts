@@ -17,13 +17,20 @@ export class InvoiceService {
         return this.http.get(`${this.baseUrl}/${id}`);
     }
 
+    getInvoiceAud(): Observable<any> {
+        return this.http.get(`${this.baseUrl}/Aud`);
+    }
+    getInvoiceAudById(id: number): Observable<any> {
+        return this.http.get(`${this.baseUrl}/Aud/${id}`);
+    }
+
     updateInvoice(id: number, value: any): Observable<Object> {
         return this.http.put(`${this.baseUrl}/${id}`, value);
     }
 
-    // getInvoicesList(): Observable<any> {
-    //     return this.http.get(`${this.baseUrl}`);
-    // }
+    getInvoicesList(): Observable<any> {
+        return this.http.get(`${this.baseUrl}/All`);
+    }
 
     createInvoice(invoice: Object): Observable<Object> {
         return this.http.post(`${this.baseUrl}`, invoice);

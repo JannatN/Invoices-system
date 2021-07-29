@@ -14,14 +14,19 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
+
+import static javax.persistence.TemporalType.TIMESTAMP;
 
 
 @Entity
@@ -30,7 +35,7 @@ import org.hibernate.envers.NotAudited;
 //@Embeddable
 
 @EntityListeners(AuditingEntityListener.class)
-public class Invoice extends Auditable<String>{
+public class Invoice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -49,6 +54,46 @@ public class Invoice extends Auditable<String>{
 	@NotBlank
 	private String company;
 
+
+	@CreatedBy
+	private String createdBy;
+
+//	@CreatedDate
+//	@Temporal(TIMESTAMP)
+//	private Date createdDate;
+
+	@LastModifiedBy
+	private String lastModifiedBy;
+
+	@LastModifiedDate
+	@Temporal(TIMESTAMP)
+	private Date lastModifiedDate;
+
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
 	@ManyToOne
 	@NotAudited
 	@JoinColumn(name = "userid", insertable = false, updatable = false)
@@ -64,18 +109,34 @@ public class Invoice extends Auditable<String>{
 	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
 	private Set<File> files;
 
-	public Invoice(Long id, LocalDateTime date_created, LocalDateTime due_date,
-			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, Set<Item> items, Set<File> files) {
-		super();
+//	public Invoice(Long id, LocalDateTime date_created, LocalDateTime due_date,
+//			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, Set<Item> items, Set<File> files) {
+//		super();
+//		this.id = id;
+////		this.userID = userID;
+//		this.date_created = date_created;
+//		this.due_date = due_date;
+//		this.type = type;
+//		this.company = company;
+//		this.user = user;
+//		this.items = items;
+//		this.files= files;
+//	}
+
+
+	public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date, String type, String company, String createdBy, String lastModifiedBy, Date lastModifiedDate, User user, Set<Item> items, Set<File> files) {
 		this.id = id;
-//		this.userID = userID;
+		this.userID = userID;
 		this.date_created = date_created;
 		this.due_date = due_date;
 		this.type = type;
 		this.company = company;
+		this.createdBy = createdBy;
+		this.lastModifiedBy = lastModifiedBy;
+		this.lastModifiedDate = lastModifiedDate;
 		this.user = user;
 		this.items = items;
-		this.files= files;
+		this.files = files;
 	}
 
 	public Invoice() {
@@ -158,9 +219,19 @@ public class Invoice extends Auditable<String>{
 
 	@Override
 	public String toString() {
-		return "Invoice [id=" + id + ", date_created=" + date_created + ", due_date=" + due_date
-				+ ", type=" + type + ", company=" + company + ", user=" + user + ", items=" + items + ", file=" + files
-				+ "]";
+		return "Invoice{" +
+				"id=" + id +
+				", userID=" + userID +
+				", date_created=" + date_created +
+				", due_date=" + due_date +
+				", type='" + type + '\'' +
+				", company='" + company + '\'' +
+				", createdBy='" + createdBy + '\'' +
+				", lastModifiedBy='" + lastModifiedBy + '\'' +
+				", lastModifiedDate=" + lastModifiedDate +
+				", user=" + user +
+				", items=" + items +
+				", files=" + files +
+				'}';
 	}
-
 }

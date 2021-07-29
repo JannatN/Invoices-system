@@ -16,6 +16,10 @@
     <div class="labels">
         <label><b>Invoice Type: </b></label> {{invoice.type}}
     </div>
+   
+
+
+  
 
     <!-- <div>
         <label><b>First name: </b></label> {{invoice["user"].firstname}}
@@ -50,6 +54,114 @@
 
 
     <br>
+<h3>Invoice History</h3>
+
+<div class="labels">
+    <label><b> Created by: </b></label> {{invoice.createdBy}}
+</div>
+<div class="labels">
+    <label><b>Last Modified By: </b></label> {{invoice.lastModifiedBy}}
+</div>
+<div class="labels">
+    <label><b> Last Modified Date:  </b></label> {{invoice.lastModifiedDate}}
+</div>
+<br>
+
+<h4>Data Editing</h4>
+<div class="panel-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Invoice ID</th>
+          <th>Date Created</th>
+          <th>Due Date</th>
+          <th>User ID</th>
+          <th> Company</th>
+          <th>Invoice Type</th>
+         
+
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invoice of invoiceAud ">
+          <td>{{invoice.id}}</td>
+          <td>{{invoice.date_created}}</td>
+          <td>{{invoice.due_date}}</td>
+          <td>{{invoice.userid}}</td>
+          <td>{{invoice.company}}</td>
+          <td>{{invoice.type}}</td>
+         
+
+          <!-- <td>
+            <button  class="btn btn-info" style="margin-left: 10px">Update</button>
+            <button class="btn btn-info"
+              style="margin-left: 10px">Details</button>
+            <button (click)="deleteInvoice(invoice.id)" class="btn btn-danger">Delete</button>
+            <button (click)="createItem(invoice.id)" class="btn btn-primary">create item</button>
+
+          </td> -->
+        </tr>
+        <!-- <tr *ngFor="let invoiceLi of invoice | keyvalue">
+            <td>{{invoiceLi.created_by}}</td>
+            <td>{{invoiceLi.created_date}}</td>
+            <td>{{invoiceLi.last_modified_by}}</td>
+            <td>{{invoiceLi.last_modified_date}}</td>
+         
+          </tr> -->
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- <div class="panel-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+         
+          <th>created_by</th>
+          <th>created_date</th>
+
+          <th>last_modified_by</th>
+
+          <th>last_modified_date</th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr *ngFor="let invoiceLi of invoice ">
+            <td>{{invoiceLi.created_by}}</td>
+            <td>{{invoiceLi.created_date}}</td>
+            <td>{{invoiceLi.last_modified_by}}</td>
+            <td>{{invoiceLi.last_modified_date}}</td>
+         
+          </tr>
+
+      </tbody>
+    </table>
+    </div> -->
+
+    
+    <!-- <div *ngIf="invoice">
+        <div class="labels">
+            <label><b> Created Date: </b></label> {{invoiceLi.created_by}}
+        </div>
+        <div class="labels">
+            <label><b>Due Date: </b></label> {{invoice.due_date}}
+        </div>
+        <div class="labels">
+            <label><b>User Id: </b></label> {{invoice.userid}}
+        </div>
+        <div class="labels">
+            <label><b>Company: </b></label> {{invoice.company}}
+        </div>
+
+    </div> -->
+
     <br>
     <button (click)="list()" class="btn">Back to List</button><br>
-</div>
+<!-- </div> -->
