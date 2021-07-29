@@ -1,6 +1,6 @@
 package com.invoice;
 
-import com.invoice.entities.Auditable;
+//import com.invoice.entities.Auditable;
 //import com.invoice.entities.SpringSecurityAuditorAware;
 import com.invoice.entities.AuditorAwareImpl;
 import org.modelmapper.ModelMapper;

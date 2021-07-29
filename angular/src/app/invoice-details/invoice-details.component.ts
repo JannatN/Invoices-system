@@ -26,7 +26,6 @@ export class InvoiceDetailsComponent implements OnInit {
     private invoiceService: InvoiceService, private itemService: ItemService, private location: Location) { }
 
   ngOnInit() {
-    // this.getInvoicesAud();
     this.invoice = new Invoice();
 
 
@@ -34,26 +33,23 @@ export class InvoiceDetailsComponent implements OnInit {
 
     this.invoiceService.getInvoice(this.id)
       .subscribe(data => {
-// this.invoiceList=data
 
-        // console.log("this.invoiceList", this.invoiceList)
 
         console.log("invoiceee ",data)
         this.invoice = data;
         this.invoices = data
 
 
-        console.log(this.invoices)
+        console.log("this.invoice   ",this.invoice)
 
       })
 
     this.invoiceService.getInvoiceAudById(this.id).subscribe(data => {
-      // console.log("invioces aud" , data)
+  
       this.invoiceAud = data
       console.log("invioces aud", this.invoiceAud)
 
     })
-    // console.log("invoices Aud ", this.invoiceAud)
 
     error => console.log(error);
   }

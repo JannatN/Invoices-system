@@ -9,12 +9,9 @@ import java.util.stream.Collectors;
 import javax.persistence.PostUpdate;
 import javax.validation.Valid;
 
-//import com.invoice.mapper.Mapper;
-//import com.invoice.entities.InvoiceHistory;
-import com.invoice.entities.Auditable;
+
 import com.invoice.payload.response.JwtResponse;
-//import com.invoice.repositories.InvoiceHistoryRepository;
-//import com.invoice.repositories.AuditableRepository;
+
 import com.invoice.repositories.InvoiceAudRepository;
 import com.invoice.repositories.InvoiceRepository;
 import org.modelmapper.ModelMapper;
@@ -72,15 +69,7 @@ private InvoiceAudRepository invoiceAudRepository;
 
         return invoiceAudRepository.findByIdEquals(id);
     }
-//@Autowired
-//   private InvoiceRepository invoiceRepository;
-//
-//    @GetMapping("/invoices/All")
-//    @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
-//    public List<Invoice> getAllAud() {
-//
-//        return invoiceRepository.find();
-//    }
+
 
 
     private Page<InvoiceDto> convertToDto(Page<Invoice> paginated) {
@@ -91,12 +80,7 @@ private InvoiceAudRepository invoiceAudRepository;
     public <D, T> Page<D> mapEntityPageIntoDtoPage(Page<T> entities, Class<D> dtoClass) {
         return entities.map(objectEntity -> modelMapper.map(objectEntity, dtoClass));
     }
-//    @GetMapping("/")
-//    @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
-//    public List<InvoiceDto> getAllInvoices() {
-//        modelMapper.getConfiguration().setAmbiguityIgnored(true);
-//        return convertToDto(invoiceService.getAllInvoices());
-//    }
+
 
     @ResponseBody
     @PostMapping("/invoices")
