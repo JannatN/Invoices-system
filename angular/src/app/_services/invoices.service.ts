@@ -31,13 +31,11 @@ export class InvoiceService {
 
     listInv(request) {
         const params = request;
-        console.log('hhho', params);
         return this.http.get(`${this.baseUrl}`, { params });
     }
 
     filter(page: number, size: number, keyword: Object): Observable<Invoice[]> {
         let params = new HttpParams();
-        params
         return this.http.get<Invoice[]>(`${this.baseUrl}`);
     }
 
@@ -46,10 +44,16 @@ export class InvoiceService {
     }
 
 
-    uploadFile(file: File): Observable<HttpEvent<any>> {
+    createInv(invoice: Object, file: File): Observable<HttpEvent<any>> {
         const formData: FormData = new FormData();
 
+        // formData.append('file', new Blob([JSON.stringify(file)], {
+        //     type: "application/json"
+        // }));
+        formData.append('invoice', JSON.stringify(invoice))
         formData.append('file', file);
+        console.log('ffff', file);
+        console.log('iiii', invoice);
 
         const req = new HttpRequest('POST', `${this.baseUrl}`, formData, {
             reportProgress: true,
@@ -58,4 +62,13 @@ export class InvoiceService {
 
         return this.http.request(req);
     }
+
+    getFiles(invoiceID: number): Observable<File[]> {
+        return this.http.get<File[]>(`${this.baseUrl}/files/${invoiceID}`);
+    }
+
+    getFile(id: number): Observable<any> {
+        return this.http.get(`${this.baseUrl}/files/${id}`);
+    }
+
 }

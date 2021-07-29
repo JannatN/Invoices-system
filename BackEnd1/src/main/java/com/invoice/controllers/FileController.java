@@ -1,26 +1,25 @@
 package com.invoice.controllers;
 
-import java.text.ParseException;
-
-import javax.validation.Valid;
-
+import com.invoice.controllers.dto.FileDto;
+import com.invoice.entities.File;
+import com.invoice.exception.ResourceNotFoundException;
+import com.invoice.payload.response.MessageResponse;
+import com.invoice.payload.response.ResponseFile;
+import com.invoice.services.FileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.invoice.controllers.dto.FileDto;
-import com.invoice.entities.File;
-import com.invoice.payload.response.MessageResponse;
-import com.invoice.services.FileService;
+import javax.validation.Valid;
+import java.text.ParseException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 //@CrossOrigin(origins = "http://localhost:4200")
@@ -66,28 +65,29 @@ public class FileController {
 //        }
 //    }
 
-//	@GetMapping("/files")
-//	@PreAuthorize("hasRole('ADMIN') ")
-//	public ResponseEntity<List<File>> getListFiles() {
-//		List<File> files = storageService.getAllFiles().map(dbFile -> {
-//			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/")
-//					.path(dbFile.getId()).toUriString();
-//
-//			return new File(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length);
-//		}).collect(Collectors.toList());
-//
-//		return ResponseEntity.status(HttpStatus.OK).body(files);
-//	}
+    @GetMapping("/files/{id}")
+    @PreAuthorize("hasRole('ADMIN') ")
+    public ResponseEntity<List<ResponseFile>> getListFiles(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
+        List<ResponseFile> files = storageService.getAllFiles(invoiceID).map(dbFile -> {
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/{id}")
+                    .path(dbFile.getId()).toUriString();
 
-    //	@GetMapping("/files/{id}")
-//	@PreAuthorize("hasRole('ADMIN') ")
-//	public ResponseEntity<byte[]> getFile(@PathVariable String id) {
-//		File fileDB = storageService.getFile(id);
+            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length);
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(files);
+    }
+
+//    @GetMapping("/files/{id}")
+////    @PreAuthorize("hasRole('ADMIN') ")
+//    public ResponseEntity<byte[]> getFile(@PathVariable String id) {
+//        File fileDB = storageService.getFile(id);
 //
-//		return ResponseEntity.ok()
-//				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
-//				.body(fileDB.getData());
-//	}
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
+//                .body(fileDB.getData());
+//    }
+
     private FileDto convertToDto(ResponseEntity<File> file) {
         FileDto fileDto = modelMapper.map(file, FileDto.class);
         return fileDto;
@@ -97,5 +97,17 @@ public class FileController {
         File file = modelMapper.map(fileDto, File.class);
         return file;
     }
+//    @GetMapping("{filename:.+}")
+//    @ResponseBody
+//    public ResponseEntity<UrlResource> downloadFile(@PathVariable String filename) throws IOException {
+//        UrlResource file = storageService.download(filename);
+//        Path path = ((UrlResource) file).getFile()
+//                .toPath();
+//
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(path))
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+//                .body(file);
+//    }
 
 }

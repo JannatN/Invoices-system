@@ -37,7 +37,17 @@ export class UploadFilesService {
   }
    
 
-  // getFiles(): Observable<any> {
-  //   return this.http.get(`${this.baseUrl}/files`);
-  // }
+  getFiles(): Observable<File[]> {
+    return this.http.get<File[]>(`${this.baseUrl}/files`);
+  }
+  
+  getFile(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/files/${id}`);
+}
+
+download(file: string | undefined): Observable<Blob> {
+  return this.http.get(`${this.baseUrl}/files/${file}`, {
+    responseType: 'blob'
+  });
+}
 }

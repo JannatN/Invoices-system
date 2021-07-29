@@ -1,29 +1,29 @@
 package com.invoice.controllers;
 
-import java.io.IOException;
-import java.text.ParseException;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
-import com.invoice.mapper.Mapper;
+import com.invoice.controllers.dto.InvoiceDto;
+import com.invoice.entities.Invoice;
+import com.invoice.exception.ResourceNotFoundException;
+import com.invoice.payload.response.ResponseFile;
+import com.invoice.services.FileService;
+import com.invoice.services.InvoiceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
-import com.invoice.controllers.dto.InvoiceDto;
-import com.invoice.entities.Invoice;
-import com.invoice.exception.ResourceNotFoundException;
-import com.invoice.services.InvoiceService;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -31,6 +31,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
+    @Autowired
+    private FileService storageService;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -56,10 +58,10 @@ public class InvoiceController {
 //    }
 
     @ResponseBody
-    @PostMapping(path = "/invoices", consumes = {"multipart/form-data"})
+    @PostMapping(path = "/invoices")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<InvoiceDto> createInvoice(@Valid @ModelAttribute  InvoiceDto invoiceDto,
+    public ResponseEntity<InvoiceDto> createInvoice(@Valid @ModelAttribute("invoice")  InvoiceDto invoiceDto,
                                                     @RequestParam("file") MultipartFile files,
                                                     HttpServletRequest request,
                                                     HttpServletResponse response) throws ParseException, IOException {
@@ -78,9 +80,9 @@ public class InvoiceController {
     @GetMapping("/invoices/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
     public InvoiceDto getInvoiceById(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
-        modelMapper.getConfiguration().setAmbiguityIgnored(true);
         return convertToDto(invoiceService.getInvoiceById(invoiceID));
     }
+
 //	@GetMapping("/invoices/{id}")
 //	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('AUDITOR') ")
 //	public Invoice getInvoiceById(@PathVariable(value = "id") Long invoiceID)
@@ -104,6 +106,7 @@ public class InvoiceController {
         invoiceService.deleteInvoice(invoiceID);
     }
 
+
     private InvoiceDto convertToDto(Invoice invoice) {
         InvoiceDto invoiceDto = modelMapper.map(invoice, InvoiceDto.class);
         return invoiceDto;
@@ -121,6 +124,19 @@ public class InvoiceController {
 
     <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         return source.stream().map(element -> modelMapper.map(element, targetClass)).collect(Collectors.toList());
+    }
+
+    @GetMapping("/invoices/files/{id}")
+    @PreAuthorize("hasRole('ADMIN') ")
+    public ResponseEntity<List<ResponseFile>> getListFiles(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
+        List<ResponseFile> files = storageService.getAllFiles(invoiceID).map(dbFile -> {
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/{id}")
+                    .path(dbFile.getId()).toUriString();
+
+            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length);
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(files);
     }
 
 }

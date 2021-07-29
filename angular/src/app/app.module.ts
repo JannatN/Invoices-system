@@ -38,7 +38,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatButtonModule } from "@angular/material/button";
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { CommonModule } from '@angular/common';  
+import { CommonModule } from '@angular/common';
+import { FilesListComponent } from './files-list/files-list.component';  
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +62,8 @@ import { CommonModule } from '@angular/common';
     ItemDetailsComponent,
     UpdateItemComponent,
     CreateItemComponent,
-    NewItemComponent
+    NewItemComponent,
+    FilesListComponent
 
   ],
   imports: [

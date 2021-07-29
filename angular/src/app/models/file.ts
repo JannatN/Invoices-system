@@ -4,6 +4,7 @@ export class File {
     id: string;
     name: string;
     type: string;
-    data: Byte[];
+    data: BlobPart[];
     invoiceid: number;
+    size: number;
 }

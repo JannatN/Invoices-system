@@ -6,6 +6,7 @@ import { Item } from '../models/item';
 import { ItemService } from '../_services/items.service';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
+import { UploadFilesService } from '../_services/upload-file.service';
 
 @Component({
   selector: 'app-invoice-details',
@@ -18,11 +19,15 @@ export class InvoiceDetailsComponent implements OnInit {
   invoice: Invoice;
   items: Item[];
   files: File[];
+  fileInfos: Observable<File[]>;
+
   invoices: Observable<Invoice[]>;
   constructor(private route: ActivatedRoute, private router: Router,
-    private invoiceService: InvoiceService, private itemService: ItemService, private location: Location) { }
+    private invoiceService: InvoiceService, private itemService: ItemService, 
+    private location: Location, private uploadService: UploadFilesService) { }
 
   ngOnInit() {
+
     this.invoice = new Invoice();
     // this.invoices = this.invoiceService.getInvoicesList();
 
@@ -34,20 +39,22 @@ export class InvoiceDetailsComponent implements OnInit {
         console.log("data", data)
         this.invoice = data;
         this.invoices = data
-        // this.items.push(this.invoices["items"]);
-        // console.log("items", this.invoice.items)
-        // console.log("files", this.invoice.files)
-
-        // console.log("start");
 
         console.log(this.invoices)
-        // console.log("end");
 
       })
     error => console.log(error);
+    this.fileInfos = this.invoiceService.getFiles(this.id);
+
   }
 
   list() {
     this.location.back();
   }
+  // downloadFile(data: Response) {
+  //   const blob = new Blob([data], { type: 'text/csv' });
+  //   const url = window.URL.createObjectURL(blob);
+  //   window.open(url);
+  // }
+ 
 }

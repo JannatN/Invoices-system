@@ -1,28 +1,25 @@
 package com.invoice.services;
 
-import java.io.IOException;
-import java.util.*;
-
-import javax.transaction.Transactional;
-
 import com.invoice.entities.File;
+import com.invoice.entities.Invoice;
+import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.repositories.FileDBRepository;
+import com.invoice.repositories.InvoiceRepository;
 import com.invoice.specification.InvoiceSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.invoice.entities.Invoice;
-import com.invoice.exception.ResourceNotFoundException;
-import com.invoice.repositories.InvoiceRepository;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.transaction.Transactional;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class InvoiceService {
@@ -43,7 +40,9 @@ public class InvoiceService {
     }
 
     /**
+     *
      * @param invoice
+     * @param files
      * @return
      * @throws IOException
      */
@@ -87,7 +86,6 @@ public class InvoiceService {
 
         return invoiceRepository.save(invoice);
     }
-
     /**
      * @param invoiceID
      * @throws ResourceNotFoundException
@@ -98,5 +96,9 @@ public class InvoiceService {
 
         invoiceRepository.delete(invoice);
     }
-
+    public Stream<File> getAllFiles(Long invoiceID) throws ResourceNotFoundException {
+        return invoiceRepository.findById(invoiceID).map(invoice -> {
+            return fileDBRepository.findByInvoice_id(invoiceID).stream();
+        }).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
+    }
 }

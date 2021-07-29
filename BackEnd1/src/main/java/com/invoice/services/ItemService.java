@@ -44,7 +44,6 @@ public class ItemService {
 	public ResponseEntity<Item> createItem(Long invoiceID, Item item) throws ResourceNotFoundException {
 		return invoiceRepository.findById(invoiceID).map(invoice -> {
 			item.setInvoice(invoice);
-//			item.setInvoiceID(invoiceID);
 			itemRepository.saveAndFlush(item);
 			return new ResponseEntity<Item>(item, HttpStatus.CREATED);
 		}).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
