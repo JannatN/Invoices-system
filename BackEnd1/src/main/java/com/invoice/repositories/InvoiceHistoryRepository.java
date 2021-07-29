@@ -1,9 +1,9 @@
 package com.invoice.repositories;
 
-import com.invoice.entities.FileHistory;
+import com.invoice.entities.InvoiceHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FileHistoryRepository extends JpaRepository<FileHistory, Integer> {
+public interface InvoiceHistoryRepository extends JpaRepository<InvoiceHistory, Integer> {
 }

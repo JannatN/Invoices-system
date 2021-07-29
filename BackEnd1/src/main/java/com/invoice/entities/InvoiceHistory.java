@@ -16,7 +16,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 
     @Entity
     @EntityListeners(AuditingEntityListener.class)
-    public class FileHistory {
+    public class InvoiceHistory {
         @Id
         @GeneratedValue
         private Integer id;
@@ -24,8 +24,11 @@ import static javax.persistence.TemporalType.TIMESTAMP;
         @ManyToOne
         @JoinColumn(name = "invoiceid", foreignKey = @ForeignKey(name = "FK_invoice_history_invoice"))
         private Invoice invoice;
+        @Transient
+        private Invoice invoiceContentBefore;
 
-        private String fileContent;
+        @Transient
+        private Invoice invoiceContentAfter;
 
         @LastModifiedBy
         private String modifiedBy;
@@ -37,15 +40,38 @@ import static javax.persistence.TemporalType.TIMESTAMP;
         @Enumerated(STRING)
         private Action action;
 
-        public FileHistory() {
+        public InvoiceHistory() {
         }
 
-        public FileHistory(Invoice invoice, Action action) {
+        public InvoiceHistory(Invoice invoice, Action action) {
             this.invoice = invoice;
-            this.fileContent = invoice.toString();
+            this.invoiceContentBefore = invoice;
             this.action = action;
         }
 
+        public Invoice getInvoice() {
+            return invoice;
+        }
+
+        public void setInvoice(Invoice invoice) {
+            this.invoice = invoice;
+        }
+
+        public Invoice getInvoiceContentBefore() {
+            return invoiceContentBefore;
+        }
+
+        public void setInvoiceContentBefore(Invoice invoiceContentBefore) {
+            this.invoiceContentBefore = invoiceContentBefore;
+        }
+
+        public Invoice getInvoiceContentAfter() {
+            return invoiceContentAfter;
+        }
+
+        public void setInvoiceContentAfter(Invoice invoiceContentAfter) {
+            this.invoiceContentAfter = invoiceContentAfter;
+        }
 
         public Integer getId() {
             return id;
@@ -61,14 +87,6 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 
         public void setFile(Invoice invoice) {
             this.invoice = invoice;
-        }
-
-        public String getFileContent() {
-            return fileContent;
-        }
-
-        public void setFileContent(String fileContent) {
-            this.fileContent = fileContent;
         }
 
         public String getModifiedBy() {
@@ -95,5 +113,16 @@ import static javax.persistence.TemporalType.TIMESTAMP;
             this.action = action;
         }
 
-
+//        @Override
+//        public String toString() {
+//            return "InvoiceHistory{" +
+//                    "id=" + id +
+//                    ", invoice=" + invoice +
+//                    ", invoiceContentBefore=" + invoiceContentBefore +
+//                    ", invoiceContentAfter=" + invoiceContentAfter +
+//                    ", modifiedBy='" + modifiedBy + '\'' +
+//                    ", modifiedDate=" + modifiedDate +
+//                    ", action=" + action +
+//                    '}';
+//        }
     }

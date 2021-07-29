@@ -1,26 +1,16 @@
 package com.invoice.services;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import com.invoice.entities.Action;
-import com.invoice.entities.FileHistory;
-import com.invoice.entities.User;
 import com.invoice.specification.InvoiceSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.invoice.entities.Invoice;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.repositories.InvoiceRepository;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class InvoiceService {

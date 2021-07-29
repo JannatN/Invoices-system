@@ -5,25 +5,19 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.persistence.PostUpdate;
 import javax.validation.Valid;
 
 //import com.invoice.mapper.Mapper;
-import com.invoice.entities.FileEntityListener;
-import com.invoice.entities.FileHistory;
-import com.invoice.entities.User;
-import com.invoice.payload.request.LoginRequest;
-import com.invoice.payload.request.SignupRequest;
+import com.invoice.entities.InvoiceHistory;
 import com.invoice.payload.response.JwtResponse;
+import com.invoice.repositories.InvoiceHistoryRepository;
 import com.invoice.repositories.InvoiceRepository;
-import com.invoice.security.jwt.JwtUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -106,19 +100,26 @@ private InvoiceRepository invoiceRepository;
 ////		modelMapper.getConfiguration().setAmbiguityIgnored(true);
 //		return invoiceService.getInvoiceById(invoiceID);
 //	}
+@Autowired
+    private InvoiceHistoryRepository invoiceHistoryRepository;
 
-    @PutMapping("/invoices/{id}")
+
+@PostUpdate
+@PutMapping("/invoices/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public InvoiceDto updateInvoice(@PathVariable(value = "id") Long invoiceID,
                                     @Valid @RequestBody InvoiceDto invoiceDetails) throws ResourceNotFoundException, ParseException {
 //        FileEntityListener fl=new FileEntityListener();
+
 //        fl.preUpdate(invoiceDetails);
 //        FileHistory file=new FileHistory();
 //        file.setFileContent(target.toString());
 //        fileHistoryRepository.saveAndFlush(file);
-        System.out.println(invoiceDetails);
+        System.out.println("post update in invoice cont");
         Invoice invoice = convertToEntity(invoiceDetails);
-
+    InvoiceHistory in=new InvoiceHistory();
+    in.setInvoiceContentAfter(invoice);
+//    invoiceHistoryRepository.save(in);
         return convertToDto(invoiceService.updateInvoice(invoice, invoiceID));
     }
 
