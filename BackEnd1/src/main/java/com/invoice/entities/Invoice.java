@@ -20,9 +20,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+
+
 @Entity
+@Audited
 @Table(name = "invoices")
 //@Embeddable
+
 @EntityListeners(AuditingEntityListener.class)
 public class Invoice extends Auditable<String>{
 	@Id
@@ -44,14 +50,17 @@ public class Invoice extends Auditable<String>{
 	private String company;
 
 	@ManyToOne
+	@NotAudited
 	@JoinColumn(name = "userid", insertable = false, updatable = false)
 	private User user;
 
 	@OneToMany(cascade = { CascadeType.ALL })
+	@NotAudited
 	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
 	private Set<Item> items;
 
 	@OneToMany(cascade = { CascadeType.ALL })
+	@NotAudited
 	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
 	private Set<File> files;
 

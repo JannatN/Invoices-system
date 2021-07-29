@@ -17,7 +17,7 @@ import java.util.Date;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 @MappedSuperclass
-@EntityListeners(InvoiceEntityListener.class)
+@EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable<U> {
 
 

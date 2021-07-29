@@ -9,9 +9,9 @@ import javax.persistence.PostUpdate;
 import javax.validation.Valid;
 
 //import com.invoice.mapper.Mapper;
-import com.invoice.entities.InvoiceHistory;
+//import com.invoice.entities.InvoiceHistory;
 import com.invoice.payload.response.JwtResponse;
-import com.invoice.repositories.InvoiceHistoryRepository;
+//import com.invoice.repositories.InvoiceHistoryRepository;
 import com.invoice.repositories.InvoiceRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,11 +100,11 @@ private InvoiceRepository invoiceRepository;
 ////		modelMapper.getConfiguration().setAmbiguityIgnored(true);
 //		return invoiceService.getInvoiceById(invoiceID);
 //	}
-@Autowired
-    private InvoiceHistoryRepository invoiceHistoryRepository;
+//@Autowired
+//    private InvoiceHistoryRepository invoiceHistoryRepository;
 
 
-@PostUpdate
+//@PostUpdate
 @PutMapping("/invoices/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public InvoiceDto updateInvoice(@PathVariable(value = "id") Long invoiceID,
@@ -117,8 +117,8 @@ private InvoiceRepository invoiceRepository;
 //        fileHistoryRepository.saveAndFlush(file);
         System.out.println("post update in invoice cont");
         Invoice invoice = convertToEntity(invoiceDetails);
-    InvoiceHistory in=new InvoiceHistory();
-    in.setInvoiceContentAfter(invoice);
+//    InvoiceHistory in=new InvoiceHistory();
+//    in.setInvoiceContentAfter(invoice);
 //    invoiceHistoryRepository.save(in);
         return convertToDto(invoiceService.updateInvoice(invoice, invoiceID));
     }
