@@ -44,22 +44,34 @@ export class InvoiceService {
     }
 
 
-    createInv(invoice: Object, file: File): Observable<HttpEvent<any>> {
+    createInv( file: File, invoice: Invoice): Observable<HttpEvent<any>> {
         const formData: FormData = new FormData();
-
-        // formData.append('file', new Blob([JSON.stringify(file)], {
+        // formData.append('invoice', new Blob([JSON.stringify(invoice)], {
         //     type: "application/json"
         // }));
-        formData.append('invoice', JSON.stringify(invoice))
-        formData.append('file', file);
-        console.log('ffff', file);
-        console.log('iiii', invoice);
+        // formData.append('invoice', JSON.stringify(invoice))
+        formData.append('type', JSON.stringify(invoice.type));
+        // formData.append('due_date', JSON.stringify(invoice.due_date));
+        // formData.append('date_created', JSON.stringify(invoice.date_created));
+        formData.append('company', JSON.stringify(invoice.company));
+        formData.append('userid', JSON.stringify(invoice.userid));
+        // formData.append('items', JSON.stringify(invoice["items"]));
+
+        // formData.append('items', JSON.stringify(invoice.items));
+        // formData.append('type', JSON.stringify(invoice.files));
+        formData.append('file', file)
+
+
+        // formData.append('file', new Blob([file], {
+        //     type: "application/json"
+        // }));
+        // console.log('ffff', file);
+        // console.log('iiii', invoice);
 
         const req = new HttpRequest('POST', `${this.baseUrl}`, formData, {
             reportProgress: true,
             responseType: 'json'
         });
-
         return this.http.request(req);
     }
 

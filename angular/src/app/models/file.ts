@@ -6,5 +6,4 @@ export class File {
     type: string;
     data: BlobPart[];
     invoiceid: number;
-    size: number;
 }

@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.text.ParseException;
@@ -50,23 +48,17 @@ public class InvoiceController {
     public <D, T> Page<D> mapEntityPageIntoDtoPage(Page<T> entities, Class<D> dtoClass) {
         return entities.map(objectEntity -> modelMapper.map(objectEntity, dtoClass));
     }
-//    @GetMapping("/")
-//    @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
-//    public List<InvoiceDto> getAllInvoices() {
-//        modelMapper.getConfiguration().setAmbiguityIgnored(true);
-//        return convertToDto(invoiceService.getAllInvoices());
-//    }
 
     @ResponseBody
     @PostMapping(path = "/invoices")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<InvoiceDto> createInvoice(@Valid @ModelAttribute("invoice")  InvoiceDto invoiceDto,
-                                                    @RequestParam("file") MultipartFile files,
-                                                    HttpServletRequest request,
-                                                    HttpServletResponse response) throws ParseException, IOException {
+    public ResponseEntity<InvoiceDto> createInvoice(@Valid @ModelAttribute("invoice") InvoiceDto invoiceDto,
+                                                    @RequestParam("file") MultipartFile files)
+                                                    throws ParseException, IOException {
+
         Invoice invoice = convertToEntity(invoiceDto);
-        ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice,files);
+        ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice, files);
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         return convertToDto(invoiceCreated);
 
@@ -82,14 +74,6 @@ public class InvoiceController {
     public InvoiceDto getInvoiceById(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
         return convertToDto(invoiceService.getInvoiceById(invoiceID));
     }
-
-//	@GetMapping("/invoices/{id}")
-//	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('AUDITOR') ")
-//	public Invoice getInvoiceById(@PathVariable(value = "id") Long invoiceID)
-//			throws ResourceNotFoundException {
-////		modelMapper.getConfiguration().setAmbiguityIgnored(true);
-//		return invoiceService.getInvoiceById(invoiceID);
-//	}
 
     @PutMapping("/invoices/{id}")
     @PreAuthorize("hasRole('ADMIN')")
