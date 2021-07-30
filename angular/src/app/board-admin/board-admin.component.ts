@@ -49,26 +49,29 @@ export class BoardAdminComponent implements OnInit {
 
 
   }
+
   filterInvoice(invoice: Invoice[]) {
-    console.log('hhh', this.filters);
-    return Object.values(invoice).filter(res => {
-      for (let i = 0; i < 10; i++) {
-        console.log('hhh', res[i].type);
-        return res[i].type.toLowerCase().includes(this.filters.keyword.toLowerCase());
-      }
-    })
+    console.log('hhh');
+    // return Object.values(invoice).filter(res => {
+    //   // for (let i = 0; i < 10; i++) {
+    //   //   console.log('hhh', res[i].type);
+    //     return res.type.includes(this.filters.keyword);
+    //   // }
+    // })
   }
-  listInv() {
-    console.log('hhh', this.filters);
-    this.invoiceService.listInv({ invoice: this.filters.keyword }).pipe(
-      catchError(() => of([])),
-    )
-    console.log('hhho', this.filters);
+
+
+  // listInv() {
+  //   // console.log('hhh', this.filters);
+  //   this.invoiceService.listInv({ invoice: this.filters.keyword }).pipe(
+  //     catchError(() => of([])),
+  //   )
+    // console.log('hhho', this.filters);
 
     // .subscribe(
     //   data => this.invoicesArray = this.filterInvoice(data)
     // )
-  }
+  // }
   // public getList = () => {
   //   this.invoiceService.getInvoicesList()
   //     .subscribe(res => {
@@ -107,6 +110,9 @@ export class BoardAdminComponent implements OnInit {
     value = value.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = value;
   }
+
+
+
 
   public redirectToDetails = (id: number) => {
     this.router.navigate(['detailsInvoice', id]);

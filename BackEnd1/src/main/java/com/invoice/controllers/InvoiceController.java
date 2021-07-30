@@ -20,6 +20,7 @@ import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.payload.response.ResponseFile;
 import com.invoice.services.FileService;
 import com.invoice.services.InvoiceService;
+import org.apache.tomcat.util.json.JSONParser;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -107,11 +108,16 @@ private InvoiceAudRepository invoiceAudRepository;
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<InvoiceDto> createInvoice(@Valid @ModelAttribute("invoice") InvoiceDto invoiceDto,
                                                     @RequestParam("file") MultipartFile files)
-                                                    throws ParseException, IOException {
+            throws ParseException, IOException, org.apache.tomcat.util.json.ParseException {
+//        JSONParser p=new JSONParser();
+//        p.parse();
+
+
 
         Invoice invoice = convertToEntity(invoiceDto);
         ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice, files);
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
+
         return convertToDto(invoiceCreated);
 
     }

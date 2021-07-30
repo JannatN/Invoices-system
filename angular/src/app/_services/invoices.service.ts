@@ -3,6 +3,8 @@ import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/
 import { Observable } from 'rxjs';
 import { _MatPaginatorBase } from '@angular/material/paginator';
 import { Invoice } from '../models/invoice';
+import { Item } from '../models/item';
+import { FormArray, FormBuilder } from '@angular/forms';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +12,9 @@ import { Invoice } from '../models/invoice';
 export class InvoiceService {
 
     private baseUrl = 'http://localhost:8080/api/invoices';
-
+ item;
+ formData: FormData = new FormData();
+ 
     constructor(private http: HttpClient) { }
 
     getInvoice(id: number): Observable<any> {
@@ -52,32 +56,63 @@ export class InvoiceService {
 
 
     createInv( file: File, invoice: Invoice): Observable<HttpEvent<any>> {
-        const formData: FormData = new FormData();
+        // const formArray = new FormArray(null);
         // formData.append('invoice', new Blob([JSON.stringify(invoice)], {
         //     type: "application/json"
+        // formData.append('type', JSON.stringify(invoice));
         // }));
         // formData.append('invoice', JSON.stringify(invoice))
-        formData.append('type', JSON.stringify(invoice.type));
+     
+        // this.formData.append('type', JSON.stringify(invoice.type));
+
+        // this.item=JSON.stringify(invoice)
+        // this.item={"invoice":invoice.items}
+
+
+    
+
+// this.formData.set('invoice[items]',JSON.stringify(invoice.items));
+
+       this. formData.append('items', JSON.stringify(invoice.items));
+
+
+
+
+
+        this.formData.append('type', JSON.stringify(invoice.type));
+
+
         // formData.append('due_date', JSON.stringify(invoice.due_date));
         // formData.append('date_created', JSON.stringify(invoice.date_created));
-        formData.append('company', JSON.stringify(invoice.company));
-        formData.append('userid', JSON.stringify(invoice.userid));
-        // formData.append('items', JSON.stringify(invoice["items"]));
 
-        // formData.append('items', JSON.stringify(invoice.items));
+
+        this.formData.append('company', JSON.stringify(invoice.company));
+        this.formData.append('userid', JSON.stringify(invoice.userid));
+        
+      
+
+        // this.formData.append('invoice', this.item);
         // formData.append('type', JSON.stringify(invoice.files));
-        formData.append('file', file)
-
+      this. formData.append('file', file)
+// console.log("tthis.formData.get("file")",this.formData.get("file"))
 
         // formData.append('file', new Blob([file], {
         //     type: "application/json"
         // }));
         // console.log('ffff', file);
         // console.log('iiii', invoice);
+// JSON.parse(this.item)
+// let headers = new Headers();
+// headers.append('Accept', 'application/json');
+// headers.append();
 
-        const req = new HttpRequest('POST', `${this.baseUrl}`, formData, {
+//  this.http.post(this.baseUrl,this.formData,{headers})
+
+        const req = new HttpRequest('POST', `${this.baseUrl}`, this.formData, {
             reportProgress: true,
-            responseType: 'json'
+            responseType: 'json',
+          
+
         });
         return this.http.request(req);
     }
