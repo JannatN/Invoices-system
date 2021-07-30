@@ -55,7 +55,7 @@ public class InvoiceController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<InvoiceDto> createInvoice(@Valid @ModelAttribute("invoice") InvoiceDto invoiceDto,
                                                     @RequestParam("file") MultipartFile files)
-                                                    throws ParseException, IOException {
+            throws ParseException, IOException {
 
         Invoice invoice = convertToEntity(invoiceDto);
         ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice, files);

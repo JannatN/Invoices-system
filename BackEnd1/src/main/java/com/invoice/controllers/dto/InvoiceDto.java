@@ -1,33 +1,31 @@
 package com.invoice.controllers.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.invoice.entities.File;
-import com.invoice.entities.User;
 import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class InvoiceDto {
-    // todo: add validations here
+    @Id
     private Long id;
     @CreationTimestamp
     private LocalDateTime date_created;
+
 //    @NotNull
     private LocalDateTime due_date;
+
     @NotBlank
     @Size(max = 20)
     private String type;
+
     @NotBlank
     @Size(max = 30)
     private String company;
-    private List<ItemDto> items;
 
+    private List<ItemDto> items;
     private List<FileDto> files;
 
 //    private UserDto user;
@@ -56,13 +54,6 @@ public class InvoiceDto {
     public void setUserid(Long userid) {
         this.userid = userid;
     }
-    //	public UserDto getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(UserDto user) {
-//		this.user = user;
-//	}
 
     public List<FileDto> getFiles() {
         return files;
@@ -72,13 +63,6 @@ public class InvoiceDto {
         this.files = files;
     }
 
-//    public Long getUserid() {
-//        return user.getId();
-//    }
-//
-//    public void setUserid(Long userid) {
-//        this.user.setId(userid);
-//    }
 
     public Long getId() {
         return id;

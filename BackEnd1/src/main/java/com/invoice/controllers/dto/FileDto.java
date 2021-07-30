@@ -42,12 +42,6 @@ public class FileDto {
         this.data = data;
     }
 
-//	public InvoiceDto getInvoice() {
-//		return invoice;
-//	}
-//
-//	public void setInvoice(InvoiceDto invoice) {
-//		this.invoice = invoice;
-//	}
+
 
 }

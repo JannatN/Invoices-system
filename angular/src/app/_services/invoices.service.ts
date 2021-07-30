@@ -8,7 +8,6 @@ import { Invoice } from '../models/invoice';
     providedIn: 'root'
 })
 export class InvoiceService {
-
     private baseUrl = 'http://localhost:8080/api/v1/invoices';
 
     constructor(private http: HttpClient) { }
@@ -51,13 +50,15 @@ export class InvoiceService {
         // }));
         // formData.append('invoice', JSON.stringify(invoice))
         formData.append('type', JSON.stringify(invoice.type));
-        // formData.append('due_date', JSON.stringify(invoice.due_date));
-        // formData.append('date_created', JSON.stringify(invoice.date_created));
+        // // formData.append('due_date', JSON.stringify(invoice.due_date));
         formData.append('company', JSON.stringify(invoice.company));
         formData.append('userid', JSON.stringify(invoice.userid));
         // formData.append('items', JSON.stringify(invoice["items"]));
+        // for (var i = 0; i < invoice.items.length; i++) {
+        // formData.append('items[]', JSON.stringify(invoice["items"]["description"]));
+        // formData.append('items[]', JSON.stringify(invoice["items"]["currency"]));
 
-        // formData.append('items', JSON.stringify(invoice.items));
+        
         // formData.append('type', JSON.stringify(invoice.files));
         formData.append('file', file)
 

@@ -39,7 +39,6 @@ import { MatButtonModule } from "@angular/material/button";
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
-import { FilesListComponent } from './files-list/files-list.component';  
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +62,6 @@ import { FilesListComponent } from './files-list/files-list.component';
     UpdateItemComponent,
     CreateItemComponent,
     NewItemComponent,
-    FilesListComponent
 
   ],
   imports: [

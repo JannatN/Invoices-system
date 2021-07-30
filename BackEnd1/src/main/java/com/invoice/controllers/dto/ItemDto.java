@@ -1,34 +1,30 @@
 package com.invoice.controllers.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class ItemDto {
     @NotBlank
     @Size(max = 30)
     private String name;
+
     @NotBlank
     @Size(max = 200)
     private String description;
+
     @NotNull
+    @DecimalMax("15.0") @DecimalMin("0.0")
     private Double price;
+
     @NotBlank
     @Size(max = 4)
     private String currency;
+
     @NotNull
+    @Min(1)
+    @Max(999999)
     private Integer quantity;
 
 //	private Invoice invoice;
-//
-//
-//	public Invoice getInvoice() {
-//		return invoice;
-//	}
-//
-//	public void setInvoice(Invoice invoice) {
-//		this.invoice = invoice;
-//	}
 
     public String getName() {
         return name;
