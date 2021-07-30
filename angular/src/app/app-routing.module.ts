@@ -19,7 +19,6 @@ import { CreateInvoiceComponent } from './create-invoice/create-invoice.componen
 
 import { UpdateItemComponent } from './update-item/update-item.component';
 import {ItemDetailsComponent } from './item-details/item-details.component';
-import { ItemListComponent } from './item-list/item-list.component';
 import { CreateItemComponent } from './create-item/create-item.component';
 import { UploadFilesComponent } from './upload-files/upload-files.component';
 
@@ -40,11 +39,8 @@ const routes: Routes = [
   { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
   { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
   { path: 'addInvoice', component: CreateInvoiceComponent },
-  // { path: 'addInvoice/:id', component: CreateInvoiceComponent },
-  { path: 'items', component: ItemListComponent },
   { path: 'detailsItem/:id', component: ItemDetailsComponent },
   { path: 'updateItem/:id', component: UpdateItemComponent },
-  // { path: 'addItem', component: CreateItemComponent },
   { path: 'addItem/:id', component: CreateItemComponent },
   { path: 'attachFile/:id', component: UploadFilesComponent },
 

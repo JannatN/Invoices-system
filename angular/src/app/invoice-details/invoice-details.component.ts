@@ -6,6 +6,7 @@ import { Item } from '../models/item';
 import { ItemService } from '../_services/items.service';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
+import { invoices_aud } from '../models/invoices_aud';
 import { UploadFilesService } from '../_services/upload-file.service';
 
 @Component({
@@ -17,6 +18,8 @@ export class InvoiceDetailsComponent implements OnInit {
 
   id: number;
   invoice: Invoice;
+  // invoiceList: Observable<Invoice[]>
+  invoiceAud: Observable<invoices_aud[]>;
   items: Item[];
   files: File[];
   fileInfos: Observable<File[]>;
@@ -29,24 +32,42 @@ export class InvoiceDetailsComponent implements OnInit {
   ngOnInit() {
 
     this.invoice = new Invoice();
-    // this.invoices = this.invoiceService.getInvoicesList();
+
 
     this.id = this.route.snapshot.params['id'];
 
     this.invoiceService.getInvoice(this.id)
       .subscribe(data => {
 
-        console.log("data", data)
+
+        console.log("invoiceee ",data)
         this.invoice = data;
         this.invoices = data
 
-        console.log(this.invoices)
+
+        console.log("this.invoice   ",this.invoice)
 
       })
+
+    this.invoiceService.getInvoiceAudById(this.id).subscribe(data => {
+  
+      this.invoiceAud = data
+      console.log("invioces aud", this.invoiceAud)
+
+    })
+
     error => console.log(error);
     this.fileInfos = this.invoiceService.getFiles(this.id);
 
   }
+
+  // getInvoicesAud(){
+  //   this.invoiceService.getInvoiceAud().subscribe(data=>{
+  //     console.log("invioces aud" , data)
+  //     this.invoiceAud=data
+  //     console.log("invoices Aud ", this.invoiceAud)
+  //   })
+  // }
 
   list() {
     this.location.back();

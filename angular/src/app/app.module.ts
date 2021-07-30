@@ -25,7 +25,6 @@ import { CreateInvoiceComponent } from './create-invoice/create-invoice.componen
 import { UploadFilesComponent } from './upload-files/upload-files.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ItemListComponent } from './item-list/item-list.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { UpdateItemComponent } from './update-item/update-item.component';
 import { CreateItemComponent } from './create-item/create-item.component';
@@ -57,7 +56,6 @@ import { CommonModule } from '@angular/common';
     UserListComponent,
     UpdateUserComponent,
     UploadFilesComponent,
-    ItemListComponent,
     ItemDetailsComponent,
     UpdateItemComponent,
     CreateItemComponent,

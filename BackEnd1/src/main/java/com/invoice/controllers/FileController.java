@@ -36,12 +36,11 @@ public class FileController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/upload/{invoiceID}")
     @PreAuthorize("hasRole('ADMIN') ")
-    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file,
-                                                      @PathVariable Long invoiceID) {
+    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
 
         try {
-            storageService.store(file, invoiceID);
+            storageService.store(file);
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
@@ -97,17 +96,5 @@ public class FileController {
         File file = modelMapper.map(fileDto, File.class);
         return file;
     }
-//    @GetMapping("{filename:.+}")
-//    @ResponseBody
-//    public ResponseEntity<UrlResource> downloadFile(@PathVariable String filename) throws IOException {
-//        UrlResource file = storageService.download(filename);
-//        Path path = ((UrlResource) file).getFile()
-//                .toPath();
-//
-//        return ResponseEntity.ok()
-//                .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(path))
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-//                .body(file);
-//    }
 
 }

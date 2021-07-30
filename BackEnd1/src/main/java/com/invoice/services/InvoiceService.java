@@ -1,5 +1,7 @@
 package com.invoice.services;
 
+import javax.transaction.Transactional;
+
 import com.invoice.entities.File;
 import com.invoice.entities.Invoice;
 import com.invoice.exception.ResourceNotFoundException;
@@ -14,6 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.invoice.entities.Invoice;
+import com.invoice.exception.ResourceNotFoundException;
+import com.invoice.repositories.InvoiceRepository;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Arrays;
@@ -76,6 +81,8 @@ public class InvoiceService {
      * @throws ResourceNotFoundException
      */
     public Invoice updateInvoice(Invoice invoiceDetails, Long invoiceID) throws ResourceNotFoundException {
+//        System.out.println(invoiceDetails.toString());
+
         Invoice invoice = invoiceRepository.findById(invoiceID)
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice not found for this id :: " + invoiceID));
         invoice.setDue_date(invoiceDetails.getDue_date());

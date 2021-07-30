@@ -3,26 +3,38 @@ import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/
 import { Observable } from 'rxjs';
 import { _MatPaginatorBase } from '@angular/material/paginator';
 import { Invoice } from '../models/invoice';
+import { Item } from '../models/item';
+import { FormArray, FormBuilder } from '@angular/forms';
 
 @Injectable({
     providedIn: 'root'
 })
 export class InvoiceService {
-    private baseUrl = 'http://localhost:8080/api/v1/invoices';
 
+    private baseUrl = 'http://localhost:8080/api/invoices';
+ item;
+ formData: FormData = new FormData();
+ 
     constructor(private http: HttpClient) { }
 
     getInvoice(id: number): Observable<any> {
         return this.http.get(`${this.baseUrl}/${id}`);
     }
 
+    getInvoiceAud(): Observable<any> {
+        return this.http.get(`${this.baseUrl}/Aud`);
+    }
+    getInvoiceAudById(id: number): Observable<any> {
+        return this.http.get(`${this.baseUrl}/Aud/${id}`);
+    }
+
     updateInvoice(id: number, value: any): Observable<Object> {
         return this.http.put(`${this.baseUrl}/${id}`, value);
     }
 
-    // getInvoicesList(): Observable<any> {
-    //     return this.http.get(`${this.baseUrl}`);
-    // }
+    getInvoicesList(): Observable<any> {
+        return this.http.get(`${this.baseUrl}/All`);
+    }
 
     createInvoice(invoice: Object): Observable<Object> {
         return this.http.post(`${this.baseUrl}`, invoice);
@@ -44,34 +56,54 @@ export class InvoiceService {
 
 
     createInv( file: File, invoice: Invoice): Observable<HttpEvent<any>> {
-        const formData: FormData = new FormData();
+        // const formArray = new FormArray(null);
         // formData.append('invoice', new Blob([JSON.stringify(invoice)], {
         //     type: "application/json"
+        // formData.append('type', JSON.stringify(invoice));
         // }));
         // formData.append('invoice', JSON.stringify(invoice))
-        formData.append('type', JSON.stringify(invoice.type));
-        // // formData.append('due_date', JSON.stringify(invoice.due_date));
-        formData.append('company', JSON.stringify(invoice.company));
-        formData.append('userid', JSON.stringify(invoice.userid));
-        // formData.append('items', JSON.stringify(invoice["items"]));
-        // for (var i = 0; i < invoice.items.length; i++) {
-        // formData.append('items[]', JSON.stringify(invoice["items"]["description"]));
-        // formData.append('items[]', JSON.stringify(invoice["items"]["currency"]));
+     
+        // this.formData.append('type', JSON.stringify(invoice.type));
 
+        // this.item=JSON.stringify(invoice)
+        // this.item={"invoice":invoice.items}
+// this.formData.set('invoice[items]',JSON.stringify(invoice.items));
+
+    //    this. formData.append('items', JSON.stringify(invoice.items));
+
+        this.formData.append('type', JSON.stringify(invoice.type));
+
+        // formData.append('due_date', JSON.stringify(invoice.due_date));
+        // formData.append('date_created', JSON.stringify(invoice.date_created));
+
+
+        this.formData.append('company', JSON.stringify(invoice.company));
+        this.formData.append('userid', JSON.stringify(invoice.userid));
         
-        // formData.append('type', JSON.stringify(invoice.files));
-        formData.append('file', file)
+      
 
+        // this.formData.append('invoice', this.item);
+        // formData.append('type', JSON.stringify(invoice.files));
+      this. formData.append('file', file)
+// console.log("tthis.formData.get("file")",this.formData.get("file"))
 
         // formData.append('file', new Blob([file], {
         //     type: "application/json"
         // }));
         // console.log('ffff', file);
         // console.log('iiii', invoice);
+// JSON.parse(this.item)
+// let headers = new Headers();
+// headers.append('Accept', 'application/json');
+// headers.append();
 
-        const req = new HttpRequest('POST', `${this.baseUrl}`, formData, {
+//  this.http.post(this.baseUrl,this.formData,{headers})
+
+        const req = new HttpRequest('POST', `${this.baseUrl}`, this.formData, {
             reportProgress: true,
-            responseType: 'json'
+            responseType: 'json',
+          
+
         });
         return this.http.request(req);
     }

@@ -7,25 +7,25 @@
 
 <div class="container">
   <div class="col-md-8">
-    <div class="input-group mb-3">
+    <!-- <div class="input-group mb-3">
       <input type="text" [(ngModel)]="filters.keyword" name="keyword" (input)="listInv()" id="exampleFormControlInput1"
         class="form-control form-control-underlined" />
-    </div>
+    </div> -->
   </div>
   <div class="form-group mb-4">
-    <!-- <mat-form-field> -->
-    <!-- <label>Filter:</label>
-      <input matInput (keyup)="filter($event.target.value)" id="exampleFormControlInput1"
-        class="form-control form-control-underlined"> -->
-    <!-- <div class="col-md-8">
-        <div class="input-group mb-3">
+    <mat-form-field> -->
+    <label>Filter:</label>
+      <input matInput (keyup)="filterInvoice($event.target.value)" id="exampleFormControlInput1"
+        class="form-control form-control-underlined">
+     <div class="col-md-8">
+        <!-- <div class="input-group mb-3">
           <input type="text" id="exampleFormControlInput1"
           class="form-control form-control-underlined" placeholder="Search"
             [(ngModel)]="filters.keyword" [ngModelOptions]="{standalone: true}"/>
-        </div>
-        <button type="button"  (click)="filterInvoice"></button>
-      </div> -->
-    <!-- </mat-form-field> -->
+        </div> -->
+        <button type="button"  (click)="filterInvoice">filter</button>
+      </div>
+     </mat-form-field>
   </div>
 
 
