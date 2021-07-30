@@ -25,14 +25,18 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * @param user
+     * @return
+     */
     public User saveUser(User user) {
         return userRepository.save(user);
     }
 
-//	public List<User> getAllUsers() {
-//		return userRepository.findAll();
-//	}
-
+    /**
+     * @param page
+     * @return
+     */
     public Page<User> findPaginatedUsers(Pageable page) {
         return userRepository.findAll(page);
     }
@@ -43,6 +47,12 @@ public class UserService {
 
     }
 
+    /**
+     * @param userId
+     * @param userDetails
+     * @return
+     * @throws ResourceNotFoundException
+     */
     public User updateUser(Long userId, User userDetails) throws ResourceNotFoundException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("user not found for this id :: " + userId));
@@ -56,6 +66,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * @param userId
+     * @return
+     * @throws ResourceNotFoundException
+     */
     public Map<String, Boolean> deleteUser(Long userId) throws ResourceNotFoundException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("user not found for this id :: " + userId));

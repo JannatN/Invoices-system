@@ -1,7 +1,11 @@
 <div class="heading">
-  <h2>Welcome Admin {{user.username}}</h2><button (click)="createInvoice()" class="btn btn-info">Create Invoice</button>
-
+  <h2>Welcome Admin {{user.username}}</h2>
+  <button (click)="createInvoice()" class="btn btn-info">Create Invoice</button>
+  <button (click)="ListFiles()" class="btn btn-info">View Invoices By Files</button>
 </div>
+
+
+
 <div class="container">
   <div class="col-md-8">
     <div class="input-group mb-3">

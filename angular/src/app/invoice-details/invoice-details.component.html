@@ -43,15 +43,28 @@
         </tr>
 
     </tbody>
-    <label><b>Files: </b></label>
+    <!-- <label><b>Files: </b></label>
     <tbody>
         <tr *ngFor="let file of invoice.files | keyvalue">
-            <div>Item Name: {{file.value.name}} </div>
+            <a href="{{ file.url }}">{{ file.name }}</a>
         </tr>
-    </tbody>
+    </tbody> -->
     
     </div>
+    
 
+    <div class="card">
+        <div class="card-header">List of Files</div>
+        <ul
+          class="list-group list-group-flush"
+          *ngFor="let file of fileInfos | async"
+        >
+          <li class="list-group-item">
+            <a href="{{ file.url }}">{{ file.name }}</a>
+         
+          </li>
+        </ul>
+      </div>
 
     <br>
 <h3>Invoice History</h3>

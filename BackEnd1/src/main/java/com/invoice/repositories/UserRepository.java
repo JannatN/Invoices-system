@@ -1,12 +1,11 @@
 package com.invoice.repositories;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.invoice.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.invoice.entities.User;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -17,8 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Boolean existsByUsername(String username);
 
 	Boolean existsByEmail(String email);
-
-//	Iterable<User> findByname(String firstname);
 
 
 }

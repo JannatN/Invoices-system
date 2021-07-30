@@ -14,6 +14,12 @@ import com.invoice.payload.response.JwtResponse;
 
 import com.invoice.repositories.InvoiceAudRepository;
 import com.invoice.repositories.InvoiceRepository;
+import com.invoice.controllers.dto.InvoiceDto;
+import com.invoice.entities.Invoice;
+import com.invoice.exception.ResourceNotFoundException;
+import com.invoice.payload.response.ResponseFile;
+import com.invoice.services.FileService;
+import com.invoice.services.InvoiceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,6 +44,18 @@ import com.invoice.entities.invoices_aud;
 
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.services.InvoiceService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -45,6 +63,8 @@ import com.invoice.services.InvoiceService;
 public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
+    @Autowired
+    private FileService storageService;
     @Autowired
     private ModelMapper modelMapper;
 @Autowired
@@ -81,43 +101,31 @@ private InvoiceAudRepository invoiceAudRepository;
         return entities.map(objectEntity -> modelMapper.map(objectEntity, dtoClass));
     }
 
-
     @ResponseBody
-    @PostMapping("/invoices")
+    @PostMapping(path = "/invoices")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException {
-        Invoice invoice = convertToEntity(invoiceDto);
-        JwtResponse j=new JwtResponse();
-       System.out.println(j.getUsername());
+    public ResponseEntity<InvoiceDto> createInvoice(@Valid @ModelAttribute("invoice") InvoiceDto invoiceDto,
+                                                    @RequestParam("file") MultipartFile files)
+                                                    throws ParseException, IOException {
 
-//        invoiceRepository.getCreatedBy();
-//        System.out.println( invoiceRepository.getCreatedBy());
-//        String username= ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-//        System.out.println(username);
-        Invoice invoiceCreated = invoiceService.createInvoice(invoice);
-        System.out.println("invoice  "+invoiceCreated);
+        Invoice invoice = convertToEntity(invoiceDto);
+        ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice, files);
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         return convertToDto(invoiceCreated);
+
+    }
+
+    private ResponseEntity<InvoiceDto> convertToDto(ResponseEntity<Invoice> invoice) {
+        ResponseEntity<InvoiceDto> invoiceDto = modelMapper.map(invoice, ResponseEntity.class);
+        return invoiceDto;
     }
 
     @GetMapping("/invoices/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
     public InvoiceDto getInvoiceById(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
-        modelMapper.getConfiguration().setAmbiguityIgnored(true);
-//        System.out.println(invoiceService.getInvoiceById(invoiceID).toString());
-
         return convertToDto(invoiceService.getInvoiceById(invoiceID));
     }
-//	@GetMapping("/invoices/{id}")
-//	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('AUDITOR') ")
-//	public Invoice getInvoiceById(@PathVariable(value = "id") Long invoiceID)
-//			throws ResourceNotFoundException {
-////		modelMapper.getConfiguration().setAmbiguityIgnored(true);
-//		return invoiceService.getInvoiceById(invoiceID);
-//	}
-//@Autowired
-//    private InvoiceHistoryRepository invoiceHistoryRepository;
 
 
 //@PostUpdate
@@ -146,6 +154,7 @@ private InvoiceAudRepository invoiceAudRepository;
         invoiceService.deleteInvoice(invoiceID);
     }
 
+
     private InvoiceDto convertToDto(Invoice invoice) {
         InvoiceDto invoiceDto = modelMapper.map(invoice, InvoiceDto.class);
         return invoiceDto;
@@ -163,6 +172,19 @@ private InvoiceAudRepository invoiceAudRepository;
 
     <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         return source.stream().map(element -> modelMapper.map(element, targetClass)).collect(Collectors.toList());
+    }
+
+    @GetMapping("/invoices/files/{id}")
+    @PreAuthorize("hasRole('ADMIN') ")
+    public ResponseEntity<List<ResponseFile>> getListFiles(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
+        List<ResponseFile> files = storageService.getAllFiles(invoiceID).map(dbFile -> {
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/{id}")
+                    .path(dbFile.getId()).toUriString();
+
+            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length);
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(files);
     }
 
 }

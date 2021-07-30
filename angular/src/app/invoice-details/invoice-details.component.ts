@@ -7,6 +7,7 @@ import { ItemService } from '../_services/items.service';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { invoices_aud } from '../models/invoices_aud';
+import { UploadFilesService } from '../_services/upload-file.service';
 
 @Component({
   selector: 'app-invoice-details',
@@ -21,11 +22,15 @@ export class InvoiceDetailsComponent implements OnInit {
   invoiceAud: Observable<invoices_aud[]>;
   items: Item[];
   files: File[];
+  fileInfos: Observable<File[]>;
+
   invoices: Observable<Invoice[]>;
   constructor(private route: ActivatedRoute, private router: Router,
-    private invoiceService: InvoiceService, private itemService: ItemService, private location: Location) { }
+    private invoiceService: InvoiceService, private itemService: ItemService, 
+    private location: Location, private uploadService: UploadFilesService) { }
 
   ngOnInit() {
+
     this.invoice = new Invoice();
 
 
@@ -52,6 +57,8 @@ export class InvoiceDetailsComponent implements OnInit {
     })
 
     error => console.log(error);
+    this.fileInfos = this.invoiceService.getFiles(this.id);
+
   }
 
   // getInvoicesAud(){
@@ -65,4 +72,10 @@ export class InvoiceDetailsComponent implements OnInit {
   list() {
     this.location.back();
   }
+  // downloadFile(data: Response) {
+  //   const blob = new Blob([data], { type: 'text/csv' });
+  //   const url = window.URL.createObjectURL(blob);
+  //   window.open(url);
+  // }
+ 
 }

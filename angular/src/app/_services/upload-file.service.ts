@@ -48,9 +48,14 @@ export class UploadFilesService {
 
     return this.http.request(req);
   }
-   
 
-  getFiles(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/files`);
+
+  getFiles(): Observable<File[]> {
+    return this.http.get<File[]>(`${this.baseUrl}/files`);
   }
+
+  getFile(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/files/${id}`);
+  }
+
 }

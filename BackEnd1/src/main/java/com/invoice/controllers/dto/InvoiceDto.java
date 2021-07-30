@@ -1,5 +1,7 @@
 package com.invoice.controllers.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.invoice.entities.File;
 import com.invoice.entities.User;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
@@ -12,6 +14,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.TemporalType.TIMESTAMP;
@@ -21,7 +25,7 @@ public class InvoiceDto {
     private Long id;
     @CreationTimestamp
     private LocalDateTime date_created;
-    @NotNull
+//    @NotNull
     private LocalDateTime due_date;
     @NotBlank
     @Size(max = 20)
@@ -29,10 +33,9 @@ public class InvoiceDto {
     @NotBlank
     @Size(max = 30)
     private String company;
+    private List<ItemDto> items;
 
-    private Set<ItemDto> items;
-
-    private Set<FileDto> files;
+    private List<FileDto> files;
 
 //    private UserDto user;
     private Long userid;
@@ -66,7 +69,7 @@ public class InvoiceDto {
 //    }
 
 
-    public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company, Set<ItemDto> items, Set<FileDto> files, Long userid, String createdBy, String lastModifiedBy, Date lastModifiedDate) {
+    public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company, List<ItemDto> items, List<FileDto> files, Long userid, String createdBy, String lastModifiedBy, Date lastModifiedDate) {
         this.id = id;
         this.date_created = date_created;
         this.due_date = due_date;
@@ -124,11 +127,11 @@ public class InvoiceDto {
 //		this.user = user;
 //	}
 
-    public Set<FileDto> getFiles() {
+    public List<FileDto> getFiles() {
         return files;
     }
 
-    public void setFiles(Set<FileDto> files) {
+    public void setFiles(List<FileDto> files) {
         this.files = files;
     }
 
@@ -180,11 +183,11 @@ public class InvoiceDto {
         this.company = company;
     }
 
-    public Set<ItemDto> getItems() {
+    public List<ItemDto> getItems() {
         return items;
     }
 
-    public void setItems(Set<ItemDto> items) {
+    public void setItems(List<ItemDto> items) {
         this.items = items;
     }
 

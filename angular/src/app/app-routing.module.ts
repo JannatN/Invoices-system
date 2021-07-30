@@ -22,6 +22,7 @@ import {ItemDetailsComponent } from './item-details/item-details.component';
 import { ItemListComponent } from './item-list/item-list.component';
 import { CreateItemComponent } from './create-item/create-item.component';
 import { UploadFilesComponent } from './upload-files/upload-files.component';
+import { FilesListComponent } from './files-list/files-list.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -47,6 +48,7 @@ const routes: Routes = [
   // { path: 'addItem', component: CreateItemComponent },
   { path: 'addItem/:id', component: CreateItemComponent },
   { path: 'attachFile/:id', component: UploadFilesComponent },
+  { path: 'listFiles', component: FilesListComponent },
 
 
 ];

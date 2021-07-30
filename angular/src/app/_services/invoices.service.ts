@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { _MatPaginatorBase } from '@angular/material/paginator';
 import { Invoice } from '../models/invoice';
@@ -38,26 +38,56 @@ export class InvoiceService {
 
     listInv(request) {
         const params = request;
-        console.log('hhho', params);
         return this.http.get(`${this.baseUrl}`, { params });
     }
-    filter(): Observable<Invoice[]> {
+
+    filter(page: number, size: number, keyword: Object): Observable<Invoice[]> {
+        let params = new HttpParams();
         return this.http.get<Invoice[]>(`${this.baseUrl}`);
     }
 
     deleteInvoice(id: number): Observable<any> {
         return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
     }
-    uploadFile(file: File): Observable<HttpEvent<any>> {
+
+
+    createInv( file: File, invoice: Invoice): Observable<HttpEvent<any>> {
         const formData: FormData = new FormData();
-    
-        formData.append('file', file);
-    
+        // formData.append('invoice', new Blob([JSON.stringify(invoice)], {
+        //     type: "application/json"
+        // }));
+        // formData.append('invoice', JSON.stringify(invoice))
+        formData.append('type', JSON.stringify(invoice.type));
+        // formData.append('due_date', JSON.stringify(invoice.due_date));
+        // formData.append('date_created', JSON.stringify(invoice.date_created));
+        formData.append('company', JSON.stringify(invoice.company));
+        formData.append('userid', JSON.stringify(invoice.userid));
+        // formData.append('items', JSON.stringify(invoice["items"]));
+
+        // formData.append('items', JSON.stringify(invoice.items));
+        // formData.append('type', JSON.stringify(invoice.files));
+        formData.append('file', file)
+
+
+        // formData.append('file', new Blob([file], {
+        //     type: "application/json"
+        // }));
+        // console.log('ffff', file);
+        // console.log('iiii', invoice);
+
         const req = new HttpRequest('POST', `${this.baseUrl}`, formData, {
-          reportProgress: true,
-          responseType: 'json'
+            reportProgress: true,
+            responseType: 'json'
         });
-    
         return this.http.request(req);
-      }
+    }
+
+    getFiles(invoiceID: number): Observable<File[]> {
+        return this.http.get<File[]>(`${this.baseUrl}/files/${invoiceID}`);
+    }
+
+    getFile(id: number): Observable<any> {
+        return this.http.get(`${this.baseUrl}/files/${id}`);
+    }
+
 }

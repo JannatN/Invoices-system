@@ -3,9 +3,8 @@ import { Invoice } from '../models/invoice';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceService } from '../_services/invoices.service';
 import {Location} from '@angular/common';
+import { Item } from '../models/item';
 import { TokenStorageService } from '../_services/token-storage.service';
-import { trackService } from '../_services/track.service';
-import { Track } from '../models/track';
 
 
 @Component({
@@ -17,12 +16,10 @@ export class UpdateInvoiceComponent implements OnInit {
 
   id: number;
   invoice: Invoice;
-  tracke :Track=new Track();
-  test:string
-  str:string
-name:string
+  item: Item;
+
   constructor(private route: ActivatedRoute,private router: Router,
-    private invoiceService: InvoiceService, private track: trackService, private location: Location, private tokenStorageService: TokenStorageService) { }
+    private invoiceService: InvoiceService,  private location: Location, private tokenStorageService: TokenStorageService) { }
     
   ngOnInit() {
 //     console.log(this.tokenStorageService.getUser().username);

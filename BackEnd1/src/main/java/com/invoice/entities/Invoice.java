@@ -1,16 +1,11 @@
 
 package com.invoice.entities;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,6 +17,9 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -102,12 +100,12 @@ public class Invoice {
 	@OneToMany(cascade = { CascadeType.ALL })
 	@NotAudited
 	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
-	private Set<Item> items;
+	private List<Item> items;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@NotAudited
 	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
-	private Set<File> files;
+	private List<File> files;
 
 //	public Invoice(Long id, LocalDateTime date_created, LocalDateTime due_date,
 //			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, Set<Item> items, Set<File> files) {
@@ -124,7 +122,7 @@ public class Invoice {
 //	}
 
 
-	public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date, String type, String company, String createdBy, String lastModifiedBy, Date lastModifiedDate, User user, Set<Item> items, Set<File> files) {
+	public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date, String type, String company, String createdBy, String lastModifiedBy, Date lastModifiedDate, User user, List<Item> items, List<File> files) {
 		this.id = id;
 		this.userID = userID;
 		this.date_created = date_created;
@@ -143,13 +141,11 @@ public class Invoice {
 
 	}
 
-
-
-				public Set<File> getFiles() {
+	public List<File> getFiles() {
 		return files;
 	}
 
-	public void setFiles(Set<File> files) {
+	public void setFiles(List<File> files) {
 		this.files = files;
 	}
 
@@ -185,11 +181,11 @@ public class Invoice {
 		this.userID = userID;
 	}
 
-	public Set<Item> getItems() {
+	public List<Item> getItems() {
 		return items;
 	}
 
-	public void setItems(Set<Item> items) {
+	public void setItems(List<Item> items) {
 		this.items = items;
 	}
 

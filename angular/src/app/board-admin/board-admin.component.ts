@@ -11,6 +11,7 @@ import { TokenStorageService } from '../_services/token-storage.service';
 import { Item } from '../models/item';
 import { InvoiceDataSource } from '../datasource/invoices.datasource';
 import { catchError, finalize, tap } from 'rxjs/operators';
+import { UploadFilesService } from '../_services/upload-file.service';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class BoardAdminComponent implements OnInit {
 
 
   public dataSource = new MatTableDataSource<Invoice>();
-  constructor(private invoiceService: InvoiceService, private router: Router, private token: TokenStorageService) { }
+  constructor(private invoiceService: InvoiceService,
+    private router: Router, private token: TokenStorageService,) { }
 
   ngOnInit() {
     // this.getList();
@@ -45,22 +47,23 @@ export class BoardAdminComponent implements OnInit {
     this.invoiceDatasource = new InvoiceDataSource(this.invoiceService);
     this.invoiceDatasource.loadInvoices();
 
+
   }
   filterInvoice(invoice: Invoice[]) {
     console.log('hhh', this.filters);
     return Object.values(invoice).filter(res => {
-      for (let i = 0; i < 10; i++) {      
-      console.log('hhh', res[i].type);
-      return res[i].type.toLowerCase().includes(this.filters.keyword.toLowerCase());
+      for (let i = 0; i < 10; i++) {
+        console.log('hhh', res[i].type);
+        return res[i].type.toLowerCase().includes(this.filters.keyword.toLowerCase());
       }
     })
   }
   listInv() {
     console.log('hhh', this.filters);
-    this.invoiceService.listInv({invoice: this.filters.keyword}) .pipe(
+    this.invoiceService.listInv({ invoice: this.filters.keyword }).pipe(
       catchError(() => of([])),
-  )
-  console.log('hhho', this.filters);
+    )
+    console.log('hhho', this.filters);
 
     // .subscribe(
     //   data => this.invoicesArray = this.filterInvoice(data)
@@ -128,6 +131,10 @@ export class BoardAdminComponent implements OnInit {
   }
   createInvoice() {
     this.router.navigate(['addInvoice']);
+  }
+  ListFiles(){
+    this.router.navigate(['listFiles']);
+
   }
   redirectToCreate(id: number) {
     this.router.navigate(['addItem', id]);

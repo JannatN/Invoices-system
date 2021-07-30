@@ -19,42 +19,47 @@
       <label for="name"> Invoice Type</label>
       <input type="text" class="form-control" id="type" required [(ngModel)]="invoice.type" name="type">
     </div>
-    <!-- <div class="form-group">
-      <label for="name">Description </label>
-      <input type="text" class="form-control" id="description  " required [(ngModel)]="invoice.items[0].description" name="description">
-    </div> -->  
-    <!-- <div class="form-group">
-      <label for="name">Item name</label>
-      <input type="text" class="form-control" id="name" required [(ngModel)]="item.name" name="name" #name="ngModel">
 
+    <div *ngFor="let item of invoice.items | keyvalue; let i = index">
+      <div class="title">Item {{i + 1}}</div>
+      <div class="form-group">
+        <label for="name">Item name</label>
+        <input type="text" class="form-control" id="name" required [(ngModel)]="item.value.name"
+          name="{{invoice.items[i].name}}" #name="ngModel">
+
+      </div>
+
+      <div class="form-group">
+        <label for="name">Item Description</label>
+        <textarea rows="4" cols="50" class="form-control" id="description" required [(ngModel)]="item.value.description"
+          name="{{invoice.items[i].description}}" #description="ngModel"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Item price</label>
+        <input type="number" class="form-control" id="price" required [(ngModel)]="item.value.price"
+          name="{{invoice.items[i].price}}" #price="ngModel">
+
+      </div>
+      <div class="form-group">
+        <label for="name">Currency </label>
+        <!-- <input type="text" class="form-control" id="currency" required [(ngModel)]="item.value.currency"
+          name="{{invoice.items[i].currency}}" #currency="ngModel"> -->
+        <select class="form-control" required [(ngModel)]="item.value.currency" name="{{invoice.items[i].currency}}"
+          #currency="ngModel">
+          <option value="USD">$</option>
+          <option value="NIS">₪</option>
+          <option value="EURO">€</option>
+        </select>
+
+      </div>
+      <div class="form-group">
+        <label for="name">Item Quantitiy </label>
+        <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.value.quantity"
+          name="{{invoice.items[i].quantity}}" #quantity="ngModel">
+
+      </div>
     </div>
-
-    <div class="form-group">
-      <label for="name">Item Description</label>
-      <textarea rows="4" cols="50" class="form-control" id="description" required [(ngModel)]="item.description"
-        name="description" #description="ngModel">
-                      Enter text here...</textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="name">Item price</label>
-      <input type="number" class="form-control" id="price" required [(ngModel)]="item.price" name="price"
-        #price="ngModel">
-
-    </div>
-    <div class="form-group">
-      <label for="name">Currency </label>
-      <input type="text" class="form-control" id="currency" required [(ngModel)]="item.currency" name="currency"
-        #currency="ngModel">
-
-    </div>
-    <div class="form-group">
-      <label for="name">Item Quantitiy </label>
-      <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.quantity" name="quantity"
-        #quantity="ngModel">
-
-    </div> -->
-
     <button type="submit" class="btn">Submit</button>
   </form>
 </div>
