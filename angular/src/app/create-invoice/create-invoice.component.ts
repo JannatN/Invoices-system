@@ -74,17 +74,17 @@ export class CreateInvoiceComponent implements OnInit {
 
   saveInvoice() {
     this.invoiceService.createInvoice(this.invoice).subscribe(data1 => {
-      console.log(data1)
+      console.log(data1['id'])
       
       this.invoice = new Invoice();
       this.invoiceService.getLastInvoice().subscribe(data2=>{
         console.log("last invoice",data2)
-     
+     this.id=data2.id
        
         this.message = '';
 
         for(let i = 0; i< this.selectedFiles.length; i++) {
-      this.upload(i, this.selectedFiles[i],this.id);
+      this.upload(i, this.selectedFiles[i],data1['id']);
     }
   
       
