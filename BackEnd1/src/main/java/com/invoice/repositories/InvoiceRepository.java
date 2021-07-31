@@ -33,6 +33,6 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, PagingA
         return list;
     }
 
-    Invoice findTopByOrderByIdDesc();
+
 
 }

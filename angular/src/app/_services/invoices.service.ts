@@ -21,9 +21,9 @@ export class InvoiceService {
         return this.http.get(`${this.baseUrl}/${id}`);
     }
 
-    getLastInvoice(): Observable<any> {
-        return this.http.get(`${this.baseUrl}/last`);
-    }
+    // getLastInvoice(): Observable<any> {
+    //     return this.http.get(`${this.baseUrl}/last`);
+    // }
 
     getInvoiceAud(): Observable<any> {
         return this.http.get(`${this.baseUrl}/Aud`);

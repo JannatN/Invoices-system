@@ -77,9 +77,7 @@ export class CreateInvoiceComponent implements OnInit {
       console.log(data1['id'])
       
       this.invoice = new Invoice();
-      this.invoiceService.getLastInvoice().subscribe(data2=>{
-        console.log("last invoice",data2)
-     this.id=data2.id
+ 
        
         this.message = '';
 
@@ -91,7 +89,7 @@ export class CreateInvoiceComponent implements OnInit {
       
       })
 
- } )
+
   }
 
   onChangeItems(e) {

@@ -63,12 +63,6 @@ public class InvoiceController {
     private InvoiceRepository invoiceRepository;
 
 
-    @GetMapping("/invoices/last")
-    @PreAuthorize("hasRole('ADMIN') ")
-    public InvoiceDto getLastInvoice() {
-        return convertToDto(invoiceRepository.findTopByOrderByIdDesc());
-    }
-
 
 
     @GetMapping("/invoices")
