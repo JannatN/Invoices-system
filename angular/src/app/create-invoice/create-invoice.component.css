@@ -56,10 +56,17 @@
 
 .btn {
     background-color: #dc656e;
-    border:none;
-
+    border: none;
 }
-.grey{
-    background-color: #949292;
 
+.grey {
+    background-color: #949292;
+}
+
+.card-header {
+    color: #dc656e;
+}
+
+.card-title {
+    color: #dc656e;
 }

@@ -30,9 +30,7 @@ export class ProfileComponent implements OnInit {
       .subscribe(data => {
         console.log(data)
         this.user = data;
-        if(this.user.invoices == null){
-          this.isActive = false
-        }
+       
       }, error => console.log(error));
      
     }

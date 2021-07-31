@@ -1,11 +1,11 @@
 <div class="container">
-  <div class="title">Upload files</div>
-
+  <h5 class="card-header">Upload File</h5>
+  <div class="card-body">
   <label class="btn btn-default">
     <input type="file" multiple (change)="selectFiles($event)" />
   </label>
 
-  <button class="btn btn-success" [disabled]="!selectedFiles" (click)="uploadFiles()">
+  <button class="btn btn-success pink" [disabled]="!selectedFiles" (click)="uploadFiles()">
     Upload
   </button>
   <div *ngFor="let progressInfo of progressInfos" class="mb-2">
@@ -17,6 +17,7 @@
         {{ progressInfo.value }}%
       </div>
     </div>
+  </div>
   </div>
 </div>
 <!-- <ul

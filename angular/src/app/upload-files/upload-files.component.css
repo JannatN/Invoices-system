@@ -17,3 +17,14 @@
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     /* border-bottom: 1px solid black; */
 }
+.card-header {
+    color: #dc656e;
+}
+
+.card-title {
+    color: #dc656e;
+    border-top: 2px dotted rgba(146, 141, 141, 0.356);
+}
+.pink {
+    background-color: #dc656e;
+}

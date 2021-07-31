@@ -28,7 +28,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { UpdateItemComponent } from './update-item/update-item.component';
 import { CreateItemComponent } from './create-item/create-item.component';
-import { NewItemComponent } from './new-item/new-item.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
@@ -59,7 +58,6 @@ import { CommonModule } from '@angular/common';
     ItemDetailsComponent,
     UpdateItemComponent,
     CreateItemComponent,
-    NewItemComponent,
 
   ],
   imports: [

@@ -33,4 +33,13 @@ form {
     font-size: 1.3vw;
     color: white;
     margin: 10px;
-  }
+}
+
+.card-header {
+    color: #dc656e;
+}
+
+.card-title {
+    color: #dc656e;
+    border-top: 2px dotted rgba(146, 141, 141, 0.356);
+}
