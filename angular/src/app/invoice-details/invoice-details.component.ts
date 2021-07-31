@@ -43,8 +43,6 @@ export class InvoiceDetailsComponent implements OnInit {
         console.log("invoiceee ",data)
         this.invoice = data;
         this.invoices = data
-
-
         console.log("this.invoice   ",this.invoice)
 
       })
