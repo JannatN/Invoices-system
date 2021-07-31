@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Invoice } from '../models/invoice';
 // import {File} from "../models/file"
 @Injectable({
   providedIn: 'root'
@@ -24,11 +25,11 @@ export class UploadFilesService {
   //   return this.http.request(req);
   //   // return this.http.post(`${this.baseUrl}/upload`,file);
   // }
-  upload(file: File): Observable<HttpEvent<any>> {
+  upload(file: File,invoice:Invoice): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
 
     formData.append('file', file);
-
+formData.append('invoice',JSON.stringify(invoice))
     const req = new HttpRequest('POST', `${this.baseUrl}/upload`, formData, {
       reportProgress: true,
       responseType: 'json'
@@ -36,18 +37,18 @@ export class UploadFilesService {
 
     return this.http.request(req);
   }
-  uploadFile(file: File): Observable<HttpEvent<any>> {
-    const formData: FormData = new FormData();
+  // uploadFile(file: File): Observable<HttpEvent<any>> {
+  //   const formData: FormData = new FormData();
 
-    formData.append('file', file);
+  //   formData.append('file', file);
 
-    const req = new HttpRequest('POST', `${this.baseUrl}/upload`, formData, {
-      reportProgress: true,
-      responseType: 'json'
-    });
+  //   const req = new HttpRequest('POST', `${this.baseUrl}/upload`, formData, {
+  //     reportProgress: true,
+  //     responseType: 'json'
+  //   });
 
-    return this.http.request(req);
-  }
+  //   return this.http.request(req);
+  // }
 
 
   getFiles(): Observable<File[]> {

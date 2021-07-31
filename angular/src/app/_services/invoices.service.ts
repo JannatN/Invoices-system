@@ -36,7 +36,7 @@ export class InvoiceService {
         return this.http.get(`${this.baseUrl}/All`);
     }
 
-    createInvoice(invoice: Object): Observable<Object> {
+    createInvoice(invoice: Invoice): Observable<Object> {
         return this.http.post(`${this.baseUrl}`, invoice);
     }
 
@@ -55,66 +55,10 @@ export class InvoiceService {
     }
 
 
-    createInv( file: File, invoice: Invoice): Observable<HttpEvent<any>> {
-        // const formArray = new FormArray(null);
-        // formData.append('invoice', new Blob([JSON.stringify(invoice)], {
-        //     type: "application/json"
-        // formData.append('type', JSON.stringify(invoice));
-        // }));
-        // formData.append('invoice', JSON.stringify(invoice))
-     
-        // this.formData.append('type', JSON.stringify(invoice.type));
-
-        // this.item=JSON.stringify(invoice)
-        // this.item={"invoice":invoice.items}
+    createInv(  invoice: Invoice): Observable<Object> {
 
 
-    
-
-// this.formData.set('invoice[items]',JSON.stringify(invoice.items));
-
-       this. formData.append('items', JSON.stringify(invoice.items));
-
-
-
-
-
-        this.formData.append('type', JSON.stringify(invoice.type));
-
-
-        // formData.append('due_date', JSON.stringify(invoice.due_date));
-        // formData.append('date_created', JSON.stringify(invoice.date_created));
-
-
-        this.formData.append('company', JSON.stringify(invoice.company));
-        this.formData.append('userid', JSON.stringify(invoice.userid));
-        
-      
-
-        // this.formData.append('invoice', this.item);
-        // formData.append('type', JSON.stringify(invoice.files));
-      this. formData.append('file', file)
-// console.log("tthis.formData.get("file")",this.formData.get("file"))
-
-        // formData.append('file', new Blob([file], {
-        //     type: "application/json"
-        // }));
-        // console.log('ffff', file);
-        // console.log('iiii', invoice);
-// JSON.parse(this.item)
-// let headers = new Headers();
-// headers.append('Accept', 'application/json');
-// headers.append();
-
-//  this.http.post(this.baseUrl,this.formData,{headers})
-
-        const req = new HttpRequest('POST', `${this.baseUrl}`, this.formData, {
-            reportProgress: true,
-            responseType: 'json',
-          
-
-        });
-        return this.http.request(req);
+        return this.http.post(`${this.baseUrl}`,invoice);
     }
 
     getFiles(invoiceID: number): Observable<File[]> {

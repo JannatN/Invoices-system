@@ -2,16 +2,16 @@
 
     <div class="card m-3">
         <h5 class="card-header">Create New Invoice</h5>
-        <div class ="container">
-        <div class="title">Attach files</div>
+        <!-- <div class ="container"> -->
+        <!-- <div class="title">Attach files</div>
 
         <label class="btnn btn-default">
             <input type="file" multiple (change)="selectFiles($event)" />
         </label>
 
-        <!-- <button class="btn" [disabled]="!selectedFiles" (click)="uploadFiles()">
+         <button class="btn" [disabled]="!selectedFiles" (click)="uploadFiles()">
   Upload
-</button> -->
+</button> 
         <div *ngFor="let progressInfo of progressInfos" class="mb-2">
             <span>{{ progressInfo.fileName }}</span>
             <div class="progress">
@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
         <div class="card-body">
             <div class="form-group">
                 <label for="name">Due Date</label>
@@ -130,7 +130,7 @@
             </div>
         </div>
         <div class="card-footer text-center">
-            <button class="btn btn-primary mr-1" [disabled]="!selectedFiles">Save Invoice</button>
+            <button  class="btn btn-primary mr-1">Save Invoice</button>
             <button class="btn btn-secondary mr-1 grey" type="reset" (click)="onReset()">Reset</button>
             <button class="btn btn-secondary grey" type="button" (click)="onClear()">Clear</button>
         </div>

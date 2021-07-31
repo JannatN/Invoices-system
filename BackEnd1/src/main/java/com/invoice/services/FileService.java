@@ -1,6 +1,7 @@
 package com.invoice.services;
 
 import com.invoice.entities.File;
+import com.invoice.entities.Invoice;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.repositories.FileDBRepository;
 import com.invoice.repositories.InvoiceRepository;
@@ -27,9 +28,14 @@ public class FileService {
 //		return fileDBRepository.save(FileDB);
 //	}
 
-	public File store(MultipartFile file) throws IOException, ResourceNotFoundException {
+	public File store(MultipartFile file,Invoice invoice) throws IOException, ResourceNotFoundException {
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		File FileDB = new File(fileName, file.getContentType(), file.getBytes());
+//		FileDB.getInvoice().setId(invoiceID);
+//		Invoice invoice=new Invoice();
+//		invoice.setId(invoiceID);
+		invoiceRepository.save(invoice);
+				FileDB.setInvoice(invoice);
 
 System.out.println(FileDB.toString());
 

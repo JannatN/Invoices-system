@@ -106,8 +106,7 @@ private InvoiceAudRepository invoiceAudRepository;
     @PostMapping(path = "/invoices")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<InvoiceDto> createInvoice(@Valid @ModelAttribute("invoice") InvoiceDto invoiceDto,
-                                                    @RequestParam("file") MultipartFile files)
+    public ResponseEntity<InvoiceDto> createInvoice(@Valid @ModelAttribute("invoice") InvoiceDto invoiceDto)
             throws ParseException, IOException, org.apache.tomcat.util.json.ParseException {
 //        JSONParser p=new JSONParser();
 //        p.parse();
@@ -115,7 +114,7 @@ private InvoiceAudRepository invoiceAudRepository;
 
 
         Invoice invoice = convertToEntity(invoiceDto);
-        ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice, files);
+        ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice);
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
 
         return convertToDto(invoiceCreated);

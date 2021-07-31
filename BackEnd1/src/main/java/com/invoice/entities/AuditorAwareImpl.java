@@ -14,6 +14,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
         // Can use Spring Security to return currently logged in user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
+
         return   Optional.ofNullable(currentPrincipalName).filter(s -> !s.isEmpty());
     }
 

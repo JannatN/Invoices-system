@@ -47,19 +47,19 @@ public class InvoiceService {
     /**
      *
      * @param invoice
-     * @param files
+
      * @return
      * @throws IOException
      */
     @Transactional
-    public ResponseEntity<Invoice> createInvoice(Invoice invoice, MultipartFile files) throws IOException {
-        String fileName = StringUtils.cleanPath(files.getOriginalFilename());
-        File FileDB = new File(fileName, files.getContentType(), files.getBytes());
+    public ResponseEntity<Invoice> createInvoice(Invoice invoice) throws IOException {
+
 //        File f = fileDBRepository.save(FileDB);
-        List<File> list = new LinkedList<File>();
-        list.add(FileDB);
-        invoice.setFiles(list);
-        System.out.println("fileeeees "+ Arrays.asList(list));
+//        List<File> list = new LinkedList<File>();
+//        list.add(FileDB);
+//        invoice.setFiles(list);
+//        System.out.println("fileeeees "+ Arrays.asList(list));
+
         final Invoice inv = invoiceRepository.save(invoice);
         return ResponseEntity.ok(inv);
     }

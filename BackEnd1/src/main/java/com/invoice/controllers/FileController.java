@@ -2,10 +2,12 @@ package com.invoice.controllers;
 
 import com.invoice.controllers.dto.FileDto;
 import com.invoice.entities.File;
+import com.invoice.entities.Invoice;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.payload.response.MessageResponse;
 import com.invoice.payload.response.ResponseFile;
 import com.invoice.services.FileService;
+import com.invoice.services.InvoiceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,15 +36,21 @@ public class FileController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private InvoiceService invoiceService;
+
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/upload/{invoiceID}")
+    @PostMapping("/upload")
     @PreAuthorize("hasRole('ADMIN') ")
     public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file
-                                                     ) {
+                             , @RequestParam("invoice") Invoice invoice                   ) throws IOException {
         String message = "";
 
+//       String in=(String) invoice;
+
+        invoiceService.createInvoice(invoice);
         try {
-            storageService.store(file);
+            storageService.store(file,invoice);
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));

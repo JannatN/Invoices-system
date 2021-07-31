@@ -27,10 +27,10 @@ public class InvoiceDto {
     private LocalDateTime date_created;
 //    @NotNull
     private LocalDateTime due_date;
-    @NotBlank
+//    @NotBlank
     @Size(max = 20)
     private String type;
-    @NotBlank
+//    @NotBlank
     @Size(max = 30)
     private String company;
     private List<ItemDto> items;
