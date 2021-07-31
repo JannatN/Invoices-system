@@ -56,18 +56,18 @@ public class FileController {
 //        }
 //    }
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/upload")
+    @PostMapping("/upload/{id}")
     @PreAuthorize("hasRole('ADMIN') ")
     public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file,
-                                                      @PathVariable Long invoiceID) {
+                                                      @PathVariable Long id) {
         String message = "";
 
-        Object invoice=new Invoice();
-        String in=(String) invoice;
+//        Object invoice=new Invoice();
+//        String in=(String) invoice;
 
 //        invoiceService.createInvoice(invoice);
         try {
-            storageService.store(file, invoiceID);
+            storageService.store(file, id);
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));

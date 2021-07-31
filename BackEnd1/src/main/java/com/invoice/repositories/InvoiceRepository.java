@@ -2,6 +2,7 @@ package com.invoice.repositories;
 
 import java.util.Optional;
 
+import com.invoice.controllers.dto.InvoiceDto;
 import org.springframework.data.domain.Auditable;
 import com.invoice.entities.File;
 import com.invoice.entities.Invoice;
@@ -14,6 +15,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, Long>, PagingAndSortingRepository<Invoice, Long>, JpaSpecificationExecutor<Invoice> {
@@ -25,9 +27,12 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, PagingA
      */
     public Page<Invoice> findAll(Specification<Invoice> spec, Pageable pageable);
 
-    public default List<File> getFiles(){
+    public default Set<File> getFiles(){
         Invoice v = new Invoice();
-        List<File> list = v.getFiles();
+        Set<File> list = v.getFiles();
         return list;
     }
+
+    Invoice findTopByOrderByIdDesc();
+
 }

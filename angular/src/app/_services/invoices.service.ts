@@ -21,6 +21,10 @@ export class InvoiceService {
         return this.http.get(`${this.baseUrl}/${id}`);
     }
 
+    getLastInvoice(): Observable<any> {
+        return this.http.get(`${this.baseUrl}/last`);
+    }
+
     getInvoiceAud(): Observable<any> {
         return this.http.get(`${this.baseUrl}/Aud`);
     }
@@ -36,7 +40,7 @@ export class InvoiceService {
         return this.http.get(`${this.baseUrl}/All`);
     }
 
-    createInvoice(invoice: Object): Observable<Object> {
+    createInvoice(invoice: Invoice): Observable<Object> {
         return this.http.post(`${this.baseUrl}`, invoice);
     }
 

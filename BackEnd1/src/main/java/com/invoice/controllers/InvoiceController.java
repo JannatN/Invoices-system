@@ -15,6 +15,7 @@ import com.invoice.entities.File;
 import com.invoice.entities.Invoice;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.payload.response.ResponseFile;
+import com.invoice.repositories.InvoiceRepository;
 import com.invoice.services.FileService;
 import com.invoice.services.InvoiceAudService;
 import com.invoice.services.InvoiceService;
@@ -57,6 +58,18 @@ public class InvoiceController {
     private ModelMapper modelMapper;
     @Autowired
     private InvoiceAudService invoiceAudService;
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+
+
+    @GetMapping("/invoices/last")
+    @PreAuthorize("hasRole('ADMIN') ")
+    public InvoiceDto getLastInvoice() {
+        return convertToDto(invoiceRepository.findTopByOrderByIdDesc());
+    }
+
+
 
     @GetMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
@@ -115,6 +128,10 @@ public class InvoiceController {
             throws ResourceNotFoundException {
         return convertToDto(invoiceAudService.getInvoiceAudById(id));
     }
+
+
+
+
 
     @GetMapping("/invoices/files/{id}")
     @PreAuthorize("hasRole('ADMIN') ")

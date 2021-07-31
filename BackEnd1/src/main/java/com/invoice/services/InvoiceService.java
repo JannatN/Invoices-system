@@ -112,4 +112,12 @@ public class InvoiceService {
             return fileDBRepository.findByInvoice_id(invoiceID).stream();
         }).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
     }
+
+
+//    public Invoice getLastInvoice() {
+//        return invoiceRepository.findTopByOrderByIdDesc();
+//    }
+
+
+
 }
