@@ -116,17 +116,18 @@
         </div>
       </div>
 
-     
+
       <br>
-      <div> <label><b>Invoices: </b></label>
+      <div *ngIf="user.invoices.length > 0">
+        <label><b>Invoices: </b></label>
         <tbody>
-          <!-- <div>hhhhhhhhs</div> -->
+
           <tr *ngFor="let invoice of user.invoices  | keyvalue">
             <div>Created at: {{invoice.value.date_created}} </div>
             <div>Due date: {{invoice.value.due_date}} </div>
             <div>Type: {{invoice.value.type}}</div>
             <div>Type: {{invoice.value.company}}</div>
-            
+
             <div><br></div>
           </tr>
 

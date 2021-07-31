@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import com.invoice.controllers.dto.Invoices_audDto;
 
 import com.invoice.controllers.dto.InvoiceDto;
+import com.invoice.entities.File;
 import com.invoice.entities.Invoice;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.payload.response.ResponseFile;
@@ -21,6 +22,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -62,18 +64,29 @@ public class InvoiceController {
         return convertToDto(invoiceService.findPaginated(page, req));
     }
 
+    //    @ResponseBody
+//    @PostMapping(path = "/invoices")
+//    @PreAuthorize("hasRole('ADMIN')")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public ResponseEntity<InvoiceDto> createInvoice(@Valid @ModelAttribute("invoice") InvoiceDto invoiceDto,
+//                                                    @RequestParam("file") MultipartFile files) throws ParseException, IOException {
+//        Invoice invoice = convertToEntity(invoiceDto);
+//        ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice, files);
+//        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+//        return convertToDto(invoiceCreated);
+//
+//    }
     @ResponseBody
-    @PostMapping(path = "/invoices")
+    @PostMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<InvoiceDto> createInvoice(@Valid @ModelAttribute("invoice") InvoiceDto invoiceDto,
-                                                    @RequestParam("file") MultipartFile files) throws ParseException, IOException {
+    public InvoiceDto createInvoice(@Valid @RequestBody InvoiceDto invoiceDto) throws ParseException, IOException {
         Invoice invoice = convertToEntity(invoiceDto);
-        ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice, files);
+        Invoice invoiceCreated = invoiceService.createInvoice(invoice);
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         return convertToDto(invoiceCreated);
-
     }
+
 
     //@PostUpdate
     @PutMapping("/invoices/{id}")
@@ -102,11 +115,12 @@ public class InvoiceController {
             throws ResourceNotFoundException {
         return convertToDto(invoiceAudService.getInvoiceAudById(id));
     }
+
     @GetMapping("/invoices/files/{id}")
     @PreAuthorize("hasRole('ADMIN') ")
     public ResponseEntity<List<ResponseFile>> getInvoiceFiles(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
         List<ResponseFile> files = storageService.getAllFiles(invoiceID).map(dbFile -> {
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/{id}")
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/file/")
                     .path(dbFile.getId()).toUriString();
 
             return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length);
@@ -114,6 +128,15 @@ public class InvoiceController {
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
     }
+//    @GetMapping("/file/{id}")
+//    @PreAuthorize("hasRole('ADMIN') ")
+//    public ResponseEntity<byte[]> getFile(@PathVariable String id) {
+//        File fileDB = storageService.getFile(id);
+//
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
+//                .body(fileDB.getData());
+//    }
 
     @DeleteMapping("/invoices/{id}")
     @PreAuthorize("hasRole('ADMIN')")
