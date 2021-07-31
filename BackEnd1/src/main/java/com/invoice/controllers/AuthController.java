@@ -1,5 +1,6 @@
 package com.invoice.controllers;
 
+import java.text.ParseException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +9,11 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.invoice.controllers.dto.ItemDto;
+import com.invoice.controllers.dto.LoginDto;
+import com.invoice.controllers.dto.SignUpDto;
+import com.invoice.entities.Item;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -37,25 +43,42 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     /**
      *
      * @param loginRequest
      * @param response
      * @return
+     * @throws ParseException
      */
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse response) {
-        return authService.authenticateUser(loginRequest, response);
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginRequest, HttpServletResponse response) throws ParseException {
+        LoginRequest req = convertToEntity(loginRequest);
+        return convertToDto(authService.authenticateUser(req, response));
     }
 
-    /**
-     *
-     * @param signUpRequest
-     * @return
-     */
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        return authService.registerUser(signUpRequest);
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpDto signUpRequest) throws ParseException {
+        SignupRequest req = convertToEntity(signUpRequest);
+        return convertToDto(authService.registerUser(req));
 
     }
+    private ResponseEntity<?> convertToDto(ResponseEntity<?> item) {
+        ResponseEntity<?> itemDto = modelMapper.map(item, ResponseEntity.class);
+        return itemDto;
+    }
+
+    private LoginRequest convertToEntity(@Valid LoginDto loginDto) throws ParseException {
+        LoginRequest req = modelMapper.map(loginDto, LoginRequest.class);
+        return req;
+    }
+    private SignupRequest convertToEntity(@Valid SignUpDto req) throws ParseException {
+        SignupRequest signup = modelMapper.map(req, SignupRequest.class);
+        return signup;
+    }
+
+
+
 }

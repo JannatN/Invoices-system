@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit {
   currentUser: any;
   id: number;
   user: User;
-  // invoice: Invoice[];
+  isActive = true;
   
   constructor(private token: TokenStorageService, private userService: UserService,
     private router: Router, private route: ActivatedRoute) { }
@@ -30,7 +30,9 @@ export class ProfileComponent implements OnInit {
       .subscribe(data => {
         console.log(data)
         this.user = data;
+       
       }, error => console.log(error));
+     
     }
     reloadData() {
       this.user = this.token.getUser();

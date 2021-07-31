@@ -1,7 +1,6 @@
 <div class="heading">
   <h2>Welcome Admin {{user.username}}</h2>
   <button (click)="createInvoice()" class="btn btn-info">Create Invoice</button>
-  <button (click)="ListFiles()" class="btn btn-info">View Invoices By Files</button>
 </div>
 
 
@@ -14,7 +13,7 @@
     </div> -->
   </div>
   <div class="form-group mb-4">
-    <mat-form-field> -->
+    <mat-form-field> 
     <label>Filter:</label>
       <input matInput (keyup)="filterInvoice($event.target.value)" id="exampleFormControlInput1"
         class="form-control form-control-underlined">
@@ -24,7 +23,7 @@
           class="form-control form-control-underlined" placeholder="Search"
             [(ngModel)]="filters.keyword" [ngModelOptions]="{standalone: true}"/>
         </div> -->
-        <button type="button"  (click)="filterInvoice">filter</button>
+        <!-- <button type="button"  (click)="filterInvoice">filter</button> -->
       </div>
      </mat-form-field>
   </div>

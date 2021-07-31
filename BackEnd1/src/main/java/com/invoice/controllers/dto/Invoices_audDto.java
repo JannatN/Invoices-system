@@ -1,22 +1,10 @@
-package com.invoice.entities;
+package com.invoice.controllers.dto;
 
-
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.util.Date;
 
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.TemporalType.TIMESTAMP;
-
-
-@Entity
-//    @Table(name = "invoices_aud ")
-
-public class invoices_aud {
+public class Invoices_audDto {
     @Id
     @Column(name = "rev")
     private Integer rev;
@@ -38,35 +26,67 @@ public class invoices_aud {
     @Column(name = "userid")
     private Integer userid;
 
+    public Integer getRev() {
+        return rev;
+    }
+
+    public void setRev(Integer rev) {
+        this.rev = rev;
+    }
+
     public Integer getId() {
         return id;
     }
 
-    public Integer getRev() {
-        return rev;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getRevtype() {
         return revtype;
     }
 
+    public void setRevtype(Integer revtype) {
+        this.revtype = revtype;
+    }
+
     public String getCompany() {
         return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public Date getDate_created() {
         return date_created;
     }
 
+    public void setDate_created(Date date_created) {
+        this.date_created = date_created;
+    }
+
     public Date getDue_date() {
         return due_date;
+    }
+
+    public void setDue_date(Date due_date) {
+        this.due_date = due_date;
     }
 
     public String getType() {
         return type;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public Integer getUserid() {
         return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 }

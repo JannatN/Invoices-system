@@ -57,7 +57,7 @@ export class InvoiceDetailsComponent implements OnInit {
     })
 
     error => console.log(error);
-    this.fileInfos = this.invoiceService.getFiles(this.id);
+    this.fileInfos = this.uploadService.getFiles(this.id);
 
   }
 
@@ -72,10 +72,13 @@ export class InvoiceDetailsComponent implements OnInit {
   list() {
     this.location.back();
   }
-  // downloadFile(data: Response) {
-  //   const blob = new Blob([data], { type: 'text/csv' });
-  //   const url = window.URL.createObjectURL(blob);
-  //   window.open(url);
-  // }
- 
+  public deleteFile = (id: string) => {
+    this.uploadService.deleteFile(id)
+      .subscribe(
+        data => {
+          console.log(data);
+          // this.reloadData();
+        },
+        error => console.log(error));
+  }
 }

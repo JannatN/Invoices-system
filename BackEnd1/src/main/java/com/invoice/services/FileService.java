@@ -3,96 +3,83 @@ package com.invoice.services;
 import com.invoice.entities.File;
 import com.invoice.entities.Invoice;
 import com.invoice.exception.ResourceNotFoundException;
+import com.invoice.payload.response.JwtResponse;
 import com.invoice.repositories.FileDBRepository;
 import com.invoice.repositories.InvoiceRepository;
+import com.invoice.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Stream;
 
 @Service
 public class FileService {
 
-	@Autowired
-	private FileDBRepository fileDBRepository;
-	@Autowired
-	private InvoiceRepository invoiceRepository;
+    @Autowired
+    private FileDBRepository fileDBRepository;
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+    @Autowired
+    JwtUtils jwtUtils;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
-//	public File store(MultipartFile file) throws IOException {
+    //	public File store(MultipartFile file) throws IOException {
 //		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 //		File FileDB = new File(fileName, file.getContentType(), file.getBytes());
 //
 //		return fileDBRepository.save(FileDB);
 //	}
+    public File store(MultipartFile file, Long invoiceID) throws IOException, ResourceNotFoundException {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        File FileDB = new File(fileName, file.getContentType(), file.getBytes());
 
-	public File store(MultipartFile file,Invoice invoice) throws IOException, ResourceNotFoundException {
-		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		File FileDB = new File(fileName, file.getContentType(), file.getBytes());
-//		FileDB.getInvoice().setId(invoiceID);
-//		Invoice invoice=new Invoice();
-//		invoice.setId(invoiceID);
-		invoiceRepository.save(invoice);
-				FileDB.setInvoice(invoice);
+        return invoiceRepository.findById(invoiceID).map(invoice -> {
+            FileDB.setInvoice(invoice);
+            return fileDBRepository.save(FileDB);
 
-System.out.println(FileDB.toString());
-
-			return fileDBRepository.save(FileDB);
-
-	}
-	// public File store(MultipartFile file) throws IOException {
-	// 	String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-	// 	File FileDB = new File(fileName, file.getContentType(), file.getBytes());
-
-	// 	return fileDBRepository.save(FileDB);
-	// }
-
-	public File getFile(String id) {
-		return fileDBRepository.findById(id).get();
-	}
+        }).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
+    }
 
 
-	public Stream<File> getAllFiles(Long invoiceID) throws ResourceNotFoundException {
-		return invoiceRepository.findById(invoiceID).map(invoice -> {
-			return fileDBRepository.findByInvoice_id(invoiceID).stream();
+    public File store(MultipartFile file) throws IOException, ResourceNotFoundException {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        File FileDB = new File(fileName, file.getContentType(), file.getBytes());
+
+        //System.out.println(FileDB.toString());
+
+        return fileDBRepository.save(FileDB);
+
+    }
+
+    public File getFile(String id) {
 
 
+        return fileDBRepository.findById(id).get();
+    }
 
-		}).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
-	}
-//	@Value("${files.path}")
-//	private String filesPath;
-//
-//	public UrlResource download(String filename) {
-//		try {
-//			Path file = Paths.get(filesPath)
-//					.resolve(filename);
-//			UrlResource resource = new UrlResource(file.toUri());
-//
-//			if (resource.exists() || resource.isReadable()) {
-//				return resource;
-//			} else {
-//				throw new RuntimeException("Could not read the file!");
-//			}
-//		} catch (MalformedURLException e) {
-//			throw new RuntimeException("Error: " + e.getMessage());
-//		}
-//	}
-//	private ResponseFile pathToFileData(Path path) {
-//		ResponseFile fileData = new ResponseFile();
-//		String filename = path.getFileName()
-//				.toString();
-//		fileData.setName(filename);
-//
-//		try {
-//			fileData.setType(Files.probeContentType(path));
-//			fileData.setSize(Files.size(path));
-//		} catch (IOException e) {
-//			throw new RuntimeException("Error: " + e.getMessage());
-//		}
-//
-//		return fileData;
-//	}
+    public Stream<File> getAllFiles() {
+        return fileDBRepository.findAll().stream();
+    }
+
+    public Stream<File> getAllFiles(Long invoiceID) throws ResourceNotFoundException {
+        return invoiceRepository.findById(invoiceID).map(invoice -> {
+            return fileDBRepository.findByInvoice_id(invoiceID).stream();
+        }).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
+    }
+
+    public void deleteFile(String file) throws ResourceNotFoundException {
+        File file1 = fileDBRepository.findById(file)
+                .orElseThrow(() -> new ResourceNotFoundException("Invoice not found for this id :: " + file));
+
+        fileDBRepository.delete(file1);
+    }
 }

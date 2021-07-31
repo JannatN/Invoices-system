@@ -17,19 +17,6 @@
         <label><b>Invoice Type: </b></label> {{invoice.type}}
     </div>
    
-
-
-  
-
-    <!-- <div>
-        <label><b>First name: </b></label> {{invoice["user"].firstname}}
-    </div>
-    <div>
-        <label><b>Last name: </b></label> {{invoice["user"].lastname}}
-    </div>
-    <div>
-        <label><b>Email: </b></label> {{invoice["user"].email}}
-    </div> -->
     <div class="labels">
     <label><b>Items: </b></label>
     <tbody>
@@ -55,15 +42,19 @@
 
     <div class="card">
         <div class="card-header">List of Files</div>
-        <ul
+        <tbody
           class="list-group list-group-flush"
-          *ngFor="let file of fileInfos | async"
-        >
-          <li class="list-group-item">
+          *ngFor="let file of fileInfos | async">
+          <tr>
+          <td class="list-group-item">
             <a href="{{ file.url }}">{{ file.name }}</a>
-         
-          </li>
-        </ul>
+          </td>
+          <!-- <td>
+            <button (click)="deleteFile(file.name)" class="btn btn-danger">Delete</button>
+          </td> -->
+        </tr>
+        </tbody>
+        
       </div>
 
     <br>
@@ -97,7 +88,6 @@
         </tr>
       </thead>
       <tbody>
-        
         <tr *ngFor="let invoice of invoiceAud ">
           <td>{{invoice.id}}</td>
           <td>{{invoice.date_created}}</td>

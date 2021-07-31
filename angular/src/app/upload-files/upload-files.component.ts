@@ -38,27 +38,27 @@ export class UploadFilesComponent implements OnInit {
     this.invoiceService.getInvoice(this.id)
       .subscribe(data => {
         console.log(data.id)
-        // this.uploadService.upload(file,).subscribe(
-        //   event => {
-        //     if (event.type === HttpEventType.UploadProgress) {
-        //       this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
-        //       console.log("fileeeeeeee", file)
+        this.uploadService.upload(file, data.id).subscribe(
+          event => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+              console.log("fileeeeeeee", file)
 
-        //     } else if (event instanceof HttpResponse) {
-        //       // this.fileInfos = this.uploadService.getFiles();
-        //     }
-        //   },
-        //   err => {
-        //     this.progressInfos[idx].value = 0;
-        //     this.message = 'Could not upload the file:' + file.name;
-        //   });
-        })
+            } else if (event instanceof HttpResponse) {
+              // this.fileInfos = this.uploadService.getFiles();
+            }
+          },
+          err => {
+            this.progressInfos[idx].value = 0;
+            this.message = 'Could not upload the file:' + file.name;
+          });
+      })
 
-      }
+  }
   uploadFiles() {
-        this.message = '';
+    this.message = '';
 
-        for(let i = 0; i< this.selectedFiles.length; i++) {
+    for (let i = 0; i < this.selectedFiles.length; i++) {
       this.upload(i, this.selectedFiles[i]);
       console.log("files", this.selectedFiles[i])
     }

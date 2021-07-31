@@ -1,6 +1,6 @@
 import { Byte } from "@angular/compiler/src/util";
 
-export class FileUp {
+export class File {
     id: string;
     name: string;
     type: string;

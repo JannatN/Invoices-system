@@ -17,6 +17,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -35,200 +36,180 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 
 @EntityListeners(AuditingEntityListener.class)
 public class Invoice {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	private Long userID;
-	@CreationTimestamp
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private LocalDateTime date_created;
+    private Long userID;
+    @CreationTimestamp
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime date_created;
 
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private LocalDateTime due_date;
-	@NotBlank
-	@Size(max = 20)
-	private String type;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime due_date;
+    @NotBlank
+    @Size(max = 20)
+    private String type;
 
-	@NotBlank
-	private String company;
-
-
-	@CreatedBy
-	private String createdBy;
-
-//	@CreatedDate
-//	@Temporal(TIMESTAMP)
-//	private Date createdDate;
-
-	@LastModifiedBy
-	private String lastModifiedBy;
-
-	@LastModifiedDate
-	@Temporal(TIMESTAMP)
-	private Date lastModifiedDate;
+    @NotBlank
+    private String company;
 
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
+    @CreatedBy
+    private String createdBy;
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+    @LastModifiedBy
+    private String lastModifiedBy;
 
-	public String getLastModifiedBy() {
-		return lastModifiedBy;
-	}
+    @LastModifiedDate
+    @Temporal(TIMESTAMP)
+    private Date lastModifiedDate;
 
-	public void setLastModifiedBy(String lastModifiedBy) {
-		this.lastModifiedBy = lastModifiedBy;
-	}
+    @ManyToOne
+    @NotAudited
+    @JoinColumn(name = "userid", insertable = false, updatable = false)
+    private User user;
 
-	public Date getLastModifiedDate() {
-		return lastModifiedDate;
-	}
+    @OneToMany(cascade = {CascadeType.ALL})
+    @NotAudited
+    @JoinColumn(name = "invoiceid", referencedColumnName = "id")
+    private List<Item> items;
 
-	public void setLastModifiedDate(Date lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
+    @OneToMany(cascade = {CascadeType.ALL})
+    @NotAudited
+    @JoinColumn(name = "invoiceid", referencedColumnName = "id")
+    private List<File> files;
 
-	@ManyToOne
-	@NotAudited
-	@JoinColumn(name = "userid", insertable = false, updatable = false)
-	private User user;
+    public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date, String type, String company, String createdBy, String lastModifiedBy, Date lastModifiedDate, User user, List<Item> items, List<File> files) {
+        this.id = id;
+        this.userID = userID;
+        this.date_created = date_created;
+        this.due_date = due_date;
+        this.type = type;
+        this.company = company;
+        this.createdBy = createdBy;
+        this.lastModifiedBy = lastModifiedBy;
+        this.lastModifiedDate = lastModifiedDate;
+        this.user = user;
+        this.items = items;
+        this.files = files;
+    }
 
-	@OneToMany(cascade = { CascadeType.ALL })
-	@NotAudited
-	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
-	private List<Item> items;
+    public Invoice() {
 
-	@OneToMany(cascade = { CascadeType.ALL })
-	@NotAudited
-	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
-	private List<File> files;
+    }
 
-//	public Invoice(Long id, LocalDateTime date_created, LocalDateTime due_date,
-//			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, Set<Item> items, Set<File> files) {
-//		super();
-//		this.id = id;
-////		this.userID = userID;
-//		this.date_created = date_created;
-//		this.due_date = due_date;
-//		this.type = type;
-//		this.company = company;
-//		this.user = user;
-//		this.items = items;
-//		this.files= files;
-//	}
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
-	public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date, String type, String company, String createdBy, String lastModifiedBy, Date lastModifiedDate, User user, List<Item> items, List<File> files) {
-		this.id = id;
-		this.userID = userID;
-		this.date_created = date_created;
-		this.due_date = due_date;
-		this.type = type;
-		this.company = company;
-		this.createdBy = createdBy;
-		this.lastModifiedBy = lastModifiedBy;
-		this.lastModifiedDate = lastModifiedDate;
-		this.user = user;
-		this.items = items;
-		this.files = files;
-	}
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
 
-	public Invoice() {
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
 
-	}
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
 
-	public List<File> getFiles() {
-		return files;
-	}
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
 
-	public void setFiles(List<File> files) {
-		this.files = files;
-	}
+    public List<File> getFiles() {
+        return files;
+    }
 
-	public LocalDateTime getDate_created() {
-		return date_created;
-	}
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
 
-	public void setDate_created(LocalDateTime date_created) {
-		this.date_created = date_created;
-	}
+    public LocalDateTime getDate_created() {
+        return date_created;
+    }
 
-	public LocalDateTime getDue_date() {
-		return due_date;
-	}
+    public void setDate_created(LocalDateTime date_created) {
+        this.date_created = date_created;
+    }
 
-	public void setDue_date(LocalDateTime due_date) {
-		this.due_date = due_date;
-	}
+    public LocalDateTime getDue_date() {
+        return due_date;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setDue_date(LocalDateTime due_date) {
+        this.due_date = due_date;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Long getUserID() {
-		return userID;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
-	}
+    public Long getUserID() {
+        return userID;
+    }
 
-	public List<Item> getItems() {
-		return items;
-	}
+    public void setUserID(Long userID) {
+        this.userID = userID;
+    }
 
-	public void setItems(List<Item> items) {
-		this.items = items;
-	}
+    public List<Item> getItems() {
+        return items;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public String getCompany() {
-		return company;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void setCompany(String company) {
-		this.company = company;
-	}
+    public String getCompany() {
+        return company;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	@Override
-	public String toString() {
-		return "Invoice{" +
-				"id=" + id +
-				", userID=" + userID +
-				", date_created=" + date_created +
-				", due_date=" + due_date +
-				", type='" + type + '\'' +
-				", company='" + company + '\'' +
-				", createdBy='" + createdBy + '\'' +
-				", lastModifiedBy='" + lastModifiedBy + '\'' +
-				", lastModifiedDate=" + lastModifiedDate +
-				", user=" + user +
-				", items=" + items +
-				", files=" + files +
-				'}';
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "id=" + id +
+                ", userID=" + userID +
+                ", date_created=" + date_created +
+                ", due_date=" + due_date +
+                ", type='" + type + '\'' +
+                ", company='" + company + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastModifiedBy='" + lastModifiedBy + '\'' +
+                ", lastModifiedDate=" + lastModifiedDate +
+                ", user=" + user +
+                ", items=" + items +
+                ", files=" + files +
+                '}';
+    }
 }

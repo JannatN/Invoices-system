@@ -51,7 +51,7 @@ export class BoardAdminComponent implements OnInit {
   }
 
   filterInvoice(invoice: Invoice[]) {
-    console.log('hhh');
+    // console.log('hhh');
     // return Object.values(invoice).filter(res => {
     //   // for (let i = 0; i < 10; i++) {
     //   //   console.log('hhh', res[i].type);
