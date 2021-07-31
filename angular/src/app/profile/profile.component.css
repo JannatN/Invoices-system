@@ -3,7 +3,7 @@ body {
 }
 
 .container {
-    height: 100vh;
+    height: auto;
 }
 
 .emp-profile {
@@ -18,10 +18,10 @@ body {
     text-align: center;
 }
 
-.profile-img img {
+/* .profile-img img {
     width: 70%;
     height: 100%;
-}
+} */
 
 .profile-img .file {
     position: relative;
@@ -71,7 +71,9 @@ body {
     color: #818182;
     margin-top: 5%;
 }
-
+span{
+    font-weight: 700;
+}
 .proile-rating span {
     color: #495057;
     font-size: 15px;
