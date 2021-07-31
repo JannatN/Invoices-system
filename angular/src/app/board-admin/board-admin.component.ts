@@ -10,8 +10,9 @@ import { Observable, of } from "rxjs";
 import { TokenStorageService } from '../_services/token-storage.service';
 import { Item } from '../models/item';
 import { InvoiceDataSource } from '../datasource/invoices.datasource';
-import { catchError, finalize, tap } from 'rxjs/operators';
+import { catchError, finalize, map, tap } from 'rxjs/operators';
 import { UploadFilesService } from '../_services/upload-file.service';
+import { InvoiceData } from '../datasource/InvoiceData';
 
 
 @Component({
@@ -23,12 +24,14 @@ export class BoardAdminComponent implements OnInit {
   filters = {
     keyword: ''
   }
+
+  filterValue: string = null;
+
   invoices: Observable<Invoice[]>;
   items: Observable<Item[]>;
   user: User;
   invoice: Invoice;
-  invoicesArray: Invoice[] = [];
-
+  invoicesArray: Invoice[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -50,15 +53,15 @@ export class BoardAdminComponent implements OnInit {
 
   }
 
-  filterInvoice(invoice: Invoice[]) {
-    console.log('hhh');
-    // return Object.values(invoice).filter(res => {
-    //   // for (let i = 0; i < 10; i++) {
-    //   //   console.log('hhh', res[i].type);
-    //     return res.type.includes(this.filters.keyword);
-    //   // }
-    // })
-  }
+  // filterInvoice(invoice: Invoice[]) {
+  //   console.log('hhh');
+  //   // return Object.values(invoice).filter(res => {
+  //   //   // for (let i = 0; i < 10; i++) {
+  //   //   //   console.log('hhh', res[i].type);
+  //   //     return res.type.includes(this.filters.keyword);
+  //   //   // }
+  //   // })
+  // }
 
 
   // listInv() {
@@ -66,11 +69,11 @@ export class BoardAdminComponent implements OnInit {
   //   this.invoiceService.listInv({ invoice: this.filters.keyword }).pipe(
   //     catchError(() => of([])),
   //   )
-    // console.log('hhho', this.filters);
+  // console.log('hhho', this.filters);
 
-    // .subscribe(
-    //   data => this.invoicesArray = this.filterInvoice(data)
-    // )
+  // .subscribe(
+  //   data => this.invoicesArray = this.filterInvoice(data)
+  // )
   // }
   // public getList = () => {
   //   this.invoiceService.getInvoicesList()
@@ -92,24 +95,58 @@ export class BoardAdminComponent implements OnInit {
         })
       )
       .subscribe();
-
-    this.paginator.page
-      .pipe(
-        tap(() => this.loadTodos())
-      )
-      .subscribe();
+    if (this.filterValue == null) {
+      this.paginator.page
+        .pipe(
+          tap(() => this.loadInvoices())
+        )
+        .subscribe();
+    } else {
+      this.paginator.page
+        .pipe(
+          tap(() => this.loadInvoicesFilter())
+        )
+        .subscribe();
+    }
   }
 
-  loadTodos() {
+  loadInvoices() {
     this.invoiceDatasource.loadInvoices(this.paginator.pageIndex, this.paginator.pageSize);
   }
 
+  loadInvoicesFilter() {
+    this.invoiceDatasource.loadInvoicesWithFilter(this.paginator.pageIndex, this.paginator.pageSize, this.invoice.type);
+  }
+
+  // findBy(type: string) {
+  //   console.log(type);
+  //   this.invoiceService.paginate(0, 10, type).pipe(
+  //     map((invoiceData: InvoiceData) => this.dataSource = invoiceData)
+  //   ).subscribe()
+  // }
+  
   public doFilter = (value: string) => {
     // this.dataSource.filter = value.trim().toLocaleLowerCase();
     value = value.trim(); // Remove whitespace
     value = value.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = value;
   }
+
+  // public searchInvoice(key: string): void {
+  //   console.log(key);
+  //   const results: Invoice[] = [];
+  //   for (const invoice1 of this.invoicesArray) {
+  //     if (invoice1.type.toLowerCase().indexOf(key.toLowerCase()) !== -1
+  //       || invoice1.company.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+  //       results.push(invoice1);
+  //     }
+  //   }
+  //   this.invoicesArray = results;
+  //   if (results.length === 0 || !key) {
+  //     // this.invoiceService.listInv();
+  //     console.log("nooo key found")
+  //   }
+  // }
 
 
 

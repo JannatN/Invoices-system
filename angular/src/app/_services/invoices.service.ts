@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { _MatPaginatorBase } from '@angular/material/paginator';
 import { Invoice } from '../models/invoice';
 import { Item } from '../models/item';
 import { FormArray, FormBuilder } from '@angular/forms';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -44,11 +45,19 @@ export class InvoiceService {
         const params = request;
         return this.http.get(`${this.baseUrl}`, { params });
     }
-
-    filter(page: number, size: number, keyword: Object): Observable<Invoice[]> {
+    
+    paginate(page: number, size: number, type: string): Observable<Invoice> {
         let params = new HttpParams();
-        return this.http.get<Invoice[]>(`${this.baseUrl}`);
-    }
+    
+        params = params.append('page', String(page));
+        params = params.append('limit', String(size));
+        params = params.append('type', type);
+    
+        return this.http.get(`${this.baseUrl}`, {params}).pipe(
+          map((invoice: Invoice) => invoice),
+          catchError(err => throwError(err))
+        )
+      }
 
     deleteInvoice(id: number): Observable<any> {
         return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });

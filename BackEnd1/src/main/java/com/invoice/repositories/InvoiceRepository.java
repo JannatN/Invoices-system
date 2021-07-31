@@ -25,9 +25,5 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, PagingA
      */
     public Page<Invoice> findAll(Specification<Invoice> spec, Pageable pageable);
 
-    public default List<File> getFiles(){
-        Invoice v = new Invoice();
-        List<File> list = v.getFiles();
-        return list;
-    }
+    Invoice findTopByOrderByIdDesc();
 }

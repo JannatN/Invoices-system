@@ -9,16 +9,16 @@ public class Invoices_audDto {
     @Column(name = "rev")
     private Integer rev;
 
-    @Column(name = "id")
-    private Integer id;
+//    @Column(name = "id")
+//    private Integer id;
 
     @Column(name = "revtype")
     private Integer revtype;
 
     @Column(name = "company")
     private String company;
-    @Column(name = "date_created")
-    private Date date_created;
+//    @Column(name = "date_created")
+//    private Date date_created;
     @Column(name = "due_date")
     private Date due_date;
     @Column(name = "type")
@@ -34,13 +34,6 @@ public class Invoices_audDto {
         this.rev = rev;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getRevtype() {
         return revtype;
@@ -56,14 +49,6 @@ public class Invoices_audDto {
 
     public void setCompany(String company) {
         this.company = company;
-    }
-
-    public Date getDate_created() {
-        return date_created;
-    }
-
-    public void setDate_created(Date date_created) {
-        this.date_created = date_created;
     }
 
     public Date getDue_date() {
