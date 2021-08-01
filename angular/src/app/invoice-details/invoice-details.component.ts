@@ -6,6 +6,8 @@ import { Item } from '../models/item';
 import { ItemService } from '../_services/items.service';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
+import { invoices_aud } from '../models/invoices_aud';
+import { UploadFilesService } from '../_services/upload-file.service';
 
 @Component({
   selector: 'app-invoice-details',
@@ -16,38 +18,65 @@ export class InvoiceDetailsComponent implements OnInit {
 
   id: number;
   invoice: Invoice;
+  // invoiceList: Observable<Invoice[]>
+  invoiceAud: Observable<invoices_aud[]>;
   items: Item[];
   files: File[];
+  fileInfos: Observable<File[]>;
+
   invoices: Observable<Invoice[]>;
   constructor(private route: ActivatedRoute, private router: Router,
-    private invoiceService: InvoiceService, private itemService: ItemService, private location: Location) { }
+    private invoiceService: InvoiceService, private itemService: ItemService, 
+    private location: Location, private uploadService: UploadFilesService) { }
 
   ngOnInit() {
+
     this.invoice = new Invoice();
-    // this.invoices = this.invoiceService.getInvoicesList();
+
 
     this.id = this.route.snapshot.params['id'];
 
     this.invoiceService.getInvoice(this.id)
       .subscribe(data => {
 
-        console.log("data", data)
+
+        console.log("invoiceee ",data)
         this.invoice = data;
         this.invoices = data
-        // this.items.push(this.invoices["items"]);
-        // console.log("items", this.invoice.items)
-        // console.log("files", this.invoice.files)
-
-        // console.log("start");
-
-        console.log(this.invoices)
-        // console.log("end");
+        console.log("this.invoice   ",this.invoice)
 
       })
+
+    this.invoiceService.getInvoiceAudById(this.id).subscribe(data => {
+  
+      this.invoiceAud = data
+      console.log("invioces aud", this.invoiceAud)
+
+    })
+
     error => console.log(error);
+    this.fileInfos = this.uploadService.getFiles(this.id);
+
   }
+
+  // getInvoicesAud(){
+  //   this.invoiceService.getInvoiceAud().subscribe(data=>{
+  //     console.log("invioces aud" , data)
+  //     this.invoiceAud=data
+  //     console.log("invoices Aud ", this.invoiceAud)
+  //   })
+  // }
 
   list() {
     this.location.back();
+  }
+  public deleteFile = (id: string) => {
+    this.uploadService.deleteFile(id)
+      .subscribe(
+        data => {
+          console.log(data);
+          // this.reloadData();
+        },
+        error => console.log(error));
   }
 }

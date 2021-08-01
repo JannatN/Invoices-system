@@ -8,7 +8,7 @@ import { User } from '../models/user';
 })
 export class UserService {
 
-  private baseUrl = 'http://localhost:8080/api/v1/users';
+  private baseUrl = 'http://localhost:8080/api/users';
   // private baseUrl2 = 'http://localhost:8080/api/v1/user';
 
 
@@ -40,6 +40,6 @@ export class UserService {
   }
   deleteUser(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
-}
- 
+  }
+
 }

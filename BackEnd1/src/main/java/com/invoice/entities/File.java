@@ -1,28 +1,15 @@
 package com.invoice.entities;
 
-import java.util.Arrays;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.GenericGenerator;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "files")
 public class File {
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	private String id;
@@ -37,16 +24,21 @@ public class File {
 	public File() {
 	}
 
+//	private Long invoiceid;
+
 	@ManyToOne
 	@JoinColumn(name = "invoiceid")
-//	@JsonManagedReference
 	private Invoice invoice;
+
 
 	public File(String name, String type, byte[] data) {
 		this.name = name;
 		this.type = type;
 		this.data = data;
 	}
+
+    public File(String name, String fileDownloadUri, String type, int length) {
+    }
 
 
 	public String getId() {

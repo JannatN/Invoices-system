@@ -25,10 +25,10 @@ import com.invoice.entities.Item;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.services.ItemService;
 
-@CrossOrigin(origins = "http://localhost:4200")
-//@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class ItemController {
 	@Autowired
 	private ItemService itemService;
@@ -42,6 +42,7 @@ public class ItemController {
 	public ItemDto createItem(@PathVariable(value = "invoiceID") Long invoiceID, @Valid @RequestBody ItemDto itemDto)
 			throws ResourceNotFoundException, ParseException {
 		Item item = convertToEntity(itemDto);
+		System.out.println(item.toString());
 		ResponseEntity<Item> itemCreated = itemService.createItem(invoiceID, item);
 		return convertToDto(itemCreated);
 	}

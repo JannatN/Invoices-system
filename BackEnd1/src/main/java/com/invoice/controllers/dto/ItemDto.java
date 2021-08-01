@@ -14,7 +14,7 @@ public class ItemDto {
     @NotNull
     private Double price;
     @NotBlank
-    @Size(max = 3)
+    @Size(max = 4)
     private String currency;
     @NotNull
     private Integer quantity;

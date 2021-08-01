@@ -25,11 +25,9 @@ import { CreateInvoiceComponent } from './create-invoice/create-invoice.componen
 import { UploadFilesComponent } from './upload-files/upload-files.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ItemListComponent } from './item-list/item-list.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { UpdateItemComponent } from './update-item/update-item.component';
 import { CreateItemComponent } from './create-item/create-item.component';
-import { NewItemComponent } from './new-item/new-item.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
@@ -38,7 +36,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatButtonModule } from "@angular/material/button";
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { CommonModule } from '@angular/common';  
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,11 +55,9 @@ import { CommonModule } from '@angular/common';
     UserListComponent,
     UpdateUserComponent,
     UploadFilesComponent,
-    ItemListComponent,
     ItemDetailsComponent,
     UpdateItemComponent,
     CreateItemComponent,
-    NewItemComponent
 
   ],
   imports: [

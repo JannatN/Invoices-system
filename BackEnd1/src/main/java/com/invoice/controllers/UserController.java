@@ -36,79 +36,66 @@ import com.invoice.services.UserService;
 //@CrossOrigin(origins = "http://localhost:4200")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class UserController {
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Autowired
-	private ModelMapper modelMapper;
+    @Autowired
+    private ModelMapper modelMapper;
 
-//	@GetMapping("/users")
-//	@PreAuthorize("hasRole('ADMIN') ")
-//	public List<UserDto> getAllUsers() {
-//		modelMapper.getConfiguration().setAmbiguityIgnored(true);
-//		return convertToDto(userService.getAllUsers());
-//	}
-	@GetMapping("/users")
-	@PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
-	public Page<UserDto> findPaginatedUsers(Pageable page) {
-		return convertToDto(userService.findPaginatedUsers(page));
-	}
-	private Page<UserDto> convertToDto(Page<User> paginated) {
-		Page<UserDto> dtoList = mapEntityPageIntoDtoPage(paginated, UserDto.class);
-		return dtoList;
-	}
+    @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
+    public Page<UserDto> findPaginatedUsers(Pageable page) {
+        return convertToDto(userService.findPaginatedUsers(page));
+    }
 
-	public <D, T> Page<D> mapEntityPageIntoDtoPage(Page<T> entities, Class<D> dtoClass) {
-		return entities.map(objectEntity -> modelMapper.map(objectEntity, dtoClass));
-	}
+    private Page<UserDto> convertToDto(Page<User> paginated) {
+        Page<UserDto> dtoList = mapEntityPageIntoDtoPage(paginated, UserDto.class);
+        return dtoList;
+    }
 
-	@GetMapping("/users/{id}")
-	@PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
-	public UserDto getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
-		return convertToDto(userService.getUserById(userId));
-	}
+    public <D, T> Page<D> mapEntityPageIntoDtoPage(Page<T> entities, Class<D> dtoClass) {
+        return entities.map(objectEntity -> modelMapper.map(objectEntity, dtoClass));
+    }
 
-//	@ResponseStatus(HttpStatus.CREATED)
-//	@PostMapping("/users")
-//	@PreAuthorize("hasRole('ADMIN')")
-//	public UserDto createUser(@Valid @RequestBody UserDto userDto) throws ParseException {
-//		User user = convertToEntity(userDto);
-//		ResponseEntity<User> userCreated = userService.saveUser(user);
-//		return convertToDto(userCreated);
-//	}
+    @GetMapping("/users/{id}")
+    @PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
+    public UserDto getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
+        return convertToDto(userService.getUserById(userId));
+    }
 
-	@PutMapping("/users/{id}")
-	@PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('AUDITOR')")
-	public UserDto updateUser(@PathVariable(value = "id") Long userId, @Valid @RequestBody UserDto userDetails)
-			throws ResourceNotFoundException, ParseException {
-		User user = convertToEntity(userDetails);
-		return convertToDto(userService.updateUser(userId, user));
-	}
+    @PutMapping("/users/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('AUDITOR')")
+    public UserDto updateUser(@PathVariable(value = "id") Long userId, @Valid @RequestBody UserDto userDetails)
+            throws ResourceNotFoundException, ParseException {
+        User user = convertToEntity(userDetails);
+        return convertToDto(userService.updateUser(userId, user));
+    }
 
-	@DeleteMapping("/users/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
-	public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
-		return userService.deleteUser(userId);
-	}
+    @DeleteMapping("/users/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
+        return userService.deleteUser(userId);
+    }
 
-	private UserDto convertToDto(User responseEntity) {
-		UserDto userDto = modelMapper.map(responseEntity, UserDto.class);
-		return userDto;
-	}
+    ////////////////////////////////////////////////////
+    private UserDto convertToDto(User responseEntity) {
+        UserDto userDto = modelMapper.map(responseEntity, UserDto.class);
+        return userDto;
+    }
 
-	private User convertToEntity(@Valid UserDto userDto) throws ParseException {
-		User user = modelMapper.map(userDto, User.class);
-		return user;
-	}
+    private User convertToEntity(@Valid UserDto userDto) throws ParseException {
+        User user = modelMapper.map(userDto, User.class);
+        return user;
+    }
 
-	private List<UserDto> convertToDto(List<User> allUsers) {
-		List<UserDto> userDtoList = mapList(allUsers, UserDto.class);
-		return userDtoList;
-	}
+    private List<UserDto> convertToDto(List<User> allUsers) {
+        List<UserDto> userDtoList = mapList(allUsers, UserDto.class);
+        return userDtoList;
+    }
 
-	<S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
-		return source.stream().map(element -> modelMapper.map(element, targetClass)).collect(Collectors.toList());
-	}
+    <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
+        return source.stream().map(element -> modelMapper.map(element, targetClass)).collect(Collectors.toList());
+    }
 }

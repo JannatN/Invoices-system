@@ -33,20 +33,25 @@
     color: white;
     margin: 10px; */
 
-.login-container {
+/* .login-container {
     font-family: "Source Sans Pro";
     background-image: url(/assets/images/group_4.png), linear-gradient(-136.82353093203deg, rgba(36, 35, 72, 255) 0%, rgba(90, 85, 170, 255) 100%);
     background-size: cover;
     min-height: 100vh;
-}
+} */
+form {
+    width: 100%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 
+}
 .title, a {
     color: black;
 }
 
 .title {
-    font-weight: bold;
-    letter-spacing: 5px;
+    letter-spacing: 2px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
 }
 
 .tag {
@@ -55,10 +60,20 @@
 
 .btn {
     background-color: #dc656e;
-    border:none;
-
+    border: none;
 }
-.grey{
+
+.grey {
     background-color: #949292;
+}
+
+.card-header {
+    color: #dc656e;
+    font-weight: 600;
+}
+
+.card-title {
+    color: #dc656e;
+    font-weight: 600;
 
 }

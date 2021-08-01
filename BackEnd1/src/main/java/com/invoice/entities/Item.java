@@ -25,7 +25,7 @@ public class Item {
 	private Double price;
 
 	@NotBlank
-	@Size(max = 3)
+	@Size(max = 4)
 	private String currency;
 
 	private Integer quantity;

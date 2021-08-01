@@ -1,152 +1,215 @@
 
 package com.invoice.entities;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+
+import static javax.persistence.TemporalType.TIMESTAMP;
+
+
 @Entity
+@Audited
 @Table(name = "invoices")
+//@Embeddable
+
+@EntityListeners(AuditingEntityListener.class)
 public class Invoice {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	private Long userID;
-	@CreationTimestamp
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private LocalDateTime date_created;
+    private Long userID;
+    @CreationTimestamp
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime date_created;
 
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private LocalDateTime due_date;
-	@NotBlank
-	@Size(max = 20)
-	private String type;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime due_date;
+    @NotBlank
+    @Size(max = 20)
+    private String type;
 
-	@NotBlank
-	private String company;
+    @NotBlank
+    private String company;
 
-	@ManyToOne
-	@JoinColumn(name = "userid", insertable = false, updatable = false)
-	private User user;
 
-	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
-	private List<Item> items;
+    @CreatedBy
+    private String createdBy;
 
-	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "invoiceid", referencedColumnName = "id")
-	private Set<File> files;
+    @LastModifiedBy
+    private String lastModifiedBy;
 
-	public Invoice(Long id, LocalDateTime date_created, LocalDateTime due_date,
-			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, List<Item> items, Set<File> files) {
-		super();
-		this.id = id;
-//		this.userID = userID;
-		this.date_created = date_created;
-		this.due_date = due_date;
-		this.type = type;
-		this.company = company;
-		this.user = user;
-		this.items = items;
-		this.files= files;
-	}
+    @LastModifiedDate
+    @Temporal(TIMESTAMP)
+    private Date lastModifiedDate;
 
-	public Invoice() {
+    @ManyToOne
+    @NotAudited
+    @JoinColumn(name = "userid", insertable = false, updatable = false)
+    private User user;
 
-	}
+    @OneToMany(cascade = {CascadeType.ALL})
+    @NotAudited
+    @JoinColumn(name = "invoiceid", referencedColumnName = "id")
+    private List<Item> items;
 
-	public Set<File> getFiles() {
-		return files;
-	}
+    @OneToMany(cascade = {CascadeType.ALL})
+    @NotAudited
+    @JoinColumn(name = "invoiceid", referencedColumnName = "id")
+    private List<File> files;
 
-	public void setFiles(Set<File> files) {
-		this.files = files;
-	}
+    public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date, String type, String company, String createdBy, String lastModifiedBy, Date lastModifiedDate, User user, List<Item> items, List<File> files) {
+        this.id = id;
+        this.userID = userID;
+        this.date_created = date_created;
+        this.due_date = due_date;
+        this.type = type;
+        this.company = company;
+        this.createdBy = createdBy;
+        this.lastModifiedBy = lastModifiedBy;
+        this.lastModifiedDate = lastModifiedDate;
+        this.user = user;
+        this.items = items;
+        this.files = files;
+    }
 
-	public LocalDateTime getDate_created() {
-		return date_created;
-	}
+    public Invoice() {
 
-	public void setDate_created(LocalDateTime date_created) {
-		this.date_created = date_created;
-	}
+    }
 
-	public LocalDateTime getDue_date() {
-		return due_date;
-	}
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
-	public void setDue_date(LocalDateTime due_date) {
-		this.due_date = due_date;
-	}
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
 
-	public Long getUserID() {
-		return userID;
-	}
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
-	}
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
 
-	public List<Item> getItems() {
-		return items;
-	}
+    public List<File> getFiles() {
+        return files;
+    }
 
-	public void setItems(List<Item> items) {
-		this.items = items;
-	}
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public LocalDateTime getDate_created() {
+        return date_created;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setDate_created(LocalDateTime date_created) {
+        this.date_created = date_created;
+    }
 
-	public String getCompany() {
-		return company;
-	}
+    public LocalDateTime getDue_date() {
+        return due_date;
+    }
 
-	public void setCompany(String company) {
-		this.company = company;
-	}
+    public void setDue_date(LocalDateTime due_date) {
+        this.due_date = due_date;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	@Override
-	public String toString() {
-		return "Invoice [id=" + id + ", date_created=" + date_created + ", due_date=" + due_date
-				+ ", type=" + type + ", company=" + company + ", user=" + user + ", items=" + items + ", file=" + files
-				+ "]";
-	}
+    public Long getUserID() {
+        return userID;
+    }
 
+    public void setUserID(Long userID) {
+        this.userID = userID;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "id=" + id +
+                ", userID=" + userID +
+                ", date_created=" + date_created +
+                ", due_date=" + due_date +
+                ", type='" + type + '\'' +
+                ", company='" + company + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastModifiedBy='" + lastModifiedBy + '\'' +
+                ", lastModifiedDate=" + lastModifiedDate +
+                ", user=" + user +
+                ", items=" + items +
+                ", files=" + files +
+                '}';
+    }
 }
