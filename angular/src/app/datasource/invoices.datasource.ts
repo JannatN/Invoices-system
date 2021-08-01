@@ -38,9 +38,9 @@ export class InvoiceDataSource implements DataSource<Invoice>{
             }
             );
     }
-    loadInvoicesWithFilter(pageNumber = 0, pageSize = 10, type = "") {
+    loadInvoicesWithFilter(pageNumber = 0, pageSize = 10, key="" ) {
         this.loadingSubject.next(true);
-        this.invoiceService.listInv({ page: pageNumber, size: pageSize, type: type })
+        this.invoiceService.paginate( pageNumber, pageSize, key )
             .pipe(
                 catchError(() => of([])),
                 finalize(() => this.loadingSubject.next(false))
@@ -51,5 +51,5 @@ export class InvoiceDataSource implements DataSource<Invoice>{
             }
             );
     }
-
+    
 }

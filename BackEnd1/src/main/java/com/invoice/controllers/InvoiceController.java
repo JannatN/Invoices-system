@@ -63,8 +63,9 @@ public class InvoiceController {
     Mapper mapper;
     @GetMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
-    public Page<InvoiceDto> findPaginated(Pageable page, Invoice req) {
-        return convertToDto(invoiceService.findPaginated(page, req));
+    public Page<InvoiceDto> findPaginated(Pageable page,@RequestParam(required = false) String key) {
+        System.out.println(key);
+        return convertToDto(invoiceService.findPaginated(page,key));
     }
 
     //    @ResponseBody
