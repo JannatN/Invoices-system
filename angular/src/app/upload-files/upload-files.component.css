@@ -1,5 +1,7 @@
 .container {
     height: 100vh;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .btn {
@@ -19,12 +21,15 @@
 }
 .card-header {
     color: #dc656e;
+    font-weight: 600;
 }
 
 .card-title {
     color: #dc656e;
+    font-weight: 600;
     border-top: 2px dotted rgba(146, 141, 141, 0.356);
 }
 .pink {
     background-color: #dc656e;
+    border: none;
 }

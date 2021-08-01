@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.invoice.entities.Invoice;
 import com.invoice.exception.ResourceNotFoundException;
 import com.invoice.repositories.InvoiceRepository;
+
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Arrays;
@@ -45,7 +46,6 @@ public class InvoiceService {
     }
 
     /**
-     *
      * @param invoice
 
      * @return
@@ -97,6 +97,7 @@ public class InvoiceService {
 
         return invoiceRepository.save(invoice);
     }
+
     /**
      * @param invoiceID
      * @throws ResourceNotFoundException
@@ -107,17 +108,11 @@ public class InvoiceService {
 
         invoiceRepository.delete(invoice);
     }
+
     public Stream<File> getAllFiles(Long invoiceID) throws ResourceNotFoundException {
         return invoiceRepository.findById(invoiceID).map(invoice -> {
             return fileDBRepository.findByInvoice_id(invoiceID).stream();
         }).orElseThrow(() -> new ResourceNotFoundException("invoiceid " + invoiceID + " not found"));
     }
-
-
-//    public Invoice getLastInvoice() {
-//        return invoiceRepository.findTopByOrderByIdDesc();
-//    }
-
-
 
 }

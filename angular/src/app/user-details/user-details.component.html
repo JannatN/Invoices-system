@@ -21,7 +21,38 @@
     <label><b>Phone number : </b></label> {{user.phoneNumber}}
   </div>
 </div>
-<div *ngIf="user.invoices.length > 0">
+
+<div class="panel panel-primary" *ngIf="user.invoices.length > 0">
+  <div class="panel-heading">
+    <h5>User Invoices</h5>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>From Date </th>
+          <th>Due Date</th>
+          <th>Type</th>
+          <th>Company</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invoice of user.invoices  | keyvalue; let indexOfelement=index; ">
+          <!-- <span>{{indexOfelement}} </span> -->
+          <td>{{invoice.value.date_created}}</td>
+          <td>{{invoice.value.due_date}}</td>
+          <td>{{invoice.value.type}}</td>
+          <td>{{invoice.value.company}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<!-- <div *ngIf="user.invoices.length > 0">
   <label><b>Invoices: </b></label>
   <tbody>
 
@@ -34,7 +65,7 @@
     </tr>
 
   </tbody>
-</div>
+</div> -->
 <br>
 <br>
-<button (click)="list()" class="btn btn-primary">Back to User List</button><br>
+<button (click)="list()" class="btn btn-primary">Back to Users</button><br>

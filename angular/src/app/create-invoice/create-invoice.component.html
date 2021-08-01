@@ -1,8 +1,9 @@
-<form [formGroup]="dynamicForm" (ngSubmit)="fo.form.valid && onSubmit()" #fo="ngForm" enctype="application/x-www-form-urlencoded" novalidate >
+<form [formGroup]="dynamicForm" (ngSubmit)="fo.form.valid && onSubmit()" #fo="ngForm"
+    enctype="application/x-www-form-urlencoded" novalidate>
 
     <div class="card m-3">
         <h5 class="card-header">Create New Invoice</h5>
- 
+
         <div class="card-body">
             <div class="form-group">
                 <label for="name">Due Date</label>
@@ -109,14 +110,16 @@
                 </div>
             </div>
         </div>
-     <div class ="container">
+        <div class="container">
             <h5 class="card-title">Attach File</h5>
-    
+
             <label class="btnn btn-default">
                 <input type="file" multiple (change)="selectFiles($event)" />
             </label>
-    
-    
+
+            <!-- <button class="btn" [disabled]="!selectedFiles" (click)="uploadFiles()">
+      Upload
+    </button> -->
             <div *ngFor="let progressInfo of progressInfos" class="mb-2">
                 <span>{{ progressInfo.fileName }}</span>
                 <div class="progress">
@@ -127,11 +130,13 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="card-footer text-center">
             <button class="btn btn-primary mr-1" [disabled]="!selectedFiles">Save Invoice</button>
             <button class="btn btn-secondary mr-1 grey" type="reset" (click)="onReset()">Reset</button>
             <button class="btn btn-secondary grey" type="button" (click)="onClear()">Clear</button>
+            <button (click)="back()" type="button" class="btn btn-secondary grey"> Back </button><br>
+
         </div>
     </div>
 </form>

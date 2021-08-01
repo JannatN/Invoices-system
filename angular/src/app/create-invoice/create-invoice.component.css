@@ -39,7 +39,11 @@
     background-size: cover;
     min-height: 100vh;
 } */
+form {
+    width: 100%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 
+}
 .title, a {
     color: black;
 }
@@ -65,8 +69,11 @@
 
 .card-header {
     color: #dc656e;
+    font-weight: 600;
 }
 
 .card-title {
     color: #dc656e;
+    font-weight: 600;
+
 }

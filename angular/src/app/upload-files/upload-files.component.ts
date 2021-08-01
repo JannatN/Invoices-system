@@ -4,6 +4,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { InvoiceService } from '../_services/invoices.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-upload-files',
@@ -19,7 +20,8 @@ export class UploadFilesComponent implements OnInit {
 
   fileInfos: Observable<any>;
 
-  constructor(private uploadService: UploadFilesService, private invoiceService: InvoiceService, private router: Router, private route: ActivatedRoute,) { }
+  constructor(private uploadService: UploadFilesService, 
+    private invoiceService: InvoiceService, private router: Router, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit() {
     // this.fileInfos = this.uploadService.getFiles();
@@ -62,5 +64,9 @@ export class UploadFilesComponent implements OnInit {
       this.upload(i, this.selectedFiles[i]);
       console.log("files", this.selectedFiles[i])
     }
+  }
+
+  list() {
+    this.location.back();
   }
 }

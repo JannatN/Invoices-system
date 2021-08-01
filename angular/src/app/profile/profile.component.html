@@ -9,7 +9,7 @@
       <div class="col-md-4">
         <div class="profile-img">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+            src="assets/images/user.png"
             alt="" />
           <div class="file btn btn-lg btn-primary">
             Change Photo
@@ -23,7 +23,7 @@
             {{user.username}} </h5>
           <!-- <h6 *ngFor="let role of user">
             {{ role }} </h6> -->
-          <p class="proile-rating">Total Invoices: <span>3</span> </p>
+          <p class="proile-rating">Enjoy your day </p>
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
               <a class="nav-link active" id="home-tab" data-toggle="tab" href="/profile" role="tab" aria-controls="home"
@@ -85,54 +85,56 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="row">
-              <div class="col-md-6">
-                <label>Invoice 1</label>
-              </div>
-              <div class="col-md-6">
-                <p>20/12/2012</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label> Invoice 2</label>
-              </div>
-              <div class="col-md-6">
-                <p>12/3/2014</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Invoice 3</label>
-              </div>
-              <div class="col-md-6">
-                <p>22/4/2021</p>
-              </div>
-            </div>
 
-          </div>
+        </div>
+        <br>
+        <div class="panel panel-primary" *ngIf="user.invoices.length > 0">
+          <div class="panel-heading">
+            <h5>Your Invoices</h5></div>
+        
+        <!-- <div *ngIf="user.invoices.length > 0">
+          <label><b>Invoices: </b></label>
+          <tbody>
 
+            <tr *ngFor="let invoice of user.invoices  | keyvalue; let indexOfelement=index; ">
+              <div> <span>{{indexOfelement}} </span>
+                From: {{invoice.value.date_created}} </div>
+              <div>Due date: {{invoice.value.due_date}} </div>
+              <div>Type: {{invoice.value.type}}</div>
+              <div>Type: {{invoice.value.company}}</div>
+
+              <div><br></div>
+            </tr>
+
+          </tbody>
+        </div> -->
+        <div class="panel-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>From Date </th>
+                <th>Due Date</th>
+                <th>Type</th>
+                <th>Company</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let invoice of user.invoices  | keyvalue; let indexOfelement=index; ">
+                <!-- <span>{{indexOfelement}} </span> -->
+                <td>{{invoice.value.date_created}}</td>
+                <td>{{invoice.value.due_date}}</td>
+                <td>{{invoice.value.type}}</td>
+                <td>{{invoice.value.company}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
 
-      <br>
-      <div *ngIf="user.invoices.length > 0">
-        <label><b>Invoices: </b></label>
-        <tbody>
 
-          <tr *ngFor="let invoice of user.invoices  | keyvalue">
-            <div>Created at: {{invoice.value.date_created}} </div>
-            <div>Due date: {{invoice.value.due_date}} </div>
-            <div>Type: {{invoice.value.type}}</div>
-            <div>Type: {{invoice.value.company}}</div>
-
-            <div><br></div>
-          </tr>
-
-        </tbody>
-      </div>
+    </div>
     </div>
   </form>
 </div>

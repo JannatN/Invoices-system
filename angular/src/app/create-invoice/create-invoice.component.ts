@@ -28,8 +28,7 @@ export class CreateInvoiceComponent implements OnInit {
   progressInfos = [];
   message = '';
   id: number;
-  // invoiceId:number;
-  // fileInfos: Observable<any>;
+
 
   constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService,
     private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService) { }
@@ -50,11 +49,9 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   upload(idx, file,id) {
-    // this.id = this.route.snapshot.params['id'];
+  
     this.progressInfos[idx] = { value: 0, fileName: file.name };
-    // this.invoiceService.getInvoice(this.id)
-    //   .subscribe(data => {
-    //     console.log(data.id)
+
         this.uploadService.upload(file, id).subscribe(
           event => {
             if (event.type === HttpEventType.UploadProgress) {

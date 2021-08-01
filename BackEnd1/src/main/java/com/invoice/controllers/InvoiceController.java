@@ -14,6 +14,7 @@ import com.invoice.controllers.dto.InvoiceDto;
 import com.invoice.entities.File;
 import com.invoice.entities.Invoice;
 import com.invoice.exception.ResourceNotFoundException;
+import com.invoice.mapper.Mapper;
 import com.invoice.payload.response.ResponseFile;
 import com.invoice.repositories.InvoiceRepository;
 import com.invoice.services.FileService;
@@ -59,12 +60,7 @@ public class InvoiceController {
     @Autowired
     private InvoiceAudService invoiceAudService;
 
-    @Autowired
-    private InvoiceRepository invoiceRepository;
-
-
-
-
+    Mapper mapper;
     @GetMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
     public Page<InvoiceDto> findPaginated(Pageable page, Invoice req) {
@@ -191,6 +187,5 @@ public class InvoiceController {
         Invoice invoice = modelMapper.map(invoiceDto, Invoice.class);
         return invoice;
     }
-
 
 }
