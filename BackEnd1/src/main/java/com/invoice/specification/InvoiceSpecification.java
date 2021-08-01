@@ -27,8 +27,8 @@ public class InvoiceSpecification {
 if(s!=null) {
 
     predicates.add(criteriaBuilder.or(criteriaBuilder.like(criteriaBuilder.lower(root.get("type")),
-             s.toLowerCase() ), criteriaBuilder.like(criteriaBuilder.lower(root.get("company")),
-             s.toLowerCase())));
+            "%" + s.toLowerCase() + "%"), criteriaBuilder.like(criteriaBuilder.lower(root.get("company")),
+            "%" + s.toLowerCase() + "%")));
 //                predicates.add(criteriaBuilder.or(criteriaBuilder.like(criteriaBuilder.lower(root.get("company"),criteriaBuilder.like(criteriaBuilder.lower(root.get("type")))).
 //                         "%"+s.toLowerCase()+"%")));
 //

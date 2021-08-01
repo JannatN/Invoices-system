@@ -53,67 +53,81 @@ export class BoardAdminComponent implements OnInit {
 
   }
 
+  load(){
+    this.invoiceDatasource.loadInvoices();
+  }
+
   search(){
+       this.invoiceDatasource.counter$
+      .pipe(
+        tap((count) => {
+          this.paginator.length = count;
+        })
+      )
+      .subscribe();
+    if (this.filterValue != null) {
+      console.log("ifffff")
+      this.paginator.page
+        .pipe(
+          tap(() => this.loadInvoicesFilter(this.filterValue))
+        )
+        .subscribe();
+    }
+    
+    // else {
+    //   console.log("elseee")
+
+    //   this.paginator.page
+    //     .pipe(
+    //       tap(() => this.loadInvoices())
+    //     )
+    //     .subscribe();
+    // }
+  }
+  ngAfterViewInit() {
     this.invoiceDatasource.counter$
-    .pipe(
-      tap((count) => {
-        this.paginator.length = count;
-      })
-    )
-    .subscribe();
-  if (this.filterValue != null) {
-    console.log("ifffff")
-    this.paginator.page
       .pipe(
-        tap(() => this.loadInvoicesFilter())
+        tap((count) => {
+          this.paginator.length = count;
+        })
       )
       .subscribe();
-  }
-  
-  else {
-    console.log("elseee")
+      this.search();}
 
-    this.paginator.page
-      .pipe(
-        tap(() => this.loadInvoices())
-      )
-      .subscribe();
-  }
-  }
-  
-  // ngAfterViewInit() {
-  //   this.invoiceDatasource.counter$
-  //     .pipe(
-  //       tap((count) => {
-  //         this.paginator.length = count;
-  //       })
-  //     )
-  //     .subscribe();
-   
+      
+  //   if (this.filterValue != null) {
   //     console.log("ifffff")
-  //     // this.paginator.page
-  //     //   .pipe(
-  //     //     tap(() => this.loadInvoices())
-  //     //   )
-  //     //   .subscribe();
-    
-    
-
+  //     this.paginator.page
+  //       .pipe(
+  //         tap(() => this.loadInvoicesFilter())
+  //       )
+  //       .subscribe();
   //   }
-  
+    
+  //   else {
+  //     console.log("elseee")
+
+  //     this.paginator.page
+  //       .pipe(
+  //         tap(() => this.loadInvoices())
+  //       )
+  //       .subscribe();
+  //   }
+  // }
 
   loadInvoices() {
     this.invoiceDatasource.loadInvoices(this.paginator.pageIndex, this.paginator.pageSize);
   }
 
-  loadInvoicesFilter() {
-    this.invoiceDatasource.loadInvoicesWithFilter(this.paginator.pageIndex, this.paginator.pageSize, this.filterValue);
+  loadInvoicesFilter(filter) {
+    this.invoiceDatasource.loadInvoicesWithFilter(this.paginator.pageIndex, this.paginator.pageSize, filter);
+    this.search();
   }
 
-  findBy(key: string) {
-    this.invoiceDatasource.loadInvoicesWithFilter(this.paginator.pageIndex, this.paginator.pageSize, key);
-this.search();
-  }
+  // findBy(key: string) {
+  //   this.invoiceDatasource.loadInvoicesWithFilter(this.paginator.pageIndex, this.paginator.pageSize, key);
+
+  // }
   
   public doFilter = (value: string) => {
     // this.dataSource.filter = value.trim().toLocaleLowerCase();

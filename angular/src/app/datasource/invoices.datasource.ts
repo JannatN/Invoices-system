@@ -38,7 +38,7 @@ export class InvoiceDataSource implements DataSource<Invoice>{
             }
             );
     }
-    loadInvoicesWithFilter(pageNumber = 0, pageSize = 10, key="" ) {
+    loadInvoicesWithFilter(pageNumber = 0, pageSize = 10, key ) {
         this.loadingSubject.next(true);
         this.invoiceService.paginate( pageNumber, pageSize, key )
             .pipe(

@@ -35,8 +35,11 @@
   <mat-label>Filter</mat-label>
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="filterValue" (input)="findBy(filterValue)"> -->
-    <input matInput [(ngModel)]="filterValue" (input)="findBy(filterValue)" id="exampleFormControlInput1"
+    <input matInput [(ngModel)]="filterValue"  id="exampleFormControlInput1"
     class="form-control form-control-underlined">
+    <button type="button"  (click)="loadInvoicesFilter(filterValue)">filter</button> 
+    <button type="button"  (click)="load()">reload list</button> 
+
   </mat-form-field>
 
   <div class=" example-container mat-elevation-z8">
