@@ -130,7 +130,7 @@ public class InvoiceController {
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/file/")
                     .path(dbFile.getId()).toUriString();
 
-            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length);
+            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length,dbFile.getId());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);

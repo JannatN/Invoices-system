@@ -4,7 +4,7 @@ import { InvoiceService } from "../_services/invoices.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../models/item';
 import { UploadFilesService } from '../_services/upload-file.service';
-import { File } from "../models/file"
+import { FileUp } from "../models/file"
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -20,7 +20,7 @@ export class CreateInvoiceComponent implements OnInit {
 
   invoice: Invoice = new Invoice();
   item: Item = new Item();
-  file: File = new File();
+  file: FileUp = new FileUp();
 
   location: any;
 

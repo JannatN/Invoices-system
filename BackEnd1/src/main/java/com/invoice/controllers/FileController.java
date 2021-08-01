@@ -101,7 +101,7 @@ public class FileController {
 //            String headerAuth = request.getHeader("Authorization");
 //            System.out.println("Header " + headerAuth);
 //            res.addHeader("Authorization", "Bearer " + headerAuth);
-            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length);
+            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length,dbFile.getId());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -114,7 +114,7 @@ public class FileController {
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/")
                     .path(dbFile.getId()).toUriString();
 
-            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length);
+            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length,dbFile.getId());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -124,9 +124,12 @@ public class FileController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('AUDITOR')")
     public ResponseEntity<byte[]> getFile(@PathVariable String id, HttpServletRequest request, HttpServletResponse res) {
         File fileDB = storageService.getFile(id);
-        String headerAuth = res.getHeader("Authorization");
+        String headerAuth = request.getHeader("Authorization");
         System.out.println("Header "+ headerAuth);
         res.addHeader("Authorization", "Bearer " + headerAuth);
+//        fileDB.getData();
+//    FileDto fileDto=new FileDto();
+//    fileDto.setData(fileDB.getData());
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
                 .body(fileDB.getData());

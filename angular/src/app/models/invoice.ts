@@ -1,5 +1,5 @@
 import { Item } from "./item";
-import { File } from "./file"
+import { FileUp } from "./file"
 import { FormArray } from "@angular/forms";
 export class Invoice {
   id: number;
@@ -10,7 +10,7 @@ export class Invoice {
   type: string;
   items: Item[];
   // items: FormArray;
-  files: File[];
+  files: FileUp[];
   invoice: any;
   createdBy:string
   lastModifiedBy:string
