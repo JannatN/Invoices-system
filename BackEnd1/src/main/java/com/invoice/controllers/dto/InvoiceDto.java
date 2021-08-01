@@ -47,7 +47,7 @@ public class InvoiceDto {
 //	@Temporal(TIMESTAMP)
 //	private Date createdDate;
 
-    @LastModifiedBy
+//    @LastModifiedBy
     private String lastModifiedBy;
 
     @LastModifiedDate

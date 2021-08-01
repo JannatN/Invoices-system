@@ -60,37 +60,13 @@ export class InvoiceService {
 
 
     // createInv(file: File, invoice: Invoice): Observable<HttpEvent<any>> {
-    //     // const formArray = new FormArray(null);
-    //     // formData.append('invoice', new Blob([JSON.stringify(invoice)], {
-    //     //     type: "application/json"
-    //     // formData.append('type', JSON.stringify(invoice));
-    //     // }));
-    //     // formData.append('invoice', JSON.stringify(invoice))
-
-    //     // this.formData.append('type', JSON.stringify(invoice.type));
-
-    //     // this.item=JSON.stringify(invoice)
-    //     // this.item={"invoice":invoice.items}
-    //     // this.formData.set('invoice[items]',JSON.stringify(invoice.items));
-
-    //     //    this. formData.append('items', JSON.stringify(invoice.items));
-
-    //     this.formData.append('type', JSON.stringify(invoice.type));
-
-    //     // formData.append('due_date', JSON.stringify(invoice.due_date));
-    //     // formData.append('date_created', JSON.stringify(invoice.date_created));
-
-
-    //     this.formData.append('company', JSON.stringify(invoice.company));
-    //     this.formData.append('userid', JSON.stringify(invoice.userid));
-
-
+ 
 
 
     //     this.formData.append('file', file)
 
 
-    //     const req = new HttpRequest('POST', `${this.baseUrl}`, this.formData, {
+    //     const req = new HttpRequest('POST', `${this.baseUrl}/${invoice}`, this.formData, {
     //         reportProgress: true,
     //         responseType: 'json',
 

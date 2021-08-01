@@ -45,7 +45,7 @@ export class InvoiceDetailsComponent implements OnInit {
         this.invoices = data
 
 
-        console.log("this.invoice   ",this.invoice)
+        console.log("this.invoice   ",this.invoice.lastModifiedDate)
 
       })
 

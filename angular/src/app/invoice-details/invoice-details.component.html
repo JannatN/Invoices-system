@@ -76,10 +76,9 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Invoice ID</th>
-          <th>Date Created</th>
+      
           <th>Due Date</th>
-          <th>User ID</th>
+       
           <th> Company</th>
           <th>Invoice Type</th>
          
@@ -88,15 +87,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let invoice of invoiceAud ">
-          <td>{{invoice.id}}</td>
-          <td>{{invoice.date_created}}</td>
-          <td>{{invoice.due_date}}</td>
-          <td>{{invoice.userid}}</td>
-          <td>{{invoice.company}}</td>
-          <td>{{invoice.type}}</td>
+        <tr *ngFor="let invoices of invoiceAud ">
+     
+          <td>{{invoices.due_date}}</td>
+       
+          <td>{{invoices.company}}</td>
+          <td>{{invoices.type}}</td>
          
-
+    
           <!-- <td>
             <button  class="btn btn-info" style="margin-left: 10px">Update</button>
             <button class="btn btn-info"
