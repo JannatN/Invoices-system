@@ -4,7 +4,6 @@ import { InvoiceService } from "../_services/invoices.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../models/item';
 import { UploadFilesService } from '../_services/upload-file.service';
-import { File } from "../models/file"
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -21,7 +20,6 @@ export class CreateInvoiceComponent implements OnInit {
 
   invoice: Invoice = new Invoice();
   item: Item = new Item();
-  file: File = new File();
 
   selectedFiles: FileList;
   progressInfos = [];
@@ -133,7 +131,7 @@ export class CreateInvoiceComponent implements OnInit {
     // this.file.data = this.selectedFiles[0].data
 
     // this.invoice.files.push(this.file);
-    console.log("filee", this.file);
+    // console.log("filee", this.file);
 
 
 

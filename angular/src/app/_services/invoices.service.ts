@@ -41,22 +41,23 @@ export class InvoiceService {
         return this.http.post(`${this.baseUrl}`, invoice);
     }
 
+    // listInv(request) {
+    //     const params = request;
+    //     return this.http.get(`${this.baseUrl}`, { params });
+    // }
     listInv(request) {
         const params = request;
         return this.http.get(`${this.baseUrl}`, { params });
     }
     
-    paginate(page: number, size: number, type: string): Observable<Invoice> {
+    paginate(page: number, size: number, key: string): Observable<object> {
         let params = new HttpParams();
     
         params = params.append('page', String(page));
         params = params.append('limit', String(size));
-        params = params.append('type', type);
+        params = params.append('key', key);
     
-        return this.http.get(`${this.baseUrl}`, {params}).pipe(
-          map((invoice: Invoice) => invoice),
-          catchError(err => throwError(err))
-        )
+        return this.http.get<Invoice>(`${this.baseUrl}`, { params });
       }
 
     deleteInvoice(id: number): Observable<any> {
@@ -64,45 +65,6 @@ export class InvoiceService {
     }
 
 
-    // createInv(file: File, invoice: Invoice): Observable<HttpEvent<any>> {
-    //     // const formArray = new FormArray(null);
-    //     // formData.append('invoice', new Blob([JSON.stringify(invoice)], {
-    //     //     type: "application/json"
-    //     // formData.append('type', JSON.stringify(invoice));
-    //     // }));
-    //     // formData.append('invoice', JSON.stringify(invoice))
-
-    //     // this.formData.append('type', JSON.stringify(invoice.type));
-
-    //     // this.item=JSON.stringify(invoice)
-    //     // this.item={"invoice":invoice.items}
-    //     // this.formData.set('invoice[items]',JSON.stringify(invoice.items));
-
-    //     //    this. formData.append('items', JSON.stringify(invoice.items));
-
-    //     this.formData.append('type', JSON.stringify(invoice.type));
-
-    //     // formData.append('due_date', JSON.stringify(invoice.due_date));
-    //     // formData.append('date_created', JSON.stringify(invoice.date_created));
-
-
-    //     this.formData.append('company', JSON.stringify(invoice.company));
-    //     this.formData.append('userid', JSON.stringify(invoice.userid));
-
-
-
-
-    //     this.formData.append('file', file)
-
-
-    //     const req = new HttpRequest('POST', `${this.baseUrl}`, this.formData, {
-    //         reportProgress: true,
-    //         responseType: 'json',
-
-
-    //     });
-    //     return this.http.request(req);
-    // }
 
     getFiles(invoiceID: number): Observable<File[]> {
         return this.http.get<File[]>(`${this.baseUrl}/files/${invoiceID}`);
