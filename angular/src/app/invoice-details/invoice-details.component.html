@@ -1,128 +1,102 @@
-<div class="header"> Invoice Details</div>
-<hr />
-<div *ngIf="invoice">
-  <div class="labels">
-    <label><b> Created Date: </b></label> {{invoice.date_created}}
-  </div>
-  <div class="labels">
-    <label><b>Due Date: </b></label> {{invoice.due_date}}
-  </div>
-  <div class="labels">
-    <label><b>User Id: </b></label> {{invoice.userid}}
-  </div>
-  <div class="labels">
-    <label><b>Company: </b></label> {{invoice.company}}
-  </div>
-  <div class="labels">
-    <label><b>Invoice Type: </b></label> {{invoice.type}}
-  </div>
+import { Invoice } from '../models/invoice';
+import { Component, OnInit, Input } from '@angular/core';
+import { InvoiceService } from "../_services/invoices.service";
+import { Router, ActivatedRoute } from '@angular/router';
+import { Item } from '../models/item';
+import { ItemService } from '../_services/items.service';
+import { Observable } from 'rxjs';
+import { Location } from '@angular/common';
+import { invoices_aud } from '../models/invoices_aud';
+import { UploadFilesService } from '../_services/upload-file.service';
+import {FileUp} from '../models/file'
+@Component({
+  selector: 'app-invoice-details',
+  templateUrl: './invoice-details.component.html',
+  styleUrls: ['./invoice-details.component.css']
+})
+export class InvoiceDetailsComponent implements OnInit {
+  istrue
+  id: number;
+  invoice: Invoice;
+  // invoiceList: Observable<Invoice[]>
+  invoiceAud: Observable<invoices_aud[]>;
+  items: Item[];
+  files: FileUp[];
+  fileInfos: Observable<FileUp[]>;
 
-  <div class="panel panel-primary" *ngIf="invoice.items.length > 0">
-    <div class="panel-heading">
-      <h5 class="header">Items List:</h5>
-    </div>
-    <div class="panel-body">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Name </th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Quantity</th>
+  invoices: Observable<Invoice[]>;
+  constructor(private route: ActivatedRoute, private router: Router,
+    private invoiceService: InvoiceService, private itemService: ItemService,
+    private location: Location, private uploadService: UploadFilesService) { }
 
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of invoice.items | keyvalue">
-            <!-- <span>{{indexOfelement}} </span> -->
-            <td>{{item.value.name}}</td>
-            <td>{{item.value.price}} {{item.value.currency}}</td>
-            <td>{{item.value.description}}</td>
-            <td>{{item.value.quantity}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  ngOnInit() {
+
+    this.invoice = new Invoice();
 
 
+    this.id = this.route.snapshot.params['id'];
 
-  <div class="card">
-    <div class="header">Files Attached</div>
-    <tbody class="list-group list-group-flush" *ngFor="let file of fileInfos | async">
-      <tr>
-        <td class="list-group-item">
-          <!-- <a href="{{ file.url }}">{{ file.name }}</a> -->
-        </td>
-        <td>
-            <button (click)="download(file.id,file.type)" class="btn btn-danger">{{file.name}}</button>
-          </td>
-      </tr>
-    </tbody>
-
-  </div>
-
-  <br>
-  <h5 class="header">Invoice History</h5>
-
-  <div class="labels">
-    <label><b> Created by: </b></label> {{invoice.createdBy}}
-  </div>
-  <div class="labels">
-    <label><b>Last Modified By: </b></label> {{invoice.lastModifiedBy}}
-  </div>
-  <div class="labels">
-    <label><b> Last Modified Date: </b></label> {{invoice.lastModifiedDate}}
-  </div>
-  <br>
-
-  <h4>Data Editing</h4>
-  <div class="panel-body">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Due Date</th>
-          <th>User ID</th>
-          <th> Company</th>
-          <th>Invoice Type</th>
+    this.invoiceService.getInvoice(this.id)
+      .subscribe(data => {
 
 
+        console.log("invoiceee ", data)
+        this.invoice = data;
+        this.invoices = data
+        console.log("this.invoice   ", this.invoice)
 
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let invoice of invoiceAud ">
-          <td>{{invoice.due_date}}</td>
-          <td>{{invoice.userid}}</td>
-          <td>{{invoice.company}}</td>
-          <td>{{invoice.type}}</td>
+      })
+
+    this.invoiceService.getInvoiceAudById(this.id).subscribe(data => {
+
+      this.invoiceAud = data
+      console.log("invioces aud", this.invoiceAud)
+
+    })
+
+    error => console.log(error);
+    this.fileInfos = this.uploadService.getFiles(this.id);
+    console.log(this.fileInfos);
+    this.uploadService.getFiles(this.id).subscribe(data=>{
+      console.log(data)
+    });
+  }
+
+  // getInvoicesAud(){
+  //   this.invoiceService.getInvoiceAud().subscribe(data=>{
+  //     console.log("invioces aud" , data)
+  //     this.invoiceAud=data
+  //     console.log("invoices Aud ", this.invoiceAud)
+  //   })
+  // }
+
+  list() {
+    this.location.back();
+  }
+  public deleteFile = (id: string) => {
+    this.uploadService.deleteFile(id)
+      .subscribe(
+        data => {
+          console.log(data);
+          // this.reloadData();
+        },
+        error => console.log(error));
+  }
+
+  download(id,type) {
+
+      this.uploadService.getFile(id).subscribe(data => {
 
 
-          <!-- <td>
-            <button  class="btn btn-info" style="margin-left: 10px">Update</button>
-            <button class="btn btn-info"
-              style="margin-left: 10px">Details</button>
-            <button (click)="deleteInvoice(invoice.id)" class="btn btn-danger">Delete</button>
-            <button (click)="createItem(invoice.id)" class="btn btn-primary">create item</button>
-
-          </td> -->
-        </tr>
-        <!-- <tr *ngFor="let invoiceLi of invoice | keyvalue">
-            <td>{{invoiceLi.created_by}}</td>
-            <td>{{invoiceLi.created_date}}</td>
-            <td>{{invoiceLi.last_modified_by}}</td>
-            <td>{{invoiceLi.last_modified_date}}</td>
-         
-          </tr> -->
-
-      </tbody>
-    </table>
-  </div>
-</div>
+          const blob = new Blob([data], { type: type });
+           const url = window.URL.createObjectURL(blob);
+           console.log("jpeg   " , url)
+           window.open(url);
+ 
 
 
+      })
 
-
-<br>
-<button (click)="list()" class="btn btn-success">Back to List</button><br>
-<!-- </div> -->
+  
+    }
+  }
