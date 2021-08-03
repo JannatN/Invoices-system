@@ -52,11 +52,11 @@
     <tbody class="list-group list-group-flush" *ngFor="let file of fileInfos | async">
       <tr>
         <td class="list-group-item">
-          <a href="{{ file.url }}">{{ file.name }}</a>
+          <!-- <a href="{{ file.url }}">{{ file.name }}</a> -->
         </td>
-        <!-- <td>
-            <button (click)="deleteFile(file.name)" class="btn btn-danger">Delete</button>
-          </td> -->
+        <td>
+            <button (click)="download(file.id,file.type)" class="btn btn-danger">{{file.name}}</button>
+          </td>
       </tr>
     </tbody>
 

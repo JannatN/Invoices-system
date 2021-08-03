@@ -14,7 +14,6 @@ import { UserListComponent } from './user-list/user-list.component';
 
 import { UpdateInvoiceComponent } from './update-Invoice/update-invoice.component';
 import {InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
-import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 
 import { UpdateItemComponent } from './update-item/update-item.component';
@@ -35,7 +34,6 @@ const routes: Routes = [
   { path: 'users', component: UserListComponent },
   { path: 'update/:id', component: UpdateUserComponent },
   { path: 'details/:id', component: UserDetailsComponent },
-  { path: 'invoices', component: InvoiceListComponent },
   { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
   { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
   { path: 'addInvoice', component: CreateInvoiceComponent },

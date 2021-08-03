@@ -4,11 +4,10 @@ import { InvoiceService } from "../_services/invoices.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../models/item';
 import { UploadFilesService } from '../_services/upload-file.service';
-import { File } from "../models/file"
+import { FileUp } from "../models/file"
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-invoice',
@@ -21,16 +20,18 @@ export class CreateInvoiceComponent implements OnInit {
 
   invoice: Invoice = new Invoice();
   item: Item = new Item();
-  file: File = new File();
+  file: FileUp = new FileUp();
+
+  location: any;
 
   selectedFiles: FileList;
   progressInfos = [];
   message = '';
   id: number;
-  // fileInfos: Observable<any>;
+
 
   constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService,
-    private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService,  private location: Location) { }
+    private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService) { }
 
   ngOnInit() {
     this.dynamicForm = this.formBuilder.group({
@@ -47,46 +48,45 @@ export class CreateInvoiceComponent implements OnInit {
 
   }
 
-  selectFiles(event) {
-    this.progressInfos = [];
-    this.selectedFiles = event.target.files;
-    console.log(this.selectedFiles)
-
-  }
-  upload(idx, file, id) {
+  upload(idx, file,id) {
+  
     this.progressInfos[idx] = { value: 0, fileName: file.name };
-    this.uploadService.upload(file, id).subscribe(
-      event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
-        } else if (event instanceof HttpResponse) {
-          // this.fileInfos = this.uploadService.getFiles();
-        }
-      },
-      err => {
-        this.progressInfos[idx].value = 0;
-        this.message = 'Could not upload the file:' + file.name;
-      });
 
-  }
-  // uploadFiles() {
-  //   this.message = '';
-  //   for (let i = 0; i < this.selectedFiles.length; i++) {
-  //     this.saveInvoice(i, this.selectedFiles[i]);
-  //     console.log("files", this.selectedFiles[i])
-  //   }
-  // }
+        this.uploadService.upload(file, id).subscribe(
+          event => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+            } else if (event instanceof HttpResponse) {
+              // this.fileInfos = this.uploadService.getFiles();
+            }
+          },
+          err => {
+            this.progressInfos[idx].value = 0;
+            this.message = 'Could not upload the file:' + file.name;
+          });
+        // })
+
+      }
+ 
 
   saveInvoice() {
     this.invoiceService.createInvoice(this.invoice).subscribe(data1 => {
       console.log(data1['id'])
-
+      
       this.invoice = new Invoice();
-      this.message = '';
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.selectedFiles[i], data1['id']);
-      }
-    })
+ 
+       
+        this.message = '';
+
+        for(let i = 0; i< this.selectedFiles.length; i++) {
+      this.upload(i, this.selectedFiles[i],data1['id']);
+    }
+  
+      
+      
+      })
+
+
   }
 
   onChangeItems(e) {
@@ -122,34 +122,25 @@ export class CreateInvoiceComponent implements OnInit {
       this.invoice.items.push(this.dynamicForm.value.items[i]);
 
     }
-    // this.invoice.files.push(this.selectedFiles[0]);
+ 
 
-    console.log("values", this.dynamicForm.value.items);
-    console.log("invoiceeee", this.invoice);
-
-    // this.file = this.selectedFiles
-    // this.file.name = this.selectedFiles[0].name
-    // this.file.type = this.selectedFiles[0].type
-    // this.file.data = this.selectedFiles[0].data
-
-    // this.invoice.files.push(this.file);
-    console.log("filee", this.file);
-
-
-
-    console.log("invoice", this.invoice);
-
-    console.log("invoice created");
     if (this.dynamicForm.invalid) {
       return;
     }
 
-    this.saveInvoice();
-    alert('SUCCESS!! \n\n The Invoice is created ! :-)\n\n');
-    this.list();
+ this.saveInvoice();
+
+// console.log(this.invoice.id)
+// this.uploadFiles();
+
+
+
 
   }
 
+
+
+  
   onReset() {
     this.submitted = false;
     this.dynamicForm.reset();
@@ -168,8 +159,25 @@ export class CreateInvoiceComponent implements OnInit {
   createItem() {
     this.router.navigate(['addItem']);
   }
-  list() {
+  back() {
     this.location.back();
   }
+
+
+
+
+  selectFiles(event) {
+    this.progressInfos = [];
+    this.selectedFiles = event.target.files;
+  }
+
+ 
+  // uploadFiles() {
+  //       this.message = '';
+
+  //       for(let i = 0; i< this.selectedFiles.length; i++) {
+  //     this.upload(i, this.selectedFiles[i],this.id);
+  //   }
+  // }
 
 }
