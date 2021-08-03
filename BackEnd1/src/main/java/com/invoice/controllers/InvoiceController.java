@@ -63,8 +63,9 @@ public class InvoiceController {
     Mapper mapper;
     @GetMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
-    public Page<InvoiceDto> findPaginated(Pageable page, Invoice req) {
-        return convertToDto(invoiceService.findPaginated(page, req));
+    public Page<InvoiceDto> findPaginated(Pageable page,@RequestParam(required = false) String key) {
+        System.out.println(key);
+        return convertToDto(invoiceService.findPaginated(page,key));
     }
 
     //    @ResponseBody
@@ -119,6 +120,10 @@ public class InvoiceController {
         return convertToDto(invoiceAudService.getInvoiceAudById(id));
     }
 
+
+
+
+
     @GetMapping("/invoices/files/{id}")
     @PreAuthorize("hasRole('ADMIN') ")
     public ResponseEntity<List<ResponseFile>> getInvoiceFiles(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
@@ -126,7 +131,7 @@ public class InvoiceController {
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/file/")
                     .path(dbFile.getId()).toUriString();
 
-            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length);
+            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length,dbFile.getId());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);

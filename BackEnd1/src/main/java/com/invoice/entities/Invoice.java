@@ -1,11 +1,15 @@
-
 package com.invoice.entities;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,11 +21,6 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -58,6 +57,10 @@ public class Invoice {
     @CreatedBy
     private String createdBy;
 
+//	@CreatedDate
+//	@Temporal(TIMESTAMP)
+//	private Date createdDate;
+
     @LastModifiedBy
     private String lastModifiedBy;
 
@@ -65,39 +68,6 @@ public class Invoice {
     @Temporal(TIMESTAMP)
     private Date lastModifiedDate;
 
-    @ManyToOne
-    @NotAudited
-    @JoinColumn(name = "userid", insertable = false, updatable = false)
-    private User user;
-
-    @OneToMany(cascade = {CascadeType.ALL})
-    @NotAudited
-    @JoinColumn(name = "invoiceid", referencedColumnName = "id")
-    private List<Item> items;
-
-    @OneToMany(cascade = {CascadeType.ALL})
-    @NotAudited
-    @JoinColumn(name = "invoiceid", referencedColumnName = "id")
-    private List<File> files;
-
-    public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date, String type, String company, String createdBy, String lastModifiedBy, Date lastModifiedDate, User user, List<Item> items, List<File> files) {
-        this.id = id;
-        this.userID = userID;
-        this.date_created = date_created;
-        this.due_date = due_date;
-        this.type = type;
-        this.company = company;
-        this.createdBy = createdBy;
-        this.lastModifiedBy = lastModifiedBy;
-        this.lastModifiedDate = lastModifiedDate;
-        this.user = user;
-        this.items = items;
-        this.files = files;
-    }
-
-    public Invoice() {
-
-    }
 
     public String getCreatedBy() {
         return createdBy;
@@ -123,11 +93,62 @@ public class Invoice {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public List<File> getFiles() {
+    @ManyToOne
+    @NotAudited
+    @JoinColumn(name = "userid", insertable = false, updatable = false)
+    private User user;
+
+    @OneToMany(cascade = { CascadeType.ALL })
+    @NotAudited
+    @JoinColumn(name = "invoiceid", referencedColumnName = "id")
+    private Set<Item> items;
+
+    @OneToMany(cascade = { CascadeType.ALL })
+    @NotAudited
+    @JoinColumn(name = "invoiceid", referencedColumnName = "id")
+    private Set<File> files;
+
+//	public Invoice(Long id, LocalDateTime date_created, LocalDateTime due_date,
+//			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, Set<Item> items, Set<File> files) {
+//		super();
+//		this.id = id;
+////		this.userID = userID;
+//		this.date_created = date_created;
+//		this.due_date = due_date;
+//		this.type = type;
+//		this.company = company;
+//		this.user = user;
+//		this.items = items;
+//		this.files= files;
+//	}
+
+
+    public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date, String type, String company, String createdBy, String lastModifiedBy, Date lastModifiedDate, User user, Set<Item> items, Set<File> files) {
+        this.id = id;
+        this.userID = userID;
+        this.date_created = date_created;
+        this.due_date = due_date;
+        this.type = type;
+        this.company = company;
+        this.createdBy = createdBy;
+        this.lastModifiedBy = lastModifiedBy;
+        this.lastModifiedDate = lastModifiedDate;
+        this.user = user;
+        this.items = items;
+        this.files = files;
+    }
+
+    public Invoice() {
+
+    }
+
+
+
+    public Set<File> getFiles() {
         return files;
     }
 
-    public void setFiles(List<File> files) {
+    public void setFiles(Set<File> files) {
         this.files = files;
     }
 
@@ -163,11 +184,11 @@ public class Invoice {
         this.userID = userID;
     }
 
-    public List<Item> getItems() {
+    public Set<Item> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(Set<Item> items) {
         this.items = items;
     }
 

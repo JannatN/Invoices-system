@@ -128,7 +128,7 @@ export class CreateInvoiceComponent implements OnInit {
     // this.file = this.selectedFiles
     // this.file.name = this.selectedFiles[0].name
     // this.file.type = this.selectedFiles[0].type
-    // this.file.data = this.selectedFiles[0].data
+    // this.file.data = this.selectedFiles[0].datac
 
     // this.invoice.files.push(this.file);
     // console.log("filee", this.file);
