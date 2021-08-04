@@ -37,32 +37,22 @@ public class InvoiceService {
 
     /**
      * @param page
-     * @param request
+     * @param
      * @return
      */
-    public Page<Invoice> findPaginated(Pageable page, Invoice request) {
+    public Page<Invoice> findPaginated(Pageable page,String key) {
 //         page = PageRequest.of(0, 10, Sort.by("userID"));
-        return invoiceRepository.findAll(InvoiceSpecification.getInvoices(request), page);
+        return invoiceRepository.findAll(InvoiceSpecification.getInvoices(key), page);
     }
+
 
     /**
      * @param invoice
-     * @param files
+
      * @return
      * @throws IOException
      */
-//    @Transactional
-//    public ResponseEntity<Invoice> createInvoice(Invoice invoice, MultipartFile files) throws IOException {
-//        String fileName = StringUtils.cleanPath(files.getOriginalFilename());
-//        File FileDB = new File(fileName, files.getContentType(), files.getBytes());
-////        File f = fileDBRepository.save(FileDB);
-//        List<File> list = new LinkedList<File>();
-//        list.add(FileDB);
-//        invoice.setFiles(list);
-//        System.out.println("fileeeees "+ Arrays.asList(list));
-//        final Invoice inv = invoiceRepository.save(invoice);
-//        return ResponseEntity.ok(inv);
-//    }
+
     @Transactional
     public Invoice createInvoice(Invoice invoice) throws IOException {
         return invoiceRepository.save(invoice);

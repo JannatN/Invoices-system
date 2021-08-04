@@ -59,12 +59,19 @@ public class AuthController {
         return convertToDto(authService.authenticateUser(req, response));
     }
 
+    /**
+     *
+     * @param signUpRequest
+     * @return
+     * @throws ParseException
+     */
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpDto signUpRequest) throws ParseException {
         SignupRequest req = convertToEntity(signUpRequest);
         return convertToDto(authService.registerUser(req));
 
     }
+    //////////////////////////////////////////////////////////////////////
     private ResponseEntity<?> convertToDto(ResponseEntity<?> item) {
         ResponseEntity<?> itemDto = modelMapper.map(item, ResponseEntity.class);
         return itemDto;

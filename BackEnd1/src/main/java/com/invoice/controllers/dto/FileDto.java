@@ -1,15 +1,24 @@
 package com.invoice.controllers.dto;
 
 public class FileDto {
+    private String id;
     private String name;
 
     private String type;
 
     private byte[] data;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 //	private InvoiceDto invoice;
 
-    public FileDto(String name, String type, byte[] data) {
+    public FileDto(String name, String type, byte[] data,String id) {
+        this.id=id;
         this.name = name;
         this.type = type;
         this.data = data;
@@ -41,13 +50,5 @@ public class FileDto {
     public void setData(byte[] data) {
         this.data = data;
     }
-
-//	public InvoiceDto getInvoice() {
-//		return invoice;
-//	}
-//
-//	public void setInvoice(InvoiceDto invoice) {
-//		this.invoice = invoice;
-//	}
 
 }

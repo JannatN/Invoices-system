@@ -36,6 +36,14 @@ public class ItemController {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	/**
+	 *
+	 * @param invoiceID
+	 * @param itemDto
+	 * @return
+	 * @throws ResourceNotFoundException
+	 * @throws ParseException
+	 */
 	@PostMapping("items/{invoiceID}")
 	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -47,7 +55,7 @@ public class ItemController {
 		return convertToDto(itemCreated);
 	}
 
-
+/////////////////////////////////////////////////////////////////
 	private ItemDto convertToDto(ResponseEntity<Item> item) {
 		ItemDto itemDto = modelMapper.map(item, ItemDto.class);
 		return itemDto;
