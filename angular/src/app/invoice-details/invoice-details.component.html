@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="header"> Invoice Details</div>
 <hr />
 <div *ngIf="invoice">
@@ -126,3 +127,57 @@
 <br>
 <button (click)="list()" class="btn btn-success">Back to List</button><br>
 <!-- </div> -->
+=======
+<h2>Invoice Details</h2>
+
+<hr />
+<div *ngIf="invoice">
+    <h4>invoice details</h4>
+    <div>
+        <label><b> Created Date: </b></label> {{invoice.dateCreated}}
+    </div>
+    <div>
+        <label><b>Due Date: </b></label> {{invoice.dueDate}}
+    </div>
+    <div>
+        <label><b>Company: </b></label> {{invoice.company}}
+    </div>
+    <div>
+        <label><b>Invoice Type: </b></label> {{invoice.type}}
+    </div>
+    
+    <h4>user details</h4>
+
+    <div>
+        <label><b>User Id: </b></label> {{invoice.userID}}
+    </div>
+    <div>
+        <label><b>First name: </b></label> {{invoice["user"].firstname}}
+    </div>
+    <div>
+
+        <label><b>Last name: </b></label> {{invoice["user"].lastname}}
+
+    </div>
+    <div>
+
+        <label><b>Email: </b></label> {{invoice["user"].email}}
+
+    </div>
+    <h4>Items details</h4>
+
+
+    <!-- <div *ngFor=" let invoice of invoice['items']"> -->
+        <!-- console.log(this.invoice["items"][1].price) -->
+        <label><b>Items: </b></label>
+        <pre> <code>
+            {{invoice["items"] |json}}
+        </code> 
+    </pre>
+    <!-- <div> -->
+
+
+<br>
+
+<button (click)="list()" class="btn btn-primary">Back to Invoice List</button><br>
+>>>>>>> 744ac9204c57a93704ae1980d936861051ec705d
