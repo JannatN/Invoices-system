@@ -6,4 +6,5 @@ export class FileUp {
     type: string;
     data: Byte[];
     invoiceid: number;
+
 }
