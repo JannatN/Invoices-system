@@ -2,7 +2,7 @@ package com.invoice.specification;
 
 import com.invoice.controllers.dto.InvoiceDto;
 import com.invoice.entities.Invoice;
-import com.sun.org.apache.xpath.internal.operations.Or;
+
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -19,16 +19,16 @@ public class InvoiceSpecification {
      * @param
      * @return
      */
-    public static Specification<Invoice> getInvoices( String s) {
+    public static Specification<Invoice> getInvoices(String s) {
         return (root, query, criteriaBuilder) -> {
 
             List<Predicate> predicates = new ArrayList<>();
 
-if(s!=null) {
+            if (s != null) {
 
-    predicates.add(criteriaBuilder.or(criteriaBuilder.like(criteriaBuilder.lower(root.get("type")),
-            "%" + s.toLowerCase() + "%"), criteriaBuilder.like(criteriaBuilder.lower(root.get("company")),
-            "%" + s.toLowerCase() + "%")));
+                predicates.add(criteriaBuilder.or(criteriaBuilder.like(criteriaBuilder.lower(root.get("type")),
+                        "%" + s.toLowerCase() + "%"), criteriaBuilder.like(criteriaBuilder.lower(root.get("company")),
+                        "%" + s.toLowerCase() + "%")));
 //                predicates.add(criteriaBuilder.or(criteriaBuilder.like(criteriaBuilder.lower(root.get("company"),criteriaBuilder.like(criteriaBuilder.lower(root.get("type")))).
 //                         "%"+s.toLowerCase()+"%")));
 //
@@ -36,7 +36,7 @@ if(s!=null) {
 //                        "%"+s.toLowerCase()+"%" ));
 
 
-}
+            }
 
             query.orderBy(criteriaBuilder.desc(root.get("date_created")));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

@@ -108,19 +108,6 @@ public class Invoice {
     @JoinColumn(name = "invoiceid", referencedColumnName = "id")
     private Set<File> files;
 
-//	public Invoice(Long id, LocalDateTime date_created, LocalDateTime due_date,
-//			@NotBlank @Size(max = 20) String type, @NotBlank String company, User user, Set<Item> items, Set<File> files) {
-//		super();
-//		this.id = id;
-////		this.userID = userID;
-//		this.date_created = date_created;
-//		this.due_date = due_date;
-//		this.type = type;
-//		this.company = company;
-//		this.user = user;
-//		this.items = items;
-//		this.files= files;
-//	}
 
 
     public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date, String type, String company, String createdBy, String lastModifiedBy, Date lastModifiedDate, User user, Set<Item> items, Set<File> files) {
@@ -141,8 +128,6 @@ public class Invoice {
     public Invoice() {
 
     }
-
-
 
     public Set<File> getFiles() {
         return files;

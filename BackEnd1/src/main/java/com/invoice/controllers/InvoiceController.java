@@ -60,7 +60,12 @@ public class InvoiceController {
     @Autowired
     private InvoiceAudService invoiceAudService;
 
-    Mapper mapper;
+    /**
+     *
+     * @param page
+     * @param key
+     * @return
+     */
     @GetMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
     public Page<InvoiceDto> findPaginated(Pageable page,@RequestParam(required = false) String key) {
@@ -68,18 +73,13 @@ public class InvoiceController {
         return convertToDto(invoiceService.findPaginated(page,key));
     }
 
-    //    @ResponseBody
-//    @PostMapping(path = "/invoices")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public ResponseEntity<InvoiceDto> createInvoice(@Valid @ModelAttribute("invoice") InvoiceDto invoiceDto,
-//                                                    @RequestParam("file") MultipartFile files) throws ParseException, IOException {
-//        Invoice invoice = convertToEntity(invoiceDto);
-//        ResponseEntity<Invoice> invoiceCreated = invoiceService.createInvoice(invoice, files);
-//        modelMapper.getConfiguration().setAmbiguityIgnored(true);
-//        return convertToDto(invoiceCreated);
-//
-//    }
+    /**
+     *
+     * @param invoiceDto
+     * @return
+     * @throws ParseException
+     * @throws IOException
+     */
     @ResponseBody
     @PostMapping("/invoices")
     @PreAuthorize("hasRole('ADMIN')")
@@ -93,6 +93,15 @@ public class InvoiceController {
 
 
     //@PostUpdate
+
+    /**
+     *
+     * @param invoiceID
+     * @param invoiceDetails
+     * @return
+     * @throws ResourceNotFoundException
+     * @throws ParseException
+     */
     @PutMapping("/invoices/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public InvoiceDto updateInvoice(@PathVariable(value = "id") Long invoiceID,
@@ -107,12 +116,24 @@ public class InvoiceController {
         return convertToDto(invoiceAudService.getAllInvoicesAud());
     }
 
+    /**
+     *
+     * @param invoiceID
+     * @return
+     * @throws ResourceNotFoundException
+     */
     @GetMapping("/invoices/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
     public InvoiceDto getInvoiceById(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
         return convertToDto(invoiceService.getInvoiceById(invoiceID));
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ResourceNotFoundException
+     */
     @GetMapping("/invoices/Aud/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR')")
     public List<Invoices_audDto> getInvoiceAudById(@PathVariable(value = "id") Integer id)
@@ -120,10 +141,12 @@ public class InvoiceController {
         return convertToDto(invoiceAudService.getInvoiceAudById(id));
     }
 
-
-
-
-
+    /**
+     *
+     * @param invoiceID
+     * @return
+     * @throws ResourceNotFoundException
+     */
     @GetMapping("/invoices/files/{id}")
     @PreAuthorize("hasRole('ADMIN') ")
     public ResponseEntity<List<ResponseFile>> getInvoiceFiles(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
@@ -153,6 +176,7 @@ public class InvoiceController {
         invoiceService.deleteInvoice(invoiceID);
     }
 /////////////////////////////////////////////////////////////////////////////////////////////
+// Convert DTOs
 
     private List<Invoices_audDto> convertToDto(List<invoices_aud> invoiceAudById) {
         List<Invoices_audDto> invoiceDtoList = mapList(invoiceAudById, Invoices_audDto.class);

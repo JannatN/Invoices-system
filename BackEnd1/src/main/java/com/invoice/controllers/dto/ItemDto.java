@@ -19,17 +19,6 @@ public class ItemDto {
     @NotNull
     private Integer quantity;
 
-//	private Invoice invoice;
-//
-//
-//	public Invoice getInvoice() {
-//		return invoice;
-//	}
-//
-//	public void setInvoice(Invoice invoice) {
-//		this.invoice = invoice;
-//	}
-
     public String getName() {
         return name;
     }

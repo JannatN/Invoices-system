@@ -144,7 +144,7 @@ export class CreateInvoiceComponent implements OnInit {
 
     this.saveInvoice();
     alert('SUCCESS!! \n\n The Invoice is created ! :-)\n\n');
-    this.list();
+    this.back();
 
   }
 
@@ -166,8 +166,9 @@ export class CreateInvoiceComponent implements OnInit {
   createItem() {
     this.router.navigate(['addItem']);
   }
-  list() {
+  back() {
     this.location.back();
   }
+
 
 }

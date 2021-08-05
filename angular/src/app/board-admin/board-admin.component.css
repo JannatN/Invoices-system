@@ -1,16 +1,14 @@
-
 .example-container {
   display: flex;
   flex-direction: column;
   min-width: 300px;
 }
-.container{
+
+.container {
   margin: 10vh;
   background-color: rgba(255, 255, 255, 0.39);
   margin-left: 0px;
-
 }
-
 
 .input {
   background-color: rgba(202, 191, 191, 0.842);
@@ -28,9 +26,7 @@
   max-height: 500px;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-size: 1.2vw;
-  
 }
-
 
 .mat-header-cell {
   text-align: left;
@@ -40,14 +36,31 @@
   font-size: 1.2vw;
 }
 
+.mat-label {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-weight: 700;
+}
+
 .btn {
   margin-left: 85%;
   margin-top: 0px;
   background-color: #20445ecb;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-size: 1.3vw;
+  border-color: aliceblue;
+}
 
-  
+.btn1 {
+  background-color: #20445ecb;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 1vw;
+  border-radius: .25rem;
+  border-color: aliceblue;
+}
+
+.box {
+  display: grid;
+  grid-template-columns: auto 10% 10%;
 }
 
 .form-control-underlined {
@@ -61,25 +74,26 @@
   font-size: 0.95rem;
   color: black;
   font-style: italic;
+  width: 400px;
 }
 
 #exampleFormControlInput1 {
   border-bottom: 1px solid black;
-  width: 20%;
+  width: 100%;
   border-bottom-width: 1px;
 }
 
 label {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-size: 1.3vw;
+  font-size: 1.5vw;
 }
 
 .heading {
   background-color: rgba(255, 255, 255, 0.39);
   padding: 10px;
 }
-h2{
+
+h2 {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   margin-top: 20px;
 }
-

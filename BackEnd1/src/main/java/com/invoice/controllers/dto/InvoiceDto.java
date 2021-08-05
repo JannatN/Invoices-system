@@ -37,15 +37,10 @@ public class InvoiceDto {
 
     private List<FileDto> files;
 
-//    private UserDto user;
     private Long userid;
 
     @CreatedBy
     private String createdBy;
-
-//	@CreatedDate
-//	@Temporal(TIMESTAMP)
-//	private Date createdDate;
 
 //    @LastModifiedBy
     private String lastModifiedBy;
@@ -53,21 +48,6 @@ public class InvoiceDto {
     @LastModifiedDate
     @Temporal(TIMESTAMP)
     private Date lastModifiedDate;
-
-
-
-//    public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company,
-//                      Set<ItemDto> items, Set<FileDto> files) {
-//        super();
-//        this.id = id;
-//        this.date_created = date_created;
-//        this.due_date = due_date;
-//        this.type = type;
-//        this.company = company;
-//        this.items = items;
-//        this.files = files;
-//    }
-
 
     public InvoiceDto(Long id, LocalDateTime date_created, LocalDateTime due_date, String type, String company, List<ItemDto> items, List<FileDto> files, Long userid, String createdBy, String lastModifiedBy, Date lastModifiedDate) {
         this.id = id;
@@ -119,13 +99,6 @@ public class InvoiceDto {
     public void setUserid(Long userid) {
         this.userid = userid;
     }
-    //	public UserDto getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(UserDto user) {
-//		this.user = user;
-//	}
 
     public List<FileDto> getFiles() {
         return files;
@@ -135,13 +108,6 @@ public class InvoiceDto {
         this.files = files;
     }
 
-//    public Long getUserid() {
-//        return user.getId();
-//    }
-//
-//    public void setUserid(Long userid) {
-//        this.user.setId(userid);
-//    }
 
     public Long getId() {
         return id;

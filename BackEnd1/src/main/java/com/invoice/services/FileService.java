@@ -32,12 +32,14 @@ public class FileService {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    //	public File store(MultipartFile file) throws IOException {
-//		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-//		File FileDB = new File(fileName, file.getContentType(), file.getBytes());
-//
-//		return fileDBRepository.save(FileDB);
-//	}
+    /**
+     *
+     * @param file
+     * @param invoiceID
+     * @return
+     * @throws IOException
+     * @throws ResourceNotFoundException
+     */
     public File store(MultipartFile file, Long invoiceID) throws IOException, ResourceNotFoundException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         File FileDB = new File(fileName, file.getContentType(), file.getBytes());
@@ -70,6 +72,12 @@ public class FileService {
         return fileDBRepository.findAll().stream();
     }
 
+    /**
+     *
+     * @param invoiceID
+     * @return
+     * @throws ResourceNotFoundException
+     */
     public Stream<File> getAllFiles(Long invoiceID) throws ResourceNotFoundException {
         return invoiceRepository.findById(invoiceID).map(invoice -> {
             return fileDBRepository.findByInvoice_id(invoiceID).stream();

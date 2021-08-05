@@ -44,27 +44,36 @@ public class UserController {
     @Autowired
     private ModelMapper modelMapper;
 
+    /**
+     * @param page
+     * @return
+     */
     @GetMapping("/users")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
     public Page<UserDto> findPaginatedUsers(Pageable page) {
         return convertToDto(userService.findPaginatedUsers(page));
     }
 
-    private Page<UserDto> convertToDto(Page<User> paginated) {
-        Page<UserDto> dtoList = mapEntityPageIntoDtoPage(paginated, UserDto.class);
-        return dtoList;
-    }
-
-    public <D, T> Page<D> mapEntityPageIntoDtoPage(Page<T> entities, Class<D> dtoClass) {
-        return entities.map(objectEntity -> modelMapper.map(objectEntity, dtoClass));
-    }
-
+    /**
+     *
+     * @param userId
+     * @return
+     * @throws ResourceNotFoundException
+     */
     @GetMapping("/users/{id}")
     @PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
     public UserDto getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
         return convertToDto(userService.getUserById(userId));
     }
 
+    /**
+     *
+     * @param userId
+     * @param userDetails
+     * @return
+     * @throws ResourceNotFoundException
+     * @throws ParseException
+     */
     @PutMapping("/users/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('AUDITOR')")
     public UserDto updateUser(@PathVariable(value = "id") Long userId, @Valid @RequestBody UserDto userDetails)
@@ -73,6 +82,12 @@ public class UserController {
         return convertToDto(userService.updateUser(userId, user));
     }
 
+    /**
+     *
+     * @param userId
+     * @return
+     * @throws ResourceNotFoundException
+     */
     @DeleteMapping("/users/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
@@ -97,5 +112,14 @@ public class UserController {
 
     <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         return source.stream().map(element -> modelMapper.map(element, targetClass)).collect(Collectors.toList());
+    }
+
+    private Page<UserDto> convertToDto(Page<User> paginated) {
+        Page<UserDto> dtoList = mapEntityPageIntoDtoPage(paginated, UserDto.class);
+        return dtoList;
+    }
+
+    public <D, T> Page<D> mapEntityPageIntoDtoPage(Page<T> entities, Class<D> dtoClass) {
+        return entities.map(objectEntity -> modelMapper.map(objectEntity, dtoClass));
     }
 }

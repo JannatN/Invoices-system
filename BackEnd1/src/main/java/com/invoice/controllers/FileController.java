@@ -39,22 +39,12 @@ public class FileController {
     @Autowired
     private ModelMapper modelMapper;
 
-    //    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping("/upload/{invoiceID}")
-//    @PreAuthorize("hasRole('ADMIN') ")
-//    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
-//        String message = "";
-//
-//        try {
-//            storageService.store(file);
-//
-//            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-//            return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
-//        } catch (Exception e) {
-//            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-//            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
-//        }
-//    }
+    /**
+     *
+     * @param file
+     * @param id
+     * @return
+     */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/upload/{id}")
     @PreAuthorize("hasRole('ADMIN') ")
@@ -76,21 +66,13 @@ public class FileController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
         }
     }
-//    @PostMapping("/upload")
-//    @PreAuthorize("hasRole('ADMIN') ")
-//    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
-//        String message = "";
-//        try {
-//            storageService.store(file);
-//
-//            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-//            return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
-//        } catch (Exception e) {
-//            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-//            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
-//        }
-//    }
 
+    /**
+     *
+     * @param invoiceID
+     * @return
+     * @throws ResourceNotFoundException
+     */
     @GetMapping("/filess/{id}")
     @PreAuthorize("hasRole('ADMIN') ")
     public ResponseEntity<List<ResponseFile>> getInvoiceFiles(@PathVariable(value = "id") Long invoiceID) throws ResourceNotFoundException {
@@ -98,9 +80,7 @@ public class FileController {
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/")
                     .path(dbFile.getId()).toUriString();
 //            System.out.println("fileeeee " + fileDownloadUri);
-//            String headerAuth = request.getHeader("Authorization");
-//            System.out.println("Header " + headerAuth);
-//            res.addHeader("Authorization", "Bearer " + headerAuth);
+
             return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length,dbFile.getId());
         }).collect(Collectors.toList());
 
@@ -120,6 +100,13 @@ public class FileController {
         return ResponseEntity.status(HttpStatus.OK).body(files);
     }
 
+    /**
+     *
+     * @param id
+     * @param request
+     * @param res
+     * @return
+     */
     @GetMapping("/files/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('AUDITOR')")
     public ResponseEntity<byte[]> getFile(@PathVariable String id, HttpServletRequest request, HttpServletResponse res) {
@@ -135,6 +122,11 @@ public class FileController {
                 .body(fileDB.getData());
     }
 
+    /**
+     *
+     * @param fileID
+     * @throws ResourceNotFoundException
+     */
     @DeleteMapping("/file/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
@@ -142,7 +134,7 @@ public class FileController {
             throws ResourceNotFoundException {
         storageService.deleteFile(fileID);
     }
-
+///////////////////////////////////////////////////////////////////////////
     private FileDto convertToDto(ResponseEntity<File> file) {
         FileDto fileDto = modelMapper.map(file, FileDto.class);
         return fileDto;
