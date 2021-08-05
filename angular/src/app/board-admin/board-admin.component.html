@@ -6,40 +6,14 @@
 
 
 <div class="container">
-  <div class="col-md-8">
-    <!-- <div class="input-group mb-3">
-      <input type="text" [(ngModel)]="filters.keyword" name="keyword" (input)="listInv()" id="exampleFormControlInput1"
-        class="form-control form-control-underlined" />
-    </div> -->
-  </div>
-  <!-- <div class="form-group mb-4">
-    <mat-form-field> 
-    <label>Filter:</label>
-      <input matInput (keyup)="filterInvoice($event.target.value)" id="exampleFormControlInput1"
-        class="form-control form-control-underlined">
-     <div class="col-md-8">
-         <div class="input-group mb-3">
-          <input type="text" id="exampleFormControlInput1"
-          class="form-control form-control-underlined" placeholder="Search"
-            [(ngModel)]="filters.keyword" [ngModelOptions]="{standalone: true}"/>
-        </div> -->
-  <!-- <button type="button"  (click)="filterInvoice">filter</button> 
-      </div>
-     </mat-form-field>
-  </div> -->
-
-  <!-- <form class="form-inline my-2 my-lg-0">
-    <input type="search" (ngModelChange)="searchInvoice(key.value)" #key="ngModel" ngModel name="key" id="searchName"
-      class="form-control mr-sm-2" placeholder="Search..." required>
-  </form> -->
-  <mat-label>Filter</mat-label>
+  <label>Filter</label>
   <mat-form-field>
-    <!-- <input matInput type="text" [(ngModel)]="filterValue" (input)="findBy(filterValue)"> -->
-    <input matInput [(ngModel)]="filterValue" id="exampleFormControlInput1"
-      class="form-control form-control-underlined">
-    <button type="button" (click)="loadInvoicesFilter(filterValue)" class="btnn btn-info">Search</button>
-    <button type="button" (click)="load()" class="btnn btn-info">Reload list</button>
-
+    <div class="box">
+      <input matInput [(ngModel)]="filterValue" id="exampleFormControlInput1"
+        class="form-control form-control-underlined">
+      <button type="button" class="btn1 btn-info" (click)="loadInvoicesFilter(filterValue)">Search</button>
+      <button type="button" class="btn1 btn-info" (click)="load()">Reload list</button>
+    </div>
   </mat-form-field>
 
   <div class=" example-container mat-elevation-z8">

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <form [formGroup]="dynamicForm" (ngSubmit)="fo.form.valid && onSubmit()" #fo="ngForm"
     enctype="application/x-www-form-urlencoded" novalidate>
 
@@ -136,85 +135,8 @@
             <button class="btn btn-primary mr-1" [disabled]="!selectedFiles">Save Invoice</button>
             <button class="btn btn-secondary mr-1 grey" type="reset" (click)="onReset()">Reset</button>
             <button class="btn btn-secondary grey" type="button" (click)="onClear()">Clear</button>
-            <button (click)="list()" type="button" class="btn btn-secondary grey"> Back </button><br>
+            <button (click)="back()" type="button" class="btn btn-secondary grey"> Back </button><br>
 
         </div>
     </div>
 </form>
-=======
-<div class="container">
-    <div class="title">Create Invoice</div>
-    <hr />
-    <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="name">Due Date</label>
-            <input type="datetime-local" class="form-control" id="dueDate" required [(ngModel)]="invoice.dueDate" name="due_date"
-                #dueDate="ngModel">
-        </div>
-
-
-        <div class="form-group">
-            <label for="name">User Id</label>
-            <input type="number" class="form-control" id="userid" required [(ngModel)]="invoice.userID" name="userid"
-                #userid="ngModel">
-
-
-        </div>
-        <div class="form-group">
-            <label for="name">Company </label>
-            <input type="text" class="form-control" id="company" required [(ngModel)]="invoice.company" name="company"
-                #company="ngModel">
-
-        </div>
-        <div class="form-group">
-            <label for="name"> Invoice Type</label>
-            <input type="text" class="form-control" id="type" required [(ngModel)]="invoice.type" name="type"
-                #type="ngModel">
-
-        </div>
-    </form>
-    <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="name">Item name</label>
-            <input type="text" class="form-control" id="name" required [(ngModel)]="item.name" name="name"
-                #name="ngModel">
-
-        </div>
-
-        <div class="form-group">
-            <label for="name">Item Description</label>
-            <textarea rows="4" cols="50" class="form-control" id="description" required [(ngModel)]="item.description"
-                name="description" #description="ngModel">
-                            Enter text here...</textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="name">Item price</label>
-            <input type="number" class="form-control" id="price" required [(ngModel)]="item.price" name="price"
-                #price="ngModel">
-
-        </div>
-        <div class="form-group">
-            <label for="name">Currency </label>
-            <input type="text" class="form-control" id="currency" required [(ngModel)]="item.currency" name="currency"
-                #currency="ngModel">
-
-        </div>
-        <div class="form-group">
-            <label for="name">Item Quantitiy </label>
-            <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.quantity" name="quantity"
-                #quantity="ngModel">
-
-        </div>
-        <button type="submit" class="btn btn-success">Save Invoice</button>
-    </form>
-
-    <div [hidden]="!submitted">
-        <h4>You submitted successfully!</h4>
-    </div>
-
-
-    <app-upload-files></app-upload-files>
-
-</div>
->>>>>>> 744ac9204c57a93704ae1980d936861051ec705d
