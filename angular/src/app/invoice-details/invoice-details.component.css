@@ -31,3 +31,15 @@
     color: black;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+.fileBtn{
+    border: none;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1.3vw;
+    margin: 10px;
+    border: none;
+    outline: none;
+    text-decoration: none;
+}
+.fileBtn:hover{
+    background-color: #dc656e;
+}

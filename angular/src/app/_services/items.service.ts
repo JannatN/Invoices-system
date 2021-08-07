@@ -16,10 +16,6 @@ export class ItemService {
         return this.http.get(`${this.baseUrl}/${id}`);
     }
 
-    updateItem(id: number, value: any): Observable<Object> {
-        return this.http.put(`${this.baseUrl}/${id}`, value);
-    }
-
     createItem(item: Object): Observable<Object> {
 
         return this.http.post(`${this.baseUrl}`, item);

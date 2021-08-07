@@ -1,18 +1,16 @@
 package com.invoice.controllers;
 
 import java.text.ParseException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.invoice.mapper.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,8 +31,6 @@ public class ItemController {
 	@Autowired
 	private ItemService itemService;
 
-	@Autowired
-	private ModelMapper modelMapper;
 
 	/**
 	 *
@@ -47,24 +43,14 @@ public class ItemController {
 	@PostMapping("items/{invoiceID}")
 	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ItemDto createItem(@PathVariable(value = "invoiceID") Long invoiceID, @Valid @RequestBody ItemDto itemDto)
+	public ResponseEntity<?> createItem(@PathVariable(value = "invoiceID") Long invoiceID, @Valid @RequestBody ItemDto itemDto)
 			throws ResourceNotFoundException, ParseException {
-		Item item = convertToEntity(itemDto);
+		Item item = Mapper.convertToEntity(itemDto);
 		System.out.println(item.toString());
 		ResponseEntity<Item> itemCreated = itemService.createItem(invoiceID, item);
-		return convertToDto(itemCreated);
+		return Mapper.convertToDto(itemCreated);
 	}
 
-/////////////////////////////////////////////////////////////////
-	private ItemDto convertToDto(ResponseEntity<Item> item) {
-		ItemDto itemDto = modelMapper.map(item, ItemDto.class);
-		return itemDto;
-	}
-
-	private Item convertToEntity(@Valid ItemDto ItemDto) throws ParseException {
-		Item item = modelMapper.map(ItemDto, Item.class);
-		return item;
-	}
 
 
 }
