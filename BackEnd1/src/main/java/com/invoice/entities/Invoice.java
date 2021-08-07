@@ -98,15 +98,17 @@ public class Invoice {
     @JoinColumn(name = "userid", insertable = false, updatable = false)
     private User user;
 
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany(cascade = { CascadeType.ALL })
     @NotAudited
     @JoinColumn(name = "invoiceid", referencedColumnName = "id")
     private Set<Item> items;
 
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany(cascade = { CascadeType.ALL })
     @NotAudited
     @JoinColumn(name = "invoiceid", referencedColumnName = "id")
     private Set<File> files;
+
+
 
     public Invoice(Long id, Long userID, LocalDateTime date_created, LocalDateTime due_date, String type, String company, String createdBy, String lastModifiedBy, Date lastModifiedDate, User user, Set<Item> items, Set<File> files) {
         this.id = id;
@@ -126,7 +128,6 @@ public class Invoice {
     public Invoice() {
 
     }
-
 
     public Set<File> getFiles() {
         return files;

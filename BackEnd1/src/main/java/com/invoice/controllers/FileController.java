@@ -50,6 +50,10 @@ public class FileController {
                                                       @PathVariable Long id) {
         String message = "";
 
+//        Object invoice=new Invoice();
+//        String in=(String) invoice;
+
+//        invoiceService.createInvoice(invoice);
         try {
             storageService.store(file, id);
 
@@ -74,6 +78,7 @@ public class FileController {
                     .path(dbFile.getId()).toUriString();
 //            System.out.println("fileeeee " + fileDownloadUri);
             return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length, dbFile.getId());
+
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -107,6 +112,9 @@ public class FileController {
         String headerAuth = request.getHeader("Authorization");
         System.out.println("Header " + headerAuth);
         res.addHeader("Authorization", "Bearer " + headerAuth);
+//        fileDB.getData();
+//    FileDto fileDto=new FileDto();
+//    fileDto.setData(fileDB.getData());
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
                 .body(file.getData());
