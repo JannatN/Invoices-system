@@ -2,6 +2,9 @@
 <hr />
 <div *ngIf="invoice">
   <div class="labels">
+    <label><b> Created by: </b></label> {{invoice.createdBy}}
+  </div>
+  <div class="labels">
     <label><b> Created Date: </b></label> {{invoice.date_created}}
   </div>
   <div class="labels">
@@ -65,18 +68,7 @@
   <br>
   <h5 class="header">Invoice History</h5>
 
-  <div class="labels">
-    <label><b> Created by: </b></label> {{invoice.createdBy}}
-  </div>
-  <div class="labels">
-    <label><b>Last Modified By: </b></label> {{invoice.lastModifiedBy}}
-  </div>
-  <div class="labels">
-    <label><b> Last Modified Date: </b></label> {{invoice.lastModifiedDate}}
-  </div>
-  <br>
 
-  <h4>Data Editing</h4>
   <div class="panel-body">
     <table class="table table-striped">
       <thead>
