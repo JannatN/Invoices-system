@@ -22,9 +22,14 @@ import java.util.stream.Collectors;
 public class Mapper {
 
     @Autowired
-    static ModelMapper modelMapper;
+    private static ModelMapper modelMapper = new ModelMapper();
 
-    <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
+    public static List<Invoices_audDto> convertToDtoInvoice(List<invoices_aud> allInvoicesAud) {
+        List<Invoices_audDto> audDto = mapList(allInvoicesAud, Invoices_audDto.class);
+        return audDto;
+    }
+
+    static <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         return source.stream().map(element -> modelMapper.map(element, targetClass)).collect(Collectors.toList());
     }
 
@@ -54,27 +59,13 @@ public class Mapper {
         return invoice;
     }
 
-//    private FileDto convertToDto(ResponseEntity<File> file) {
-//        FileDto fileDto = modelMapper.map(file, FileDto.class);
-//        return fileDto;
-//    }
 
-    private File convertToEntity(@Valid FileDto fileDto) throws ParseException {
-        File file = modelMapper.map(fileDto, File.class);
-        return file;
-    }
-
-//    private ResponseEntity<?> convertToDto(ResponseEntity<?> item) {
-//        ResponseEntity<?> itemDto = modelMapper.map(item, ResponseEntity.class);
-//        return itemDto;
-//    }
-
-    private LoginRequest convertToEntity(@Valid LoginDto loginDto) throws ParseException {
+    public static LoginRequest convertToEntity(@Valid LoginDto loginDto) throws ParseException {
         LoginRequest req = modelMapper.map(loginDto, LoginRequest.class);
         return req;
     }
 
-    private SignupRequest convertToEntity(@Valid SignUpDto req) throws ParseException {
+    public static SignupRequest convertToEntity(@Valid SignUpDto req) throws ParseException {
         SignupRequest signup = modelMapper.map(req, SignupRequest.class);
         return signup;
     }
@@ -84,23 +75,34 @@ public class Mapper {
 //        return itemDto;
 //    }
 
-    private Item convertToEntity(@Valid ItemDto ItemDto) throws ParseException {
+    public static Item convertToEntity(@Valid ItemDto ItemDto) throws ParseException {
         Item item = modelMapper.map(ItemDto, Item.class);
         return item;
     }
 
-    private UserDto convertToDto(User responseEntity) {
+    public static UserDto convertToDto(User responseEntity) {
         UserDto userDto = modelMapper.map(responseEntity, UserDto.class);
         return userDto;
     }
 
-    private User convertToEntity(@Valid UserDto userDto) throws ParseException {
+    public static User convertToEntity(@Valid UserDto userDto) throws ParseException {
         User user = modelMapper.map(userDto, User.class);
         return user;
     }
 
-    private List<UserDto> convertToDto(List<User> allUsers) {
+    public static List<UserDto> convertToDto(List<User> allUsers) {
         List<UserDto> userDtoList = mapList(allUsers, UserDto.class);
         return userDtoList;
+    }
+
+
+    public static Page<UserDto> convertToDtoUser(Page<User> paginatedUsers) {
+        Page<UserDto> dtoList = mapEntityPageIntoDtoPage(paginatedUsers, UserDto.class);
+        return dtoList;
+    }
+
+    public static FileDto convertToDto(File fileDB) {
+        FileDto fileDto = modelMapper.map(fileDB, FileDto.class);
+        return fileDto;
     }
 }

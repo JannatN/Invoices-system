@@ -3,7 +3,9 @@ package com.invoice.controllers;
 import com.invoice.controllers.dto.FileDto;
 import com.invoice.entities.File;
 import com.invoice.entities.Invoice;
+import com.invoice.entities.Item;
 import com.invoice.exception.ResourceNotFoundException;
+import com.invoice.mapper.Mapper;
 import com.invoice.payload.response.MessageResponse;
 import com.invoice.payload.response.ResponseFile;
 import com.invoice.services.FileService;
@@ -36,11 +38,7 @@ public class FileController {
     @Autowired
     private FileService storageService;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     /**
-     *
      * @param file
      * @param id
      * @return
@@ -64,7 +62,6 @@ public class FileController {
     }
 
     /**
-     *
      * @param invoiceID
      * @return
      * @throws ResourceNotFoundException
@@ -76,7 +73,7 @@ public class FileController {
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/")
                     .path(dbFile.getId()).toUriString();
 //            System.out.println("fileeeee " + fileDownloadUri);
-            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length,dbFile.getId());
+            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length, dbFile.getId());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -89,14 +86,13 @@ public class FileController {
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/")
                     .path(dbFile.getId()).toUriString();
 
-            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length,dbFile.getId());
+            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length, dbFile.getId());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
     }
 
     /**
-     *
      * @param id
      * @param request
      * @param res
@@ -106,16 +102,17 @@ public class FileController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('AUDITOR')")
     public ResponseEntity<byte[]> getFile(@PathVariable String id, HttpServletRequest request, HttpServletResponse res) {
         File fileDB = storageService.getFile(id);
+        FileDto file = Mapper.convertToDto(fileDB);
+
         String headerAuth = request.getHeader("Authorization");
-        System.out.println("Header "+ headerAuth);
+        System.out.println("Header " + headerAuth);
         res.addHeader("Authorization", "Bearer " + headerAuth);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
-                .body(fileDB.getData());
+                .body(file.getData());
     }
 
     /**
-     *
      * @param fileID
      * @throws ResourceNotFoundException
      */
@@ -125,16 +122,6 @@ public class FileController {
     public void deleteInvoice(@PathVariable(value = "id") String fileID)
             throws ResourceNotFoundException {
         storageService.deleteFile(fileID);
-    }
-///////////////////////////////////////////////////////////////////////////
-    private FileDto convertToDto(ResponseEntity<File> file) {
-        FileDto fileDto = modelMapper.map(file, FileDto.class);
-        return fileDto;
-    }
-
-    private File convertToEntity(@Valid FileDto fileDto) throws ParseException {
-        File file = modelMapper.map(fileDto, File.class);
-        return file;
     }
 
 }

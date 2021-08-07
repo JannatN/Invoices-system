@@ -21,7 +21,6 @@ import java.util.Set;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 public class InvoiceDto {
-    // todo: add validations here
     private Long id;
     @CreationTimestamp
     private LocalDateTime date_created;

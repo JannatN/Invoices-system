@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import com.invoice.controllers.dto.InvoiceDto;
 import com.invoice.entities.Invoice;
+import com.invoice.mapper.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,8 +42,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private ModelMapper modelMapper;
 
     /**
      * @param page
@@ -51,7 +50,7 @@ public class UserController {
     @GetMapping("/users")
     @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') ")
     public Page<UserDto> findPaginatedUsers(Pageable page) {
-        return convertToDto(userService.findPaginatedUsers(page));
+        return Mapper.convertToDtoUser(userService.findPaginatedUsers(page));
     }
 
     /**
@@ -63,7 +62,7 @@ public class UserController {
     @GetMapping("/users/{id}")
     @PreAuthorize("hasRole(" + "'ADMIN') or hasRole('USER') or hasRole('AUDITOR') ")
     public UserDto getUserById(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
-        return convertToDto(userService.getUserById(userId));
+        return Mapper.convertToDto(userService.getUserById(userId));
     }
 
     /**
@@ -78,8 +77,8 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('AUDITOR')")
     public UserDto updateUser(@PathVariable(value = "id") Long userId, @Valid @RequestBody UserDto userDetails)
             throws ResourceNotFoundException, ParseException {
-        User user = convertToEntity(userDetails);
-        return convertToDto(userService.updateUser(userId, user));
+        User user = Mapper.convertToEntity(userDetails);
+        return Mapper.convertToDto(userService.updateUser(userId, user));
     }
 
     /**
@@ -94,32 +93,4 @@ public class UserController {
         return userService.deleteUser(userId);
     }
 
-    ////////////////////////////////////////////////////
-    private UserDto convertToDto(User responseEntity) {
-        UserDto userDto = modelMapper.map(responseEntity, UserDto.class);
-        return userDto;
-    }
-
-    private User convertToEntity(@Valid UserDto userDto) throws ParseException {
-        User user = modelMapper.map(userDto, User.class);
-        return user;
-    }
-
-    private List<UserDto> convertToDto(List<User> allUsers) {
-        List<UserDto> userDtoList = mapList(allUsers, UserDto.class);
-        return userDtoList;
-    }
-
-    <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
-        return source.stream().map(element -> modelMapper.map(element, targetClass)).collect(Collectors.toList());
-    }
-
-    private Page<UserDto> convertToDto(Page<User> paginated) {
-        Page<UserDto> dtoList = mapEntityPageIntoDtoPage(paginated, UserDto.class);
-        return dtoList;
-    }
-
-    public <D, T> Page<D> mapEntityPageIntoDtoPage(Page<T> entities, Class<D> dtoClass) {
-        return entities.map(objectEntity -> modelMapper.map(objectEntity, dtoClass));
-    }
 }
