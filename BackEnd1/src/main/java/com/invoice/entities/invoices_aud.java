@@ -4,6 +4,7 @@ package com.invoice.entities;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -37,6 +38,32 @@ public class invoices_aud {
     private String type;
     @Column(name = "userid")
     private Integer userid;
+
+    @CreatedBy
+    @Column(name = "created_by")
+    private String createdBy;
+
+
+    @LastModifiedBy
+    @Column(name = "last_modified_by")
+    private String lastModifiedBy;
+
+    @LastModifiedDate
+    @Temporal(TIMESTAMP)
+    @Column(name = "last_modified_date")
+    private Date lastModifiedDate;
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
 
     public Integer getId() {
         return id;

@@ -57,9 +57,6 @@ public class Invoice {
     @CreatedBy
     private String createdBy;
 
-//	@CreatedDate
-//	@Temporal(TIMESTAMP)
-//	private Date createdDate;
 
     @LastModifiedBy
     private String lastModifiedBy;
