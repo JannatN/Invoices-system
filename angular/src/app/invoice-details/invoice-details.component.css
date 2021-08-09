@@ -7,7 +7,6 @@
     font-size: 1.8vw;
     font-weight: 600;
     color: #dc656e;
-
 }
 
 .btn {
@@ -31,7 +30,8 @@
     color: black;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
-.fileBtn{
+
+.fileBtn {
     border: none;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 1.3vw;
@@ -40,6 +40,8 @@
     outline: none;
     text-decoration: none;
 }
-.fileBtn:hover{
+
+.fileBtn:hover {
     background-color: #dc656e;
 }
+
