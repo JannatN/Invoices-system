@@ -4,14 +4,15 @@
 
 
 <div class="container">
-  <div class="form-group mb-4">
-    <mat-form-field>
-      <label>Filter:</label>
-      <input matInput (keyup)="doFilter($event.target.value)" class="input" id="exampleFormControlInput1"
+  <label>Filter</label>
+  <mat-form-field>
+    <div class="box">
+      <input matInput [(ngModel)]="filterValue" id="exampleFormControlInput1"
         class="form-control form-control-underlined">
-    </mat-form-field>
-  </div>
-
+      <button type="button" class="btn1 btn-info" (click)="loadInvoicesFilter(filterValue)">Search</button>
+      <button type="button" class="btn1 btn-info" (click)="load()">Reload list</button>
+    </div>
+  </mat-form-field>
 
   <div class="example-container mat-elevation-z8">
     <mat-table [dataSource]="invoiceDatasource" matSort>

@@ -24,8 +24,8 @@ export class BoardAuditorComponent implements OnInit {
   invoices: Observable<Invoice[]>;
   items: Observable<Item[]>;
   user: User;
+  filterValue: string = null;
 
- 
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -59,25 +59,36 @@ export class BoardAuditorComponent implements OnInit {
   //   this.dataSource.sort = this.sort;
   //   this.dataSource.paginator = this.paginator;
   // }
-  ngAfterViewInit() {
-    this.invoiceDatasource.counter$
-      .pipe(
-        tap((count) => {
-          this.paginator.length = count;
-        })
-      )
-      .subscribe();
+  // ngAfterViewInit() {
+  //   this.invoiceDatasource.counter$
+  //     .pipe(
+  //       tap((count) => {
+  //         this.paginator.length = count;
+  //       })
+  //     )
+  //     .subscribe();
 
-    this.paginator.page
-      .pipe(
-        tap(() => this.loadTodos())
-      )
-      .subscribe();
+  //   this.paginator.page
+  //     .pipe(
+  //       tap(() => this.loadTodos())
+  //     )
+  //     .subscribe();
+  // }
+
+  load() {
+    this.invoiceDatasource.loadInvoices();
   }
 
-  loadTodos() {
+
+  loadInvoices() {
     this.invoiceDatasource.loadInvoices(this.paginator.pageIndex, this.paginator.pageSize);
   }
+
+  loadInvoicesFilter(filter) {
+    this.invoiceDatasource.loadInvoicesWithFilter(this.paginator.pageIndex, this.paginator.pageSize, filter);
+    this.search();
+  }
+
   public doFilter = (value: string) => {
     // this.dataSource.filter = value.trim().toLocaleLowerCase();
     value = value.trim(); // Remove whitespace
@@ -89,8 +100,35 @@ export class BoardAuditorComponent implements OnInit {
     this.router.navigate(['detailsInvoice', id]);
 
   }
- 
- 
+
+  search() {
+    this.invoiceDatasource.counter$
+      .pipe(
+        tap((count) => {
+          this.paginator.length = count;
+        })
+      )
+      .subscribe();
+    if (this.filterValue != null) {
+      console.log("ifffff")
+      this.paginator.page
+        .pipe(
+          tap(() => this.loadInvoicesFilter(this.filterValue))
+        )
+        .subscribe();
+    }
+  }
+  ngAfterViewInit() {
+    this.invoiceDatasource.counter$
+      .pipe(
+        tap((count) => {
+          this.paginator.length = count;
+        })
+      )
+      .subscribe();
+    this.search();
+  }
+
 
 
 
