@@ -26,6 +26,7 @@ export class BoardAdminComponent implements OnInit {
   }
 
   filterValue: string = null;
+  showAdminBoard = false;
 
   invoices: Observable<Invoice[]>;
   items: Observable<Item[]>;

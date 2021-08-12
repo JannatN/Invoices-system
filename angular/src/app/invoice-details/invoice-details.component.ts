@@ -8,7 +8,9 @@ import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { invoices_aud } from '../models/invoices_aud';
 import { UploadFilesService } from '../_services/upload-file.service';
-import {FileUp} from '../models/file'
+import { FileUp } from '../models/file';
+import { filter, map } from 'rxjs/operators';
+
 @Component({
   selector: 'app-invoice-details',
   templateUrl: './invoice-details.component.html',
@@ -30,45 +32,11 @@ export class InvoiceDetailsComponent implements OnInit {
     private location: Location, private uploadService: UploadFilesService) { }
 
   ngOnInit() {
-
-    this.invoice = new Invoice();
-
-
     this.id = this.route.snapshot.params['id'];
-
-    this.invoiceService.getInvoice(this.id)
-      .subscribe(data => {
-
-
-        console.log("invoiceee ", data)
-        this.invoice = data;
-        this.invoices = data
-        console.log("this.invoice   ", this.invoice)
-
-      })
-
-    this.invoiceService.getInvoiceAudById(this.id).subscribe(data => {
-
-      this.invoiceAud = data
-      console.log("invioces aud", this.invoiceAud)
-
-    })
-
-    error => console.log(error);
-    this.fileInfos = this.uploadService.getFiles(this.id);
-    console.log(this.fileInfos);
-    this.uploadService.getFiles(this.id).subscribe(data=>{
-      console.log(data)
-    });
+    this.getInvoiceDetails();
+    this.getInvoiceAud();
+    this.getFilesList();
   }
-
-  // getInvoicesAud(){
-  //   this.invoiceService.getInvoiceAud().subscribe(data=>{
-  //     console.log("invioces aud" , data)
-  //     this.invoiceAud=data
-  //     console.log("invoices Aud ", this.invoiceAud)
-  //   })
-  // }
 
   list() {
     this.location.back();
@@ -83,20 +51,38 @@ export class InvoiceDetailsComponent implements OnInit {
         error => console.log(error));
   }
 
-  download(id,type) {
-
-      this.uploadService.getFile(id).subscribe(data => {
-
-
-          const blob = new Blob([data], { type: type });
-           const url = window.URL.createObjectURL(blob);
-           console.log("jpeg   " , url)
-           window.open(url);
- 
-
-
-      })
-
-  
-    }
+  download(id, type) {
+    this.uploadService.getFile(id).subscribe(data => {
+      const blob = new Blob([data], { type: type });
+      const url = window.URL.createObjectURL(blob);
+      console.log("jpeg   ", url)
+      window.open(url);
+    })
   }
+  getInvoiceDetails() {
+    // this.invoiceService.getInvoice(this.id).pipe(filter(ev => ev.target.tagName === 'DIV'))
+    this.invoiceService.getInvoice(this.id)
+      .subscribe(data => {
+        console.log("invoiceee ", data)
+        this.invoice = data;
+        this.invoices = data
+        console.log("this.invoice", this.invoice)
+      }, 
+      // (error) => {
+      //   console.log("error occuerd!", error)
+      // }
+      
+      )
+  }
+  getInvoiceAud() {
+    this.invoiceService.getInvoiceAudById(this.id).subscribe(data => {
+      this.invoiceAud = data
+      console.log("invioces aud", this.invoiceAud)
+
+    })
+  }
+  getFilesList() {
+    this.fileInfos = this.uploadService.getFiles(this.id);
+    console.log(this.fileInfos);
+  }
+}

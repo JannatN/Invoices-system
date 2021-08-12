@@ -28,7 +28,7 @@ export class CreateInvoiceComponent implements OnInit {
   // fileInfos: Observable<any>;
 
   constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService,
-    private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService,  private location: Location) { }
+    private router: Router, private uploadService: UploadFilesService,  private location: Location) { }
 
   ngOnInit() {
     this.dynamicForm = this.formBuilder.group({

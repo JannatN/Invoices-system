@@ -6,13 +6,14 @@ import { Invoice } from '../models/invoice';
 import { Item } from '../models/item';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class InvoiceService {
 
-    private baseUrl = 'http://localhost:8080/api/invoices';
+    private baseUrl = environment.baseUrl;
     item;
     formData: FormData = new FormData();
 
