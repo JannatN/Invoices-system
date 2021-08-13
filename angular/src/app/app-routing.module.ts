@@ -20,8 +20,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', loadChildren: () => import('./register/register.module').then(m => m.RegisterModule) },
   { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: "admin", loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   // { path: "user", loadChildren: () => import('./board-user/borad-user.module').then(m => m.BoradUserModule) },
 
   // { path: 'user', component: BoardUserComponent },

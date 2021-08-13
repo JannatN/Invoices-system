@@ -53,12 +53,12 @@ export class BoardAdminComponent implements OnInit {
 
   }
 
-  load(){
+  load() {
     this.invoiceDatasource.loadInvoices();
   }
 
-  search(){
-       this.invoiceDatasource.counter$
+  search() {
+    this.invoiceDatasource.counter$
       .pipe(
         tap((count) => {
           this.paginator.length = count;
@@ -73,16 +73,7 @@ export class BoardAdminComponent implements OnInit {
         )
         .subscribe();
     }
-    
-    // else {
-    //   console.log("elseee")
 
-    //   this.paginator.page
-    //     .pipe(
-    //       tap(() => this.loadInvoices())
-    //     )
-    //     .subscribe();
-    // }
   }
   ngAfterViewInit() {
     this.invoiceDatasource.counter$
@@ -92,28 +83,10 @@ export class BoardAdminComponent implements OnInit {
         })
       )
       .subscribe();
-      this.search();}
+    this.search();
+  }
 
-      
-  //   if (this.filterValue != null) {
-  //     console.log("ifffff")
-  //     this.paginator.page
-  //       .pipe(
-  //         tap(() => this.loadInvoicesFilter())
-  //       )
-  //       .subscribe();
-  //   }
-    
-  //   else {
-  //     console.log("elseee")
 
-  //     this.paginator.page
-  //       .pipe(
-  //         tap(() => this.loadInvoices())
-  //       )
-  //       .subscribe();
-  //   }
-  // }
 
   loadInvoices() {
     this.invoiceDatasource.loadInvoices(this.paginator.pageIndex, this.paginator.pageSize);
@@ -124,11 +97,7 @@ export class BoardAdminComponent implements OnInit {
     this.search();
   }
 
-  // findBy(key: string) {
-  //   this.invoiceDatasource.loadInvoicesWithFilter(this.paginator.pageIndex, this.paginator.pageSize, key);
 
-  // }
-  
   public doFilter = (value: string) => {
     // this.dataSource.filter = value.trim().toLocaleLowerCase();
     value = value.trim(); // Remove whitespace
@@ -137,16 +106,12 @@ export class BoardAdminComponent implements OnInit {
   }
 
 
-
-
-
-
   public redirectToDetails = (id: number) => {
-    this.router.navigate(['detailsInvoice', id]);
+    this.router.navigate(['admin/detailsInvoice', id]);
 
   }
   public redirectToUpdate = (id: number) => {
-    this.router.navigate(['updateInvoice', id]);
+    this.router.navigate(['admin/updateInvoice', id]);
 
   }
   public redirectToDelete = (id: number) => {
@@ -154,27 +119,24 @@ export class BoardAdminComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          // this.reloadData();
+          this.load();
         },
         error => console.log(error));
   }
   redirectToAttachFile(id: number) {
-    this.router.navigate(['attachFile', id]);
+    this.router.navigate(['admin/attachFile', id]);
 
   }
   createInvoice() {
-    this.router.navigate(['addInvoice']);
+    this.router.navigate(['admin/addInvoice']);
   }
-  ListFiles(){
-    this.router.navigate(['listFiles']);
+  // ListFiles(){
+  //   this.router.navigate(['adminlistFiles']);
 
-  }
-  redirectToCreate(id: number) {
-    this.router.navigate(['addItem', id]);
-  }
-  // reloadData() {
-  //   this.invoices = this.invoiceService.getInvoicesList();
   // }
+  redirectToCreate(id: number) {
+    this.router.navigate(['admin/addItem', id]);
+  }
 
 
 

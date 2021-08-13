@@ -7,57 +7,15 @@ import { InvoiceDetailsComponent } from './components/invoice-details/invoice-de
 import { UpdateInvoiceComponent } from './components/update-Invoice/update-invoice.component';
 import { UploadFilesComponent } from './components/upload-files/upload-files.component';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: BoardAdminComponent,
-    children: [
-      
-      {
-        path: 'admin/addInvoice',
-        component: CreateInvoiceComponent,
-      },
-      {
-        path: 'addItem/:id',
-        component: CreateItemComponent,
-      },
-      {
-        path: 'attachFile/:id',
-        component: UploadFilesComponent,
-      },
-      {
-        path: 'updateInvoice/:id',
-        component: UpdateInvoiceComponent,
-      },
-      {
-        path: 'detailsInvoice/:id',
-        component: InvoiceDetailsComponent,
-      },
+const routes: Routes = [ 
+  { path: '', component: BoardAdminComponent },
+  { path: 'addInvoice', component: CreateInvoiceComponent },
+  { path: 'addItem/:id', component: CreateItemComponent },
+  { path: 'attachFile/:id', component: UploadFilesComponent },
+  { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
+  { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
 
-    ]
 
-  // {
-  //   path: '',
-  //   component: CreateItemComponent,
-  // },
-  // {
-  //   path: '',
-  //   component: UploadFilesComponent,
-  // },
-  // {
-  //   path: '',
-  //   component: UpdateInvoiceComponent,
-  // },
-  // {
-  //   path: '',
-  //   component: BoardAdminComponent,
-  // },
-  // {
-  //   path: '',
-  //   component: InvoiceDetailsComponent,
-  // },
-
-  }
 ];
 
 @NgModule({

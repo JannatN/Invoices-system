@@ -42,10 +42,6 @@ export class InvoiceService {
         return this.http.post(`${this.baseUrl}`, invoice);
     }
 
-    // listInv(request) {
-    //     const params = request;
-    //     return this.http.get(`${this.baseUrl}`, { params });
-    // }
     listInv(request) {
         const params = request;
         return this.http.get(`${this.baseUrl}`, { params });
