@@ -5,38 +5,37 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
-import { BoardUserComponent } from './board-user/board-user.component';
-import { BoardAuditorComponent } from './board-auditor/board-auditor.component';
-import { BoardAdminComponent } from './board-admin/board-admin.component';
-import { UpdateUserComponent } from './update-user/update-user.component';
-import { UserDetailsComponent } from './user-details/user-details.component';
-import { UserListComponent } from './user-list/user-list.component';
+import { BoardAdminComponent } from './admin/components/board-admin/board-admin.component';
 
-import { UpdateInvoiceComponent } from './update-Invoice/update-invoice.component';
-import {InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
-import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
+// import { UpdateInvoiceComponent } from './board-admin/update-Invoice/update-invoice.component';
+// import { InvoiceDetailsComponent } from './board-admin/invoice-details/invoice-details.component';
+// import { CreateInvoiceComponent } from './board-admin/components/create-invoice/create-invoice.component';
 
-import { CreateItemComponent } from './create-item/create-item.component';
-import { UploadFilesComponent } from './upload-files/upload-files.component';
+// import { CreateItemComponent } from './board-admin/create-item/create-item.component';
+// import { UploadFilesComponent } from './board-admin/upload-files/upload-files.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'logout', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'user', component: BoardUserComponent },
-  { path: 'auditor', component: BoardAuditorComponent },
-  { path: 'admin', component: BoardAdminComponent },
+  { path: 'register', loadChildren: () => import('./register/register.module').then(m => m.RegisterModule) },
+  { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'users', component: UserListComponent },
-  { path: 'update/:id', component: UpdateUserComponent },
-  { path: 'details/:id', component: UserDetailsComponent },
-  { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
-  { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
-  { path: 'addInvoice', component: CreateInvoiceComponent },
-  { path: 'addItem/:id', component: CreateItemComponent },
-  { path: 'attachFile/:id', component: UploadFilesComponent },
+  { path: "admin", loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+  // { path: "user", loadChildren: () => import('./board-user/borad-user.module').then(m => m.BoradUserModule) },
+
+  // { path: 'user', component: BoardUserComponent },
+  // { path: 'auditor', component: BoardAuditorComponent },
+  // { path: 'admin', component: BoardAdminComponent },
+  // { path: '', redirectTo: 'home', pathMatch: 'full' },
+  // { path: 'users', component: UserListComponent },
+  // { path: 'update/:id', component: UpdateUserComponent },
+  // { path: 'details/:id', component: UserDetailsComponent },
+  // { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
+  // { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
+  // { path: 'addInvoice', component: CreateInvoiceComponent },
+  // { path: 'addItem/:id', component: CreateItemComponent },
+  // { path: 'attachFile/:id', component: UploadFilesComponent },
 
 
 ];

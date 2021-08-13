@@ -2,9 +2,9 @@ import { DataSource } from '@angular/cdk/table';
 import { CollectionViewer } from '@angular/cdk/collections';
 import { Observable, BehaviorSubject, of } from "rxjs";
 import { catchError, finalize } from "rxjs/operators";
-import { Invoice } from '../models/invoice'
-import { InvoiceService } from '../_services/invoices.service';
-import { InvoiceListResponse } from '../models/invoicesListResponse';
+import { Invoice } from '../core/models/invoice'
+import { InvoiceService } from '../core/services/invoices.service';
+import { InvoiceListResponse } from '../core/models/invoicesListResponse';
 
 export class InvoiceDataSource implements DataSource<Invoice>{
 

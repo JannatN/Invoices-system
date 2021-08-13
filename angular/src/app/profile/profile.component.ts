@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from "rxjs";
-import { User } from "../models/user";
-import { TokenStorageService } from '../_services/token-storage.service';
-import { UserService } from "../_services/users.service";
+import { User } from "../core/models/user";
+import { TokenStorageService } from '../core/services/token-storage.service';
+import { UserService } from "../core/services/users.service";
 import { Router, ActivatedRoute } from '@angular/router';
-import { Invoice } from '../models/invoice';
+import { Invoice } from '../core/models/invoice';
 
 @Component({
   selector: 'app-profile',
