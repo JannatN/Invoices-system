@@ -1,4 +1,4 @@
-<!-- <h2>User Details</h2>
+<h2>User Details</h2>
 
 <hr />
 <div *ngIf="user">
@@ -39,8 +39,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let invoice of user.invoices  | keyvalue; let indexOfelement=index; ">
-          <!-- <span>{{indexOfelement}} </span> -->
-          <!-- <td>{{invoice.value.date_created}}</td>
+          <td>{{invoice.value.date_created}}</td>
           <td>{{invoice.value.due_date}}</td>
           <td>{{invoice.value.type}}</td>
           <td>{{invoice.value.company}}</td>
@@ -49,10 +48,10 @@
     </table>
   </div>
 </div>
- -->
+ 
 
 
-<!-- <div *ngIf="user.invoices.length > 0">
+ <div *ngIf="user.invoices.length > 0">
   <label><b>Invoices: </b></label>
   <tbody>
 
@@ -65,7 +64,7 @@
     </tr>
 
   </tbody>
-</div> -->
-<!-- <br>
+</div> 
+ <br>
 <br>
-<button (click)="list()" class="btn btn-primary">Back to Users</button><br> --> 
+<button (click)="list()" class="btn btn-primary">Back to Users</button><br> 

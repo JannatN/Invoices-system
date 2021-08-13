@@ -24,19 +24,6 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   // { path: "user", loadChildren: () => import('./board-user/borad-user.module').then(m => m.BoradUserModule) },
 
-  // { path: 'user', component: BoardUserComponent },
-  // { path: 'auditor', component: BoardAuditorComponent },
-  // { path: 'admin', component: BoardAdminComponent },
-  // { path: '', redirectTo: 'home', pathMatch: 'full' },
-  // { path: 'users', component: UserListComponent },
-  // { path: 'update/:id', component: UpdateUserComponent },
-  // { path: 'details/:id', component: UserDetailsComponent },
-  // { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
-  // { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
-  // { path: 'addInvoice', component: CreateInvoiceComponent },
-  // { path: 'addItem/:id', component: CreateItemComponent },
-  // { path: 'attachFile/:id', component: UploadFilesComponent },
-
 
 ];
 

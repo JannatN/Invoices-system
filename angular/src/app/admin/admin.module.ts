@@ -17,12 +17,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 
 @NgModule({
   declarations: [CreateInvoiceComponent, InvoiceDetailsComponent,
     UploadFilesComponent, CreateItemComponent, BoardAdminComponent,
-    UpdateInvoiceComponent],
+    UpdateInvoiceComponent, UserListComponent, UpdateUserComponent, UserDetailsComponent ],
   imports: [
     CommonModule,
     AdminRoutingModule,

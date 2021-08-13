@@ -107,7 +107,7 @@ export class BoardAdminComponent implements OnInit {
 
 
   public redirectToDetails = (id: number) => {
-    this.router.navigate(['admin/detailsInvoice', id]);
+    this.router.navigate(['admin/invoiceDetails', id]);
 
   }
   public redirectToUpdate = (id: number) => {
