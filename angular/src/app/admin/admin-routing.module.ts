@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddEditComponent } from './components/add-edit/add-edit.component';
+import { AddEditComponent } from './components/create-item/create-item.component';
 import { BoardAdminComponent } from './components/board-admin/board-admin.component';
 import { CreateInvoiceComponent } from './components/create-invoice/create-invoice.component';
 import { InvoiceDetailsComponent } from './components/invoice-details/invoice-details.component';
