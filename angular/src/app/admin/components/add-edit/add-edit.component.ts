@@ -9,13 +9,13 @@ import { InvoiceService } from 'src/app/core/services/invoices.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-create-item',
-  templateUrl: './create-item.component.html',
-  styleUrls: ['./create-item.component.css']
+  selector: 'app-add-edit',
+  templateUrl: './add-edit.component.html',
+  styleUrls: ['./add-edit.component.css']
 })
-export class CreateItemComponent implements OnInit {
-  dynamicForm: FormGroup;
-
+export class AddEditComponent implements OnInit {
+  @Input() dynamicForm: FormGroup;
+  isAddMode: boolean;
   invoice: Invoice;
   item: Item = new Item();
   submitted = false;
@@ -25,17 +25,39 @@ export class CreateItemComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService, private itemService: ItemService,
     private router: Router, private route: ActivatedRoute, private location: Location) { }
 
- 
+
   ngOnInit() {
+    this.isAddMode = !this.id;
+    this.id = this.route.snapshot.params['id'];
+    if (this.isAddMode) {
     this.dynamicForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
       currency: ['', Validators.required],
       quantity: ['', Validators.required],
-  
+
     });
-  
+  }
+  if (!this.isAddMode) {
+    this.dynamicForm = this.formBuilder.group({
+      name: ['name', Validators.required],
+      description: ['description', Validators.required],
+      price: ['price', Validators.required],
+      currency: ['currency', Validators.required],
+      quantity: ['quantity', Validators.required],
+
+    });
+  }
+      this.invoice = new Invoice();
+      this.invoiceService.getInvoice(this.id)
+        .subscribe(data => {
+          console.log("before", data)
+          this.invoice = data;
+        }, error => console.log(error));
+    
+        console.log(this.isAddMode)
+    
   }
   get f() {
     return this.dynamicForm.controls;
@@ -45,30 +67,7 @@ export class CreateItemComponent implements OnInit {
 
   }
 
-  // onChangeItems(e) {
-  //   const numberOfItems = e.target.value || 0;
-  //   if (this.t.length < numberOfItems) {
-  //     for (let i = this.t.length; i < numberOfItems; i++) {
-  //       this.t.push(this.formBuilder.group({
-  //         name: ['', Validators.required],
-  //         description: ['', Validators.required],
-  //         price: ['', Validators.required],
-  //         currency: ['', Validators.required],
-  //         quantity: ['', Validators.required],
-
-  //       }));
-  //       console.log("num", numberOfItems);
-
-  //     }
-
-  //   } else {
-  //     for (let i = this.t.length; i >= numberOfItems; i--) {
-  //       this.t.removeAt(i);
-  //     }
-  //   }
-  // }
-
-  save() {
+  addItem() {
     this.id = this.route.snapshot.params['id'];
     this.invoiceService.getInvoice(this.id)
       .subscribe(data => {
@@ -81,16 +80,30 @@ export class CreateItemComponent implements OnInit {
             error => console.log(error));
 
       })
-      console.log('ss',this.dynamicForm.getRawValue())
+  }
+  updateInvoice() {
+    this.invoiceService.updateInvoice(this.id, this.invoice)
+      .subscribe(data => {
+        console.log(data);
+        this.invoice = new Invoice();
+
+        this.back();
+      }, error => console.log(error));
   }
 
   onSubmit() {
     this.submitted = true;
-    this.save();
-    
+    this.addItem();
+
     if (this.dynamicForm.invalid) {
       return;
     }
+    if (this.isAddMode) {
+      this.addItem();
+    } else {
+      this.updateInvoice();
+    }
+
     alert('SUCCESS!! \n\n The Invoice is created ! :-)\n\n');
     this.back();
     console.log(this.dynamicForm.value);
@@ -102,10 +115,6 @@ export class CreateItemComponent implements OnInit {
     this.t.clear();
   }
 
-  onClear() {
-    this.submitted = false;
-    this.t.reset();
-  }
 
   createItem() {
     this.router.navigate(['addItem']);

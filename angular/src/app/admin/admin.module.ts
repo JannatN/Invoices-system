@@ -4,9 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CreateInvoiceComponent } from './components/create-invoice/create-invoice.component';
 import { InvoiceDetailsComponent } from './components/invoice-details/invoice-details.component';
 import { UploadFilesComponent } from './components/upload-files/upload-files.component';
-import { CreateItemComponent } from './components/create-item/create-item.component';
 import { BoardAdminComponent } from './components/board-admin/board-admin.component';
-import { UpdateInvoiceComponent } from './components/update-Invoice/update-invoice.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -20,12 +18,13 @@ import { SharedModule } from '../shared/shared.module';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { AddEditComponent } from './components/add-edit/add-edit.component';
 
 
 @NgModule({
   declarations: [CreateInvoiceComponent, InvoiceDetailsComponent,
-    UploadFilesComponent, CreateItemComponent, BoardAdminComponent,
-    UpdateInvoiceComponent, UserListComponent, UpdateUserComponent, UserDetailsComponent ],
+    UploadFilesComponent, AddEditComponent, BoardAdminComponent,
+    UserListComponent, UpdateUserComponent, UserDetailsComponent ],
   imports: [
     CommonModule,
     AdminRoutingModule,
