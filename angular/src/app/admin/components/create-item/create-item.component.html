@@ -1,47 +1,65 @@
-<form (ngSubmit)="onSubmit()">
-    <div class="card m-3">
-        <h5 class="card-header">Add New Item</h5>
+<div class="card m-3">
+    <h5 class="card-header">Add Item</h5>
+    <div class="card-body">
+        <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
 
-        <div class="card-body">
-            <div class="form-group">
-                <label for="name">Item name</label>
-                <input type="text" class="form-control" id="name" required [(ngModel)]="item.name" name="name"
-                    #name="ngModel">
+                <div class="form-group col-6">
+                    <label>Name</label>
+                    <input type="text" formControlName="name" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted &&f.name.errors }" />
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                        <div *ngIf="f.name.errors.required">Name is required</div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label>Description</label>
+                    <input type="text" formControlName="description" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Description is required</div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label>Price</label>
+                    <input type="text" formControlName="price" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.price.errors }" />
+                    <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                        <div *ngIf="f.price.errors.required">Price is required</div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label>Currency</label>
+                    <!-- <input type="text" formControlName="currency" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && item.controls.currency.errors }" /> -->
+                    <select class="form-control" formControlName="currency"
+                        [ngClass]="{ 'is-invalid': submitted && f.currency.errors }">
+                        <option value="USD">$</option>
+                        <option value="NIS">₪</option>
+                        <option value="EURO">€</option>
+                    </select>
+                    <!-- <div *ngIf="submitted && item.controls.currency.errors" class="invalid-feedback">
+                        <div *ngIf="item.controls.currency.errors.required">Currency is required</div>
+                    </div> -->
+                </div>
+                <div class="form-group col-6">
+                    <label>Quantity</label>
+                    <input type="text" formControlName="quantity" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }" />
+                    <!-- <div *ngIf="submitted && item.controls.quantity.errors" class="invalid-feedback">
+                        <div *ngIf="item.controls.quantity.errors.required">Quantity is required</div>
+                    </div> -->
+                </div>
             </div>
-            <div class="form-group">
-                <label for="name">Description</label>
-                <textarea rows="4" cols="50" class="form-control" id="description" required
-                    [(ngModel)]="item.description" name="description" #description="ngModel">
-                        Enter text here...</textarea>
+
+
+            <div class="card-footer text-center">
+                <button class="btn btn-primary mr-1">Save Item</button>
+                <button class="btn btn-secondary mr-1 grey" type="reset" (click)="onReset()">Reset</button>
+                <button class="btn btn-secondary grey" type="button" (click)="onClear()">Clear</button>
+                <button (click)="back()" type="button" class="btn btn-secondary grey"> Back </button><br>
 
             </div>
-
-            <div class="form-group">
-                <label for="name">Item price</label>
-                <input type="number" class="form-control" id="price" required [(ngModel)]="item.price" name="price"
-                    #price="ngModel">
-
-            </div>
-            <div class="form-group">
-                <label for="name">Currency </label>
-                <!-- <input type="text" class="form-control" id="currency" required [(ngModel)]="item.currency"
-                        name="currency" #currency="ngModel"> -->
-                <select class="form-control" class="form-control" id="currency" required [(ngModel)]="item.currency"
-                    name="currency" #currency="ngModel">
-                    <option value="USD">$</option>
-                    <option value="NIS">₪</option>
-                    <option value="EURO">€</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="name">Quantitiy </label>
-                <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.quantity"
-                    name="quantity" #quantity="ngModel">
-
-            </div>
-        </div>
-        <div class="card-footer text-center">
-            <button type="submit" class="btn">Save Item</button>
-        </div>
+        </form>
     </div>
-</form>
+</div>

@@ -69,7 +69,7 @@ export class UserListComponent implements OnInit {
     public redirectToUpdate = (id: number) => {
         this.router.navigate(['admin/updateUser', id]);
     }
-
+ 
     gotoProfile() {
         this.router.navigate(['/profile']);
     }
