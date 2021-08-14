@@ -13,7 +13,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './create-item.component.html',
   styleUrls: ['./create-item.component.css']
 })
-export class AddEditComponent implements OnInit {
+export class CreateItemComponent implements OnInit {
   dynamicForm: FormGroup;
   isAddMode: boolean;
   invoice: Invoice;

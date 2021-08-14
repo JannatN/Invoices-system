@@ -18,12 +18,13 @@ import { SharedModule } from '../shared/shared.module';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
-import { AddEditComponent } from './components/create-item/create-item.component';
+import { CreateItemComponent } from './components/create-item/create-item.component';
+import { UpdateInvoiceComponent } from './components/update-Invoice/update-invoice.component';
 
 
 @NgModule({
-  declarations: [CreateInvoiceComponent, InvoiceDetailsComponent,
-    UploadFilesComponent, AddEditComponent, BoardAdminComponent,
+  declarations: [CreateInvoiceComponent, InvoiceDetailsComponent, UpdateInvoiceComponent,
+    UploadFilesComponent, CreateItemComponent, BoardAdminComponent,
     UserListComponent, UpdateUserComponent, UserDetailsComponent ],
   imports: [
     CommonModule,
