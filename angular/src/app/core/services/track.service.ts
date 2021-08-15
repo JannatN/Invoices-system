@@ -15,16 +15,7 @@ export class trackService {
     getTracksList(): Observable<any> {
         return this.http.get(`${this.baseUrl}`);
     }
-    //  op = {
-    //     headers: new HttpHeaders({
-    //       'Accept': 'text/html',
-    //       'Content-Type': 'text/plain; charset=utf-8'
-    //     }),
-    //     responseType: 'text' as 'json'
-    //   };
-
     createTrack(track: Object): Observable<Object> {
-        // let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         return this.http.post(`${this.baseUrl}`, track)
     }
 

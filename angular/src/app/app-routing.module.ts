@@ -8,6 +8,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { BoardAdminComponent } from './admin/components/board-admin/board-admin.component';
 import { AuthGuard } from './core/helpers/auth.guard';
 import { HasRoleGuard } from './core/helpers/has-role.guard';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 // import { UpdateInvoiceComponent } from './board-admin/update-Invoice/update-invoice.component';
 // import { InvoiceDetailsComponent } from './board-admin/invoice-details/invoice-details.component';
@@ -30,6 +31,7 @@ const routes: Routes = [
     canActivate: [AuthGuard, HasRoleGuard]
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent},
 
 
 ];

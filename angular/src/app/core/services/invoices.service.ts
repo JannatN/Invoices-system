@@ -14,7 +14,6 @@ import { environment } from 'src/environments/environment';
 export class InvoiceService {
 
     private baseUrl = environment.invoices;
-    item;
     formData: FormData = new FormData();
 
     constructor(private http: HttpClient) { }
