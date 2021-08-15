@@ -21,8 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
       authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
     }
     return next.handle(authReq).pipe(catchError(err => {
-      if (err.status === 401) {
-          // auto logout if 401 response returned from api
+      if (err.status === 401 || err.status === 403) {
           this.token.signOut();
           location.reload(true);
       }
@@ -31,29 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
       return throwError(error);
   }))
     
-    // .pipe(catchError(x=> this.handleAuthError(x)))
-    //   retry(1),
-    //   catchError((error: HttpErrorResponse) => {
-    //     let message = '';
-    //     if (error.error instanceof ErrorEvent) {
-    //       // handle client-side error
-    //       message = `Error: ${error.error.message}`;
-    //       if (error.status === 401) {
-    //         // this.router.navigate(['home']);
-    //         this.router.navigateByUrl(`/home`);
-    //       }
-    //       if (error.status === 404 || error.status == 0) {
-    //         this.router.navigateByUrl(`/home`);
-    //       }
-    //     }
-    //     else {
-    //       // handle server-side error
-    //       message = `Error Status: ${error.status}\nMessage: ${error.message}`;
-    //     }
-    //     console.log(message);
-    //     return throwError(message);
-    //   })
-    // )
+   
     
   }
     private handleAuthError(err: HttpErrorResponse): Observable<any> {

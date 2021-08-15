@@ -29,7 +29,7 @@ export class HasRoleGuard implements CanActivate {
         const isAuthorized = user.roles.includes('ROLE_ADMIN');
 
         if (!isAuthorized) {
-            this.router.navigate(['/login'])     // display a message
+            this.router.navigate(['/logout'])     // display a message
             window.alert('you are not authorized');
         }
 
