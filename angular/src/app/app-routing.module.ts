@@ -5,7 +5,6 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
-import { BoardAdminComponent } from './admin/components/board-admin/board-admin.component';
 import { AuthGuard } from './core/helpers/auth.guard';
 import { HasRoleGuard } from './core/helpers/has-role.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -29,6 +28,10 @@ const routes: Routes = [
   {
     path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
     canActivate: [AuthGuard, HasRoleGuard]
+  },
+  {
+    path: 'auditor', loadChildren: () => import('./auditor/auditor.module').then(m => m.AuditorModule),
+    canActivate: [AuthGuard]
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent},

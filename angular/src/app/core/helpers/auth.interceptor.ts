@@ -23,7 +23,10 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(authReq).pipe(catchError(err => {
       if (err.status === 401 || err.status === 403) {
           this.token.signOut();
-          location.reload(true);
+          // location.reload(true);
+      }
+      if (err.status === 404 ){
+        this.router.navigateByUrl('**')
       }
       
       const error = err.error.message || err.statusText;

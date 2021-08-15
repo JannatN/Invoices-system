@@ -17,15 +17,15 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('auth-user')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
-  
+
 
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
-}
+  }
   login(credentials): Observable<any> {
     return this.http.post(AUTH_API + 'signin', {
       username: credentials.username,
@@ -33,7 +33,7 @@ export class AuthService {
     }, httpOptions);
   }
 
-  
+
 
   register(user): Observable<any> {
     return this.http.post(AUTH_API + 'signup', {
@@ -46,7 +46,8 @@ export class AuthService {
       password: user.password
     }, httpOptions);
   }
-   isLoggedIn() {
+  
+  isLoggedIn() {
     return !!sessionStorage.getItem('auth-user');
-}
+  }
 }
