@@ -1,44 +1,4 @@
-/* form {
-    width: 100%
-}
 
-.form-group {
-    margin: 10px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: large;
-}
-
-.title {
-    font-size: 30px;
-    color: black;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    /* border-bottom: 1px solid black; */
-
-/* 
-.container {
-    border: 1px solid black;
-    border-radius: 20px;
-    background-color: #20445e2a;
-    width: 60%;
-}
-
-.body {
-    display: grid;
-    grid-template-columns: auto auto;
-}
-.btn {
-    background-color: #dc656e;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 1.3vw;
-    color: white;
-    margin: 10px; */
-
-/* .login-container {
-    font-family: "Source Sans Pro";
-    background-image: url(/assets/images/group_4.png), linear-gradient(-136.82353093203deg, rgba(36, 35, 72, 255) 0%, rgba(90, 85, 170, 255) 100%);
-    background-size: cover;
-    min-height: 100vh;
-} */
 form {
     width: 100%;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;

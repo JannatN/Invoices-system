@@ -10,5 +10,7 @@ export class User {
     address: string;
     phoneNumber: string;
     invoices: Invoice[];
+    jwtToken?: string;
+
 }
     

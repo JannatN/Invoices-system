@@ -7,6 +7,7 @@ import { Item } from 'src/app/core/models/item';
 import { ItemService } from 'src/app/core/services/items.service';
 import { InvoiceService } from 'src/app/core/services/invoices.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 
 @Component({
   selector: 'app-create-item',
@@ -15,20 +16,16 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CreateItemComponent implements OnInit {
   dynamicForm: FormGroup;
-  isAddMode: boolean;
   invoice: Invoice;
   item: Item = new Item();
   submitted = false;
   id: number;
-
-
   constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService, private itemService: ItemService,
-    private router: Router, private route: ActivatedRoute, private location: Location) { }
+    private router: Router, private route: ActivatedRoute, private location: Location, private token: TokenStorageService) { }
 
 
   ngOnInit() {
-    this.isAddMode = !this.id;
-
+ 
     this.dynamicForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],

@@ -20,18 +20,17 @@ import { UploadFilesService } from '../../../core/services/upload-file.service';
   styleUrls: ['./board-admin.component.css']
 })
 export class BoardAdminComponent implements OnInit {
-  filters = {
-    keyword: ''
-  }
-
-  filterValue: string = null;
   showAdminBoard = false;
+  showAuditorBoard = false;
+  filterValue: string = null;
 
   invoices: Observable<Invoice[]>;
   items: Observable<Item[]>;
   user: User;
   invoice: Invoice;
   invoicesArray: Invoice[];
+  private roles: string[];
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -41,7 +40,7 @@ export class BoardAdminComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<Invoice>();
   constructor(private invoiceService: InvoiceService,
-    private router: Router, private token: TokenStorageService,) { }
+    private router: Router, private token: TokenStorageService) { }
 
   ngOnInit() {
     // this.getList();
@@ -49,7 +48,12 @@ export class BoardAdminComponent implements OnInit {
     this.user = this.token.getUser();
     this.invoiceDatasource = new InvoiceDataSource(this.invoiceService);
     this.invoiceDatasource.loadInvoices();
+    const user = this.token.getUser();
 
+    this.roles = user.roles;
+
+    this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+    this.showAuditorBoard = this.roles.includes('ROLE_AUDITOR');
 
   }
 

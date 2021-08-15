@@ -9,12 +9,13 @@ import { UploadFilesComponent } from './components/upload-files/upload-files.com
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UpdateInvoiceComponent } from './components/update-Invoice/update-invoice.component';
+import { AddEditComponent } from './components/add-edit/add-edit.component';
 
 const routes: Routes = [
   { path: '', component: BoardAdminComponent },
-  { path: 'addInvoice', component: CreateInvoiceComponent },
+  // { path: 'addInvoice', component: CreateInvoiceComponent },
+  { path: 'addInvoice', component: AddEditComponent },
   { path: 'addItem/:id', component: CreateItemComponent },
-  // { path: 'updateInvoice/:id', component: CreateItemComponent },
 
   { path: 'attachFile/:id', component: UploadFilesComponent },
   { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },

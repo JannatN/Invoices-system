@@ -20,7 +20,18 @@ export class AuthInterceptor implements HttpInterceptor {
       // for Spring Boot back-end
       authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
     }
-    return next.handle(authReq).pipe(catchError(x=> this.handleAuthError(x)))
+    return next.handle(authReq).pipe(catchError(err => {
+      if (err.status === 401) {
+          // auto logout if 401 response returned from api
+          this.token.signOut();
+          location.reload(true);
+      }
+      
+      const error = err.error.message || err.statusText;
+      return throwError(error);
+  }))
+    
+    // .pipe(catchError(x=> this.handleAuthError(x)))
     //   retry(1),
     //   catchError((error: HttpErrorResponse) => {
     //     let message = '';

@@ -6,6 +6,8 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BoardAdminComponent } from './admin/components/board-admin/board-admin.component';
+import { AuthGuard } from './core/helpers/auth.guard';
+import { HasRoleGuard } from './core/helpers/has-role.guard';
 
 // import { UpdateInvoiceComponent } from './board-admin/update-Invoice/update-invoice.component';
 // import { InvoiceDetailsComponent } from './board-admin/invoice-details/invoice-details.component';
@@ -20,7 +22,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', loadChildren: () => import('./register/register.module').then(m => m.RegisterModule) },
   { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
-  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+  canActivate:[AuthGuard, HasRoleGuard]
+},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   // { path: "user", loadChildren: () => import('./board-user/borad-user.module').then(m => m.BoradUserModule) },
 

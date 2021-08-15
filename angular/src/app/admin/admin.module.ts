@@ -20,19 +20,20 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { CreateItemComponent } from './components/create-item/create-item.component';
 import { UpdateInvoiceComponent } from './components/update-Invoice/update-invoice.component';
+import { AddEditComponent } from './components/add-edit/add-edit.component';
 
 
 @NgModule({
   declarations: [CreateInvoiceComponent, InvoiceDetailsComponent, UpdateInvoiceComponent,
-    UploadFilesComponent, CreateItemComponent, BoardAdminComponent,
-    UserListComponent, UpdateUserComponent, UserDetailsComponent ],
+    UploadFilesComponent, CreateItemComponent, BoardAdminComponent, AddEditComponent,
+    UserListComponent, UpdateUserComponent, UserDetailsComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     MatTableModule,
-    MatPaginatorModule, 
+    MatPaginatorModule,
     MatFormFieldModule,
     MatSortModule,
     MatInputModule,

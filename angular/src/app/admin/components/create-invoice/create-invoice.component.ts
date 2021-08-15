@@ -17,10 +17,8 @@ import { Location } from '@angular/common';
 export class CreateInvoiceComponent implements OnInit {
   dynamicForm: FormGroup;
   submitted = false;
-
   invoice: Invoice = new Invoice();
   item: Item = new Item();
-
   selectedFiles: FileList;
   progressInfos = [];
   message = '';
