@@ -35,9 +35,14 @@ export class CreateItemComponent implements OnInit {
 
 
 
+
+      
+
+
   }
 
 
+  
   newItem(): void {
     this.submitted = false;
     this.item = new Item();
@@ -82,6 +87,8 @@ export class CreateItemComponent implements OnInit {
   back() {
     this.location.back();
   }
+
+  
 }
 
 

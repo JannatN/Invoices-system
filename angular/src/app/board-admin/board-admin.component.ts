@@ -43,13 +43,22 @@ export class BoardAdminComponent implements OnInit {
   constructor(private invoiceService: InvoiceService,
     private router: Router, private token: TokenStorageService,) { }
 
+    private roles: string[];
+
+  isLoggedIn = false;
+  showAdminBoard=false;
+
   ngOnInit() {
     // this.getList();
     // this.getListBackend();
     this.user = this.token.getUser();
     this.invoiceDatasource = new InvoiceDataSource(this.invoiceService);
     this.invoiceDatasource.loadInvoices();
+    const user = this.token.getUser();
+    this.roles = user.roles;
 
+    this.isLoggedIn = !!this.token.getToken();
+    this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
 
   }
 

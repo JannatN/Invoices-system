@@ -1,5 +1,6 @@
 package com.invoice.controllers.dto;
 
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -37,7 +38,6 @@ public class Invoices_audDto {
     @LastModifiedBy
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
-
     @LastModifiedDate
     @Temporal(TIMESTAMP)
     @Column(name = "last_modified_date")

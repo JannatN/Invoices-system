@@ -22,9 +22,7 @@ export class UpdateInvoiceComponent implements OnInit {
     private invoiceService: InvoiceService,  private location: Location, private tokenStorageService: TokenStorageService) { }
     
   ngOnInit() {
-//     console.log(this.tokenStorageService.getUser().username);
-//     this.name=this.tokenStorageService.getUser().username
-// this.tracke.auditorName=this.name
+
 
     this.invoice = new Invoice();
 
@@ -33,13 +31,9 @@ export class UpdateInvoiceComponent implements OnInit {
     this.invoiceService.getInvoice(this.id)
       .subscribe(data => {
         console.log("before",data)
-      //   this.test=data
-      // this.tracke.invoiceBefore=this.test;
-      // console.log("name",this.tracke.auditorName)
-      // console.log("tracke before",this.tracke.invoiceBefore)
+     
       
         this.invoice = data;
-        // console.log(this.invoice.items)
       }, error => console.log(error));
   }
 
@@ -47,16 +41,7 @@ export class UpdateInvoiceComponent implements OnInit {
     this.invoiceService.updateInvoice(this.id, this.invoice)
       .subscribe(data => {
         console.log(data);
-//         console.log("tracke before",this.tracke.invoiceBefore)
-//         console.log("this.tracke.invoiceAfter",this.tracke.invoiceAfter)
-//         console.log("invoice after",this.invoice)
-//         // this.tracke.invoiceAfter=this.invoice
-// this.str=JSON.stringify(this.invoice)
-// console.log("strrrrrrrrrrrrrrrrrrrrrrrrrrrrr",this.str)
-//     this.track.createTrack(this.tracke).subscribe(data3=>{
-//       console.log(data3)
-//     })
-//     console.log("etstttt",this.test)
+
       
         this.invoice = new Invoice();
        

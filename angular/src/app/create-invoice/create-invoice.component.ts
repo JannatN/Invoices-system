@@ -67,13 +67,20 @@ export class CreateInvoiceComponent implements OnInit {
       });
 
   }
-  // uploadFiles() {
-  //   this.message = '';
-  //   for (let i = 0; i < this.selectedFiles.length; i++) {
-  //     this.saveInvoice(i, this.selectedFiles[i]);
-  //     console.log("files", this.selectedFiles[i])
-  //   }
-  // }
+
+
+  updateInvoice() {
+    this.invoiceService.updateInvoice(this.id, this.invoice)
+      .subscribe(data => {
+        console.log(data);
+
+      
+        this.invoice = new Invoice();
+       
+        this.back();
+      }, error => console.log(error));
+  }
+
 
   saveInvoice() {
     this.invoiceService.createInvoice(this.invoice).subscribe(data1 => {

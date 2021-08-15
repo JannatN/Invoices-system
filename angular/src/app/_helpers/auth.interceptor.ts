@@ -14,8 +14,10 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let authReq = req;
     const token = this.token.getToken();
-    if (token != null) {
-      // for Spring Boot back-end
+    console.log("authReq",authReq)
+    if (token !=null) {
+
+
       authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
      
     }
