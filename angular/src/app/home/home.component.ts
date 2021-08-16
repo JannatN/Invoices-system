@@ -20,19 +20,16 @@ export class HomeComponent implements OnInit {
 
 
 
-
-
-
-
+  CheckRequiredField(field: FormControl): boolean {
+    return field.hasError('required') && (field.dirty || field.touched);
+}
     @Input() item: Invoice;
     @Output() formSubmitEvent = new EventEmitter<string>();
   
     itemForm: FormGroup;
   
     isProcessing: Boolean = false;
-    CheckRequiredField(field: AbstractControl): boolean {
-        return field.hasError('required') && (field.dirty || field.touched);
-    }
+  
     checkField  = this.CheckRequiredField;
   
     constructor(
