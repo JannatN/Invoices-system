@@ -30,54 +30,183 @@
             </div>
         </div>
     </div>
-    <!-- <div class="form-row">
         <div class="form-group col-7">
-            <label>Email</label>
-            <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                <div *ngIf="f.email.errors.required">Email is required</div>
-                <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+            <label>due_date</label>
+            <input type="datetime-local" formControlName="due_date" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.due_date.errors }" />
+            <div *ngIf="submitted && f.due_date.errors" class="invalid-feedback">
+                <div *ngIf="f.due_date.errors.required">due_date is required</div>
             </div>
-        </div> -->
-        <!-- <div class="form-group col">
-            <label>Role</label>
-            <select formControlName="role" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.role.errors }">
-                <option value=""></option>
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-            </select>
-            <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
-                <div *ngIf="f.role.errors.required">Role is required</div>
+        <!-- </div> -->
+      
+
+
+
+
+        <h5 class="card-title">Items Section</h5>
+        <div class="form-row">
+            <div class="form-group">
+                <label> Number of Items</label>
+                <select  class="form-control" (change)="onChangeItems($event)"
+                    [ngClass]="{ 'is-invalid': submitted && f.numberOfItems.errors }">
+                    <option value=""></option>
+                    <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">{{i}}</option>
+                </select>
+                <div *ngIf="submitted && f.numberOfItems.errors" class="invalid-feedback">
+                    <div *ngIf="f.numberOfItems.errors.required">Number of items is required</div>
+                </div>
             </div>
         </div>
-    </div> -->
-    <div *ngIf="!isAddMode">
-        <h3 class="pt-3">Change Password</h3>
-        <p>Leave blank to keep the same password</p>
     </div>
-    <!-- <div class="form-row">
-        <div class="form-group col">
-            <label>Password</label>
-            <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                <div *ngIf="f.password.errors.required">Password is required</div>
-                <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-            </div>
-        </div> -->
-        <!-- <div class="form-group col">
-            <label>Confirm Password</label>
-            <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
-            <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
-                <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
-                <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+    <div *ngFor="let item of t.controls; let i = index" class="list-group list-group-flush">
+        <div class="list-group-item">
+            <h5 class="card-title">Item {{i + 1}}</h5>
+            <div [formGroup]="item" class="form-row">
+                <div class="form-group col-6">
+                    <label>Name</label>
+                    <input type="text" formControlName="name" class="form-control" [(ngModel)]="item.value.name"
+                        [ngClass]="{ 'is-invalid': submitted && item.controls.name.errors }" />
+                    <div *ngIf="submitted && item.controls.name.errors" class="invalid-feedback">
+                        <div *ngIf="item.controls.name.errors.required">Name is required</div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label>Description</label>
+                    <input type="text" formControlName="description" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && item.controls.description.errors }" />
+                    <div *ngIf="submitted && item.controls.description.errors" class="invalid-feedback">
+                        <div *ngIf="item.controls.description.errors.required">Description is required</div>
+                        <div *ngIf="item.controls.description.errors.description">Description must be a valid
+                            email address</div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label>Price</label>
+                    <input type="text" formControlName="price" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && item.controls.price.errors }" />
+                    <div *ngIf="submitted && item.controls.price.errors" class="invalid-feedback">
+                        <div *ngIf="item.controls.price.errors.required">Price is required</div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label>Currency</label>
+                    <!-- <input type="text" formControlName="currency" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && item.controls.currency.errors }" /> -->
+                    <select class="form-control" formControlName="currency"
+                        [ngClass]="{ 'is-invalid': submitted && item.controls.currency.errors }">
+                        <option value="USD">$</option>
+                        <option value="NIS">₪</option>
+                        <option value="EURO">€</option>
+                    </select>
+                    <div *ngIf="submitted && item.controls.currency.errors" class="invalid-feedback">
+                        <div *ngIf="item.controls.currency.errors.required">Currency is required</div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label>Quantity</label>
+                    <input type="text" formControlName="quantity" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && item.controls.quantity.errors }" />
+                    <div *ngIf="submitted && item.controls.quantity.errors" class="invalid-feedback">
+                        <div *ngIf="item.controls.quantity.errors.required">Quantity is required</div>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div> -->
+    </div>
+    <div class="container">
+        <h5 class="card-title">Attach File</h5>
+
+        <label class="btnn btn-default">
+            <input type="file" multiple (change)="selectFiles($event)" />
+        </label>
+
+        <!-- <button class="btn" [disabled]="!selectedFiles" (click)="uploadFiles()">
+  Upload
+</button> -->
+        <div *ngFor="let progressInfo of progressInfos" class="mb-2">
+            <span>{{ progressInfo.fileName }}</span>
+            <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                    attr.aria-valuenow="{{ progressInfo.value }}" aria-valuemin="0" aria-valuemax="100"
+                    [ngStyle]="{ width: progressInfo.value + '%' }">
+                    {{ progressInfo.value }}%
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<h3 *ngIf="!isAddMode" >
+    <div class="card m-3">
+        <h5 class="card-header">Update Invoice</h5>
+        <div class="card-body">
+         
+    
+          <div *ngFor="let item of invoice.items | keyvalue; let i = index">
+            <h5 class="card-title">Item {{i + 1}}</h5>
+            <div class="form-group">
+              <label for="name">Item name</label>
+              <input type="text" class="form-control" id="name" required [(ngModel)]="item.value.name"
+                name="{{invoice.items[i].name}}" #name="ngModel">
+    
+            </div>
+    
+            <div class="form-group">
+              <label for="name">Item Description</label>
+              <textarea rows="4" cols="50" class="form-control" id="description" required
+                [(ngModel)]="item.value.description" name="{{invoice.items[i].description}}"
+                #description="ngModel"></textarea>
+            </div>
+    
+            <div class="form-group">
+              <label for="name">Item price</label>
+              <input type="number" class="form-control" id="price" required [(ngModel)]="item.value.price"
+                name="{{invoice.items[i].price}}" #price="ngModel">
+    
+            </div>
+            <div class="form-group">
+              <label for="name">Currency </label>
+              <!-- <input type="text" class="form-control" id="currency" required [(ngModel)]="item.value.currency"
+              name="{{invoice.items[i].currency}}" #currency="ngModel"> -->
+              <select class="form-control" required [(ngModel)]="item.value.currency" name="{{invoice.items[i].currency}}"
+                #currency="ngModel">
+                <option value="USD">$</option>
+                <option value="NIS">₪</option>
+                <option value="EURO">€</option>
+              </select>
+    
+            </div>
+            <div class="form-group">
+              <label for="name">Item Quantitiy </label>
+              <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.value.quantity"
+                name="{{invoice.items[i].quantity}}" #quantity="ngModel">
+    
+            </div>
+          </div>
+        </div>
+        <!-- <div class="card-footer text-center">
+          <button type="submit" class="btn">Update</button>
+        </div> -->
+      </div>
+
+
+
+
+    </h3>
+
+
+
+
+
     <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">
+        <button [disabled]="loading" class="btn btn-primary" [disabled]="!selectedFiles">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Save
         </button>
-        <a routerLink="/users" class="btn btn-link">Cancel</a>
+        <button class="btn btn-secondary mr-1 grey" type="reset" (click)="onReset()">Reset</button>
+        <button class="btn btn-secondary grey" type="button" (click)="onClear()">Clear</button>
+        <button (click)="back()" type="button" class="btn btn-secondary grey"> Back </button><br>
+        <!-- <a routerLink="/users" class="btn btn-link">Cancel</a> -->
     </div>
 </form>

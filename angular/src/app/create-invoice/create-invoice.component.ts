@@ -69,6 +69,7 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
 
+
   updateInvoice() {
     this.invoiceService.updateInvoice(this.id, this.invoice)
       .subscribe(data => {
@@ -127,30 +128,23 @@ export class CreateInvoiceComponent implements OnInit {
       this.invoice.items.push(this.dynamicForm.value.items[i]);
 
     }
-    // this.invoice.files.push(this.selectedFiles[0]);
 
-    console.log("values", this.dynamicForm.value.items);
-    console.log("invoiceeee", this.invoice);
+    // console.log("values", this.dynamicForm.value.items);
+    // console.log("invoiceeee", this.invoice);
 
-    // this.file = this.selectedFiles
-    // this.file.name = this.selectedFiles[0].name
-    // this.file.type = this.selectedFiles[0].type
-    // this.file.data = this.selectedFiles[0].datac
-
-    // this.invoice.files.push(this.file);
-    // console.log("filee", this.file);
+ 
 
 
 
-    console.log("invoice", this.invoice);
+    // console.log("invoice", this.invoice);
 
-    console.log("invoice created");
+    // console.log("invoice created");
     if (this.dynamicForm.invalid) {
       return;
     }
 
     this.saveInvoice();
-    alert('SUCCESS!! \n\n The Invoice is created ! :-)\n\n');
+    // alert('SUCCESS!! \n\n The Invoice is created ! :-)\n\n');
     this.back();
 
   }
