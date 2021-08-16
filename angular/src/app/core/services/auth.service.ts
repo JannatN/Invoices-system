@@ -46,8 +46,23 @@ export class AuthService {
       password: user.password
     }, httpOptions);
   }
-  
+
   isLoggedIn() {
     return !!sessionStorage.getItem('auth-user');
   }
+  // isAuthorized(allowedRoles: string[]): boolean {
+  //   if (allowedRoles == null || allowedRoles.length === 0) {
+  //     return true;
+  //   }
+
+  //   const token = sessionStorage.getItem('auth-user');
+
+  //   if (!token) {
+  //     console.log('Invalid token');
+  //     return false;
+  //   }
+
+  //   // check if the user roles is in the list of allowed roles, return true if allowed and false if not allowed
+  //   return allowedRoles.includes(token['roles']);
+  // }
 }

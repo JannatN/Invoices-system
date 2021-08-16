@@ -44,7 +44,7 @@ export class ProfileComponent implements OnInit {
   }
   
   updateUser(id: number) {
-    this.router.navigate(['update', id]);
+    this.router.navigate(['profile/update', id]);
   }
   
   getUser() {

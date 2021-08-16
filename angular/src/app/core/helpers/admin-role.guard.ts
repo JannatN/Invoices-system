@@ -13,8 +13,8 @@ import { TokenStorageService } from '../services/token-storage.service';
 @Injectable({
     providedIn: 'root',
 })
-export class HasRoleGuard implements CanActivate {
-    constructor(private router: Router, private tokenStorageService: TokenStorageService) { }
+export class AdminRoleGuard implements CanActivate {
+    constructor(private router: Router, private tokenStorageService: TokenStorageService, private authService: AuthService) { }
     private roles: string[];
 
     canActivate(
@@ -26,15 +26,15 @@ export class HasRoleGuard implements CanActivate {
         | boolean
         | UrlTree {
         const user = this.tokenStorageService.getUser();
-        const isAuthorizedAdmin = user.roles.includes('ROLE_ADMIN');
-        const isAuthorizedAud = user.roles.includes('ROLE_AUDITOR');
+        const isAuthorized = user.roles.includes('ROLE_ADMIN');
+        if (!isAuthorized) {
+            this.tokenStorageService.signOut();
+            this.router.navigate(['/login']) 
+            window.alert('you are not authorized');
 
-        if (isAuthorizedAud || isAuthorizedAdmin) {
-            this.router.navigate(['/board'])     // display a message
-            // window.alert('you are not authorized');
         }
-      
 
-        return isAuthorizedAud;
+        return isAuthorized;
     }
+
 }

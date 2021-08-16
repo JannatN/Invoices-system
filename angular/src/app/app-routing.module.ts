@@ -6,15 +6,9 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './core/helpers/auth.guard';
-import { HasRoleGuard } from './core/helpers/has-role.guard';
+import { AdminRoleGuard } from './core/helpers/admin-role.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
-// import { UpdateInvoiceComponent } from './board-admin/update-Invoice/update-invoice.component';
-// import { InvoiceDetailsComponent } from './board-admin/invoice-details/invoice-details.component';
-// import { CreateInvoiceComponent } from './board-admin/components/create-invoice/create-invoice.component';
-
-// import { CreateItemComponent } from './board-admin/create-item/create-item.component';
-// import { UploadFilesComponent } from './board-admin/upload-files/upload-files.component';
+import { AudRoleGuard } from './core/helpers/aud-role.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -27,11 +21,11 @@ const routes: Routes = [
   },
   {
     path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
-    canActivate: [AuthGuard, HasRoleGuard]
+    canActivate: [AuthGuard, AdminRoleGuard]
   },
   {
     path: 'auditor', loadChildren: () => import('./auditor/auditor.module').then(m => m.AuditorModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AudRoleGuard]
   },
   {
     path: 'board', loadChildren: () => import('./shared/shared.module').then(m => m.SharedModule),

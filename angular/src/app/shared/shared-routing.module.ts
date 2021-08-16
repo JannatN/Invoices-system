@@ -6,11 +6,15 @@ import { InvoiceDetailsComponent } from './components/invoice-details/invoice-de
 const routes: Routes = [
   {
     path: '',
-    component: BoardComponent
+    component: BoardComponent,
+
   },
   {
     path: 'invoiceDetails/:id',
-    component: InvoiceDetailsComponent
+    component: InvoiceDetailsComponent,
+    data: {
+      allowedRoles: ['ROLE_ADMIN', 'ROLE_AUDITOR']
+    }
   },
 
 ];
