@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-// import { UserService } from '../_services/user.service';
-import { LoginComponent } from '../login/login.component';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
-import { InvoiceService } from '../_services/invoices.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Validators, AbstractControl, FormBuilder, FormGroup, FormControl , Validator , FormsModule} from '@angular/forms';
+import { Observable, Subject , Subscription, BehaviorSubject } from 'rxjs';
+// import { CheckRequiredField } from '../../_shared/helpers/form.helper';
+import { Invoice } from '../models/invoice';
+
+// import { ItemsService } from '../_services/items.service';
+import { InvoiceService } from "../_services/invoices.service";
+// import { FormControl } from '@angular/forms';
+
+// import { ItemModel } from '../_models/item.model';
 
 @Component({
   selector: 'app-home',
@@ -13,98 +17,83 @@ import { InvoiceService } from '../_services/invoices.service';
   
 })
 export class HomeComponent implements OnInit { 
-  form: FormGroup;
-  id: any;
-  isAddMode: boolean;
-  loading = false;
-  submitted = false;
 
-  constructor(
-      private formBuilder: FormBuilder,
-      private route: ActivatedRoute,
-      private router: Router,
-      private userService: InvoiceService,
-      // private alertService: AlertService
-  ) {}
 
-  ngOnInit() {
-      this.id = this.route.snapshot.params['id'];
-      this.isAddMode = !this.id;
-      
-      // password not required in edit mode
-      const passwordValidators = [Validators.minLength(6)];
-      if (this.isAddMode) {
-          passwordValidators.push(Validators.required);
+
+
+
+
+
+    @Input() item: Invoice;
+    @Output() formSubmitEvent = new EventEmitter<string>();
+  
+    itemForm: FormGroup;
+  
+    isProcessing: Boolean = false;
+    CheckRequiredField(field: AbstractControl): boolean {
+        return field.hasError('required') && (field.dirty || field.touched);
+    }
+    checkField  = this.CheckRequiredField;
+  
+    constructor(
+      private itemsService: InvoiceService
+    ) { }
+  
+    ngOnInit() {
+      this.initForm();
+    }
+  
+    onSubmit($event) {
+  
+      this.isProcessing  = true;
+  
+      if (this.itemForm.valid) {
+          if (!this.item) {
+            this.doAddItem();
+          } else {
+            this.doUpdateItem();
+          }
       }
-
-      this.form = this.formBuilder.group({
-          title: ['', Validators.required],
-          firstName: ['', Validators.required],
-          lastName: ['', Validators.required],
-          email: ['', [Validators.required, Validators.email]],
-          role: ['', Validators.required],
-          password: ['', [Validators.minLength(6), this.isAddMode ? Validators.required : Validators.nullValidator]],
-          confirmPassword: ['', this.isAddMode ? Validators.required : Validators.nullValidator]
-      }, {
-          // validator: MustMatch('password', 'confirmPassword')
+    }
+  
+    getButtonText(): string {
+      return this.item ? 'Update' : 'Add';
+    }
+  
+    private doAddItem() {
+      this.itemsService.createInvoice(this.itemForm.value).subscribe(
+        (result) => {
+          this.itemForm.reset();
+          this.formSubmitEvent.next('add');
+          this.isProcessing  = false;
+        }
+      );
+    }
+  
+    private doUpdateItem() {
+      this.itemsService.updateInvoice(this.itemForm.value.id , this.itemForm.value).subscribe(
+        (result) => {
+          if (result) {
+            this.formSubmitEvent.next('update');
+            this.reset();
+          }
+          this.isProcessing  = false;
+        }
+      );
+    }
+  
+    private reset() {
+      this.item  = null;
+      this.itemForm.reset();
+      this.initForm();
+    }
+  
+    private initForm() {
+      this.itemForm = new FormGroup({
+        company: new FormControl(this.item ? this.item.company : '', Validators.required),
+        type: new FormControl(this.item ? this.item.type : ''),
+        id: new FormControl(this.item ? this.item.id : null),
       });
-
-      if (!this.isAddMode) {
-          this.userService.getInvoice(this.id)
-              .pipe(first())
-              .subscribe(x => this.form.patchValue(x));
-      }
+    }
+  
   }
-
-  // convenience getter for easy access to form fields
-  get f() { return this.form.controls; }
-
-  onSubmit() {
-      this.submitted = true;
-
-      // reset alerts on submit
-      // this.alertService.clear();
-
-      // stop here if form is invalid
-      if (this.form.invalid) {
-          return;
-      }
-
-      this.loading = true;
-      if (this.isAddMode) {
-          this.createUser();
-      } else {
-          this.updateUser();
-      }
-  }
-
-  private createUser() {
-      this.userService.createInvoice(this.form.value)
-          .pipe(first())
-          .subscribe({
-              next: () => {
-                  // this.alertService.success('User added', { keepAfterRouteChange: true });
-                  // this.router.navigate(['../'], { relativeTo: this.route });
-              },
-              error: error => {
-                  // this.alertService.error(error);
-                  this.loading = false;
-              }
-          });
-  }
-
-  private updateUser() {
-      this.userService.updateInvoice(this.id, this.form.value)
-          .pipe(first())
-          .subscribe({
-              next: () => {
-                  // this.alertService.success('User updated', { keepAfterRouteChange: true });
-                  this.router.navigate(['../../'], { relativeTo: this.route });
-              },
-              error: error => {
-                  // this.alertService.error(error);
-                  this.loading = false;
-              }
-          });
-  }
-}
