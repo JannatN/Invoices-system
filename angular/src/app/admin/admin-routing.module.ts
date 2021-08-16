@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateItemComponent } from './components/create-item/create-item.component';
 import { CreateInvoiceComponent } from './components/create-invoice/create-invoice.component';
-import { InvoiceDetailsComponent } from './components/invoice-details/invoice-details.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { UploadFilesComponent } from './components/upload-files/upload-files.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
@@ -18,7 +17,6 @@ const routes: Routes = [
   { path: 'addItem/:id', component: CreateItemComponent },
   { path: 'attachFile/:id', component: UploadFilesComponent },
   { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
-  // { path: 'invoiceDetails/:id', component: InvoiceDetailsComponent },
   { path: 'users', component: UserListComponent },
   { path: 'updateUser/:id', component: UpdateUserComponent },
   { path: 'userDetails/:id', component: UserDetailsComponent },

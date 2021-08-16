@@ -3,14 +3,6 @@
 
 </div>
 <div class="container">
-  <div class="form-group mb-4">
-    <mat-form-field>
-      <label>Filter:</label>
-      <input matInput (keyup)="doFilter($event.target.value)" class="input" id="exampleFormControlInput1"
-        class="form-control form-control-underlined">
-    </mat-form-field>
-  </div>
-
 
   <div class="example-container mat-elevation-z8">
     <mat-table [dataSource]="usersDatasource" matSort>

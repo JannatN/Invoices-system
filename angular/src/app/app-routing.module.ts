@@ -33,6 +33,10 @@ const routes: Routes = [
     path: 'auditor', loadChildren: () => import('./auditor/auditor.module').then(m => m.AuditorModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'board', loadChildren: () => import('./shared/shared.module').then(m => m.SharedModule),
+    canActivate: [AuthGuard]
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent},
 

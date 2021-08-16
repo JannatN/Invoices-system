@@ -110,7 +110,7 @@ export class BoardComponent implements OnInit {
 
 
   public redirectToDetails = (id: number) => {
-    this.router.navigate(['invoiceDetails', id]);
+    this.router.navigate(['board/invoiceDetails', id]);
 
   }
   public redirectToUpdate = (id: number) => {
