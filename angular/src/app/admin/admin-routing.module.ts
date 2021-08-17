@@ -16,6 +16,8 @@ const routes: Routes = [
   // { path: 'addInvoice', component: AddEditComponent },
   { path: 'addItem/:id', component: CreateItemComponent },
   { path: 'attachFile/:id', component: UploadFilesComponent },
+  // { path: 'updateInvoice/:id', component: AddEditComponent },
+
   { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
   { path: 'users', component: UserListComponent },
   { path: 'updateUser/:id', component: UpdateUserComponent },

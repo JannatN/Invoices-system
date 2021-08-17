@@ -7,6 +7,7 @@ import { Item } from 'src/app/core/models/item';
 import { InvoiceService } from 'src/app/core/services/invoices.service';
 import { UploadFilesService } from 'src/app/core/services/upload-file.service';
 import { Location } from '@angular/common';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-edit',
@@ -14,46 +15,89 @@ import { Location } from '@angular/common';
   styleUrls: ['./add-edit.component.css']
 })
 export class AddEditComponent implements OnInit {
-
-  dynamicForm: FormGroup;
+  form: FormGroup;
+  id: any;
+  isAddMode: boolean;
+  loading = false;
   submitted = false;
-  invoice: Invoice = new Invoice();
+  // invoice: Invoice = new Invoice();
+  dynamicForm: FormGroup;
+
   item: Item = new Item();
+
   selectedFiles: FileList;
   progressInfos = [];
   message = '';
-  id: number;
-  isAddMode: boolean;
-
-  constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService,
-    private router: Router, private route: ActivatedRoute, private uploadService: UploadFilesService, private location: Location) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private userService: InvoiceService,
+    private invoiceService: InvoiceService,
+    private uploadService: UploadFilesService
+    //  ,  private location: Location
+    // private alertService: AlertService
+  ) { }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
-    this.isAddMode = !this.id;
-
     this.dynamicForm = this.formBuilder.group({
       numberOfItems: ['', Validators.required],
       items: new FormArray([])
     });
-    if (!this.isAddMode) {
-      this.invoice = new Invoice();
+
+    this.id = this.route.snapshot.params['id'];
+    this.isAddMode = !this.id;
+
+    // password not required in edit mode
+    // const passwordValidators = [Validators.minLength(6)];
+    // if (this.isAddMode) {
+    //     passwordValidators.push(Validators.required);
+    // }
 
 
-      this.invoiceService.getInvoice(this.id)
-        .subscribe(data => {
-          console.log("before", data)
-          this.invoice = data;
-        }, error => console.log(error));
+
+
+    this.form = this.formBuilder.group({
+      company: ['', Validators.required],
+      type: ['', Validators.required],
+      due_date: ['', Validators.required],
+      // description: ['', Validators.required],
+      // price: ['', Validators.required],
+      // currency: ['', Validators.required],
+      // quantity: ['', Validators.required]
+      // lastName: ['', Validators.required],
+      // email: ['', [Validators.required, Validators.email]],
+      // role: ['', Validators.required],
+      // password: ['', [Validators.minLength(6), this.isAddMode ? Validators.required : Validators.nullValidator]],
+      // confirmPassword: ['', this.isAddMode ? Validators.required : Validators.nullValidator]
     }
+      // , {
+      //     validator: MustMatch('password', 'confirmPassword')
+      // }
+
+    );
+
+    if (!this.isAddMode) {
+      this.userService.getInvoice(this.id)
+        .pipe(first())
+        .subscribe(x => this.form.patchValue(x));
+    }
+
+
+
   }
-  get f() {
+
+  // convenience getter for easy access to form fields
+  get f() { return this.form.controls; }
+
+  get l() {
     return this.dynamicForm.controls;
   }
   get t() {
-    return this.f.items as FormArray;
+    return this.l.items as FormArray;
 
   }
+
 
   selectFiles(event) {
     this.progressInfos = [];
@@ -76,27 +120,6 @@ export class AddEditComponent implements OnInit {
         this.message = 'Could not upload the file:' + file.name;
       });
 
-  }
-  updateInvoice() {
-    this.invoiceService.updateInvoice(this.id, this.invoice)
-      .subscribe(data => {
-        console.log(data);
-        this.invoice = new Invoice();
-
-        this.back();
-      }, error => console.log(error));
-  }
-
-  saveInvoice() {
-    this.invoiceService.createInvoice(this.invoice).subscribe(data1 => {
-      console.log(data1['id'])
-
-      this.invoice = new Invoice();
-      this.message = '';
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.selectedFiles[i], data1['id']);
-      }
-    })
   }
 
   onChangeItems(e) {
@@ -123,46 +146,99 @@ export class AddEditComponent implements OnInit {
   }
 
 
-
   onSubmit() {
+
     this.submitted = true;
-    this.invoice.items = [];
-    this.invoice.files = [];
-    for (let i = 0; i < 10; i++) {
-      this.invoice.items.push(this.dynamicForm.value.items[i]);
 
-    }
-    // this.invoice.files.push(this.selectedFiles[0]);
+    // reset alerts on submit
+    // this.alertService.clear();
 
-    console.log("values", this.dynamicForm.value.items);
-    console.log("invoiceeee", this.invoice);
-
-    // this.file = this.selectedFiles
-    // this.file.name = this.selectedFiles[0].name
-    // this.file.type = this.selectedFiles[0].type
-    // this.file.data = this.selectedFiles[0].datac
-
-    // this.invoice.files.push(this.file);
-    // console.log("filee", this.file);
+    // stop here if form is invalid
 
 
-
-    console.log("invoice", this.invoice);
-
-    console.log("invoice created");
-    if (this.dynamicForm.invalid) {
-      return;
-    }
+    this.loading = true;
     if (this.isAddMode) {
-      this.saveInvoice();
+      this.createUser();
+
+      if (this.form.invalid) {
+        return;
+      }
+      this.form.value.items = [];
+      this.form.value.files = [];
+      for (let i = 0; i < 10; i++) {
+        console.log("line 175   mmmmmm")
+        this.form.value.items.push(this.dynamicForm.value.items[i]);
+
+      }
+      console.log("this.invoice.items", this.form.value.items)
+      if (this.dynamicForm.invalid) {
+        return;
+      }
+
     } else {
-      this.updateInvoice();
+      this.updateUser();
     }
-    // this.saveInvoice();
-    alert('SUCCESS!! \n\n The Invoice is created ! :-)\n\n');
+
+
+    // this.submitted = true;
+
+
+    // console.log("values", this.dynamicForm.value.items);
+    // console.log("invoiceeee", this.invoice);
+
+
+
+
+
+    // console.log("invoice", this.invoice);
+
+    // console.log("invoice created");
+
+    // alert('SUCCESS!! \n\n The Invoice is created ! :-)\n\n');
     this.back();
 
   }
+
+  private createUser() {
+    this.userService.createInvoice(this.form.value)
+      .pipe(first())
+      .subscribe(data => {
+        // this.invoice = new Invoice();
+        this.message = '';
+        for (let i = 0; i < this.selectedFiles.length; i++) {
+          this.upload(i, this.selectedFiles[i], data['id']);
+        }
+
+        // next: () => {
+
+        //     // this.alertService.success('User added', { keepAfterRouteChange: true });
+        //     this.router.navigate(['../'], { relativeTo: this.route });
+
+        // }
+
+        // ,
+        error: error => {
+          // this.alertService.error(error);
+          this.loading = false;
+        }
+      });
+  }
+
+  private updateUser() {
+    this.userService.updateInvoice(this.id, this.form.value)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          // this.alertService.success('User updated', { keepAfterRouteChange: true });
+          this.router.navigate([''], { relativeTo: this.route });
+        },
+        error: error => {
+          // this.alertService.error(error);
+          this.loading = false;
+        }
+      });
+  }
+
 
   onReset() {
     this.submitted = false;
@@ -183,7 +259,6 @@ export class AddEditComponent implements OnInit {
     this.router.navigate(['addItem']);
   }
   back() {
-    this.location.back();
+    this.router.navigate(['/invoices']);
   }
-
 }

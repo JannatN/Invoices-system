@@ -53,15 +53,3 @@ export const authInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
 ];
 
-      //if 401 logout
-      //if 403
-      //if 404
-      //lazy loading
-      //ngrx
-      //gurd 
-      //recative form
-      //ng if for boards doone 
-      //input() binding data between components
-      // handle errors in getInvoice ...
-      //environment
-      //userid replace with name

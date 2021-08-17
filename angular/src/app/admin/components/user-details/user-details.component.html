@@ -51,20 +51,7 @@
  
 
 
- <div *ngIf="user.invoices.length > 0">
-  <label><b>Invoices: </b></label>
-  <tbody>
 
-    <tr *ngFor="let invoice of user.invoices  | keyvalue">
-      <div>Created at: {{invoice.value.date_created}} </div>
-      <div>Due date: {{invoice.value.due_date}} </div>
-      <div>Type: {{invoice.value.type}}</div>
-      <div>Company: {{invoice.value.company}}</div>
-      <div><br></div>
-    </tr>
-
-  </tbody>
-</div> 
  <br>
 <br>
 <button (click)="list()" class="btn btn-primary">Back to Users</button><br> 
