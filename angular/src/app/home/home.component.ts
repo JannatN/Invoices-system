@@ -1,14 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, AbstractControl, FormBuilder, FormGroup, FormControl , Validator , FormsModule, FormArray} from '@angular/forms';
 import { Observable, Subject , Subscription, BehaviorSubject } from 'rxjs';
-import { Invoice } from '../models/invoice';
+// import { Invoice } from '../models/invoice';
 
-import { InvoiceService } from "../_services/invoices.service";
+// import { InvoiceService } from "../_services/invoices.service";
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { Item } from '../models/item';
-import { UploadFilesService } from '../_services/upload-file.service';
+// import { Item } from '../models/item';
+// import { UploadFilesService } from '../_services/upload-file.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { Item } from '../core/models/item';
+import { InvoiceService } from '../core/services/invoices.service';
+import { UploadFilesService } from '../core/services/upload-file.service';
 
 
 @Component({
@@ -39,7 +42,6 @@ export class HomeComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private userService: InvoiceService,
-      private invoiceService: InvoiceService,
      private uploadService: UploadFilesService
     //  ,  private location: Location
         // private alertService: AlertService

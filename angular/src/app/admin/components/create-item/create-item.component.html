@@ -1,0 +1,66 @@
+<div class="card m-3">
+    <h5 class="card-header">Add Item</h5>
+    <h5 class="card-header">Update Invoice</h5>
+
+    <div class="card-body">
+        <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+
+                <div class="form-group col-6">
+                    <label>Name</label>
+                    <input type="text" formControlName="name" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted &&f.name.errors }" />
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                        <div *ngIf="f.name.errors.required">Name is required</div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label>Description</label>
+                    <input type="text" formControlName="description" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Description is required</div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label>Price</label>
+                    <input type="text" formControlName="price" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.price.errors }" />
+                    <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                        <div *ngIf="f.price.errors.required">Price is required</div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label>Currency</label>
+                    <!-- <input type="text" formControlName="currency" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && item.controls.currency.errors }" /> -->
+                    <select class="form-control" formControlName="currency"
+                        [ngClass]="{ 'is-invalid': submitted && f.currency.errors }">
+                        <option value="USD">$</option>
+                        <option value="NIS">₪</option>
+                        <option value="EURO">€</option>
+                    </select>
+                    <!-- <div *ngIf="submitted && item.controls.currency.errors" class="invalid-feedback">
+                        <div *ngIf="item.controls.currency.errors.required">Currency is required</div>
+                    </div> -->
+                </div>
+                <div class="form-group col-6">
+                    <label>Quantity</label>
+                    <input type="text" formControlName="quantity" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }" />
+                    <!-- <div *ngIf="submitted && item.controls.quantity.errors" class="invalid-feedback">
+                        <div *ngIf="item.controls.quantity.errors.required">Quantity is required</div>
+                    </div> -->
+                </div>
+            </div>
+
+
+            <div class="card-footer text-center">
+                <button class="btn btn-primary mr-1">Save Item</button>
+                <button class="btn btn-secondary mr-1 grey" type="reset" (click)="onReset()">Reset</button>
+                <button (click)="back()" type="button" class="btn btn-secondary grey"> Back </button><br>
+
+            </div>
+        </form>
+    </div>
+</div>

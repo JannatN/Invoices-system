@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Invoice } from '../models/invoice';
+// import { Invoice } from '../models/invoice';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InvoiceService } from '../_services/invoices.service';
+// import { InvoiceService } from '../_services/invoices.service';
 import {Location} from '@angular/common';
-import { Item } from '../models/item';
-import { TokenStorageService } from '../_services/token-storage.service';
+import { InvoiceService } from '../core/services/invoices.service';
+import { Invoice } from '../core/models/invoice';
+import { Item } from '../core/models/item';
+import { TokenStorageService } from '../core/services/token-storage.service';
+// import { Item } from '../models/item';
+// import { TokenStorageService } from '../_services/token-storage.service';
 
 
 @Component({

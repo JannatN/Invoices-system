@@ -2,15 +2,20 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { InvoiceService } from "../_services/invoices.service";
-import { Invoice } from '../models/invoice';
+// import { InvoiceService } from "../_services/invoices.service";
+// import { Invoice } from '../models/invoice';
 import { Router } from '@angular/router';
-import { User } from '../models/user';
+// import { User } from '../models/user';
 import { Observable, of } from "rxjs";
-import { TokenStorageService } from '../_services/token-storage.service';
-import { Item } from '../models/item';
+// import { TokenStorageService } from '../_services/token-storage.service';
+// import { Item } from '../models/item';
 import { InvoiceDataSource } from '../datasource/invoices.datasource';
 import { tap } from 'rxjs/operators';
+import { Invoice } from '../core/models/invoice';
+import { Item } from '../core/models/item';
+import { User } from '../core/models/user';
+import { InvoiceService } from '../core/services/invoices.service';
+import { TokenStorageService } from '../core/services/token-storage.service';
 
 
 

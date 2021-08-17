@@ -8,11 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
 import javax.validation.Valid;
-import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,10 +67,6 @@ public class Mapper {
         return signup;
     }
 
-//    private ItemDto convertToDto(ResponseEntity<Item> item) {
-//        ItemDto itemDto = modelMapper.map(item, ItemDto.class);
-//        return itemDto;
-//    }
 
     public static Item convertToEntity(@Valid ItemDto ItemDto) throws ParseException {
         Item item = modelMapper.map(ItemDto, Item.class);

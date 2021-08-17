@@ -1,0 +1,67 @@
+<form (ngSubmit)="onSubmit()">
+  <div class="card m-3">
+    <h5 class="card-header">Update Invoice</h5>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="name">Due Date</label>
+        <input type="text" class="form-control" id="due_date" required [(ngModel)]="invoice.due_date" name="due_date">
+      </div>
+
+      <div class="form-group">
+        <label for="name">User Id</label>
+        <input type="text" class="form-control" id="userid" required [(ngModel)]="invoice.userid" name="userid">
+      </div>
+      <div class="form-group">
+        <label for="name">Company </label>
+        <input type="text" class="form-control" id="company" required [(ngModel)]="invoice.company" name="company">
+      </div>
+      <div class="form-group">
+        <label for="name"> Invoice Type</label>
+        <input type="text" class="form-control" id="type" required [(ngModel)]="invoice.type" name="type">
+      </div>
+
+      <div *ngFor="let item of invoice.items | keyvalue; let i = index">
+        <h5 class="card-title">Item {{i + 1}}</h5>
+        <div class="form-group">
+          <label for="name">Item name</label>
+          <input type="text" class="form-control" id="name" required [(ngModel)]="item.value.name"
+            name="{{invoice.items[i].name}}" #name="ngModel">
+
+        </div>
+
+        <div class="form-group">
+          <label for="name">Item Description</label>
+          <textarea rows="4" cols="50" class="form-control" id="description" required
+            [(ngModel)]="item.value.description" name="{{invoice.items[i].description}}"
+            #description="ngModel"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Item price</label>
+          <input type="number" class="form-control" id="price" required [(ngModel)]="item.value.price"
+            name="{{invoice.items[i].price}}" #price="ngModel">
+
+        </div>
+        <div class="form-group">
+          <label for="name">Currency </label>
+          <select class="form-control" required [(ngModel)]="item.value.currency" name="{{invoice.items[i].currency}}"
+            #currency="ngModel">
+            <option value="USD">$</option>
+            <option value="NIS">₪</option>
+            <option value="EURO">€</option>
+          </select>
+
+        </div>
+        <div class="form-group">
+          <label for="name">Item Quantitiy </label>
+          <input type="text" class="form-control" id="quantity" required [(ngModel)]="item.value.quantity"
+            name="{{invoice.items[i].quantity}}" #quantity="ngModel">
+
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-center">
+      <button type="submit" class="btn">Update</button>
+    </div>
+  </div>
+</form>

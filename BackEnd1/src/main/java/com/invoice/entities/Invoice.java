@@ -28,6 +28,7 @@ import org.hibernate.envers.NotAudited;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 
+
 @Entity
 @Audited
 @Table(name = "invoices")

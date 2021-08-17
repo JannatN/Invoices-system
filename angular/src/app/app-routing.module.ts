@@ -5,19 +5,10 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
-import { BoardUserComponent } from './board-user/board-user.component';
-import { BoardAuditorComponent } from './board-auditor/board-auditor.component';
-import { BoardAdminComponent } from './board-admin/board-admin.component';
-import { UpdateUserComponent } from './update-user/update-user.component';
-import { UserDetailsComponent } from './user-details/user-details.component';
-import { UserListComponent } from './user-list/user-list.component';
-
-import { UpdateInvoiceComponent } from './update-Invoice/update-invoice.component';
-import {InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
-import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
-
-import { CreateItemComponent } from './create-item/create-item.component';
-import { UploadFilesComponent } from './upload-files/upload-files.component';
+import { AuthGuard } from './core/helpers/auth.guard';
+import { AdminRoleGuard } from './core/helpers/admin-role.guard';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AudRoleGuard } from './core/helpers/aud-role.guard';
 
 
 
@@ -26,24 +17,25 @@ const routes: Routes = [
   // { path: 'home', component: HomeComponent },
   { path: 'logout', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'user', component: BoardUserComponent },
-  { path: 'auditor', component: BoardAuditorComponent },
-  { path: 'admin', component: BoardAdminComponent },
+  { path: 'register', loadChildren: () => import('./register/register.module').then(m => m.RegisterModule) },
+  {
+    path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AuthGuard, AdminRoleGuard]
+  },
+  {
+    path: 'auditor', loadChildren: () => import('./auditor/auditor.module').then(m => m.AuditorModule),
+    canActivate: [AuthGuard, AudRoleGuard]
+  },
+  {
+    path: 'board', loadChildren: () => import('./shared/shared.module').then(m => m.SharedModule),
+    canActivate: [AuthGuard]
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'users', component: UserListComponent },
-  { path: 'update/:id', component: UpdateUserComponent },
-  { path: 'details/:id', component: UserDetailsComponent },
-  { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
-  { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
-  { path: 'addInvoice', component: CreateInvoiceComponent },
-  // { path: 'updateInvoice/:id', component: HomeComponent },
-  // { path: 'addInvoice', component: HomeComponent },
-  
-
-  { path: 'addItem/:id', component: CreateItemComponent },
-  { path: 'attachFile/:id', component: UploadFilesComponent },
+  { path: '**', component: PageNotFoundComponent},
 
 
 ];
