@@ -61,21 +61,21 @@ export class BoardComponent implements OnInit {
   }
 
   search() {
-    this.invoiceDatasource.counter$
+    // this.invoiceDatasource.counter$
+    //   .pipe(
+    //     tap((count) => {
+    //       this.paginator.length = count;
+    //     })
+    //   )
+    //   .subscribe();
+    // if (this.filterValue != null) {
+    console.log("ifffff")
+    this.paginator.page
       .pipe(
-        tap((count) => {
-          this.paginator.length = count;
-        })
+        tap(() => this.loadInvoicesFilter(this.filterValue))
       )
       .subscribe();
-    if (this.filterValue != null) {
-      console.log("ifffff")
-      this.paginator.page
-        .pipe(
-          tap(() => this.loadInvoicesFilter(this.filterValue))
-        )
-        .subscribe();
-    }
+    // }
 
   }
   ngAfterViewInit() {
@@ -86,7 +86,15 @@ export class BoardComponent implements OnInit {
         })
       )
       .subscribe();
-    this.search();
+    this.paginator.page
+      .pipe(
+        tap(() => this.loadInvoices())
+      )
+      .subscribe();
+    if (this.filterValue != null) {
+
+      this.search();
+    }
   }
 
 

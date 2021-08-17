@@ -18,8 +18,6 @@ import { tap } from 'rxjs/operators';
 export class UserListComponent implements OnInit {
     users: Observable<User[]>;
     user?: User[];
-    currentIndex = -1;
-    username = '';
     usersDatasource: UserDataSource;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;

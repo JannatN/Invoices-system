@@ -14,9 +14,13 @@
                 </div> -->
             </div>
             <div class="form-group">
-                <label for="name">User Id</label>
+                <label for="name">User ID</label> 
                 <input type="number" class="form-control" id="userid" required [(ngModel)]="invoice.userid"
                     name="userid" #userid="ngModel" [ngModelOptions]="{standalone: true}">
+                    <!-- <select [(ngModel)]="invoice.userid" (ngModelChange)="processSelectedItem($event)" [ngModelOptions]="{standalone: true}">
+                        <option value="-1">Choose...</option>
+                        <option *ngFor="let u of users" [ngValue]="u.id">{{ u.username }}</option>
+                    </select> -->
                 <div class="alert alert-danger" role="alert" *ngIf="fo.submitted && userid.invalid">
                     User id is required!
                 </div>

@@ -8,6 +8,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
+import { User } from 'src/app/core/models/user';
+import { UserService } from 'src/app/core/services/users.service';
 
 @Component({
   selector: 'app-create-invoice',
@@ -23,12 +25,15 @@ export class CreateInvoiceComponent implements OnInit {
   progressInfos = [];
   message = '';
   id: number;
+  users: Observable<User[]>
+  user: User = new User();
   // fileInfos: Observable<any>;
 
-  constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService,
-    private router: Router, private uploadService: UploadFilesService,  private location: Location) { }
+  constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService,private userService: UserService,
+    private router: Router, private uploadService: UploadFilesService, private location: Location) { }
 
   ngOnInit() {
+    this.users = this.userService.getUserList();
     this.dynamicForm = this.formBuilder.group({
       numberOfItems: ['', Validators.required],
       items: new FormArray([])
@@ -42,7 +47,10 @@ export class CreateInvoiceComponent implements OnInit {
     return this.f.items as FormArray;
 
   }
-
+  processSelectedItem(u) {
+    this.user.username = u.username;
+    this.user.id = u.id;
+  }
   selectFiles(event) {
     this.progressInfos = [];
     this.selectedFiles = event.target.files;
