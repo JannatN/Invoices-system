@@ -61,16 +61,16 @@ export class HomeComponent implements OnInit {
         // }
       
 
-
+   
 
         this.form = this.formBuilder.group({
             company: ['', Validators.required],
             type: ['', Validators.required],
             due_date:['', Validators.required],
-            description: ['', Validators.required],
-            price: ['', Validators.required],
-            currency: ['', Validators.required],
-            quantity: ['', Validators.required]
+            // description: ['', Validators.required],
+            // price: ['', Validators.required],
+            // currency: ['', Validators.required],
+            // quantity: ['', Validators.required]
             // lastName: ['', Validators.required],
             // email: ['', [Validators.required, Validators.email]],
             // role: ['', Validators.required],
