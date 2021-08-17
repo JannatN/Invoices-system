@@ -1,20 +1,17 @@
-<h1 *ngIf="isAddMode">Add User</h1>
+
+  
+<br>
+<br>
+<div class="container">
+   <img class="img-responsive" src="assets/images/invoice1.png"><app-login></app-login>
+
+</div>
+
+<!-- <h1 *ngIf="isAddMode">Add User</h1>
 <h1 *ngIf="!isAddMode">Edit User</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-row">
-        <!-- <div class="form-group col">
-            <label>Title</label>
-            <select formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
-                <option value=""></option>
-                <option value="Mr">Mr</option>
-                <option value="Mrs">Mrs</option>
-                <option value="Miss">Miss</option>
-                <option value="Ms">Ms</option>
-            </select>
-            <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
-                <div *ngIf="f.title.errors.required">Title is required</div>
-            </div>
-        </div> -->
+     
         <div class="form-group col-5">
             <label>company</label>
             <input type="text" formControlName="company" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.company.errors }" />
@@ -62,14 +59,14 @@
         <div class="list-group-item">
             <h5 class="card-title">Item {{i + 1}}</h5>
             <div [formGroup]="item" class="form-row">
-                <!-- <div class="form-group col-6">
+                 <div class="form-group col-6">
                     <label>Name</label>
                     <input type="text" formControlName="name" class="form-control" [(ngModel)]="item.value.name"
                         [ngClass]="{ 'is-invalid': submitted && item.controls.name.errors }" />
                     <div *ngIf="submitted && item.controls.name.errors" class="invalid-feedback">
                         <div *ngIf="item.controls.name.errors.required">Name is required</div>
                     </div>
-                </div> -->
+                </div> 
                 <div class="form-group col-7">
                   <label>name</label>
                   <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
@@ -97,8 +94,7 @@
                 </div>
                 <div class="form-group col-6">
                     <label>Currency</label>
-                    <!-- <input type="text" formControlName="currency" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && item.controls.currency.errors }" /> -->
+                  
                     <select class="form-control" formControlName="currency"
                         [ngClass]="{ 'is-invalid': submitted && item.controls.currency.errors }">
                         <option value="USD">$</option>
@@ -131,9 +127,6 @@
             <input type="file" multiple (change)="selectFiles($event)" />
         </label>
 
-        <!-- <button class="btn" [disabled]="!selectedFiles" (click)="uploadFiles()">
-  Upload
-</button> -->
         <div *ngFor="let progressInfo of progressInfos" class="mb-2">
             <span>{{ progressInfo.fileName }}</span>
             <div class="progress">
@@ -144,8 +137,8 @@
                 </div>
             </div>
         </div>
-    </div>
-   </div>
+    </div> 
+   </div>-->
 
 <!-- <h3 *ngIf="!isAddMode" >
     <div class="card m-3">
@@ -206,7 +199,7 @@
 
 
 
-    <div class="form-group">
+    <!-- <div class="form-group">
         <button [disabled]="loading" class="btn btn-primary" [disabled]="!selectedFiles">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Save
@@ -214,6 +207,6 @@
         <button class="btn btn-secondary mr-1 grey" type="reset" (click)="onReset()">Reset</button>
         <button class="btn btn-secondary grey" type="button" (click)="onClear()">Clear</button>
         <button (click)="back()" type="button" class="btn btn-secondary grey"> Back </button><br>
-        <!-- <a routerLink="/users" class="btn btn-link">Cancel</a> -->
+        <a routerLink="/users" class="btn btn-link">Cancel</a> 
     </div>
-</form>
+</form> -->
