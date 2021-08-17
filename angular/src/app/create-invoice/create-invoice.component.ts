@@ -1,4 +1,4 @@
-import { Invoice } from '../models/invoice';
+// import { Invoice } from '../models/invoice';
 import { Component, OnInit, Input } from '@angular/core';
 import { InvoiceService } from "../_services/invoices.service";
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
+import { Invoice } from '../models/invoice';
 
 @Component({
   selector: 'app-create-invoice',
