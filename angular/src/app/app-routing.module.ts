@@ -36,10 +36,10 @@ const routes: Routes = [
   { path: 'update/:id', component: UpdateUserComponent },
   { path: 'details/:id', component: UserDetailsComponent },
   { path: 'detailsInvoice/:id', component: InvoiceDetailsComponent },
-  { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
-  { path: 'addInvoice', component: CreateInvoiceComponent },
-  // { path: 'updateInvoice/:id', component: HomeComponent },
-  // { path: 'addInvoice', component: HomeComponent },
+  // { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
+  // { path: 'addInvoice', component: CreateInvoiceComponent },
+  { path: 'updateInvoice/:id', component: HomeComponent },
+  { path: 'addInvoice', component: HomeComponent },
   
 //   {
   

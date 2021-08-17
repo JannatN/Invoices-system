@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
     isAddMode: boolean;
     loading = false;
     submitted = false;
-    invoice: Invoice = new Invoice();
+    // invoice: Invoice = new Invoice();
     dynamicForm: FormGroup;
  
     item: Item = new Item();
@@ -46,11 +46,11 @@ export class HomeComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-
-        this.dynamicForm = this.formBuilder.group({
-            numberOfItems: ['', Validators.required],
-            items: new FormArray([])
-          });
+      this.dynamicForm = this.formBuilder.group({
+        numberOfItems: ['', Validators.required],
+        items: new FormArray([])
+      });
+       
         this.id = this.route.snapshot.params['id'];
         this.isAddMode = !this.id;
         
@@ -66,7 +66,11 @@ export class HomeComponent implements OnInit {
         this.form = this.formBuilder.group({
             company: ['', Validators.required],
             type: ['', Validators.required],
-            due_date:['', Validators.required]
+            due_date:['', Validators.required],
+            description: ['', Validators.required],
+            price: ['', Validators.required],
+            currency: ['', Validators.required],
+            quantity: ['', Validators.required]
             // lastName: ['', Validators.required],
             // email: ['', [Validators.required, Validators.email]],
             // role: ['', Validators.required],
@@ -84,6 +88,9 @@ export class HomeComponent implements OnInit {
                 .pipe(first())
                 .subscribe(x => this.form.patchValue(x));
         }
+
+        
+
     }
 
     // convenience getter for easy access to form fields
@@ -123,10 +130,10 @@ export class HomeComponent implements OnInit {
 
       onChangeItems(e) {
         const numberOfItems = e.target.value || 0;
-        this.dynamicForm = this.formBuilder.group({
-            numberOfItems: ['', Validators.required],
-            items: new FormArray([])
-          });
+        // this.dynamicForm = this.formBuilder.group({
+        //     numberOfItems: ['', Validators.required],
+        //     items: new FormArray([])
+        //   });
         if (this.t.length < numberOfItems) {
           for (let i = this.t.length; i < numberOfItems; i++) {
             this.t.push(this.formBuilder.group({
@@ -150,6 +157,7 @@ export class HomeComponent implements OnInit {
 
 
     onSubmit() {
+      
         this.submitted = true;
 
         // reset alerts on submit
@@ -161,17 +169,18 @@ export class HomeComponent implements OnInit {
         this.loading = true;
         if (this.isAddMode) {
             this.createUser();
+          
               if (this.form.invalid) {
             return;
         }
-            this.invoice.items = [];
-            this.invoice.files = [];
+            this.form.value.items = [];
+            this.form.value.files = [];
             for (let i = 0; i < 10; i++) {
                 console.log("line 175   mmmmmm")
-              this.invoice.items.push(this.dynamicForm.value.items[i]);
+              this.form.value.items.push(this.dynamicForm.value.items[i]);
         
             }
-            console.log("this.invoice.items",this.invoice.items)
+            console.log("this.invoice.items",this.form.value.items)
             if (this.dynamicForm.invalid) {
                 return;
               }
@@ -204,7 +213,7 @@ export class HomeComponent implements OnInit {
         this.userService.createInvoice(this.form.value)
             .pipe(first())
             .subscribe(data=>{
-                this.invoice = new Invoice();
+                // this.invoice = new Invoice();
                 this.message = '';
                 for (let i = 0; i < this.selectedFiles.length; i++) {
                   this.upload(i, this.selectedFiles[i], data['id']);

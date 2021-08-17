@@ -41,12 +41,13 @@
 
 
 
+        <div *ngIf="isAddMode" >
 
         <h5 class="card-title">Items Section</h5>
         <div class="form-row">
             <div class="form-group">
                 <label> Number of Items</label>
-                <select  class="form-control" (change)="onChangeItems($event)"
+                <select formControlName="numberOfItems" class="form-control" (change)="onChangeItems($event)"
                     [ngClass]="{ 'is-invalid': submitted && f.numberOfItems.errors }">
                     <option value=""></option>
                     <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">{{i}}</option>
@@ -61,13 +62,20 @@
         <div class="list-group-item">
             <h5 class="card-title">Item {{i + 1}}</h5>
             <div [formGroup]="item" class="form-row">
-                <div class="form-group col-6">
+                <!-- <div class="form-group col-6">
                     <label>Name</label>
                     <input type="text" formControlName="name" class="form-control" [(ngModel)]="item.value.name"
                         [ngClass]="{ 'is-invalid': submitted && item.controls.name.errors }" />
                     <div *ngIf="submitted && item.controls.name.errors" class="invalid-feedback">
                         <div *ngIf="item.controls.name.errors.required">Name is required</div>
                     </div>
+                </div> -->
+                <div class="form-group col-7">
+                  <label>name</label>
+                  <input type="text" formControlName="item.value.name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                      <div *ngIf="f.name.errors.required">name is required</div>
+                  </div>
                 </div>
                 <div class="form-group col-6">
                     <label>Description</label>
@@ -113,6 +121,9 @@
             </div>
         </div>
     </div>
+   </div>
+   <div *ngIf="isAddMode" >
+
     <div class="container">
         <h5 class="card-title">Attach File</h5>
 
@@ -134,10 +145,9 @@
             </div>
         </div>
     </div>
+   </div>
 
-
-
-<h3 *ngIf="!isAddMode" >
+<!-- <h3 *ngIf="!isAddMode" >
     <div class="card m-3">
         <h5 class="card-header">Update Invoice</h5>
         <div class="card-body">
@@ -167,8 +177,7 @@
             </div>
             <div class="form-group">
               <label for="name">Currency </label>
-              <!-- <input type="text" class="form-control" id="currency" required [(ngModel)]="item.value.currency"
-              name="{{invoice.items[i].currency}}" #currency="ngModel"> -->
+             
               <select class="form-control" required [(ngModel)]="item.value.currency" name="{{invoice.items[i].currency}}"
                 #currency="ngModel">
                 <option value="USD">$</option>
@@ -185,15 +194,13 @@
             </div>
           </div>
         </div>
-        <!-- <div class="card-footer text-center">
-          <button type="submit" class="btn">Update</button>
-        </div> -->
+      
       </div>
 
 
 
 
-    </h3>
+    </h3> -->
 
 
 
