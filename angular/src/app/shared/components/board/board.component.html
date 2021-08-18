@@ -27,12 +27,12 @@
 
       <ng-container matColumnDef="date_created">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Date Created</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.date_created}} </mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.date_created |date: 'fullDate'}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="due_date">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Due Date</mat-header-cell>
-        <mat-cell *matCellDef="let row" class="mycolor2"> {{row.due_date }} </mat-cell>
+        <mat-cell *matCellDef="let row" class="mycolor2"> {{row.due_date | date: 'short'}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="userid">

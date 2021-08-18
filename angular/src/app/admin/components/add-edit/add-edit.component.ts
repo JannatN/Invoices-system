@@ -8,6 +8,8 @@ import { InvoiceService } from 'src/app/core/services/invoices.service';
 import { UploadFilesService } from 'src/app/core/services/upload-file.service';
 import { Location } from '@angular/common';
 import { first } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { UserService } from 'src/app/core/services/users.service';
 
 @Component({
   selector: 'app-add-edit',
@@ -21,8 +23,9 @@ export class AddEditComponent implements OnInit {
   loading = false;
   submitted = false;
   // invoice: Invoice = new Invoice();
-  dynamicForm: FormGroup;
-
+  // dynamicForm: FormGroup;
+  users = new BehaviorSubject([]);
+  users$ = this.users.asObservable();
   item: Item = new Item();
 
   selectedFiles: FileList;
@@ -32,55 +35,54 @@ export class AddEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private userService: InvoiceService,
     private invoiceService: InvoiceService,
-    private uploadService: UploadFilesService
+    // private invoiceService: InvoiceService,
+    private uploadService: UploadFilesService,
+    private userService: UserService
     //  ,  private location: Location
     // private alertService: AlertService
   ) { }
 
   ngOnInit() {
-    this.dynamicForm = this.formBuilder.group({
-      numberOfItems: ['', Validators.required],
-      items: new FormArray([])
-    });
-
+    this.userService.getUserList().subscribe(e => {
+      debugger
+      this.users.next(e.content)
+    }
+    );
     this.id = this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
-
-    // password not required in edit mode
-    // const passwordValidators = [Validators.minLength(6)];
-    // if (this.isAddMode) {
-    //     passwordValidators.push(Validators.required);
-    // }
-
-
-
-
     this.form = this.formBuilder.group({
       company: ['', Validators.required],
       type: ['', Validators.required],
       due_date: ['', Validators.required],
-      // description: ['', Validators.required],
-      // price: ['', Validators.required],
-      // currency: ['', Validators.required],
-      // quantity: ['', Validators.required]
-      // lastName: ['', Validators.required],
-      // email: ['', [Validators.required, Validators.email]],
-      // role: ['', Validators.required],
-      // password: ['', [Validators.minLength(6), this.isAddMode ? Validators.required : Validators.nullValidator]],
-      // confirmPassword: ['', this.isAddMode ? Validators.required : Validators.nullValidator]
+      userid: ['', Validators.required],
+      numberOfItems: ['', Validators.required],
+      items: new FormArray([])
     }
-      // , {
-      //     validator: MustMatch('password', 'confirmPassword')
-      // }
 
     );
 
     if (!this.isAddMode) {
-      this.userService.getInvoice(this.id)
+      this.invoiceService.getInvoice(this.id)
         .pipe(first())
-        .subscribe(x => this.form.patchValue(x));
+        .subscribe(x => {
+          x.numberOfItems = x.items.length
+          for (let i = 0; i < x.numberOfItems; i++) {
+            this.t.push(this.formBuilder.group({
+              id: [''],
+              name: ['', Validators.required],
+              description: ['', Validators.required],
+              price: ['', Validators.required],
+              currency: ['', Validators.required],
+              quantity: ['', Validators.required],
+
+            }));
+            // console.log("num", numberOfItems);
+
+          }
+          debugger
+          this.form.patchValue(x)
+        });
     }
 
 
@@ -90,11 +92,11 @@ export class AddEditComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() { return this.form.controls; }
 
-  get l() {
-    return this.dynamicForm.controls;
-  }
+  // get l() {
+  //   return this.dynamicForm.controls;
+  // }
   get t() {
-    return this.l.items as FormArray;
+    return this.f.items as FormArray;
 
   }
 
@@ -167,11 +169,11 @@ export class AddEditComponent implements OnInit {
       this.form.value.files = [];
       for (let i = 0; i < 10; i++) {
         console.log("line 175   mmmmmm")
-        this.form.value.items.push(this.dynamicForm.value.items[i]);
+        this.form.value.items.push(this.form.value.items[i]);
 
       }
       console.log("this.invoice.items", this.form.value.items)
-      if (this.dynamicForm.invalid) {
+      if (this.form.invalid) {
         return;
       }
 
@@ -200,7 +202,7 @@ export class AddEditComponent implements OnInit {
   }
 
   private createUser() {
-    this.userService.createInvoice(this.form.value)
+    this.invoiceService.createInvoice(this.form.value)
       .pipe(first())
       .subscribe(data => {
         // this.invoice = new Invoice();
@@ -225,7 +227,7 @@ export class AddEditComponent implements OnInit {
   }
 
   private updateUser() {
-    this.userService.updateInvoice(this.id, this.form.value)
+    this.invoiceService.updateInvoice(this.id, this.form.value)
       .pipe(first())
       .subscribe({
         next: () => {
@@ -242,7 +244,7 @@ export class AddEditComponent implements OnInit {
 
   onReset() {
     this.submitted = false;
-    this.dynamicForm.reset();
+    this.form.reset();
     this.t.clear();
   }
 

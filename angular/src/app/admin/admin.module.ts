@@ -19,6 +19,7 @@ import { UpdateInvoiceComponent } from './components/update-Invoice/update-invoi
 import { AddEditComponent } from './components/add-edit/add-edit.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MatSelectModule,
     SharedModule
   ]
 })

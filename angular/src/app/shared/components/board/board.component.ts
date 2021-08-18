@@ -33,7 +33,8 @@ export class BoardComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  public displayedColumns = ['id', 'date_created', 'due_date', 'userid', 'company', 'type', 'details', 'update', 'delete', 'create', 'attachFile'];
+  // public displayedColumns = ['id', 'date_created', 'due_date', 'userid', 'company', 'type', 'details', 'update', 'delete', 'create', 'attachFile'];
+  public displayedColumns = []
   invoiceDatasource: InvoiceDataSource;
 
 
@@ -52,6 +53,12 @@ export class BoardComponent implements OnInit {
     this.roles = user.roles;
 
     this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+    if (this.showAdminBoard) {
+      this.displayedColumns = ['id', 'date_created', 'due_date', 'userid', 'company', 'type', 'details', 'update', 'delete', 'create', 'attachFile'];
+    }
+    else {
+      this.displayedColumns = ['id', 'date_created', 'due_date', 'userid', 'company', 'type', 'details']
+    }
     this.showAuditorBoard = this.roles.includes('ROLE_AUDITOR');
 
   }

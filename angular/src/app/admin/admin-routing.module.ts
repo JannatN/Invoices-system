@@ -12,13 +12,13 @@ import { BoardComponent } from '../shared/components/board/board.component';
 
 const routes: Routes = [
   { path: '', component: BoardComponent },
-  { path: 'addInvoice', component: CreateInvoiceComponent },
-  // { path: 'addInvoice', component: AddEditComponent },
+  // { path: 'addInvoice', component: CreateInvoiceComponent },
+  { path: 'addInvoice', component: AddEditComponent },
   { path: 'addItem/:id', component: CreateItemComponent },
   { path: 'attachFile/:id', component: UploadFilesComponent },
-  // { path: 'updateInvoice/:id', component: AddEditComponent },
+  { path: 'updateInvoice/:id', component: AddEditComponent },
 
-  { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
+  // { path: 'updateInvoice/:id', component: UpdateInvoiceComponent },
   { path: 'users', component: UserListComponent },
   { path: 'updateUser/:id', component: UpdateUserComponent },
   { path: 'userDetails/:id', component: UserDetailsComponent },

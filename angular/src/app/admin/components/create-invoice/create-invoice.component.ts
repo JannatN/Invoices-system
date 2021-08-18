@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../../../core/models/item';
 import { UploadFilesService } from '../../../core/services/upload-file.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { User } from 'src/app/core/models/user';
@@ -25,15 +25,21 @@ export class CreateInvoiceComponent implements OnInit {
   progressInfos = [];
   message = '';
   id: number;
-  users: Observable<User[]>
+  users = new BehaviorSubject([]);
+  users$ = this.users.asObservable();
   user: User = new User();
   // fileInfos: Observable<any>;
 
-  constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService,private userService: UserService,
+  constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService, private userService: UserService,
     private router: Router, private uploadService: UploadFilesService, private location: Location) { }
 
   ngOnInit() {
-    this.users = this.userService.getUserList();
+    this.userService.getUserList().subscribe(e => {
+      debugger
+      this.users.next(e.content)
+    }
+
+    );
     this.dynamicForm = this.formBuilder.group({
       numberOfItems: ['', Validators.required],
       items: new FormArray([])
@@ -51,6 +57,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.user.username = u.username;
     this.user.id = u.id;
   }
+
   selectFiles(event) {
     this.progressInfos = [];
     this.selectedFiles = event.target.files;

@@ -11,12 +11,26 @@
             </div>
         </div>
         <div class="form-group col-5">
-            <label>User ID</label>
-            <input type="text" formControlName="userid" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.userid.errors }" />
-            <div *ngIf="submitted && f.userid.errors" class="invalid-feedback">
-                <div *ngIf="f.userid.errors.required">Userid is required</div>
-            </div>
+            <!-- <mat-form-field appearance="fill"> -->
+
+                <label>User ID</label>
+                <!-- <input type="text" formControlName="userid" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.userid.errors }" /> -->
+                <!-- <select>
+                    <option value="-1">Choose...</option>
+                    <option *ngFor="let u of users$ | async" [ngValue]="u.id">{{ u.username }}</option>
+                </select> -->
+                <select formControlName="userid" class="form-control">
+                    <option>--</option>
+                    <option *ngFor="let u of users$ | async" [value]="u.id">
+                        {{u.username}}
+                    </option>
+                </select>
+                <!-- <div *ngIf="submitted && f.userid.errors" class="invalid-feedback">
+                    <div *ngIf="f.userid.errors.required">Userid is required</div>
+                </div> -->
+            <!-- </mat-form-field> -->
+
         </div>
 
         <div class="form-group col-5">
@@ -37,7 +51,7 @@
         </div>
     </div>
 
-    <div *ngIf="isAddMode">
+    <div>
         <h5 class="card-title">Items Section</h5>
         <div class="form-row">
             <div class="form-group">
@@ -199,7 +213,7 @@
 
 
     <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary" [disabled]="!selectedFiles">
+        <button [disabled]="loading" class="btn btn-primary">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Save
         </button>
